@@ -1,0 +1,40 @@
+$main-background-colour : rgba(193, 249, 253, 0.253);
+$font-size-large : 8rem;
+$font-size-medium : 3rem;
+$font-size-small : 2.5rem;
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+body{
+    background-color: $main-background-colour; 
+
+}
+
+h1{
+    font-size: $font-size-large;
+    text-align: center;
+    margin: 2%;
+}
+
+p{
+    font-size : $font-size-medium;
+    text-align: center;
+    margin : 2%;
+}
+
+a{
+    font-size: $font-size-small;
+    display: block;
+    text-align: center;
+}
+
+#login-wrapper{
+    height: auto;
+    margin: 0 auto;
+}

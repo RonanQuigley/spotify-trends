@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: rgba(193, 249, 253, 0.253);
+}
+
+h1 {
+  font-size: 8rem;
+  text-align: center;
+  margin: 2%;
+}
+
+p {
+  font-size: 3rem;
+  text-align: center;
+  margin: 2%;
+}
+
+a {
+  font-size: 2.5rem;
+  display: block;
+  text-align: center;
+}
+
+#login-wrapper {
+  height: auto;
+  margin: 0 auto;
+}
+/*# sourceMappingURL=index.css.map */
