@@ -1,3 +1,4 @@
+var dotenv = require('dotenv').config();
 var express = require("express"); // Express web server framework
 var request = require("request"); // "Request" library
 var morgan = require("morgan");
@@ -10,6 +11,7 @@ var publicDir = path.join(__dirname, "public");
 var port = 9999;
 var clientID = "e71c573718c74445a4c7790b229b9a94"; // Your client id
 var clientSecret = process.env.CLIENT_SECRET; // Your secret
+if(!clientSecret) throw 'client secret is ' + clientSecret;
 var redirectURI = "http://localhost:" + port + "/callback"; // Your redirect uri
 var mongodb = require("./mongodb");
 var hbs = require("express-handlebars");
@@ -78,9 +80,6 @@ app.get("/callback", function(req, res) {
         var accessToken = body.access_token;
         var refreshToken = body.refresh_token;
         var expiryIn = body.expires_in         
-
-
-
         if(!accessToken) throw 'no access token';
         if(!refreshToken) throw 'no refresh token';
         if(!expiryIn) throw 'no expires in time';
@@ -89,13 +88,13 @@ app.get("/callback", function(req, res) {
           refreshToken : refreshToken,
           expiryIn : expiryIn
         }));
-      } else {
+      } else {        
         res.redirect(
           "/#" +
             querystring.stringify({
               error: "invalid_token"
             })
-        );
+        );         
       }
     });
   } else {
@@ -105,41 +104,64 @@ app.get("/callback", function(req, res) {
 
 app.get('/results', (req,response) => {  
   debug("querystring is: " + req.query);
-  var storedResults = {}; 
-  var resultsSize = 2;  
-  var resultsCount = 0;
-  getTopSongs(req.query.accessToken, timeRange.SHORT, 1, 0, storeTopSongs);
-  getTopArtists(req.query.accessToken, timeRange.SHORT, 1, 0, storeTopArtists);
-  function storeTopSongs(topSongs){
-    storedResults.topSongs = topSongs;
-    updateRenderPageStatus();
+  var accessToken = (req.query.access_token) ? 
+  req.query.access_token : req.headers.access_token;
+  if(accessToken){
+    var storedResults = {}; 
+    var resultsSize = 2;  
+    var resultsCount = 0;
+    getTopSongs(accessToken, timeRange.SHORT, 1, 0, storeTopSongs);
+    getTopArtists(accessToken, timeRange.SHORT, 1, 0, storeTopArtists);
+    function storeTopSongs(topSongs){
+      storedResults.topSongs = topSongs;
+      updateRenderPageStatus();
+    }
+    function storeTopArtists(topArtists){
+      storedResults.topArtists = topArtists;
+      updateRenderPageStatus();
+    }
+    function updateRenderPageStatus(){
+      (resultsCount + 1) === resultsSize ? 
+      response.render('results', storedResults) : resultsCount++;
+    }
   }
-  function storeTopArtists(topArtists){
-    storedResults.topArtists = topArtists;
-    updateRenderPageStatus();
-  }
-  function updateRenderPageStatus(){
-    (resultsCount + 1) === resultsSize ? 
-    response.render('results', storedResults) : resultsCount++;
+  else{
+    throw 'no valid access token';
   }
 })
 
-app.post("/refresh_token", (err, req, res) => {
+app.get("/refresh", (req, res) => {
+
+  // requesting access token from refresh token
+  var refresh_token = req.headers.refresh_token ? req.headers.refresh_token : req.query.refresh_token;
+  if(!refresh_token) throw 'missing refresh token - check client side naming';
   var authOptions = {
-    url: "https://accounts.spotify.com/api/token",
+    url: 'https://accounts.spotify.com/api/token',
     headers: {
       Authorization:
-        "Basic " + new Buffer(clientID + ":" + clientSecret).toString("base64")
+        "Basic " +
+        new Buffer(clientID + ":" + clientSecret).toString("base64")
     },
     form: {
-      grant_type: "refresh_token",
-      refresh_token: refreshToken
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token
     },
     json: true
   };
-  request.post(authOptions, (err, res, body) => {
-    if (!error && response.statusCode === 200) {
-      accessToken = body.access_token;
+  
+  request.post(authOptions, function(error, response, body) {
+    if(error) throw error;
+    if(response.statusCode === 200) {      
+      var access_token = body.access_token;
+      var expiry_in = body.expires_in;              
+      res.send({
+        'access_token': access_token,
+        'expiry_in' : expiry_in
+      });
+    }
+    else{
+      debug("cannot get refresh token: " + response.statusCode);
+      debug(body);
     }
   });
 });

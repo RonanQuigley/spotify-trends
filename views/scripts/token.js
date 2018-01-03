@@ -2,6 +2,9 @@ var Token = {
     setAccessToken: function(accessToken) {
         localStorage.setItem('access-token', accessToken);
     },    
+    getAccessToken : function(){
+        return localStorage.getItem('access-token');
+    },
     getValidAccessToken: function(){
         var expiresAt = parseInt(localStorage.getItem('token-expires-at'), 10);
         var token = localStorage.getItem('access-token');
