@@ -1,5 +1,5 @@
 var Results = {
-  _getAllArtists: function(obj) {
+  getAllArtists: function(obj) {
     // Object.keys(obj).forEach(function(key) {
     //     console.log(key, obj[key]);
     // });
@@ -25,12 +25,5 @@ var Results = {
         popularity : obj.popularity,
         image : obj.images[1] // 320 x 320 - medium
     }
-  },
-  renderTopArtists: function(obj) {
-    var artists = this._getAllArtists(obj);
-    console.log(artists);
-  },
-  renderTopSongs: function(obj) {
-    var parsedObj = JSON.parse(obj);
   }
 };

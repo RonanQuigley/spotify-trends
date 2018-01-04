@@ -28,6 +28,10 @@ a {
   text-align: center;
 }
 
+li {
+  font-size: 2.5rem;
+}
+
 #login-wrapper {
   height: auto;
   margin: 0 auto;

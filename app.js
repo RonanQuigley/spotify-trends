@@ -128,10 +128,13 @@ app.get('/results', (req,response) => {
           debug('stored results is of type: ' + typeof storedResults);
           // before sending out the objects send 
           // them in the correct format 
-          stringifyObjects(storedResults);
+          // stringifyObjects(storedResults);
+          var topArtists = Results.getAllArtists(storedResults.topArtists);
+          // stringifyObjects(topArtists);
+          debug(topArtists);
           response.render('results', {
             Spotify : {
-              topArtists : storedResults.topArtists,
+              topArtists : topArtists,
               topSongs : storedResults.topSongs
             }
           });
@@ -275,3 +278,34 @@ function stringifyObjects(parentObject){
     parentObject[value] = JSON.stringify(parentObject[value]);    
   })
 }
+
+
+var Results = {
+  getAllArtists: function(obj) {
+    // Object.keys(obj).forEach(function(key) {
+    //     console.log(key, obj[key]);
+    // });
+    var artists = [];    
+    for(let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            var currentObj = obj[key];
+            var currentArtist = this._getRelevantArtistData(currentObj);
+            artists.push(currentArtist);
+        }
+        else{
+            console.logerror('missing artist data');
+        }
+    }
+    return artists; 
+  },
+  _getRelevantArtistData : function(obj){
+    return {
+        name : obj.name,
+        popularity : obj.popularity,
+        genres : obj.genres,
+        uri : obj.uri,
+        popularity : obj.popularity,
+        image : obj.images[1] // 320 x 320 - medium
+    }
+  }
+};
