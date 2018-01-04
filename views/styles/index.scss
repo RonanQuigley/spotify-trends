@@ -38,6 +38,12 @@ li{
     font-size: $font-size-small;
 }
 
+img{
+    width : 100px;
+    height : 100px;
+    object-fit: cover;
+}
+
 #login-wrapper{
     height: auto;
     margin: 0 auto;

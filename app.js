@@ -16,18 +16,25 @@ var clientSecret = process.env.CLIENT_SECRET; // Your secret
 if(!clientSecret) throw 'client secret is ' + clientSecret;
 var redirectURI = "http://localhost:" + port + "/callback"; // Your redirect uri
 var mongodb = require("./mongodb");
-var hbs = require("express-handlebars");
-
+var expressHandlebars = require("express-handlebars");
+var hbs = expressHandlebars.create({
+  helpers: {
+    stringify: function (value) {
+        return JSON.stringify(value);
+    }
+  },
+  extname : 'hbs',
+  defaultLayout: "layout",
+  layoutsDir: __dirname + "/views/layouts"
+});
 var appTitle = 'Spotify Trends';
 
-app.engine(
-  "hbs",
-  hbs({
-    extname: "hbs",
-    defaultLayout: "layout",
-    layoutsDir: __dirname + "/views/layouts"
-  })
-);
+var numOfTopArtistsResults = 5; // max of 50
+var numOfTopSongsResults = 5; // max of 50
+var topSongsOffset = 0; // results offset
+var topArtistsOffset = 0; // results offset
+
+app.engine("hbs", hbs.engine);
 
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
@@ -86,17 +93,17 @@ app.get("/callback", function(req, res) {
         if(!refreshToken) throw 'no refresh token';
         if(!expiryIn) throw 'no expires in time';
         res.redirect('results?' + querystring.stringify({
-          accessToken : accessToken,
-          refreshToken : refreshToken,
-          expiryIn : expiryIn
+          access_token : accessToken,
+          refresh_token : refreshToken,
+          expiry_in : expiryIn
         }));
       } else {        
-        res.redirect(
+        res.redirect(res.redirect(
           "/#" +
             querystring.stringify({
               error: "invalid_token"
             })
-        );         
+        ));         
       }
     });
   } else {
@@ -106,14 +113,17 @@ app.get("/callback", function(req, res) {
 
 app.get('/results', (req,response) => {  
   debug("querystring is: " + req.query);
-  var accessToken = (req.query.access_token) ? 
+  var accessToken = req.query ? 
   req.query.access_token : req.headers.access_token;
   if(accessToken){
     var storedResults = {}; 
     var resultsSize = 2;  
     var resultsCount = 0;
-    getTopSongs(accessToken, timeRange.SHORT, 10, 0, storeTopSongs);
-    getTopArtists(accessToken, timeRange.SHORT, 10, 0, storeTopArtists);
+    // callbacks for requesting spotify api data 
+    getTopSongs(accessToken, timeRange.SHORT, 
+      numOfTopSongsResults, topSongsOffset, storeTopSongs);
+    getTopArtists(accessToken, timeRange.SHORT, 
+      numOfTopArtistsResults, topArtistsOffset, storeTopArtists);
     function storeTopSongs(topSongs){
       storedResults.topSongs = topSongs;            
       updateRenderPageStatus();
@@ -126,16 +136,14 @@ app.get('/results', (req,response) => {
       if(resultsCount + 1 === resultsSize){
         if(!isObjectEmpty(storedResults)){
           debug('stored results is of type: ' + typeof storedResults);
-          // before sending out the objects send 
-          // them in the correct format 
-          // stringifyObjects(storedResults);
           var topArtists = Results.getAllArtists(storedResults.topArtists);
-          // stringifyObjects(topArtists);
+          var topSongs = Results.getAllSongs(storedResults.topSongs);
           debug(topArtists);
+          debug(topSongs);
           response.render('results', {
             Spotify : {
               topArtists : topArtists,
-              topSongs : storedResults.topSongs
+              topSongs : topSongs
             }
           });
         }
@@ -249,7 +257,7 @@ function getTopSongs(accessToken, timeRange, limit, offset, callback){
   var queryString = generateQueryString(timeRange, limit, offset);  
   var header = generateAuthHeader('https://api.spotify.com/v1/me/top/tracks?' 
   + queryString, accessToken);
-  debug("finalised header: " + header.headers);
+  debug("finalised header: " + header.headers);  
   request.get(header, (err, res, body) => {
     if(err) throw err;
     if(res.statusCode === 200){
@@ -266,7 +274,6 @@ function calculateTopGenres(){
 }
 
 
-
 // Utilities file
 
 function isObjectEmpty(obj){
@@ -279,6 +286,7 @@ function stringifyObjects(parentObject){
   })
 }
 
+// results file 
 
 var Results = {
   getAllArtists: function(obj) {
@@ -298,14 +306,48 @@ var Results = {
     }
     return artists; 
   },
+  getAllSongs : function(obj){
+    var songs = [];    
+    for(let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            var currentObj = obj[key];
+            var currentSong = this._getRelevantSongData(currentObj);
+            songs.push(currentSong);
+        }
+        else{
+            console.logerror('missing songs data');
+        }
+    }
+    return songs; 
+  },
+  _getRelevantSongData : function(obj){
+    return {
+      name : obj.name ? obj.name : null,
+      uri : obj.uri ? obj.uri : null,    
+      popularity : obj.popularity ? obj.popularity : null,
+      image : obj.album ? (obj.album.images ? 
+        this._getCorrectImageUrl(obj.album.images) : null) : null // 640 x 640 image
+      }
+  },
   _getRelevantArtistData : function(obj){
     return {
-        name : obj.name,
-        popularity : obj.popularity,
-        genres : obj.genres,
-        uri : obj.uri,
-        popularity : obj.popularity,
-        image : obj.images[1] // 320 x 320 - medium
+        name : obj.name ? obj.name : null,
+        popularity : obj.popularity ? obj.popularity : null,
+        genres : obj.genres ? obj.genres : null,
+        uri : obj.uri ? obj.uri : null,
+        image : obj.images ? this._getCorrectImageUrl(obj.images) : null // 640 x 640 image
+    }
+  },
+  _getCorrectImageUrl(images){
+    // the image array size is inconsitent between artists
+    // so we need to keep checking for the right sized match 
+    for(let i = 0; i < images.length; i++){
+      if(parseInt(images[i].width, 10) === 640) {
+        return images[i].url;
+      }
+      else if(i === images.length - 1){
+        throw 'cannot get a valid image of the right size'
+      }
     }
   }
 };

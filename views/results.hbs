@@ -1,16 +1,36 @@
 <p>This is a results page</p>
 
 {{#if Spotify.topArtists}}
-    <ul>
-        {{#each Spotify.topArtists}}
-            <li>{{this.name}}</li>
-        {{/each}}
-    </ul>
+    <div id="top-artists-container">
+        <ul>
+            {{#each Spotify.topArtists}}
+                <img src={{this.image}}>
+                {{this.name}}   
+                {{this.popularity}}
+                {{this.uri}}
+                {{this.genres}}     
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}
+
+{{#if Spotify.topSongs}}    
+    <div id="top-songs-container">
+        <ul>
+            {{#each Spotify.topSongs}}
+                <img src={{this.image}}>
+                {{this.name}}
+                {{this.popularity}}
+                {{this.uri}}
+                {{this.image}}
+            {{/each}}
+        </ul>
+    </div>    
 {{/if}}
 
 <script>
     if (window.location.href.indexOf('?') > -1) {
-        (function parseQueryString(){
+        (function parseQueryString() {
             function getParameterByName(name, url) {
                 if (!url) url = window.location.href;
                 name = name.replace(/[\[\]]/g, "\\$&");
@@ -21,15 +41,15 @@
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
             if (!Token.getValidAccessToken()) {
-                var accessToken = getParameterByName('accessToken');
+                var accessToken = getParameterByName('access_token');
                 accessToken ? Token.setAccessToken(accessToken) : console.error('access token is ' + accessToken + ', did you change the name of the query string param?');
             }
             if (!Token.getRefreshToken()) {
-                var refreshToken = getParameterByName('refreshToken');
+                var refreshToken = getParameterByName('refresh_token');
                 refreshToken ? Token.setRefreshToken(refreshToken) : console.error('refresh token is ' + refreshToken + ', did you change the name of the query string param?');
             }
             if (!Token.getAccessTokenExpiry()) {
-                var expiry = getParameterByName('expiryIn');
+                var expiry = getParameterByName('expiry_in');
                 expiry ? Token.setAccessTokenExpiry(expiry) : console.error('expiry time is ' + expiry + ', did you change the name of the query string param?');
             }
         }());
