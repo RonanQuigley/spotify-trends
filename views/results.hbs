@@ -1,14 +1,9 @@
 <p>This is a results page</p>
 
-{{#if topArtists}}
+{{#if Spotify}}
+    <script src="scripts/results.js"></script>
     <script>
-        console.log({{{topArtists}}});
-    </script>
-{{/if}}
-
-{{#if topSongs}}
-    <script>
-        console.log({{{topSongs}}})
+        Results.renderTopArtists({{{Spotify.topArtists}}});
     </script>
 {{/if}}
 

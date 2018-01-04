@@ -1,4 +1,6 @@
+
 var dotenv = require('dotenv').config();
+var util = require('util');
 var express = require("express"); // Express web server framework
 var request = require("request"); // "Request" library
 var morgan = require("morgan");
@@ -110,23 +112,28 @@ app.get('/results', (req,response) => {
     var storedResults = {}; 
     var resultsSize = 2;  
     var resultsCount = 0;
-    getTopSongs(accessToken, timeRange.SHORT, 1, 0, storeTopSongs);
-    getTopArtists(accessToken, timeRange.SHORT, 1, 0, storeTopArtists);
+    getTopSongs(accessToken, timeRange.SHORT, 10, 0, storeTopSongs);
+    getTopArtists(accessToken, timeRange.SHORT, 10, 0, storeTopArtists);
     function storeTopSongs(topSongs){
-      storedResults.topSongs = topSongs;
+      storedResults.topSongs = topSongs;            
       updateRenderPageStatus();
     }
     function storeTopArtists(topArtists){
       storedResults.topArtists = topArtists;
       updateRenderPageStatus();
-    }
+    }    
     function updateRenderPageStatus(){
       if(resultsCount + 1 === resultsSize){
         if(!isObjectEmpty(storedResults)){
           debug('stored results is of type: ' + typeof storedResults);
+          // before sending out the objects send 
+          // them in the correct format 
+          stringifyObjects(storedResults);
           response.render('results', {
-            topArtists : JSON.stringify(storedResults.topArtists),
-            topSongs : JSON.stringify(storedResults.topSongs)
+            Spotify : {
+              topArtists : storedResults.topArtists,
+              topSongs : storedResults.topSongs
+            }
           });
         }
         else{
@@ -227,6 +234,7 @@ function getTopArtists(accessToken, timeRange, limit, offset, callback){
   request.get(header, (err, res, body) => {
     if(err) throw err;
     if(res.statusCode === 200){
+      debug('top Artists : ' + util.inspect(body.items, false, null));
       body ? callback(body.items) : console.error('artists are undefined');
     }else{
       throw '' + res.statusCode + ': ' + res.statusMessage;
@@ -242,6 +250,7 @@ function getTopSongs(accessToken, timeRange, limit, offset, callback){
   request.get(header, (err, res, body) => {
     if(err) throw err;
     if(res.statusCode === 200){
+      debug('top songs : ' + util.inspect(body.items, false, null));
       body ? callback(body.items) : console.error('songs are undefined');
     }else{
       throw '' + res.statusCode + ': ' + res.statusMessage;
@@ -259,4 +268,10 @@ function calculateTopGenres(){
 
 function isObjectEmpty(obj){
   return (Object.keys(obj).length === 0 && obj.constructor === Object)
+}
+
+function stringifyObjects(parentObject){
+  Object.keys(parentObject).forEach((value) => {
+    parentObject[value] = JSON.stringify(parentObject[value]);    
+  })
 }
