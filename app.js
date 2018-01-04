@@ -121,8 +121,23 @@ app.get('/results', (req,response) => {
       updateRenderPageStatus();
     }
     function updateRenderPageStatus(){
-      (resultsCount + 1) === resultsSize ? 
-      response.render('results', storedResults) : resultsCount++;
+      if(resultsCount + 1 === resultsSize){
+        if(!isObjectEmpty(storedResults)){
+          debug('stored results is of type: ' + typeof storedResults);
+          response.render('results', {
+            topArtists : JSON.stringify(storedResults.topArtists),
+            topSongs : JSON.stringify(storedResults.topSongs)
+          });
+        }
+        else{
+          console.error('stored results obj is empty');
+        }
+      } 
+      else{
+        resultsCount++;
+      }
+      // (resultsCount + 1) === resultsSize ? 
+      // response.render('results', storedResults) : resultsCount++;
     }
   }
   else{
@@ -178,7 +193,7 @@ app.listen(port);
 
 reload(app);
 
-/// TO MOVE INTO ANOTHER FILE 
+/// Spotify File
 
 var timeRange = {
   SHORT : 'short_term', // last 4 weeks
@@ -212,7 +227,7 @@ function getTopArtists(accessToken, timeRange, limit, offset, callback){
   request.get(header, (err, res, body) => {
     if(err) throw err;
     if(res.statusCode === 200){
-      callback(body);
+      body ? callback(body.items) : console.error('artists are undefined');
     }else{
       throw '' + res.statusCode + ': ' + res.statusMessage;
     }      
@@ -227,7 +242,7 @@ function getTopSongs(accessToken, timeRange, limit, offset, callback){
   request.get(header, (err, res, body) => {
     if(err) throw err;
     if(res.statusCode === 200){
-      callback(body);
+      body ? callback(body.items) : console.error('songs are undefined');
     }else{
       throw '' + res.statusCode + ': ' + res.statusMessage;
     }    
@@ -236,4 +251,12 @@ function getTopSongs(accessToken, timeRange, limit, offset, callback){
 
 function calculateTopGenres(){
   
+}
+
+
+
+// Utilities file
+
+function isObjectEmpty(obj){
+  return (Object.keys(obj).length === 0 && obj.constructor === Object)
 }
