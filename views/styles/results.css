@@ -42,8 +42,36 @@ img {
   object-fit: cover;
 }
 
-#login-wrapper {
-  height: auto;
+.results-container {
+  width: 50rem;
+  height: 65rem;
+  overflow-y: scroll;
   margin: 0 auto;
 }
-/*# sourceMappingURL=index.css.map */
+
+.result-container {
+  width: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.result-container:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.image {
+  float: left;
+  width: 20%;
+  height: 10rem;
+  overflow: auto;
+}
+
+.text-container {
+  float: right;
+  width: 80%;
+  display: inline-block;
+}
+/*# sourceMappingURL=results.css.map */

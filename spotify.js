@@ -1,5 +1,5 @@
 var queryString = require('querystring');
-var debug = require("debug")("expressdebug:server");
+var debug = require("debug")("spotifydebug:");
 var request = require('request');
 var util = require('util');
 module.exports = {

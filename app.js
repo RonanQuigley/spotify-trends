@@ -7,6 +7,7 @@ var querystring = require("querystring"); // genereates strings to send with url
 var app = express();
 var reload = require("reload");
 var debug = require("debug")("expressdebug:server");
+
 var path = require("path");
 var publicDir = path.join(__dirname, "public");
 var port = 9999;
