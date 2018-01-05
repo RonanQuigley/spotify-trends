@@ -30,6 +30,7 @@ module.exports = {
       }
       return songs; 
     },
+    calculateTopGenres: function() {},
     _getRelevantSongData : function(obj){
       return {
         name : obj.name ? obj.name : null,
@@ -43,7 +44,7 @@ module.exports = {
       return {
           name : obj.name ? obj.name : null,
           popularity : obj.popularity ? obj.popularity : null,
-          genres : obj.genres ? obj.genres : null,
+          genres : obj.genres ? this._getGenres(obj.genres) : null,
           uri : obj.uri ? obj.uri : null,
           image : obj.images ? this._getCorrectImageUrl(obj.images) : null // 640 x 640 image
       }
@@ -56,9 +57,21 @@ module.exports = {
           return images[i].url;
         }
         else if(i === images.length - 1){
-          throw 'cannot get a valid image of the right size'
+          return images[0].url // just return the largest image 
         }
       }
-    }
+    },
+    _getGenres : function(genres){
+      // if(genres.length === 0){
+      //   return genres[0];
+      // }
+      // else{
+      //   // get a random genre 
+      //   var rand = Math.floor(Math.random() * genres.length);
+      //   genres.length[re]
+      // }      
+      // just return the first genre for now
+      return genres[0];
+    },
   };
   

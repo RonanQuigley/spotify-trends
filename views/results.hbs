@@ -1,21 +1,25 @@
 <p>This is a results page</p>
 
 {{#if Spotify.topArtists}}
-    <div id="top-artists-container">
-        <ul>
-            {{#each Spotify.topArtists}}
-                <img src={{this.image}}>
-                {{this.name}}   
-                {{this.popularity}}
-                {{this.uri}}
-                {{this.genres}}     
-            {{/each}}
-        </ul>
+    <div id="top-artists">        
+        {{#each Spotify.topArtists}}
+            <div id='artist-{{@index}}' class="artist-container">
+                <img class="image-container" src={{this.image}}>
+                <div class="text-container">
+                    <ul>
+                        <li>{{this.name}}</li>
+                        <li>{{this.popularity}}</li>
+                        <li>{{this.uri}}</li>
+                        <li>{{this.genres}}</li>
+                    </ul>                                                                       
+                </div>                
+            </div>    
+        {{/each}}    
     </div>
 {{/if}}
-
+<!-- 
 {{#if Spotify.topSongs}}    
-    <div id="top-songs-container">
+    <div id="top-songs">
         <ul>
             {{#each Spotify.topSongs}}
                 <img src={{this.image}}>
@@ -27,7 +31,7 @@
         </ul>
     </div>    
 {{/if}}
-
+-->
 <script>
     if (window.location.href.indexOf('?') > -1) {
         (function parseQueryString() {

@@ -3,6 +3,13 @@ $font-size-large : 8rem;
 $font-size-medium : 3rem;
 $font-size-small : 2.5rem;
 
+@mixin clearfix {
+    content: "";
+    display: block; 
+    height: 0; 
+    clear: both;
+}
+
 *{
     box-sizing: border-box;
 }
@@ -14,6 +21,11 @@ html{
 body{
     background-color: $main-background-colour; 
 
+}
+
+h1,h2,h3,h4,h5,ul,li,p{
+    margin: 0; 
+    padding: 0;
 }
 
 h1{
@@ -48,3 +60,29 @@ img{
     height: auto;
     margin: 0 auto;
 }
+
+#top-artists{
+    width : 50rem;
+    margin : 0 auto;
+}
+
+    .artist-container{
+        width: 100%;  
+        margin-top : 2%;
+        margin-bottom : 2%;
+        &:after{
+            @include clearfix;
+        }      
+    }
+
+        .image-container{
+           float : left;
+           overflow: auto;           
+        }
+
+        .text-container{
+            float : right;
+            width : 50%;
+            display: inline-block;            
+        }
+

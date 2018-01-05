@@ -1,5 +1,5 @@
 var queryString = require('querystring');
-var debug = require('debug')
+var debug = require("debug")("expressdebug:server");
 var request = require('request');
 var util = require('util');
 module.exports = {
@@ -58,6 +58,5 @@ module.exports = {
         throw "" + res.statusCode + ": " + res.statusMessage;
       }
     });
-  },
-  calculateTopGenres: function() {}
+  }
 };

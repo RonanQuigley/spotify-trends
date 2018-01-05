@@ -10,6 +10,11 @@ body {
   background-color: rgba(193, 249, 253, 0.253);
 }
 
+h1, h2, h3, h4, h5, ul, li, p {
+  margin: 0;
+  padding: 0;
+}
+
 h1 {
   font-size: 8rem;
   text-align: center;
@@ -41,5 +46,34 @@ img {
 #login-wrapper {
   height: auto;
   margin: 0 auto;
+}
+
+#top-artists {
+  width: 50rem;
+  margin: 0 auto;
+}
+
+.artist-container {
+  width: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.artist-container:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.image-container {
+  float: left;
+  overflow: auto;
+}
+
+.text-container {
+  float: right;
+  width: 50%;
+  display: inline-block;
 }
 /*# sourceMappingURL=index.css.map */
