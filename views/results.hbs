@@ -5,43 +5,15 @@
 {{#if Spotify.topArtists}}  
     <div id="top-artists-container" class="spotify-results">
         <h1>Top Artists</h1>
-        <div class="results-container">
-            {{#each Spotify.topArtists}}
-                <div id='artist-{{@index}}' class="result-container">
-                    <a class="spotify-uri" href={{this.uri}}>
-                        <img class="image" src={{this.image}}>    
-                    </a>                
-                    <div class="text-container">
-                        <ul>
-                            <li>{{this.name}}</li>
-                            <li>popularity : {{this.popularity}}</li>
-                            <li>{{this.genres}}</li>
-                        </ul>                                                                       
-                    </div>                
-                </div>    
-            {{/each}}    
-        </div>
+        {{> spotify-results obj=Spotify.topArtists }}
     </div>
 {{/if}}
+
 
 {{#if Spotify.topSongs}}
     <div id="top-songs-container" class="spotify-results">
         <h1>Top Songs</h1>
-        <div class="results-container">
-            {{#each Spotify.topSongs}}
-                <div id='song-{{@index}}' class="result-container">
-                    <a class="spotify-uri" href={{this.uri}}>
-                        <img class="image" src={{this.image}}>
-                    </a>                    
-                    <div class="text-container">
-                        <ul>
-                            <li>{{this.name}}</li>
-                            <li>popularity : {{this.popularity}}</li>                            
-                        </ul>                                                                       
-                    </div>                
-                </div>    
-            {{/each}}    
-        </div>
+        {{> spotify-results obj=Spotify.topSongs }}
     </div>      
 {{/if}}
 

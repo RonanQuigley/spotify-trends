@@ -21,11 +21,15 @@ var hbs = expressHandlebars.create({
   helpers: {
     stringify: function (value) {
         return JSON.stringify(value);
+    },
+    offsetIndexByOne : function(index){
+      return parseInt(index,10) + 1;
     }
   },
   extname : 'hbs',
   defaultLayout: "layout",
-  layoutsDir: __dirname + "/views/layouts"
+  layoutsDir: __dirname + "/views/layouts",
+  partialsDir : 'views/partials'
 });
 var utilities = require('./utilities');
 var spotify = require('./spotify');

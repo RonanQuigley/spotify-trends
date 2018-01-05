@@ -17,7 +17,7 @@
 }
 
 .spotify-uri{
-
+    
 }
 
 .image{
@@ -33,7 +33,16 @@
     display: inline-block;            
 }
 
-#top-artists-container{
-    
+.spotify-results{
+    width: 30%;    
 }
 
+#top-artists-container{
+    float : left;
+    margin-left: 20%;    
+}
+
+#top-songs-container{
+    float : right;
+    margin-right: 20%;
+}
