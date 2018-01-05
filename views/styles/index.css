@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5, ul, li, p {
 }
 
 h1 {
-  font-size: 8rem;
+  font-size: 3rem;
   text-align: center;
   margin: 2%;
 }
@@ -28,18 +28,17 @@ p {
 }
 
 a {
-  font-size: 2.5rem;
+  font-size: 2rem;
   display: block;
   text-align: center;
 }
 
 li {
-  font-size: 2.5rem;
+  font-size: 2rem;
+  list-style-type: none;
 }
 
 img {
-  width: 100px;
-  height: 100px;
   object-fit: cover;
 }
 
@@ -48,32 +47,36 @@ img {
   margin: 0 auto;
 }
 
-#top-artists {
+.results-container {
   width: 50rem;
+  height: 65rem;
+  overflow-y: scroll;
   margin: 0 auto;
 }
 
-.artist-container {
+.result-container {
   width: 100%;
   margin-top: 2%;
   margin-bottom: 2%;
 }
 
-.artist-container:after {
+.result-container:after {
   content: "";
   display: block;
   height: 0;
   clear: both;
 }
 
-.image-container {
+.image {
   float: left;
+  width: 20%;
+  height: 10rem;
   overflow: auto;
 }
 
 .text-container {
   float: right;
-  width: 50%;
+  width: 80%;
   display: inline-block;
 }
 /*# sourceMappingURL=index.css.map */

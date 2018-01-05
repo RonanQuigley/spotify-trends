@@ -1,7 +1,7 @@
 $main-background-colour : rgba(193, 249, 253, 0.253);
 $font-size-large : 8rem;
 $font-size-medium : 3rem;
-$font-size-small : 2.5rem;
+$font-size-small : 2rem;
 
 @mixin clearfix {
     content: "";
@@ -29,7 +29,7 @@ h1,h2,h3,h4,h5,ul,li,p{
 }
 
 h1{
-    font-size: $font-size-large;
+    font-size: $font-size-medium;
     text-align: center;
     margin: 2%;
 }
@@ -48,11 +48,10 @@ a{
 
 li{
     font-size: $font-size-small;
+    list-style-type: none;
 }
 
 img{
-    width : 100px;
-    height : 100px;
     object-fit: cover;
 }
 
@@ -61,28 +60,36 @@ img{
     margin: 0 auto;
 }
 
-#top-artists{
+.results-container{
     width : 50rem;
-    margin : 0 auto;
+    height: 65rem;
+    overflow-y: scroll;
+    margin : 0 auto;    
 }
 
-    .artist-container{
-        width: 100%;  
-        margin-top : 2%;
-        margin-bottom : 2%;
-        &:after{
-            @include clearfix;
-        }      
-    }
+.result-container{
+    width: 100%;  
+    margin-top : 2%;
+    margin-bottom : 2%;        
+    &:after{
+        @include clearfix;
+    }      
+}
 
-        .image-container{
-           float : left;
-           overflow: auto;           
+#top-artists-container{
+    
+}
+
+        .image{
+            float : left;
+            width : 20%;
+            height: 10rem;        
+            overflow: auto;           
         }
 
         .text-container{
             float : right;
-            width : 50%;
+            width : 80%;
             display: inline-block;            
         }
 

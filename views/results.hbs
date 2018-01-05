@@ -1,37 +1,47 @@
 <p>This is a results page</p>
 
-{{#if Spotify.topArtists}}
-    <div id="top-artists">        
-        {{#each Spotify.topArtists}}
-            <div id='artist-{{@index}}' class="artist-container">
-                <img class="image-container" src={{this.image}}>
-                <div class="text-container">
-                    <ul>
-                        <li>{{this.name}}</li>
-                        <li>{{this.popularity}}</li>
-                        <li>{{this.uri}}</li>
-                        <li>{{this.genres}}</li>
-                    </ul>                                                                       
-                </div>                
-            </div>    
-        {{/each}}    
+{{#if Spotify.topArtists}}  
+    <div id="top-artists-container">
+        <h1>Top Artists</h1>
+        <div class="results-container">
+            {{#each Spotify.topArtists}}
+                <div id='artist-{{@index}}' class="result-container">
+                    <img class="image" src={{this.image}}>
+                    <div class="text-container">
+                        <ul>
+                            <li>{{this.name}}</li>
+                            <li>popularity : {{this.popularity}}</li>
+                            <li>{{this.uri}}</li>
+                            <li>{{this.genres}}</li>
+                        </ul>                                                                       
+                    </div>                
+                </div>    
+            {{/each}}    
+        </div>
     </div>
+
 {{/if}}
-<!-- 
-{{#if Spotify.topSongs}}    
-    <div id="top-songs">
-        <ul>
+
+{{#if Spotify.topSongs}}
+    <div id="top-songs-container">
+        <h1>Top Songs</h1>
+        <div class="results-container">
             {{#each Spotify.topSongs}}
-                <img src={{this.image}}>
-                {{this.name}}
-                {{this.popularity}}
-                {{this.uri}}
-                {{this.image}}
-            {{/each}}
-        </ul>
-    </div>    
+                <div id='song-{{@index}}' class="result-container">
+                    <img class="image" src={{this.image}}>
+                    <div class="text-container">
+                        <ul>
+                            <li>{{this.name}}</li>
+                            <li>popularity : {{this.popularity}}</li>
+                            <li>{{this.genres}}</li>
+                        </ul>                                                                       
+                    </div>                
+                </div>    
+            {{/each}}    
+        </div>
+    </div>      
 {{/if}}
--->
+
 <script>
     if (window.location.href.indexOf('?') > -1) {
         (function parseQueryString() {

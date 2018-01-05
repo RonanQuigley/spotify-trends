@@ -34,7 +34,7 @@ var results = require('./results');
 var appTitle = 'Spotify Trends';
 
 var numOfTopArtistsResults = 50; // max of 50
-var numOfTopSongsResults = 5; // max of 50
+var numOfTopSongsResults = 50; // max of 50
 var topSongsOffset = 0; // results offset
 var topArtistsOffset = 0; // results offset
 
