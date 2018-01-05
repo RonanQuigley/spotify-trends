@@ -32,8 +32,8 @@ var hbs = expressHandlebars.create({
   partialsDir : 'views/partials'
 });
 var utilities = require('./utilities');
-var spotify = require('./spotify');
-var timeRange = spotify.timeRange;
+var spotifyApi = require('./spotify-api');
+var timeRange = spotifyApi.timeRange;
 var results = require('./results');
 
 var appTitle = 'Spotify Trends';
@@ -125,28 +125,28 @@ app.get('/results', (req,response) => {
   var accessToken = req.query ? 
   req.query.access_token : req.headers.access_token;
   if(accessToken){
-    var storedResults = {}; 
+    var data = results.initResultsObj(); 
     var resultsSize = 2;  
     var resultsCount = 0;
     // callbacks for requesting spotify api data 
-    spotify.getTopSongs(accessToken, timeRange.SHORT, 
+    spotifyApi.getTopSongs(accessToken, timeRange.SHORT, 
       numOfTopSongsResults, topSongsOffset, storeTopSongs);
-    spotify.getTopArtists(accessToken, timeRange.SHORT, 
+    spotifyApi.getTopArtists(accessToken, timeRange.SHORT, 
       numOfTopArtistsResults, topArtistsOffset, storeTopArtists);
     function storeTopSongs(topSongs){
-      storedResults.topSongs = topSongs;            
+      data.topSongs = topSongs;            
       updateRenderPageStatus();
     }
     function storeTopArtists(topArtists){
-      storedResults.topArtists = topArtists;
+      data.topArtists = data.getAllArtists(topArtists);
       updateRenderPageStatus();
     }    
     function updateRenderPageStatus(){
       if(resultsCount + 1 === resultsSize){
-        if(!utilities.isObjectEmpty(storedResults)){
-          debug('stored results is of type: ' + typeof storedResults);
-          var topArtists = results.getAllArtists(storedResults.topArtists);
-          var topSongs = results.getAllSongs(storedResults.topSongs);
+        if(!utilities.isObjectEmpty(data)){
+          debug('stored results is of type: ' + typeof data);
+          var topArtists = results.getAllArtists(data.topArtists);
+          var topSongs = results.getAllSongs(data.topSongs);
           debug(topArtists);
           debug(topSongs);
           response.render('results', {

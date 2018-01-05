@@ -1,5 +1,15 @@
 module.exports = {
-    getAllArtists: function(obj) {
+    initResultsObj : function(){
+      return{
+        topSongsShort : null, 
+        topSongsMed : null, 
+        topSongsAllTime : null, 
+        topArtistsShort : null, 
+        topArtistsMed : null, 
+        topArtistsAllTime : null
+      }
+    },
+    getRelevantArtistsData: function(obj) {
       // Object.keys(obj).forEach(function(key) {
       //     console.log(key, obj[key]);
       // });
@@ -7,7 +17,7 @@ module.exports = {
       for(let key in obj) {
           if (obj.hasOwnProperty(key)) {
               var currentObj = obj[key];
-              var currentArtist = this._getRelevantArtistData(currentObj);
+              var currentArtist = this._processArtistData(currentObj);
               artists.push(currentArtist);
           }
           else{
@@ -16,12 +26,12 @@ module.exports = {
       }
       return artists; 
     },
-    getAllSongs : function(obj){
+    getRelevantSongsData : function(obj){
       var songs = [];    
       for(let key in obj) {
           if (obj.hasOwnProperty(key)) {
               var currentObj = obj[key];
-              var currentSong = this._getRelevantSongData(currentObj);
+              var currentSong = this._processSongData(currentObj);
               songs.push(currentSong);
           }
           else{
@@ -30,8 +40,7 @@ module.exports = {
       }
       return songs; 
     },
-    calculateTopGenres: function() {},
-    _getRelevantSongData : function(obj){
+    _processSongData : function(obj){
       return {
         name : obj.name ? obj.name : null,
         uri : obj.uri ? obj.uri : null,    
@@ -40,7 +49,7 @@ module.exports = {
           this._getCorrectImageUrl(obj.album.images) : null) : null // 640 x 640 image
         }
     },
-    _getRelevantArtistData : function(obj){
+    _processArtistData : function(obj){
       return {
           name : obj.name ? obj.name : null,
           popularity : obj.popularity ? obj.popularity : null,
@@ -73,5 +82,7 @@ module.exports = {
       // just return the first genre for now
       return genres[0];
     },
+    calculateTopGenres: function() {},
+
   };
   

@@ -58,5 +58,5 @@ module.exports = {
         throw "" + res.statusCode + ": " + res.statusMessage;
       }
     });
-  }
+  }  
 };
