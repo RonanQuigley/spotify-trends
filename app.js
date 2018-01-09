@@ -33,14 +33,13 @@ var hbs = expressHandlebars.create({
 });
 var utilities = require('./utilities');
 var spotifyApi = require('./spotify-api');
-var timeRange = spotifyApi.timeRange;
 var results = require('./results');
 
 var appTitle = 'Spotify Trends';
 
 var numOfTopArtistsResults = 50; // max of 50
 var numOfTopSongsResults = 50; // max of 50
-var topSongsOffset = 0; // results offset
+var topTracksOffset = 0; // results offset
 var topArtistsOffset = 0; // results offset
 
 app.engine("hbs", hbs.engine);
@@ -125,34 +124,44 @@ app.get('/results', (req,response) => {
   var accessToken = req.query ? 
   req.query.access_token : req.headers.access_token;
   if(accessToken){
-    var data = results.initResultsObj(); 
-    var resultsSize = 2;  
+    var spotifyResults = results.initResultsObj(); 
+    var resultsSize = 1;  
     var resultsCount = 0;
     // callbacks for requesting spotify api data 
-    spotifyApi.getTopSongs(accessToken, timeRange.SHORT, 
-      numOfTopSongsResults, topSongsOffset, storeTopSongs);
-    spotifyApi.getTopArtists(accessToken, timeRange.SHORT, 
-      numOfTopArtistsResults, topArtistsOffset, storeTopArtists);
-    function storeTopSongs(topSongs){
-      data.topSongs = topSongs;            
+    spotifyApi.getTopArtists(accessToken, numOfTopArtistsResults, topArtistsOffset, storeTopArtists);
+    // spotifyApi.getTopTracks(accessToken, numOfTopSongsResults, topTracksOffset, storeTopTracks);
+    function storeTopTracks(topTracks){
+      spotifyResults.topTracks.fourWeeks = topTracks.fourWeeks;
+      spotifyResults.topTracks.sixMonths = topTracks.sixMonths;
+      spotifyResults.topTracks.allTime = topTracks.allTime;            
       updateRenderPageStatus();
     }
     function storeTopArtists(topArtists){
-      data.topArtists = data.getAllArtists(topArtists);
+      spotifyResults.topArtists.fourWeeks = topArtists.fourWeeks;
+      spotifyResults.topArtists.sixMonths = topArtists.sixMonths;
+      spotifyResults.topArtists.allTime = topArtists.allTime;    
       updateRenderPageStatus();
     }    
     function updateRenderPageStatus(){
       if(resultsCount + 1 === resultsSize){
-        if(!utilities.isObjectEmpty(data)){
-          debug('stored results is of type: ' + typeof data);
-          var topArtists = results.getAllArtists(data.topArtists);
-          var topSongs = results.getAllSongs(data.topSongs);
-          debug(topArtists);
-          debug(topSongs);
+        if(!utilities.isObjectEmpty(spotifyResults)){
+          debug('stored results is of type: ' + typeof spotifyResults);
+          // var topArtists = results.getAllArtists(data.topArtists);          
+          var topArtistsFourWeeks = results.getRelevantArtistsData(spotifyResults.topArtists.fourWeeks);
+          var topArtistsSixMonths = results.getRelevantArtistsData(spotifyResults.topArtists.sixMonths);
+          var topArtistsAllTime = results.getRelevantArtistsData(spotifyResults.topArtists.allTime);
+          var topTracksFourWeeks = results.getRelevantTracksData(spotifyResults.topTracks.fourWeeks);
+          var topTracksSixMonths = results.getRelevantTracksData(spotifyResults.topTracks.sixMonths);
+          var topTracksAllTime = results.getRelevantTracksData(spotifyResults.topTracks.allTime);
+          // debug(topArtists);
           response.render('results', {
             Spotify : {
-              topArtists : topArtists,
-              topSongs : topSongs
+              topArtistsFourWeeks : topArtistsFourWeeks,
+              topArtistsSixMonths : topArtistsSixMonths,
+              topArtistsAllTime : topArtistsAllTime,
+              topTracksFourWeeks : topTracksFourWeeks,
+              topTracksSixMonths : topTracksSixMonths,
+              topTracksAllTime : topTracksAllTime
             }
           });
         }
@@ -207,6 +216,7 @@ app.get("/refresh", (req, res) => {
     }
   });
 });
+
 
 app.get("/", (req, res) => {
   res.render("index", {

@@ -81,11 +81,11 @@ img {
 
 #top-artists-container {
   float: left;
-  margin-left: 20%;
+  margin-left: 3%;
 }
 
 #top-songs-container {
-  float: right;
-  margin-right: 20%;
+  float: left;
+  margin-right: 3%;
 }
 /*# sourceMappingURL=results.css.map */

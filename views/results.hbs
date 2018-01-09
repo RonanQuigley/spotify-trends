@@ -2,20 +2,51 @@
 
 <p>This is a results page</p>
 
-{{#if Spotify.topArtists}}  
+{{#if Spotify.topArtistsFourWeeks}}  
     <div id="top-artists-container" class="spotify-results">
-        <h1>Top Artists</h1>
-        {{> spotify-results obj=Spotify.topArtists }}
+        <h1>Top Artists - Four Weeks</h1>
+        {{> spotify-results obj=Spotify.topArtistsFourWeeks }}
+    </div>
+{{/if}}
+
+{{#if Spotify.topArtistsSixMonths}}  
+    <div id="top-artists-container" class="spotify-results">
+        <h1>Top Artists - Six Months</h1>
+        {{> spotify-results obj=Spotify.topArtistsSixMonths }}
+    </div>
+{{/if}}
+
+{{#if Spotify.topArtistsAllTime}}  
+    <div id="top-artists-container" class="spotify-results">
+        <h1>Top Artists - All Time</h1>
+        {{> spotify-results obj=Spotify.topArtistsAllTime }}
     </div>
 {{/if}}
 
 
-{{#if Spotify.topSongs}}
+{{#if Spotify.topTracksFourWeeks}}
     <div id="top-songs-container" class="spotify-results">
-        <h1>Top Songs</h1>
-        {{> spotify-results obj=Spotify.topSongs }}
+        <h1>Top Songs - Four Weeks</h1> 
+        {{> spotify-results obj=Spotify.topTracksFourWeeks }}
     </div>      
 {{/if}}
+
+{{#if Spotify.topTracksSixMonths}}
+    <div id="top-songs-container" class="spotify-results">
+        <h1>Top Songs - Six Months</h1>
+        {{> spotify-results obj=Spotify.topTracksSixMonths }}
+    </div>      
+{{/if}}
+
+
+{{#if Spotify.topTracksAllTime}}
+    <div id="top-songs-container" class="spotify-results">
+        <h1>Top Songs - All Time</h1>
+        {{> spotify-results obj=Spotify.topTracksAllTime }}
+    </div>      
+{{/if}}
+
+
 
 <script>
     if (window.location.href.indexOf('?') > -1) {

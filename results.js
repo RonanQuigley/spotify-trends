@@ -1,12 +1,18 @@
+var debug = require('debug')
+
 module.exports = {
     initResultsObj : function(){
       return{
-        topSongsShort : null, 
-        topSongsMed : null, 
-        topSongsAllTime : null, 
-        topArtistsShort : null, 
-        topArtistsMed : null, 
-        topArtistsAllTime : null
+        topTracks : {
+          fourWeeks : null, 
+          sixMonths : null, 
+          allTime : null, 
+        },
+        topArtists : {
+          fourWeeks : null, 
+          sixMonths : null, 
+          allTime : null
+        }
       }
     },
     getRelevantArtistsData: function(obj) {
@@ -17,8 +23,8 @@ module.exports = {
       for(let key in obj) {
           if (obj.hasOwnProperty(key)) {
               var currentObj = obj[key];
-              var currentArtist = this._processArtistData(currentObj);
-              artists.push(currentArtist);
+              var currentTracks = this._processArtistData(currentObj);
+              artists.push(currentTracks);
           }
           else{
               console.logerror('missing artist data');
@@ -26,21 +32,31 @@ module.exports = {
       }
       return artists; 
     },
-    getRelevantSongsData : function(obj){
-      var songs = [];    
+    getRelevantTracksData : function(obj){  
+      var tracks = [];      
       for(let key in obj) {
           if (obj.hasOwnProperty(key)) {
               var currentObj = obj[key];
-              var currentSong = this._processSongData(currentObj);
-              songs.push(currentSong);
+              var currentTracks = this._processTrackData(currentObj);
+              tracks.push(currentTracks);
           }
           else{
-              console.logerror('missing songs data');
+              console.logerror('missing artist data');
           }
-      }
-      return songs; 
+      }  
+      // var array = Object.values(obj);
+      // for(let i = 0; i < array.length; i++){
+      //   var subtracks = {};
+      //   for(let key in array[i]){          
+      //     var currentTrackData = array[i][key];
+      //     var currentTrackProcessedData = this._processTrackData(currentTrackData); 
+      //     Object.assign(subtracks, currentTrackProcessedData);       
+      //   }
+      //   tracks.push(subtracks);
+      // }
+      return tracks;
     },
-    _processSongData : function(obj){
+    _processTrackData : function(obj){
       return {
         name : obj.name ? obj.name : null,
         uri : obj.uri ? obj.uri : null,    

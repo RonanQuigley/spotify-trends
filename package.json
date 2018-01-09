@@ -24,5 +24,13 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RonanQuigley/spotify-trends.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RonanQuigley/spotify-trends/issues"
+  },
+  "homepage": "https://github.com/RonanQuigley/spotify-trends#readme",
   "description": ""
 }
