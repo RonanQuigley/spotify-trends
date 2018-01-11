@@ -125,11 +125,13 @@ app.get('/results', (req,response) => {
   req.query.access_token : req.headers.access_token;
   if(accessToken){
     var spotifyResults = results.initResultsObj(); 
-    var resultsSize = 1;  
+    // IF YOU CHANGE THE RESULTS SIZE WHEN TESTING YOU MAY GET 
+    // A 'CAN'T SET HEADERS AFTER THEY ARE SENT TO THE CLIENT' ERROR 
+    var resultsSize = 2; 
     var resultsCount = 0;
     // callbacks for requesting spotify api data 
     spotifyApi.getTopArtists(accessToken, numOfTopArtistsResults, topArtistsOffset, storeTopArtists);
-    // spotifyApi.getTopTracks(accessToken, numOfTopSongsResults, topTracksOffset, storeTopTracks);
+    spotifyApi.getTopTracks(accessToken, numOfTopSongsResults, topTracksOffset, storeTopTracks);
     function storeTopTracks(topTracks){
       spotifyResults.topTracks.fourWeeks = topTracks.fourWeeks;
       spotifyResults.topTracks.sixMonths = topTracks.sixMonths;
