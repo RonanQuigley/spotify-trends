@@ -1,28 +1,29 @@
 // third-party modules
-var dotenv = require('dotenv').config();
-var express = require("express"); // Express web server framework
-var request = require("request"); // "Request" library
-var morgan = require("morgan");
-var reload = require("reload");
-var debug = require("debug")("expressdebug:server");
+const dotenv = require('dotenv').config();
+const express = require("express"); // Express web server framework
+const request = require("request"); // "Request" library
+const morgan = require("morgan");
+const reload = require("reload");
+const debug = require("debug")("expressdebug:server");
 
 // program modules
-var utilities = require('./utilities');
-var spotifyApi = require('./spotify-api');
-var results = require('./results');
-var hbs = require('./handlebars');
+const utilities = require('./lib/utilities');
+const spotifyApi = require('./lib/spotify-api');
+const spotifyResults = require('./lib/spotify-results');
+const hbs = require('./lib/handlebars');
+const resultsRouting = require('./lib/routing/results');
 
 // globals
-var publicDir = __dirname + "/public";
-var port = 9999;
-var clientID = process.env.CLIENT_ID; // Your client id
-var clientSecret = process.env.CLIENT_SECRET ; // Your secret
-var headerType = spotifyApi.headerType;
-var appTitle = 'Spotify Trends';
-var numOfTopArtistsResults = 50; // max of 50
-var numOfTopSongsResults = 50; // max of 50
-var topTracksOffset = 0; // results offset
-var topArtistsOffset = 0; // results offset
+const publicDir = __dirname + "/public";
+const port = 9999;
+const clientID = process.env.CLIENT_ID; // Your client id
+const clientSecret = process.env.CLIENT_SECRET ; // Your secret
+const headerType = spotifyApi.headerType;
+const appTitle = 'Spotify Trends';
+const numOfTopArtistsResults = 50; // max of 50
+const numOfTopSongsResults = 50; // max of 50
+const topTracksOffset = 0; // results offset
+const topArtistsOffset = 0; // results offset
 
 var app = (function initExpressApp(){
   let app = express();
@@ -32,107 +33,6 @@ var app = (function initExpressApp(){
   app.use(express.static(__dirname + "/views"));
   return app; 
 })();
-
-function getTokensFromClient(req, res, next){
-  debug("querystring is: " + req.query);
-  let accessToken = req.query ? req.query.access_token : req.headers.access_token;
-  if(!accessToken) throw 'no valid access token';
-  res.locals.accessToken = accessToken
-  next();
-}
-
-function requestSpotifyData(req, res, next){
-  let spotifyResults = results.createResultsObject(); 
-  // IF YOU CHANGE THE RESULTS SIZE WHEN TESTING YOU MAY GET 
-  // A 'CAN'T SET HEADERS AFTER THEY ARE SENT TO THE CLIENT' ERROR 
-  const resultsSize = 2; // increase this based on the number of requests you are making
-  let resultsCount = 0; 
-  let accessToken = res.locals.accessToken;    
-  let requestsCompleted = () => {
-    return ++resultsCount === resultsSize; 
-  }
-  let callNextMiddleware = () => {
-    res.locals.spotifyResults = spotifyResults;
-    next()
-  }
-  spotifyApi.getTopArtists(accessToken, numOfTopArtistsResults, topArtistsOffset, (topArtistsResults) => {
-    spotifyResults.topArtists.fourWeeks = topArtistsResults.fourWeeks;
-    spotifyResults.topArtists.sixMonths = topArtistsResults.sixMonths;
-    spotifyResults.topArtists.allTime = topArtistsResults.allTime;
-    if(requestsCompleted()) callNextMiddleware();
-  });
-  spotifyApi.getTopTracks(accessToken, numOfTopSongsResults, topTracksOffset, (topTracksResults) => {
-    spotifyResults.topTracks.fourWeeks = topTracksResults.fourWeeks;
-    spotifyResults.topTracks.sixMonths = topTracksResults.sixMonths;
-    spotifyResults.topTracks.allTime = topTracksResults.allTime;
-    if(requestsCompleted()) callNextMiddleware();
-  });
-}
-
-function setupResultsPage(req, res, next){ 
-  let spotifyResults = res.locals.spotifyResults; 
-  if(utilities.isObjectEmpty(spotifyResults)) throw 'spotifyResults object is undefined';
-  debug('stored results is of type: ' + typeof spotifyResults);         
-  res.locals.finalResults = {
-    topArtistsFourWeeks : results.getRelevantArtistsData(spotifyResults.topArtists.fourWeeks),
-    topArtistsSixMonths : results.getRelevantArtistsData(spotifyResults.topArtists.sixMonths),
-    topArtistsAllTime : results.getRelevantArtistsData(spotifyResults.topArtists.allTime),
-    topTracksFourWeeks : results.getRelevantTracksData(spotifyResults.topTracks.fourWeeks),
-    topTracksSixMonths : results.getRelevantTracksData(spotifyResults.topTracks.sixMonths),
-    topTracksAllTime : results.getRelevantTracksData(spotifyResults.topTracks.allTime)
-  }
-  next();
-}
-
-function redirectToErrorPage(){
-  res.redirect(res.redirect(
-    "/#" +
-      utilities.generateQueryString({
-        error: "invalid_token"
-      })
-  ));  
-}
-
-function redirectToResultsPage(accessToken, refreshToken, expiryIn){
-  res.redirect('results?' + utilities.generateQueryString({
-    access_token : accessToken,
-    refresh_token : refreshToken,
-    expiry_in : expiryIn
-  }));
-}
-
-function requestSpotifyTokens(authOptions){
-  request.post(authOptions, function(error, response, body) {
-    if(error) throw error;
-    if (response.statusCode === 200 && body) {      
-      let accessToken = body.access_token;
-      if(!accessToken) throw 'no access token';
-      let refreshToken = body.refresh_token;
-      if(!refreshToken) throw 'no refresh token';
-      let expiryIn = body.expires_in         
-      if(!expiryIn) throw 'no expires in time';
-      redirectToResultsPage(accessToken, refreshToken, expiryIn);
-    } else {        
-      redirectToErrorPage();       
-    }
-  });
-}
-
-function refreshAccessToken(authOptions, callback){
-  request.post(authOptions, (error, response, body) => {
-    if(error) throw error;
-    if(response.statusCode === 200 && body) {      
-      var accessToken = body.access_token;
-      if(!accessToken) throw 'no access token';      
-      var expiryIn = body.expires_in;   
-      if(!expiryIn) throw 'no expires in time';  
-      callback(accessToken, expiryIn);         
-    }
-    else{
-      debug("cannot get refresh token: " + response.statusCode);
-    }
-  });
-}
 
 app.get("/login", function(req, res) {
   // defines the kinds of spotify data that we're looking to access
@@ -149,43 +49,33 @@ app.get("/login", function(req, res) {
 });
 
 // log in successful, spotify authorizes access
-app.get("/callback", function(req, res) {
+app.get("/callback", (req, res) => {
   let authCode = req.query.code; // the authorization code
-  if (authCode) {
-    // make a request for tokens
-    let authOptions = spotifyApi.generateAuthHeader(headerType.LOGIN, authCode, null, null);  
-    requestSpotifyTokens(authOptions);
-  } else {
-    console.error("No auth code received");
-  }
+  if (!authCode) throw 'authCode is undefined';
+  // make a request for tokens
+  let authOptions = spotifyApi.generateAuthHeader(headerType.LOGIN, authCode, null, null);  
+  spotifyApi.requestTokens(authOptions, (obj) => {
+    res.redirect('results?' + utilities.generateQueryString({
+      access_token : obj.accessToken,
+      refresh_token : obj.refreshToken,
+      expiry_in : obj.expiryIn
+    }));
+  });
 });
 
 app.use('/results', [
-  getTokensFromClient, 
-  requestSpotifyData,
-  setupResultsPage
+  resultsRouting.getTokensFromClient, 
+  resultsRouting.requestSpotifyData,
+  resultsRouting.processSpotifyData,
+  resultsRouting.renderResultsPage
 ]);
-
-app.get('/results', (req, res) => {  
-  let finalResults = res.locals.finalResults;
-  res.render('results', {
-    Spotify : {
-      topArtistsFourWeeks : finalResults.topArtistsFourWeeks,
-      topArtistsSixMonths : finalResults.topArtistsSixMonths,
-      topArtistsAllTime : finalResults.topArtistsAllTime,
-      topTracksFourWeeks : finalResults.topTracksFourWeeks,
-      topTracksSixMonths : finalResults.topTracksSixMonths,
-      topTracksAllTime : finalResults.topTracksAllTime
-    }
-  });
-})
 
 app.get("/refresh", (req, res) => {
   // requesting access token from refresh token
   let refresh_token = req.headers.refresh_token ? req.headers.refresh_token : req.query.refresh_token;
   if(!refresh_token) throw 'missing refresh token - check client side naming';
   let authOptions = spotifyApi.generateAuthHeader(headerType.REFRESH, null, null, refresh_token);
-  refreshAccessToken(authOptions, (accessToken, expiryIn) => {
+  spotifyApi.refreshAccessToken(authOptions, (accessToken, expiryIn) => {
     res.send({
       'access_token': accessToken,
       'expiry_in' : expiryIn

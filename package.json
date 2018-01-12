@@ -32,5 +32,8 @@
     "url": "https://github.com/RonanQuigley/spotify-trends/issues"
   },
   "homepage": "https://github.com/RonanQuigley/spotify-trends#readme",
+  "directories": {
+    "lib": "lib"
+  },
   "description": ""
 }
