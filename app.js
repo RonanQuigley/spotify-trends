@@ -43,16 +43,20 @@ function getSpotifyTokens(req, res, next){
 
 function requestSpotifyData(req, res, next){
   let spotifyResults = results.createResultsObject(); 
-    // IF YOU CHANGE THE RESULTS SIZE WHEN TESTING YOU MAY GET 
+  // IF YOU CHANGE THE RESULTS SIZE WHEN TESTING YOU MAY GET 
   // A 'CAN'T SET HEADERS AFTER THEY ARE SENT TO THE CLIENT' ERROR 
-  let resultsSize = 2; 
+  const resultsSize = 2; 
   let resultsCount = 0;
   let accessToken = res.locals.accessToken;  
+  let requestsCompleted = () => {
+    return ++resultsCount === resultsSize; 
+  }
   spotifyApi.getTopArtists(accessToken, numOfTopArtistsResults, topArtistsOffset, (topArtistsResults) => {
     spotifyResults.topArtists.fourWeeks = topArtistsResults.fourWeeks;
     spotifyResults.topArtists.sixMonths = topArtistsResults.sixMonths;
     spotifyResults.topArtists.allTime = topArtistsResults.allTime;
-    if(updateRenderPageStatus(++resultsCount, resultsSize)){
+    if(requestsCompleted()){
+      res.locals.spotifyResults = spotifyResults;
       next()
     }    
   });
@@ -60,18 +64,11 @@ function requestSpotifyData(req, res, next){
     spotifyResults.topTracks.fourWeeks = topTracksResults.fourWeeks;
     spotifyResults.topTracks.sixMonths = topTracksResults.sixMonths;
     spotifyResults.topTracks.allTime = topTracksResults.allTime;
-    if(updateRenderPageStatus(++resultsCount, resultsSize)){
+    if(requestsCompleted()){
       res.locals.spotifyResults = spotifyResults;
-      next();
-    }
+      next()
+    }    
   });
-}
-
-function updateRenderPageStatus(resultsCount, resultsSize){
-  // we can't evaluate the variable using the ! operator as it would return true for 0/1
-  if(resultsCount === undefined) throw 'resultsCount is undefined';
-  if(resultsSize === undefined) throw 'resultsSize is undefined';
-  return resultsCount === resultsSize;
 }
 
 function setupResultsPage(req, res, next){ 
