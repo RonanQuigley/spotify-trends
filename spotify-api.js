@@ -2,6 +2,9 @@ var queryString = require("querystring");
 var debug = require("debug")("spotifydebug:");
 var request = require("request");
 var util = require("util");
+var clientID = process.env.CLIENT_ID; // Your client id
+var clientSecret = process.env.CLIENT_SECRET ; // Your secret
+var port = process.env.PORT;
 module.exports = {
   _timeRange: {
     SHORT: "short_term", // last 4 weeks
@@ -12,12 +15,52 @@ module.exports = {
     TRACKS : 'tracks', 
     ARTISTS : 'artists'
   },
-  generateAuthHeader: function(url, accessToken) {
-    return {
-      url: url,
-      headers: { Authorization: "Bearer " + accessToken },
-      json: true
-    };
+  headerType : {
+    LOGIN : 'generate-tokens',
+    DATAREQ : 'request-spotify-data',
+    REFRESH : 'refresh-access-token'
+  },
+  redirectURI : "http://localhost:" + port + "/callback", // Your redirect uri
+  generateAuthHeader: function(headerType, authCode, url, token) {    
+    if(typeof headerType !== "string") throw 'header type is wrong; did you pass the object by mistake?'
+    switch(headerType){
+      case(this.headerType.DATAREQ) :
+        return {
+          url: url,
+          headers: { Authorization: "Bearer " + token },
+          json: true
+        };
+      case(this.headerType.REFRESH) :
+        return {
+          url: 'https://accounts.spotify.com/api/token',
+          headers: {
+            Authorization:
+              "Basic " +
+              new Buffer(clientID + ":" + clientSecret).toString("base64")
+          },
+          form: {
+            grant_type: 'refresh_token',
+            refresh_token: token
+          },
+          json: true
+        };
+      case(this.headerType.LOGIN) : 
+        return {
+          url: 'https://accounts.spotify.com/api/token',
+          form: {
+            code: authCode, // the authorizaton code string
+            redirect_uri: this.redirectURI, // the callback uri
+            grant_type: "authorization_code"
+          },
+          headers: {
+            Authorization:
+              "Basic " +
+              new Buffer(clientID + ":" + clientSecret).toString("base64")
+          },
+          json: true
+        }
+    }
+
   },
   generateQueryString: function(time, limit, offset) {
     if (!time) time = timeRange.SHORT;
@@ -70,19 +113,20 @@ module.exports = {
         break;
     }
   },
-  _getRequest(accessToken, limit, offset, callback, type) {   
-    if(type){
+  _getRequest(accessToken, limit, offset, callback, requestedDataType) {   
+    if(requestedDataType){
       var createRequest = function(i){
-        var currentTimeRange = Object.values(this._timeRange)[i];
+        var currentTimeRange = Object.values(this._timeRange)[i]; 
         var queryString = "?" + this.generateQueryString(currentTimeRange, limit, offset);
-        var header = this.generateAuthHeader("https://api.spotify.com/v1/me/top/" + type + "" + queryString, accessToken);
+        var header = this.generateAuthHeader(this.headerType.DATAREQ, null,  
+          "https://api.spotify.com/v1/me/top/" + requestedDataType + "" + queryString, accessToken);
         debug("finalised header: " + header.headers); 
         request.get(header, (err, res, body) => {
           if (err) throw err;
           if (res.statusCode === 200) {
             body ? callback(currentTimeRange, body.items) : console.error("songs are undefined");
           } else {
-            throw "" + res.statusCode + ": " + res.statusMessage;
+            throw "" + JSON.stringify(body);
           }
         });
       }.bind(this);

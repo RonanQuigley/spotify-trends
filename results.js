@@ -1,7 +1,7 @@
 var debug = require('debug')
 
 module.exports = {
-    initResultsObj : function(){
+    createResultsObject : function(){
       return{
         topTracks : {
           fourWeeks : null, 

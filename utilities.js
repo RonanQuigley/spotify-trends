@@ -1,3 +1,4 @@
+var queryString = require("querystring"); 
 module.exports = {
   isObjectEmpty: function(obj) {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -6,5 +7,8 @@ module.exports = {
     Object.keys(parentObject).forEach(value => {
       parentObject[value] = JSON.stringify(parentObject[value]);
     });
+  },
+  generateQueryString : function(obj){
+    return queryString.stringify(obj);
   }
 };
