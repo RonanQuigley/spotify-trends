@@ -9,7 +9,6 @@ const debug = require("debug")("expressdebug:server");
 // program modules
 const utilities = require('./lib/utilities');
 const spotifyApi = require('./lib/spotify-api');
-const spotifyResults = require('./lib/spotify-results');
 const hbs = require('./lib/handlebars');
 const resultsRouting = require('./lib/routing/results');
 
@@ -20,10 +19,6 @@ const clientID = process.env.CLIENT_ID; // Your client id
 const clientSecret = process.env.CLIENT_SECRET ; // Your secret
 const headerType = spotifyApi.headerType;
 const appTitle = 'Spotify Trends';
-const numOfTopArtistsResults = 50; // max of 50
-const numOfTopSongsResults = 50; // max of 50
-const topTracksOffset = 0; // results offset
-const topArtistsOffset = 0; // results offset
 
 var app = (function initExpressApp(){
   let app = express();
