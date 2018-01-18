@@ -1,10 +1,15 @@
 {{#each obj as | Spotify |}}
-    <div id="top-{{formatKey @key}}-container" class="spotify-results">
+    {{!-- type is in the container object for a specific type of results i.e. topArtists --}}
+    {{#blockParams (formatType @key) as |type|}}
+    {{#blockParams (formatStringForDiv type) as |formattedType|}}
+    <div id="{{formattedType}}-container" class="spotify-results">
         {{#each this}}
-        <div class="results-container">
-            <h1>{{formatHeader @../key}} - {{formatKey @key}}</h1>
-                {{#each this}}
-                    <div id='artist-{{offsetIndexByOne @index}}' class="result-container">
+        <div>
+            {{!-- formatDuration is for the time period of results i.e. sixMonths --}}
+            <h1>{{type}} - {{formatDuration @key}}</h1>
+            <div class="results-container">
+                {{#each this}}                        
+                    <div id='{{formattedType}}-{{offsetIndexByOne @index}}' class="result-container">
                         <a class="spotify-uri" href={{this.uri}}>
                             <img class="image" src={{this.image}}>    
                         </a>                
@@ -18,11 +23,10 @@
                         </div>                
                     </div>                  
                 {{/each}}
-        </div> 
+            </div> 
+        </div>
         {{/each}}
     </div>
+    {{/blockParams}}
+    {{/blockParams}}
 {{/each}}
-
-<!-- 
-
--->
