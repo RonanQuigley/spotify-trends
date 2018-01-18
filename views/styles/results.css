@@ -42,9 +42,16 @@ img {
   object-fit: cover;
 }
 
-.results-container {
+.results-container-outer {
   width: 50rem;
   height: 65rem;
+  float: left;
+  margin: 0 2%;
+}
+
+.results-container-inner {
+  height: 94%;
+  width: 100%;
   overflow-y: scroll;
   margin: 0 auto;
 }
@@ -76,16 +83,19 @@ img {
 }
 
 .spotify-results {
-  width: 30%;
+  margin: 2% 0;
+  width: 100%;
 }
 
-#top-artists-container {
-  float: left;
-  margin-left: 3%;
+.spotify-results:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
 }
 
-#top-songs-container {
-  float: left;
-  margin-right: 3%;
+.results-header {
+  height: 6%;
+  margin: 0;
 }
 /*# sourceMappingURL=results.css.map */

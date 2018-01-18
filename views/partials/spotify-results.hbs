@@ -4,10 +4,10 @@
     {{#blockParams (formatStringForDiv type) as |formattedType|}}
     <div id="{{formattedType}}-container" class="spotify-results">
         {{#each this}}
-        <div>
+        <div class="results-container-outer">
             {{!-- formatDuration is for the time period of results i.e. sixMonths --}}
-            <h1>{{type}} - {{formatDuration @key}}</h1>
-            <div class="results-container">
+            <h1 class="results-header">{{type}} - {{formatDuration @key}}</h1>
+            <div class="results-container-inner">
                 {{#each this}}                        
                     <div id='{{formattedType}}-{{offsetIndexByOne @index}}' class="result-container">
                         <a class="spotify-uri" href={{this.uri}}>

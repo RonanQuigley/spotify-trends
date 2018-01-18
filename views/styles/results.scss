@@ -1,8 +1,15 @@
 @import 'template';
 
-.results-container{
+.results-container-outer{
     width : 50rem;
     height: 65rem;
+    float : left; 
+    margin: 0 2%;
+}
+
+.results-container-inner{
+    height: 94%; 
+    width : 100%; 
     overflow-y: scroll;
     margin : 0 auto;    
 }
@@ -14,10 +21,6 @@
     &:after{
         @include clearfix;
     }      
-}
-
-.spotify-uri{
-    
 }
 
 .image{
@@ -34,15 +37,13 @@
 }
 
 .spotify-results{
-    width: 30%;    
+    margin: 2% 0;
+    width: 100%;
+    &:after{
+        @include clearfix;
+    }      
 }
-
-#top-artists-container{
-    float : left;
-    margin-left: 3%;    
-}
-
-#top-songs-container{
-    float : left;
-    margin-right: 3%;
+.results-header{
+    height : 6%;
+    margin: 0;
 }
