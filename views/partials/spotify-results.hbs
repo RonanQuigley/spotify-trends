@@ -1,17 +1,28 @@
-<div class="results-container">
-    {{#each obj}}
-        <div id='artist-{{@index}}' class="result-container">
-            <a class="spotify-uri" href={{this.uri}}>
-                <img class="image" src={{this.image}}>    
-            </a>                
-            <div class="text-container">
-                <ul>
-                    <li>{{this.name}}</li>
-                    <li>popularity : {{this.popularity}}</li>
-                    <li>{{this.genres}}</li>
-                </ul>                       
-                <p>{{offsetIndexByOne @index}}</p>                                                
-            </div>                
-        </div>    
-    {{/each}}    
-</div>
+{{#each obj as | Spotify |}}
+    <div id="top-{{formatKey @key}}-container" class="spotify-results">
+        {{#each this}}
+        <div class="results-container">
+            <h1>{{formatHeader @../key}} - {{formatKey @key}}</h1>
+                {{#each this}}
+                    <div id='artist-{{offsetIndexByOne @index}}' class="result-container">
+                        <a class="spotify-uri" href={{this.uri}}>
+                            <img class="image" src={{this.image}}>    
+                        </a>                
+                        <div class="text-container">
+                            <ul>
+                                <li>{{this.name}}</li>
+                                <li>popularity : {{this.popularity}}</li>
+                                <li>{{this.genres}}</li>
+                            </ul>                       
+                            <p>{{offsetIndexByOne @index}}</p>                                                
+                        </div>                
+                    </div>                  
+                {{/each}}
+        </div> 
+        {{/each}}
+    </div>
+{{/each}}
+
+<!-- 
+
+-->
