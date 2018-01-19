@@ -4,7 +4,7 @@ const express = require("express"); // Express web server framework
 const request = require("request"); // "Request" library
 const morgan = require("morgan");
 const reload = require("reload");
-const debug = require("debug")("expressdebug:server");
+const debug = require("debug")("app:server");
 
 // program modules
 const utilities = require('./lib/utilities');
