@@ -14,7 +14,7 @@ const resultsRouting = require('./lib/routing/results');
 
 // globals
 const publicDir = __dirname + "/public";
-const port = 9999;
+const port = process.env.PORT || 3000;
 const clientID = process.env.CLIENT_ID; // Your client id
 const clientSecret = process.env.CLIENT_SECRET ; // Your secret
 const headerType = spotifyApi.headerType;
