@@ -1,3 +1,5 @@
+var test = require('./test.jsx');
+
 // third-party modules
 const dotenv = require('dotenv').config();
 const express = require("express"); // Express web server framework
@@ -76,6 +78,12 @@ app.get("/refresh", (req, res) => {
     });
   });
 });
+
+app.get('/react', (req, res) => {
+  res.render("react", {
+    React : test
+  })
+})
 
 app.get("/", (req, res) => {
   res.render("index", {
