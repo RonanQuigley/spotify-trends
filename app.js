@@ -13,7 +13,6 @@ const hbs = require('./lib/handlebars');
 const resultsRouting = require('./lib/routing/results');
 
 // globals
-const publicDir = __dirname + "/public";
 const port = process.env.PORT || 3000;
 const clientID = process.env.CLIENT_ID; // Your client id
 const clientSecret = process.env.CLIENT_SECRET ; // Your secret
