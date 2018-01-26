@@ -29,17 +29,22 @@
     "util": "^0.10.3",
     "webpack": "^3.10.0"
   },
+  "config": {
+    "ext" : "js,jsx,css,scss,hbs"
+  },
   "scripts": {
     "copy:views": "mkdirp ./build/views && cp -R ./app/views/. ./build/views",
-    "build:client": "webpack --progress --colors",
+    "build:react-client": "webpack --progress --colors",
     "build:server": "babel ./app/server -d ./build/server --source-maps --watch",
-    "build:react": "babel ./app/react -d ./build/react/ --source-maps --watch",
-    "build:dev": "npm-run-all -p build:server build:client build:react watch:views",
-    "build:start": "npm-run-all -p build:dev start:dev",
-    "watch:views": "nodemon -e js,hbs,css,scss,jsx --watch ./app/views/ --exec npm run copy:views",
-    "watch:build": "nodemon --watch build/",
-    "watch:start": "npm-run-all -p build:dev watch:build",
-    "start:dev": "set DEBUG=* && node build/server/app.js"
+    "build:react-server": "babel ./app/react -d ./build/react/ --source-maps --watch",
+    "build:dev": "npm-run-all -p build:server build:react-client build:react-server",
+    "set:debug" : "set DEBUG=* node ./build/server/app.js",
+    "set:no-debug" : "node ./build/server/app.js",
+    "watch:views": "nodemon -e %npm_package_config_ext% --watch app/views/ --exec npm run copy:views",
+    "watch:build": "nodemon -e %npm_package_config_ext% --watch build/ npm run set:no-debug",
+    "watch:debug" : "nodemon -e %npm_package_config_ext% --watch build/ npm run set:debug",  
+    "start:watch-debug": "npm-run-all -p build:dev watch:debug",
+    "start:watch-no-debug": "npm-run-all -p build:dev watch:views watch:build"
   },
   "author": "Ronan Quigley",
   "license": "ISC",

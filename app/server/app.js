@@ -9,8 +9,9 @@ import Debug from "debug";
 // program modules
 import utilities from './utilities';
 import spotifyApi from './spotify/spotify-api';
-import hbs from './handlebars';
+import Handlebars from './handlebars';
 import resultsRouting from './routing/results';
+import handlebars from './handlebars';
 
 // globals
 const port = process.env.PORT || 3000;
@@ -18,10 +19,11 @@ const clientID = process.env.CLIENT_ID; // Your client id
 const clientSecret = process.env.CLIENT_SECRET ; // Your secret
 const headerType = spotifyApi.headerType;
 const appTitle = 'Spotify Trends';
-const debug = Debug('app:server')
+const debug = Debug('app:server');
 
 const app = (function initExpressApp(){
   let app = express();
+  let hbs = new Handlebars();
   app.engine("hbs", hbs.getEngine());
   app.set("view engine", "hbs");
   app.set("views", __dirname + "/..//views");

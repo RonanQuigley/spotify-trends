@@ -12,7 +12,12 @@
                 "<node_internals>/**/*.js"
             ],
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\build\\server\\app.js"
+            "program": "${workspaceFolder}\\build\\server\\app.js",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/build/**/*.{js,js.map}" 
+            ],
+            "smartStep": true
         }
     ]
 }
