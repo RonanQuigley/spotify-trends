@@ -2,7 +2,7 @@ const queryString = require("querystring");
 const debug = require("debug")("spotifydebug:");
 const request = require("request");
 const util = require("util");
-const utilities = require("./utilities");
+const utilities = require("../utilities");
 const clientID = process.env.CLIENT_ID; // Your client id
 const clientSecret = process.env.CLIENT_SECRET; // Your secret
 const port = process.env.PORT;
@@ -143,7 +143,7 @@ const SpotifyApi = function(){
       // otherwise, once we're done, pass the results back to the callback  
       ++resultsCount >= maxResults ? callback(results) : results[prop.valueOf()] = tracksFeatures;
     }.bind(callback, results);
-    // process all time, six months and four weeks periods
+    // process all time, six months and four week periods
     for(let tracks in topTracks){
         let ids = getSpotifyIDs(topTracks[tracks]);
         getRequest.call(tracks, accessToken, ids, cb);

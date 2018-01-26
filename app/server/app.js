@@ -1,16 +1,16 @@
 // third-party modules
-const dotenv = require('dotenv').config();
-const express = require("express"); // Express web server framework
-const request = require("request"); // "Request" library
-const morgan = require("morgan");
-const reload = require("reload");
-const debug = require("debug")("app:server");
+import dotenv from 'dotenv/config'
+import express from "express"; // Express web server framework
+import request from "request"; // "Request" library
+import morgan from "morgan";
+import reload from "reload";
+import Debug from "debug";
 
 // program modules
-const utilities = require('./lib/utilities');
-const spotifyApi = require('./lib/spotify-api');
-const hbs = require('./lib/handlebars');
-const resultsRouting = require('./lib/routing/results');
+import utilities from './utilities';
+import spotifyApi from './spotify/spotify-api';
+import hbs from './handlebars';
+import resultsRouting from './routing/results';
 
 // globals
 const port = process.env.PORT || 3000;
@@ -18,13 +18,14 @@ const clientID = process.env.CLIENT_ID; // Your client id
 const clientSecret = process.env.CLIENT_SECRET ; // Your secret
 const headerType = spotifyApi.headerType;
 const appTitle = 'Spotify Trends';
+const debug = Debug('app:server')
 
-var app = (function initExpressApp(){
+const app = (function initExpressApp(){
   let app = express();
   app.engine("hbs", hbs.getEngine());
   app.set("view engine", "hbs");
-  app.set("views", __dirname + "/views");
-  app.use(express.static(__dirname + "/views"));
+  app.set("views", __dirname + "/..//views");
+  app.use(express.static(__dirname + "/..//views"));
   return app; 
 })();
 
@@ -76,10 +77,6 @@ app.get("/refresh", (req, res) => {
     });
   });
 });
-
-app.get('/react', (req, res) => {
-  res.render("react");
-})
 
 app.get("/", (req, res) => {
   res.render("index", {

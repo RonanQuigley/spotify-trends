@@ -2,6 +2,7 @@ var Token = {
     setAccessToken: function(accessToken) {
         localStorage.setItem('access-token', accessToken);
     },    
+    
     getAccessToken : function(){
         return localStorage.getItem('access-token');
     },

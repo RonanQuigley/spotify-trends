@@ -1,14 +1,18 @@
-const spotifyResults = require('../spotify-results');
+import spotifyResults from '..//spotify/spotify-results'; 
+import spotifyApi from '..//spotify/spotify-api';
+import Debug from 'debug';
+import utilities from '../utilities';
+import App from '../../react/react';
+import React from 'react';
+import ReactDOM from 'react-dom/server';
+
 const resultsType = spotifyResults.resultsType;
-const spotifyApi = require('../spotify-api');
 const requestType = spotifyApi.requestType;
-const debug = require('debug')('resultsdebug');
-const utilities = require('../utilities');
 const numOfTopArtistsResults = 50; // max of 50
 const numOfTopSongsResults = 50; // max of 50
 const topTracksOffset = 0; // results offset
-const topArtistsOffset = 0; // results offset
-
+ const topArtistsOffset = 0; // results offset
+const debug = Debug('resultsdebug');
 const Results = function() {};
 
 Results.prototype.getTokensFromClient = function(req, res, next){
@@ -57,15 +61,15 @@ Results.prototype.processSpotifyData = function(req, res, next) {
   if (utilities.isObjectEmpty(results)) throw "spotifyResults object is empty";
   let topArtists = spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS);
   let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
-  spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {
+  spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {        
     res.locals.results = {      
       topArtists : topArtists,
       topTracks : topTracks, 
-      audioFeatures : audioFeatures
     };
     next();
   });
 }
+
 
 Results.prototype.renderResultsPage = function(req, res, next) {
   let finalResults = res.locals.results;
@@ -74,7 +78,7 @@ Results.prototype.renderResultsPage = function(req, res, next) {
       topArtists : finalResults.topArtists,
       topTracks : finalResults.topTracks,
     }, 
-    audioFeatures : finalResults.audioFeatures
+    ReactApp : ReactDOM.renderToString(<App/>)
   });
 }
 

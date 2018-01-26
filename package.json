@@ -1,23 +1,23 @@
 {
   "name": "spotify",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "./build/server/app.js",
   "dependencies": {
-    "babel-runtime": "^6.26.0",
     "cookie-parser": "^1.4.3",
-    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "morgan": "^1.9.0",
+    "nodemon": "^1.14.11",
     "querystring": "^0.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "reload": "^2.2.2",
     "request": "^2.83.0",
-    "webpack": "^3.10.0"
+    "source-map-support": "^0.5.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -26,16 +26,24 @@
     "babel-preset-stage-0": "^6.24.1",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "mkdirp": "^0.5.1",
     "mongodb": "^3.0.1",
     "npm-run-all": "^4.1.2",
-    "util": "^0.10.3"
+    "util": "^0.10.3",
+    "webpack": "^3.10.0"
   },
   "scripts": {
-    "start"        : "npm-run-all --parallel watch:server watch:build",
-    "watch:build"  : "webpack --watch --progress --display-reasons --colors",
-    "watch:server" : "nodemon -e js,css,scss,hbs --ignore views/scripts/bundles"
+    "copy:views": "mkdirp ./build/views && cp -R ./app/views/. ./build/views",
+    "build:client": "webpack --progress --colors",
+    "build:server": "babel ./app/server -d ./build/server --source-maps --watch",
+    "build:react": "babel ./app/react -d ./build/react/ --source-maps --watch",
+    "build:dev": "npm-run-all -p build:server build:client build:react watch:views",
+    "build:start": "npm run build:dev && node build/server/app.js",
+    "watch:views" : "nodemon -e js,hbs,css,scss,jsx --watch ./app/views/ --exec npm run copy:views",
+    "watch:build": "nodemon --watch build/",    
+    "start": "npm-run-all -p build:dev watch:build"
   },
-  "author": "",
+  "author": "Ronan Quigley",
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -44,9 +52,5 @@
   "bugs": {
     "url": "https://github.com/RonanQuigley/spotify-trends/issues"
   },
-  "homepage": "https://github.com/RonanQuigley/spotify-trends#readme",
-  "directories": {
-    "lib": "lib"
-  },
-  "description": ""
+  "homepage": "https://github.com/RonanQuigley/spotify-trends#readme"
 }

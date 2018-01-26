@@ -6,7 +6,12 @@
     {{> spotify-results obj=Spotify}}
 {{/if}}
 
-{{#if audioFeatures}}
+{{#if ReactApp}}
+    <div id="root">{{{ReactApp}}}</div>
+    <script src="scripts/react-bundle.min.js"></script>
+{{/if}}
+
+<!-- {{#if audioFeatures}}
     {{#each audioFeatures}}
         {{#each this}}
                     {{#each this}}
@@ -14,7 +19,7 @@
         {{/each}}    
         {{/each}}    
     {{/each}}
-{{/if}}
+{{/if}} -->
 
 <script>
     if (window.location.href.indexOf('?') > -1) {
