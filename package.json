@@ -38,10 +38,11 @@
     "build:server": "babel ./app/server -d ./build/server --source-maps --watch",
     "build:react": "babel ./app/react -d ./build/react/ --source-maps --watch",
     "build:dev": "npm-run-all -p build:server build:client build:react watch:views",
-    "build:start": "npm run build:dev && node build/server/app.js",
-    "watch:views" : "nodemon -e js,hbs,css,scss,jsx --watch ./app/views/ --exec npm run copy:views",
-    "watch:build": "nodemon --watch build/",    
-    "start": "npm-run-all -p build:dev watch:build"
+    "build:start": "npm-run-all -p build:dev start:dev",
+    "watch:views": "nodemon -e js,hbs,css,scss,jsx --watch ./app/views/ --exec npm run copy:views",
+    "watch:build": "nodemon --watch build/",
+    "watch:start": "npm-run-all -p build:dev watch:build",
+    "start:dev": "set DEBUG=* && node build/server/app.js"
   },
   "author": "Ronan Quigley",
   "license": "ISC",
