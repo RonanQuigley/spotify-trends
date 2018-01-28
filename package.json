@@ -22,6 +22,9 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "dotenv": "^4.0.0",
     "mkdirp": "^0.5.1",
     "mongodb": "^3.0.1",
@@ -29,11 +32,11 @@
     "util": "^0.10.3",
     "webpack": "^3.10.0"
   },
-  "nodemonConfig" : {
-    "verbose" : true
+  "nodemonConfig": {
+    "verbose": true
   },
   "config": {
-    "ext" : "js,jsx,css,scss,hbs"
+    "ext": "js,jsx,css,scss,hbs"
   },
   "scripts": {
     "copy:views": "mkdirp ./build/views && cp -R ./app/views/. ./build/views",
@@ -42,12 +45,12 @@
     "build:react-server": "babel ./app/react -d ./build/react/ --source-maps --watch",
     "build:all": "npm-run-all -p build:server build:react-client build:react-server",
     "nodemon:views-dir": "nodemon -e %npm_package_config_ext% --watch app/views/ --exec npm run copy:views",
-    "nodemon:build-dir:debug" : "nodemon -e %npm_package_config_ext% --watch build/ --exec npm run start:debug", 
+    "nodemon:build-dir:debug": "nodemon -e %npm_package_config_ext% --watch build/ --exec npm run start:debug",
     "nodemon:build-dir:no-debug": "nodemon -e %npm_package_config_ext% --watch build/ --exec npm run start",
     "start:build:watch:debug": "npm-run-all -p build:all nodemon:views-dir nodemon:build-dir:debug",
     "start:build:watch:no-debug": "npm-run-all -p build:all nodemon:views-dir nodemon:build-dir:no-debug",
-    "start:debug" : "set DEBUG=* & npm run start", 
-    "start" : "node build/server/app.js"
+    "start:debug": "set DEBUG=* & npm run start",
+    "start": "node build/server/app.js"
   },
   "author": "Ronan Quigley",
   "license": "ISC",

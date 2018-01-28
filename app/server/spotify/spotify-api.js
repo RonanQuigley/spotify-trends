@@ -141,7 +141,8 @@ const SpotifyApi = function(){
       debug(tracksFeatures);
       // pass the current property name and assign it the audio track features values
       // otherwise, once we're done, pass the results back to the callback  
-      ++resultsCount >= maxResults ? callback(results) : results[prop.valueOf()] = tracksFeatures;
+      results[prop.valueOf()] = tracksFeatures;
+      if(++resultsCount >= maxResults) callback(results)
     }.bind(callback, results);
     // process all time, six months and four week periods
     for(let tracks in topTracks){

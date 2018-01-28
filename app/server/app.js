@@ -1,3 +1,10 @@
+// babel-core 
+import {transform} from 'babel-core';
+transform("code", {
+  presets: ["env", "stage-0"],
+  babelrc: false
+});
+
 // third-party modules
 import dotenv from 'dotenv/config'
 import express from "express"; // Express web server framework
@@ -10,7 +17,7 @@ import Debug from "debug";
 import utilities from './utilities';
 import spotifyApi from './spotify/spotify-api';
 import Handlebars from './handlebars';
-import resultsRouting from './routing/results';
+import ResultsRouting from './routing/results';
 import handlebars from './handlebars';
 
 // globals
@@ -61,10 +68,10 @@ app.get("/callback", (req, res) => {
 });
 
 app.use('/results', [
-  resultsRouting.getTokensFromClient, 
-  resultsRouting.requestSpotifyData,
-  resultsRouting.processSpotifyData,
-  resultsRouting.renderResultsPage
+  ResultsRouting.getTokensFromClient, 
+  ResultsRouting.requestSpotifyData,
+  ResultsRouting.processSpotifyData,
+  ResultsRouting.renderResultsPage
 ]);
 
 app.get("/refresh", (req, res) => {
