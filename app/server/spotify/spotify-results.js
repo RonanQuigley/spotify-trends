@@ -1,75 +1,8 @@
-const debug = require('debug')('spotify-results');
-const SpotifyResults = function(){};
+import Debug from 'debug';
+import { currentId } from 'async_hooks';
+import Tally from './tally';
 
-const resultsType = {
-  ARTISTS : 'artists', 
-  TRACKS : 'tracks'
-}
-
-SpotifyResults.prototype = function(){
-  return {  
-    resultsType,
-    createResultsObject,
-    getRelevantData
-  }
-}();
-
-module.exports = new SpotifyResults();
-
-function createResultsObject(){
-  return{
-    topTracks : {
-      fourWeeks : null, 
-      sixMonths : null, 
-      allTime : null, 
-    },
-    topArtists : {
-      fourWeeks : null, 
-      sixMonths : null, 
-      allTime : null
-    }
-  }
-}
- 
-function getRelevantData(obj, type){
-  // let results = [];  
-  // for(let outerKey in obj) {
-  //   for(let innerKey in obj[outerKey]) {
-  //       if (obj.hasOwnProperty(key)) {
-  //           let currentObj = obj[key];
-  //           let currentData = type === resultsType.ARTISTS ? 
-  //           _processArtistData(currentObj) : _processTrackData(currentObj);
-  //           results.push(currentData);
-  //       }
-  //       else{
-  //           console.logerror('missing artist data');
-  //       }
-  //   }
-  // }
-  // return results; 
-
-	return Object.assign(...Object.keys(obj).map((outerKey) => {
-    // return {[oK] : obj[oK]};	
-    let value = Object.assign(...Object.keys(obj[outerKey]).map((innerKey) => {
-      let currentObj = obj[outerKey][innerKey];
-      let processedObj = type === resultsType.ARTISTS ? 
-      _processArtistData(currentObj) : _processTrackData(currentObj);
-      return {[innerKey] : processedObj};	
-    })); 
-		return {[outerKey] : value}
-	}))
-
-
-  // uses map to access each object value, then an inner map to access each child value. 
-  // this inner child obj is then transformed to create a new object that, once the loop has completed, 
-  // is passed up the return chain to give an array // of object results   
-  // return Object.keys(obj).map((key) => {
-  //   return Object.keys(obj[key]).map((innerKey) => {
-  //     let currentObj = obj[key][innerKey];
-  //     return (type === resultsType.ARTISTS ? _processArtistData(currentObj) : _processTrackData(currentObj));
-  //   });
-  // })
-}
+const debug = Debug()('spotify-results');
 
 function _processTrackData(obj){
   return {
@@ -104,14 +37,58 @@ function _getCorrectImageUrl(images){
 }
 
 function _getGenres(genres){
-  // if(genres.length === 0){
-  //   return genres[0];
-  // }
-  // else{
-  //   // get a random genre 
-  //   var rand = Math.floor(Math.random() * genres.length);
-  //   genres.length[re]
-  // }      
-  // just return the first genre for now
   return genres[0];
 }
+
+class SpotifyResults {
+
+  static resultsType = {
+    ARTISTS : 'artists', 
+    TRACKS : 'tracks',
+    FEATURES : {
+      KEYSIG : 'key signature',    
+    }
+  }
+
+  static createResultsObject(){
+    return{
+      topTracks : {
+        fourWeeks : null, 
+        sixMonths : null, 
+        allTime : null, 
+      },
+      topArtists : {
+        fourWeeks : null, 
+        sixMonths : null, 
+        allTime : null
+      }
+    }
+  }
+   
+  static getRelevantData(obj, type){
+    return Object.assign(...Object.keys(obj).map((outerKey) => {
+      let value = Object.assign(...Object.keys(obj[outerKey]).map((innerKey) => {
+        let currentObj = obj[outerKey][innerKey];
+        let processedObj = null;
+        switch(type){
+          case this.resultsType.ARTISTS :
+            processedObj = _processArtistData(currentObj);
+            return {[innerKey] : processedObj};	
+          case this.resultsType.TRACKS : 
+            processedObj = _processTrackData(currentObj);
+            return {[innerKey] : processedObj};	
+        }
+      })); 
+      return {[outerKey] : value}
+    }))
+  }
+
+  static getStatistics(obj, type){
+    switch(type){
+      case this.resultsType.FEATURES.KEYSIG : 
+        return Tally.tallyObjValue(obj, "key");
+    }    
+  }
+}
+
+export default SpotifyResults;

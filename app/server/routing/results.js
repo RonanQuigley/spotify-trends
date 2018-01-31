@@ -61,7 +61,8 @@ class Results {
     let topArtists = spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS);
     let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
     spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {    
-      let app = <ReactApp audioFeatures={audioFeatures}/>;         
+      let keySignatures = spotifyResults.getStatistics(audioFeatures, resultsType.FEATURES.KEYSIG);
+      let app = <ReactApp audioFeatures={audioFeatures.allTime}/>;         
       res.locals.results = {      
         topArtists : topArtists,
         topTracks : topTracks, 
