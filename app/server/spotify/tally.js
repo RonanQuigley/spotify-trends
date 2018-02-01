@@ -2,13 +2,12 @@ export default class Tally {
     
     static tallyObjValue(obj, valueToTally) {
       let results = _initResultsObj();    
-      for (let timePeriod in obj) {
-        let currentTally = _tallyValues(obj[timePeriod], valueToTally);
+      for (let timeRange in obj) {
+        let currentTally = _tallyValues(obj[timeRange], valueToTally);
         let namedKeySigs = _nameKeySigs(currentTally);
-        _formatResults(namedKeySigs, results, timePeriod);
+        _formatResults(namedKeySigs, results, timeRange);
       }      
-      // _countResults(results);
-      console.log(results);
+      // _countResults(results);    
       return results;
     }
   }
@@ -92,15 +91,14 @@ function _nameKeySigs(arr) {
   });  
 }
 
-var output = [
-  {pitchClass : 'C', tallyFourWeeks : 0, tallySixMonths: 0, tallyAllTime : 0},
-]
-
-function _formatResults(obj, output, timePeriod) {
-  for(let key in output){
-    for(let item in obj){
-      if(obj[item].pitchClass === output[key].pitchClass){
-        output[key][timePeriod + tallyString] = obj[item].tally;
+function _formatResults(input, output, timeRange) {
+  
+  for(let outputKey in output){
+    for(let inputKey in input){
+      if(input[inputKey].pitchClass === output[outputKey].pitchClass){
+        // initialise the property in the current obj - accessed by output key
+        // and assign the input key's tally to it i.e. C = 12 or D# = 2 etc. 
+        output[outputKey][timeRange + tallyString] = input[inputKey].tally;
       }
     }
   }
