@@ -65,19 +65,21 @@ class Results {
       let app = <ReactApp keySignatures={keySignatures}/>;         
       res.locals.results = {      
         topArtists : topArtists,
-        topTracks : topTracks, 
+        topTracks : topTracks,
+        keySignatures : keySignatures, 
         app : app
       };
       next();
     });
   }
   static renderResultsPage(req, res, next) {
-    let finalResults = res.locals.results;
+    let finalResults = res.locals.results;  
     res.render("results", {
       Spotify: {
         topArtists : finalResults.topArtists,
         topTracks : finalResults.topTracks,
       }, 
+      keySignatures : finalResults.keySignatures,
       ReactApp : ReactDOM.renderToString(finalResults.app)
     });
   }

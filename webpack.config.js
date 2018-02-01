@@ -10,7 +10,10 @@ module.exports = {
       path : path.resolve(__dirname, 'build/views/scripts'),
       filename: 'react-bundle.min.js'
     },
-    watch : true, 
+    watch : true,
+    watchOptions : {
+      ignored : 'app/react/react.js'
+    },
     module: {
         rules: [
           {
