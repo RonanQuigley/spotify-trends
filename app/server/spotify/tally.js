@@ -1,33 +1,48 @@
-var keySigs = {
-    C: "C",
-    CSHARP: "C#/Db",
-    D: "D",
-    DSHARP: "D#/Eb",
-    E: "E",
-    F: "F",
-    FSHARP: "F#/Gb",
-    G: "G",
-    GSHARP: "G#/Ab",
-    A: "A",
-    ASHARP: "A#/Bb",
-    B: "B"
-  };
-  
-
 export default class Tally {
-    static tallyObjValue(obj, value) {
-      let results = {};
-      for (let key in obj) {
-        let tally = _tallyValues(obj[key], value);
-        let namedKeySigs = _nameKeySigs(tally);
-        results[key] = _formatResults(namedKeySigs);
-      }
+    
+    static tallyObjValue(obj, valueToTally) {
+      let results = _initResultsObj();    
+      for (let timePeriod in obj) {
+        let currentTally = _tallyValues(obj[timePeriod], valueToTally);
+        let namedKeySigs = _nameKeySigs(currentTally);
+        _formatResults(namedKeySigs, results, timePeriod);
+      }      
+      // _countResults(results);
+      console.log(results);
       return results;
     }
   }
+
+const tallyString = 'Tally';
+
+var keySigs = {
+  "C" : "C",
+  "C#/Db" : "C#/Db",
+  "D" : "D",
+  "D#/Eb" : "D#/Eb",
+  "E" : "E",
+  "F" : "F",
+  "F#/Gb" : "F#/Gb",
+  "G" : "G",
+  "G#/Ab" : "G#/Ab",
+  "A" : "A",
+  "A#/Bb" : "A#/Bb",
+  "B" : "B"
+};
+
+function _initResultsObj(){
+  return Object.keys(keySigs).map(k => {
+    return {
+      pitchClass : k, 
+      fourWeeksTally: 0, 
+      sixMonthsTally : 0, 
+      allTimeTally : 0
+    };
+  })
+}
   
 
-function numToPitchClass(num, keySigs) {
+function _numToPitchClass(num, keySigs) {
   num = parseInt(num, 10);
   switch (num) {
     case 0:
@@ -68,24 +83,51 @@ function _tallyValues(arr, value) {
 
 function _nameKeySigs(arr) {
   // convert the keys of tallied key sigs into a pitch class name
-  return Object.getOwnPropertyNames(arr).map(k => {
-    let pitchClass = numToPitchClass(k, Object.keys(keySigs));
-    return { name: pitchClass, value: arr[k] };
-  });
+  return Object.keys(arr).map(k => {
+    let pitchClass = _numToPitchClass(k, Object.keys(keySigs));
+    return {
+      pitchClass : pitchClass, 
+      tally: arr[k]      
+    };
+  });  
 }
 
-function _formatResults(obj) {
-  // produce the final output; an array of objects:
-  // each object uses a name:KEYSIG, value:TALLY convention
-  return Object.getOwnPropertyNames(keySigs).map(k => {
-    let value = 0;
-    for (let element in obj) {
-      if (k === obj[element].name) {
-        value = obj[element].value;
-        break;
+var output = [
+  {pitchClass : 'C', tallyFourWeeks : 0, tallySixMonths: 0, tallyAllTime : 0},
+]
+
+function _formatResults(obj, output, timePeriod) {
+  for(let key in output){
+    for(let item in obj){
+      if(obj[item].pitchClass === output[key].pitchClass){
+        output[key][timePeriod + tallyString] = obj[item].tally;
       }
     }
-    return { name: k, value: value };
-  });
+  }
+  // // produce the final output; an array of objects:
+  // // each object uses a name:KEYSIG, value:TALLY convention
+  // return Object.getOwnPropertyNames(keySigs).map(k => {
+  //   let tally = 0;
+  //   for (let element in obj) {
+  //     if (k === obj[element].name) {
+  //       tally = obj[element].tally;
+  //       break;
+  //     }
+  //   }
+  //   return {name: k, tally: tally};
+  // });
 }
 
+
+// sanity check for debugging
+function _countResults(results){
+  let x = 0;
+  let y = 0; 
+  let z = 0;
+  for(let i in results){
+    x += results[i].fourWeeksTally;
+    y += results[i].sixMonthsTally;
+    z += results[i].allTimeTally;        
+  }
+  console.log(x + y + z);
+}
