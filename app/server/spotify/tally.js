@@ -3,7 +3,8 @@ export default class Tally {
     static tallyObjValue(obj, valueToTally) {
       let results = _initResultsObj();    
       for (let timeRange in obj) {
-        let currentTally = _tallyValues(obj[timeRange], valueToTally);
+        let currentObj = obj[timeRange];
+        let currentTally = _tallyValues(currentObj, valueToTally);
         let namedKeySigs = _nameKeySigs(currentTally);
         _formatResults(namedKeySigs, results, timeRange);
       }      
@@ -96,8 +97,9 @@ function _formatResults(input, output, timeRange) {
   for(let outputKey in output){
     for(let inputKey in input){
       if(input[inputKey].pitchClass === output[outputKey].pitchClass){
-        // initialise the property in the current obj - accessed by output key
-        // and assign the input key's tally to it i.e. C = 12 or D# = 2 etc. 
+        // initialise the property in current obj of output using the current 
+        // time Range and assign the input key's tally to it i.e. 
+        // for the pitch class of C allTimeTally = N, fourWeeksTally = N etc.        
         output[outputKey][timeRange + tallyString] = input[inputKey].tally;
       }
     }
