@@ -2,9 +2,10 @@ import spotifyResults from '..//spotify/spotify-results';
 import spotifyApi from '..//spotify/spotify-api';
 import Debug from 'debug';
 import utilities from '../utilities';
-import ReactApp from '../../react/react';
+import KeySigChart from '../../react/react';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
+import Tally from '../spotify/tally';
 
 const resultsType = spotifyResults.resultsType;
 const requestType = spotifyApi.requestType;
@@ -61,8 +62,9 @@ class Results {
     let topArtists = spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS);
     let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
     spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {    
-      let keySignatures = spotifyResults.getStatistics(audioFeatures, resultsType.FEATURES.KEYSIG);
-      let app = <ReactApp keySignatures={keySignatures}/>;         
+      let keySignatures = spotifyResults.getStatistics(audioFeatures, 
+        resultsType.FEATURES.KEYSIG, Tally.outputFormat.TIMEPERIOD);
+      let app = <KeySigChart keySignatures={keySignatures}/>;         
       res.locals.results = {      
         topArtists : topArtists,
         topTracks : topTracks,

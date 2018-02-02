@@ -16,7 +16,7 @@ export default class KeySignatures extends React.Component {
             theme={VictoryTheme.material}
             data={this.props.keySignatures}
             x="pitchClass"
-            y={this.props.timePeriod}
+            y="allTimeTally"
             width={400}
             height={400}
             innerRadius={68}
