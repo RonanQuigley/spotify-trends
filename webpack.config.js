@@ -11,14 +11,13 @@ module.exports = {
       filename: 'react-bundle.min.js'
     },
     watch : true,
-    watchOptions : {
-      ignored : 'app/react/react.js'
-    },
     module: {
         rules: [
           {
             test: /.js$/,
-            exclude: path.resolve(__dirname, "node_modules"),
+            exclude: [
+              path.resolve(__dirname, "node_modules"),
+            ],
             use: [
               {
                 loader: 'babel-loader',

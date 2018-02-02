@@ -38,7 +38,7 @@ const app = (function initExpressApp(){
   return app; 
 })();
 
-app.get("/login", function(req, res) {
+app.get("/login", (req, res) => {
   // defines the kinds of spotify data that we're looking to access
   let scope = "user-read-private user-read-email user-top-read";
   let urlString = utilities.generateQueryString({

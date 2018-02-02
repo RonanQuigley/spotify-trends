@@ -1,11 +1,12 @@
-const queryString = require("querystring");
-const debug = require("debug")("spotifydebug:");
-const request = require("request");
-const util = require("util");
-const utilities = require("../utilities");
+import queryString from "querystring";
+import Debug from "debug";
+import request from "request";
+import util from "util";
+import Utilities from "../utilities";
 const clientID = process.env.CLIENT_ID; // Your client id
 const clientSecret = process.env.CLIENT_SECRET; // Your secret
 const port = process.env.PORT;
+const debug = Debug("spotifydebug:");
 
 const SpotifyApi = function(){
 
@@ -35,7 +36,7 @@ const SpotifyApi = function(){
   
   function requestTokens(authOptions, callback) {
     request.post(authOptions, (err, res, body) => {
-      let result = utilities.validateReqCallback(err, res, body);
+      let result = Utilities.validateReqCallback(err, res, body);
       if(result !== true) throw result; 
       let accessToken = body.access_token;
       if (!accessToken) throw "no access token";
@@ -53,7 +54,7 @@ const SpotifyApi = function(){
   
   function refreshAccessToken(authOptions, callback) {
     request.post(authOptions, (err, res, body) => {
-      let result = utilities.validateReqCallback(err, res, body);
+      let result = Utilities.validateReqCallback(err, res, body);
       if(result !== true) throw result; 
       let accessToken = body.access_token;
       if (!accessToken) throw "no access token";
@@ -181,7 +182,7 @@ const SpotifyApi = function(){
       let header = generateAuthHeader(headerType.DATAREQ, null, url, accessToken);
       debug("finalised header: " + header.headers);
       request.get(header, (err, res, body) => {
-        let result = utilities.validateReqCallback(err, res, body);
+        let result = Utilities.validateReqCallback(err, res, body);
         if(result !== true) throw result; 
         callback(currentTimeRange, body.items);          
       });
@@ -195,7 +196,7 @@ const SpotifyApi = function(){
     let url = "https://api.spotify.com/v1/audio-features?ids=" + ids;
     let header = generateAuthHeader(headerType.DATAREQ, null, url, accessToken);
     request.get.call(this, header, (err, res, body) => {
-      let result = utilities.validateReqCallback(err, res, body);
+      let result = Utilities.validateReqCallback(err, res, body);
       if(result !== true) throw result; 
       callback(this, body.audio_features);
     });
