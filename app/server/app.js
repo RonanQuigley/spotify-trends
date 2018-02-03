@@ -1,5 +1,7 @@
 // babel-core 
 import {transform} from 'babel-core';
+// don't remove this; the presets in this file don't require react 
+// if you do you'll cause an error where babel incorrectly transpiles code
 transform("code", {
   presets: ["env", "stage-0"],
   babelrc: false

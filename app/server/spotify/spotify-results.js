@@ -86,7 +86,7 @@ class SpotifyResults {
   static getStatistics(obj, type, outputFormat){
     switch(type){
       case this.resultsType.FEATURES.KEYSIG : 
-        return Tally.tallyObjValue(obj, "key");
+        return Tally.tallyObjValue(obj, ["key", "mode"] , outputFormat);
     }    
   }
 }

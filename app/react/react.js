@@ -7,6 +7,14 @@ import {
 } from "victory";
 
 export default class KeySignatures extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  getChild(obj){
+    return Object.keys(obj).map(k => {
+      return obj[k];
+    })
+  }
   render() {
     return (
       <div>
@@ -14,9 +22,9 @@ export default class KeySignatures extends React.Component {
           <VictoryPie
             standalone={false}
             theme={VictoryTheme.material}
-            data={this.props.keySignatures}
-            x="pitchClass"
-            y="allTimeTally"
+            data={this.getChild(this.props.keySignatures)}    
+            x={"pitchClass"}
+            y={"tally"}
             width={400}
             height={400}
             innerRadius={68}
@@ -28,7 +36,7 @@ export default class KeySignatures extends React.Component {
             style={{ fontSize: 20 }}
             x={200}
             y={200}
-            text="Pie!"
+            text={this.props.timeRangeLabel}
           />
         </svg>
       </div>

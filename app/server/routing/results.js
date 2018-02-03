@@ -2,7 +2,7 @@ import spotifyResults from '..//spotify/spotify-results';
 import spotifyApi from '..//spotify/spotify-api';
 import Debug from 'debug';
 import utilities from '../utilities';
-import KeySigChart from '../../react/react';
+import PitchClassChart from '../../react/react';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Tally from '../spotify/tally';
@@ -62,27 +62,34 @@ class Results {
     let topArtists = spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS);
     let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
     spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {    
-      let keySignatures = spotifyResults.getStatistics(audioFeatures, 
-        resultsType.FEATURES.KEYSIG, Tally.outputFormat.TIMEPERIOD);
-      let app = <KeySigChart keySignatures={keySignatures}/>;         
+      let keySignatures = spotifyResults.getStatistics(audioFeatures, resultsType.FEATURES.KEYSIG, Tally.outputFormat.TIMEPERIOD);
+      let pitchClassAllTime = ReactDOM.renderToString(<PitchClassChart keySignatures={keySignatures.allTime} timeRangeLabel="All Time"/>);
+      let pitchClassFourWeeks = ReactDOM.renderToString(<PitchClassChart keySignatures={keySignatures.sixMonths} timeRangeLabel="Six Months"/>);
+      let pitchClassSixMonths = ReactDOM.renderToString(<PitchClassChart keySignatures={keySignatures.fourWeeks} timeRangeLabel="Four Weeks"/>);
+      let Spotify = {
+        topArtists,
+        topTracks,
+      }
+      let ReactApps = {
+        pitchClassAllTime,
+        pitchClassFourWeeks,
+        pitchClassSixMonths
+      }         
       res.locals.results = {      
-        topArtists : topArtists,
-        topTracks : topTracks,
-        keySignatures : keySignatures, 
-        app : app
+        Spotify,
+        keySignatures, 
+        ReactApps
       };
       next();
     });
   }
   static renderResultsPage(req, res, next) {
-    let finalResults = res.locals.results;  
+    let results = res.locals.results; 
+    let Spotify = results.Spotify;
+    let ReactApps = results.ReactApps;
     res.render("results", {
-      Spotify: {
-        topArtists : finalResults.topArtists,
-        topTracks : finalResults.topTracks,
-      }, 
-      keySignatures : finalResults.keySignatures,
-      ReactApp : ReactDOM.renderToString(finalResults.app)
+      Spotify, 
+      ReactApps
     });
   }
 }
