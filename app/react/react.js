@@ -23,8 +23,8 @@ export default class KeySignatures extends React.Component {
             standalone={false}
             theme={VictoryTheme.material}
             data={this.getChild(this.props.keySignatures)}    
-            x={"pitchClass"}
-            y={"tally"}
+            x={this.props.x}
+            y={this.props.y}
             width={400}
             height={400}
             innerRadius={68}

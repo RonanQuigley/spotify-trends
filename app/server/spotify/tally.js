@@ -6,8 +6,6 @@ export default class Tally {
   }
 
   static tallyObjValue(obj, valuesToTally, outputFormat) {
-
-
     let results = {};
     for(let timeRange in obj){
       results[timeRange] = {};
@@ -20,36 +18,9 @@ export default class Tally {
       }
     }
     return results;
-
-    // for (let timeRange in obj) {
-    //   let currentObj = obj[timeRange];
-    //   let currentTallies = _tallyValues(currentObj, valuesToTally);
-    //   let convertedTallies = _convertTallies(currentTallies);
-    //   switch(outputFormat){
-    //     case this.outputFormat.PITCHCLASS : 
-    //       _formatPitchClassArray(pitchClass, results, timeRange);
-    //       break;
-    //     case this.outputFormat.TIMEPERIOD : 
-    //       results[timeRange] = _formatTimeRangeArray(pitchClass)
-    //       break;
-    //   }
-    // }
-    // return results;
   }
 
 }
-
-var _initResultsObj = function(outputFormat, valuesToTally, obj) {
-  let results = {};
-  for(let timeRange in obj){
-    results[timeRange] = {};
-    for(let key in valuesToTally){
-      let value = valuesToTally[key];
-      results[timeRange][value] = 0;
-    }
-  }
-  return results;
-};
 
 const tallyString = "Tally";
 
@@ -159,34 +130,6 @@ function _tallyToMode(obj){
   }
   return result;
 }
-
-// function _formatPitchClassArray(input, output, timeRange) {
-//   for (let outputKey in output) {
-//     for (let inputKey in input) {
-//       if (input[inputKey].pitchClass === output[outputKey].pitchClass) {
-//         // initialise the property in current obj of output using the current
-//         // time Range and assign the input key's tally to it i.e.
-//         // for the pitch class of C allTimeTally = N, fourWeeksTally = N etc.
-//         output[outputKey][timeRange + tallyString] = input[inputKey].tally;
-//       }
-//     }
-//   }
-// }
-
-// function _formatTimeRangeArray(input){
-//   // produce the final output; an array of objects:
-//   // each object uses a name:KEYSIG, value:TALLY convention
-//   return Object.getOwnPropertyNames(pitchClass).map(k => {
-//     let tally = 0;
-//     for (let element in input) {
-//       if (k === input[element].pitchClass) {
-//         tally = input[element].tally;
-//         break;
-//       }
-//     }
-//     return { pitchClass: k, tally: tally };
-//   });  
-// }
 
 // sanity check for debugging
 function _countResults(results) {
