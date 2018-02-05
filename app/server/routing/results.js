@@ -6,6 +6,7 @@ import PieChart from '../../react/react';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Tally from '../spotify/tally';
+import MeanStatistics from '../spotify/mean';
 
 const resultsType = spotifyResults.resultsType;
 const requestType = spotifyApi.requestType;
@@ -14,6 +15,8 @@ const numOfTopSongsResults = 50; // max of 50
 const topTracksOffset = 0; // results offset
 const topArtistsOffset = 0; // results offset
 const debug = Debug('resultsdebug');
+
+
 
 class Results {
 
@@ -63,6 +66,8 @@ class Results {
     let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
     spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {    
       let statistics = spotifyResults.getStatistics(audioFeatures, ["key", "mode"]);
+      const meanStatistics = new MeanStatistics();
+      let other = meanStatistics.getMean(audioFeatures, MeanStatistics.types);
       let pitchClassAllTime = ReactDOM.renderToString(<PieChart keySignatures={statistics.allTime.key} timeRangeLabel="All Time" x="pitchClass" y="tally"/>);
       let pitchClassFourWeeks = ReactDOM.renderToString(<PieChart keySignatures={statistics.sixMonths.key} timeRangeLabel="Six Months" x="pitchClass" y="tally"/>);
       let pitchClassSixMonths = ReactDOM.renderToString(<PieChart keySignatures={statistics.fourWeeks.key} timeRangeLabel="Four Weeks" x="pitchClass" y="tally"/>);
@@ -79,12 +84,14 @@ class Results {
         pitchClassSixMonths,
         modalityFourWeeks,
         modalitySixMonths,
-        modalityAllTime
+        modalityAllTime,
+
       }         
       res.locals.results = {      
         Spotify,
         statistics, 
-        ReactApps
+        ReactApps, 
+        other
       };
       next();
     });
@@ -95,7 +102,8 @@ class Results {
     let ReactApps = results.ReactApps;
     res.render("results", {
       Spotify, 
-      ReactApps
+      ReactApps, 
+      other : results.other
     });
   }
 }

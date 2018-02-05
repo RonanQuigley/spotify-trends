@@ -10,10 +10,19 @@
     <div id="root" class="statistics-container">
         {{#each ReactApps as |ReactApp|}}
             {{{ReactApp}}}
-        {{/each}}
+        {{/each}}        
     </div>
    <script src="scripts/react-bundle.min.js"></script>
 {{/if}}
+
+{{#each other}}
+    <h1>{{@key}}</h1>
+    <h1>loudness {{this.loudness}}</h1>
+    <h1>energy {{this.energy}}</h1>
+    <h1>acousticness {{this.acousticness}}</h1>
+    <h1>danceability {{this.danceability}}</h1>
+    <h1>valence {{this.valence}}</h1>
+{{/each}}
 
 <script>
     if (window.location.href.indexOf('?') > -1) {
