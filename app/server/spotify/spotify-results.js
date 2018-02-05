@@ -45,9 +45,6 @@ class SpotifyResults {
   static resultsType = {
     ARTISTS : 'artists', 
     TRACKS : 'tracks',
-    FEATURES : {
-      KEYSIG : 'key signature',    
-    }
   }
 
   static createResultsObject(){
@@ -83,11 +80,8 @@ class SpotifyResults {
     }))
   }
 
-  static getStatistics(obj, type, outputFormat){
-    switch(type){
-      case this.resultsType.FEATURES.KEYSIG : 
-        return Tally.tallyObjValue(obj, ["key", "mode"] , outputFormat);
-    }    
+  static getStatistics(obj, statKeys){
+    return Tally.tallyObjValue(obj, statKeys); 
   }
 }
 

@@ -1,11 +1,6 @@
 export default class Tally {
 
-  static outputFormat = {
-    PITCHCLASS: "pitch class based array of objects",
-    TIMEPERIOD: "time period based array of objects"
-  }
-
-  static tallyObjValue(obj, valuesToTally, outputFormat) {
+  static tallyObjValue(obj, valuesToTally) {
     let results = {};
     for(let timeRange in obj){
       results[timeRange] = {};

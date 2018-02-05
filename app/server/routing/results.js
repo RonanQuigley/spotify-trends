@@ -62,7 +62,7 @@ class Results {
     let topArtists = spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS);
     let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
     spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {    
-      let statistics = spotifyResults.getStatistics(audioFeatures, resultsType.FEATURES.KEYSIG, Tally.outputFormat.TIMEPERIOD);
+      let statistics = spotifyResults.getStatistics(audioFeatures, ["key", "mode"]);
       let pitchClassAllTime = ReactDOM.renderToString(<PieChart keySignatures={statistics.allTime.key} timeRangeLabel="All Time" x="pitchClass" y="tally"/>);
       let pitchClassFourWeeks = ReactDOM.renderToString(<PieChart keySignatures={statistics.sixMonths.key} timeRangeLabel="Six Months" x="pitchClass" y="tally"/>);
       let pitchClassSixMonths = ReactDOM.renderToString(<PieChart keySignatures={statistics.fourWeeks.key} timeRangeLabel="Four Weeks" x="pitchClass" y="tally"/>);
