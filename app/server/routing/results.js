@@ -72,7 +72,7 @@ class Results {
       const meanStatistics = new MeanStatistics();
       let meanResults = meanStatistics.getMean(audioFeatures, MeanStatistics.types);
 
-      let meanEnergySixMonths = ReactDOM.renderToString(<MeanChart />);
+      let meanEnergySixMonths = ReactDOM.renderToString(<MeanChart max={1} value={meanResults.allTime.energy}/>);
       let pitchClassAllTime = ReactDOM.renderToString(<PieChart keySignatures={Statistics.allTime.key} timeRangeLabel="All Time" x="pitchClass" y="tally"/>);
       let pitchClassFourWeeks = ReactDOM.renderToString(<PieChart keySignatures={Statistics.sixMonths.key} timeRangeLabel="Six Months" x="pitchClass" y="tally"/>);
       let pitchClassSixMonths = ReactDOM.renderToString(<PieChart keySignatures={Statistics.fourWeeks.key} timeRangeLabel="Four Weeks" x="pitchClass" y="tally"/>);

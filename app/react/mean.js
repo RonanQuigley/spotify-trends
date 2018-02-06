@@ -1,27 +1,21 @@
 import React from 'react';
-import {VictoryPie, VictoryAnimation, VictoryLabel}from 'victory';
+import {VictoryPie, VictoryAnimation, VictoryLabel} from 'victory';
+
+// NOTE - YOU NEED TO PROVIDE THE PERCENTAGE DATA TO HYDRATE ON CLIENT SIDE 
+// OTHERWISE YOU'LL GET AN UNDEFINED
 
 export default class MeanChart extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       percent: 0, data: this.getData(0)
     };
   }
 
   componentDidMount() {
-    let percent = 30;
-    this.setStateInterval = window.setInterval(() => {
-      // percent += (Math.random() * 25);
-      // percent = (percent > 100) ? 0 : percent;
-      this.setState({
-        percent, data: this.getData(percent)
-      });
-    }, 2000);
-  }
-
-  componentWillUnmount() {
-    window.clearInterval(this.setStateInterval);
+    this.setState({
+      percent, data: this.getData(percent)
+    });
   }
 
   getData(percent) {
@@ -39,6 +33,7 @@ export default class MeanChart extends React.Component {
             data={this.state.data}
             innerRadius={120}
             cornerRadius={25}
+            startAngle={-90}
             labels={() => null}
             style={{
               data: { fill: (d) => {
