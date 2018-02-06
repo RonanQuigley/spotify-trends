@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import App from './react';
+import MeanChart from './mean';
 
-// ReactDOM.hydrate(<App/>, document.getElementById('root'));
+ReactDOM.hydrate(<MeanChart/>, document.getElementById('root-meanenergysixmonths'));
+

@@ -1,13 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
     entry: {
-        // 'bundle.min.js' : [__dirname + '/index.js', __dirname + '/anotherFile.js']
         react : path.resolve(__dirname, 'app/react/react-client.js')
     },
     output: {
-      path : path.resolve(__dirname, 'build/views/scripts'),
+      path : path.resolve(__dirname, 'app/views/scripts'),
       filename: 'react-bundle.min.js'
     },
     watch : true,
@@ -15,9 +15,7 @@ module.exports = {
         rules: [
           {
             test: /.js$/,
-            exclude: [
-              path.resolve(__dirname, "node_modules"),
-            ],
+            exclude: /node_modules/,
             use: [
               {
                 loader: 'babel-loader',
@@ -30,9 +28,13 @@ module.exports = {
         ],
       },
     plugins : [
-      new webpack.optimize.UglifyJsPlugin(),
-      new webpack.DefinePlugin({
-        '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })'
-      }),
+      new HardSourceWebpackPlugin()
     ]
+    // ENABLE FOR PRODUCTION: SLOWS DOWN BUILD TIMES OTHERWISE
+    // plugins : [
+    //   // new webpack.optimize.UglifyJsPlugin(),
+    //   // new webpack.DefinePlugin({
+    //   //   '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })'
+    //   // }),
+    // ]
 }
