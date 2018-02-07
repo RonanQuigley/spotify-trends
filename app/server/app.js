@@ -40,6 +40,12 @@ const app = (function initExpressApp(){
   return app; 
 })();
 
+app.get("/", (req, res) => {
+  res.render("index", {
+    title : appTitle
+  });  
+});
+
 app.get("/login", (req, res) => {
   // defines the kinds of spotify data that we're looking to access
   let scope = "user-read-private user-read-email user-top-read";
@@ -73,8 +79,15 @@ app.use('/results', [
   ResultsRouting.getTokensFromClient, 
   ResultsRouting.requestSpotifyData,
   ResultsRouting.processSpotifyData,
-  ResultsRouting.renderResultsPage
+  ResultsRouting.renderResultsPage,
+  redirectBackToMainPage
 ]);
+
+function redirectBackToMainPage(err, req, res, next){  
+  res.redirect("/", {
+    title : appTitle
+  });
+}
 
 app.get("/refresh", (req, res) => {
   // requesting access token from refresh token
@@ -89,11 +102,11 @@ app.get("/refresh", (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.render("index", {
-    title : appTitle
-  });  
-});
+app.get("/react", (req, res) => {
+  res.send({
+    maxValue : 1
+  })
+})
 
 console.log("app now listening on port " + port);
 

@@ -16,7 +16,6 @@ export default class KeySignatures extends React.Component {
     })
   }
 
-  
   render() {
     return (
       <div>

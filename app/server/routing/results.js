@@ -11,23 +11,31 @@ import MeanStatistics from '../spotify/mean';
 
 const resultsType = spotifyResults.resultsType;
 const requestType = spotifyApi.requestType;
+const headerType = spotifyApi.headerType;
 const numOfTopArtistsResults = 50; // max of 50
 const numOfTopSongsResults = 50; // max of 50
 const topTracksOffset = 0; // results offset
 const topArtistsOffset = 0; // results offset
 const debug = Debug('resultsdebug');
 
-
-
-class Results {
+export default class Results {
 
   static getTokensFromClient(req, res, next){
     debug("querystring is: " + req.query);
     let accessToken = req.query ? req.query.access_token : req.headers.access_token;
     if (!accessToken) throw "no valid access token";
-    res.locals.accessToken = accessToken;
-    next();
+    spotifyApi.validateAccessToken(accessToken, (statusCode) => {
+      if(statusCode === 401){
+        let err = new Error(statusCode);
+        return next(err);             
+      }
+      else{
+        res.locals.accessToken = accessToken;
+        next();        
+      }
+    })
   }
+
   static requestSpotifyData(req, res, next) {
     let results = spotifyResults.createResultsObject();
     // IF YOU CHANGE THE RESULTS SIZE WHEN TESTING YOU MAY GET
@@ -71,8 +79,8 @@ class Results {
       // TO MOVE
       const meanStatistics = new MeanStatistics();
       let meanResults = meanStatistics.getMean(audioFeatures, MeanStatistics.types);
-
-      let meanEnergySixMonths = ReactDOM.renderToString(<MeanChart max={1} value={meanResults.allTime.energy}/>);
+      
+      let meanEnergySixMonths = ReactDOM.renderToString(<MeanChart maxValue={1}/>);
       let pitchClassAllTime = ReactDOM.renderToString(<PieChart keySignatures={Statistics.allTime.key} timeRangeLabel="All Time" x="pitchClass" y="tally"/>);
       let pitchClassFourWeeks = ReactDOM.renderToString(<PieChart keySignatures={Statistics.sixMonths.key} timeRangeLabel="Six Months" x="pitchClass" y="tally"/>);
       let pitchClassSixMonths = ReactDOM.renderToString(<PieChart keySignatures={Statistics.fourWeeks.key} timeRangeLabel="Four Weeks" x="pitchClass" y="tally"/>);
@@ -94,7 +102,7 @@ class Results {
       }         
       res.locals.results = {      
         Spotify,
-        Statistics, 
+        meanResults,
         ReactApps, 
       };
       next();
@@ -104,11 +112,11 @@ class Results {
     let results = res.locals.results; 
     let Spotify = results.Spotify;
     let ReactApps = results.ReactApps;
+    let meanResults = results.meanResults;
     res.render("results", {
       Spotify, 
+      meanResults,
       ReactApps,       
     });
   }
 }
-
-export default Results;

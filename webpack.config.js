@@ -11,6 +11,8 @@ module.exports = {
       filename: 'react-bundle.min.js'
     },
     watch : true,
+    // DON'T USE THE 'SOURCE-MAP' OPTION; SEEMS TO BE BROKEN
+    devtool: 'eval-source-map',
     module: {
         rules: [
           {

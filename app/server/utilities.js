@@ -14,7 +14,7 @@ export default class Utilities{
   }
   static validateReqCallback(err, res, body){
     if(err) return err; 
-    if(res.statusCode !== 200) return res.statusCode + ':' + res.statusMessage;
+    if(res.statusCode !== 200) return res;
     if(!body) return 'no data in returned body';
     return true;
   }

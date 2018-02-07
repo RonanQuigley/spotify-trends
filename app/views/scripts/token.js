@@ -1,4 +1,5 @@
 var Token = {
+    // based off of : http://kaaes.github.io/albums-availability/#18qY7zpuNqeXNGywRysjxx
     setAccessToken: function(accessToken) {
         localStorage.setItem('access-token', accessToken);
     },    
@@ -12,7 +13,6 @@ var Token = {
         return !!token && !!expiresAt && expiresAt > now ? token : null;
     },
     setAccessTokenExpiry : function(expiresIn){
-        console.log(expiresIn);
         var now = Date.now();
         // add the number of ms to seconds, then x 1000 to create an hour from now.
         var expiresAt = now + (parseInt(expiresIn, 10) * 1000); 

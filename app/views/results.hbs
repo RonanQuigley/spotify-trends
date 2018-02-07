@@ -9,12 +9,14 @@
 {{/if}}-->
 
 {{#if ReactApps}}
-    <div class="react-apps-container">
-        {{#each ReactApps as |ReactApp|}}
-            <div id="root-{{formatStringForDiv @key}}">
-                {{{ReactApp}}}
-            </div>
-        {{/each}}        
+    <div class="react-apps-container" data="{{stringify meanResults}}">
+        {{#blockParams meanResults as |foo| }}
+            {{#each ReactApps}}
+                <div id="root-{{formatStringForDiv @key}}" attr="{{stringify foo}}">
+                    {{{this}}}
+                </div>
+            {{/each}}        
+        {{/blockParams }}
     </div>
    <script src="scripts/react-bundle.min.js"></script>
 {{/if}}

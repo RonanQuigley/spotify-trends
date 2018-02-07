@@ -6,6 +6,9 @@ const projectDir = __dirname + '/..';
 function stringify(value) {
     return JSON.stringify(value);
 }
+function parse(value){
+    return JSON.parse(value);
+}
 function offsetIndexByOne(index) {
     return parseInt(index, 10) + 1;
 }
@@ -50,6 +53,7 @@ export default class Handlebars {
         return expressHandlebars.create({
             helpers: {
                 stringify,
+                parse,
                 offsetIndexByOne,
                 formatDuration,
                 formatType,

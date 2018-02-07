@@ -4,9 +4,11 @@
   "main": "./build/server/app.js",
   "dependencies": {
     "cookie-parser": "^1.4.3",
+    "es6-promise": "^4.2.4",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "hard-source-webpack-plugin": "^0.5.16",
+    "isomorphic-fetch": "^2.2.1",
     "morgan": "^1.9.0",
     "nodemon": "^1.14.11",
     "querystring": "^0.2.0",
@@ -58,11 +60,9 @@
     "start:build:watch:no-debug": "npm-run-all -p build:all nodemon:views-dir nodemon:build-dir:no-debug",
     "start:watch:no-debug": "npm-run-all -p nodemon:views-dir nodemon:build-dir:no-debug",
     "start:debug:prod": "set DEBUG=* & npm run start",
-    "babel-watch": "babel-watch --watch app/ app/server/app.js",
+    "babel-watch": "babel-watch -I --watch app/ app/server/app.js",
     "start:prod": "node build/server/app.js",
-    "start:dev": "npm-run-all -p build:react-client babel-watch",
-    "start:debug:dev": "babel-watch --debug 5859 app/server/app.js",
-    "debug": "babel-node --inspect-brk app/server/app.js --presets env,react,stage-0"
+    "start:dev": "npm-run-all -p build:react-client babel-watch"
   },
   "author": "Ronan Quigley",
   "license": "ISC",

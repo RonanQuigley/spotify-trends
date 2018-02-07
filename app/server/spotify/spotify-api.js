@@ -8,33 +8,31 @@ const clientSecret = process.env.CLIENT_SECRET; // Your secret
 const port = process.env.PORT;
 const debug = Debug("spotifydebug:");
 
-const SpotifyApi = function(){
+export default class SpotifyApi {
 
-  const redirectURI = "http://localhost:" + port + "/callback";
-  const headerType = {
+  static redirectURI = "http://localhost:" + port + "/callback";
+  
+  static headerType = {
     LOGIN: "generate-tokens",
     DATAREQ: "request-spotify-data",
     REFRESH: "refresh-access-token"
   };  
 
-  const Results = function(){
-    this.fourWeeks =  null;
-    this.sixMonths =  null;
-    this.allTime = null;
-  };
-
-  const timeRange = {
-    SHORT: "short_term", // last 4 weeks
-    MEDIUM: "medium_term", // approx last 6 months
-    LONG: "long_term" // several years of data
-  }
-
-  const requestType = {
+  static requestType = {
     TRACKS: "tracks",
     ARTISTS: "artists"
   };
+
+  static validateAccessToken(accessToken, cb){
+    // create a dummy request to test if our access token is still valid
+
+    let authHeader = this.generateAuthHeader(this.headerType.DATAREQ, null, dummyRequestURL, accessToken);
+    request.get(authHeader, (err, res, body) => {
+      cb(res.statusCode)
+    });
+  }
   
-  function requestTokens(authOptions, callback) {
+  static requestTokens(authOptions, callback) {
     request.post(authOptions, (err, res, body) => {
       let result = Utilities.validateReqCallback(err, res, body);
       if(result !== true) throw result; 
@@ -51,8 +49,8 @@ const SpotifyApi = function(){
       });  
     });
   }
-  
-  function refreshAccessToken(authOptions, callback) {
+
+  static refreshAccessToken(authOptions, callback) {
     request.post(authOptions, (err, res, body) => {
       let result = Utilities.validateReqCallback(err, res, body);
       if(result !== true) throw result; 
@@ -64,17 +62,17 @@ const SpotifyApi = function(){
     });
   }
   
-  function generateAuthHeader(requestedType, authCode, url, token) {
-    if (typeof requestedType !== "string")
+  static generateAuthHeader(headerType, authCode, url, token) {
+    if (typeof headerType !== "string")
       throw "header type is wrong; did you pass the object by mistake?";
-    switch (requestedType) {
-      case headerType.DATAREQ:
+    switch (headerType) {
+      case this.headerType.DATAREQ:
         return {
           url: url,
           headers: { Authorization: "Bearer " + token },
           json: true
         };
-      case headerType.REFRESH:
+      case this.headerType.REFRESH:
         return {
           url: "https://accounts.spotify.com/api/token",
           headers: {
@@ -88,7 +86,7 @@ const SpotifyApi = function(){
           },
           json: true
         };
-      case headerType.LOGIN:
+      case this.headerType.LOGIN:
         return {
           url: "https://accounts.spotify.com/api/token",
           form: {
@@ -106,7 +104,7 @@ const SpotifyApi = function(){
     }
   }
   
-  function generateQueryString(time, limit, offset) {
+  static generateQueryString(time, limit, offset) {
     if (!time) time = timeRange.SHORT;
     if (!limit) limit = 20;
     // can't use not with 0; would evaluate to true
@@ -118,23 +116,18 @@ const SpotifyApi = function(){
     });
   }
   
-  function onRequestCompleted(storedResultsObj, timeRange, result){
-    storeResults(result, storedResultsObj, timeRange);
-    if (storedResultsObj.allTime && storedResultsObj.sixMonths && storedResultsObj.fourWeeks) {
-      // send the results back up to the executing context callback function
-      // it will either be results of topArtists or topTracks
-      let sendResultsCallback = this;
-      sendResultsCallback(storedResultsObj);
-    }
-  }
-
-  function getPersonalStats(accessToken, limit, offset, requestType, callback) {
+  static getPersonalStats(accessToken, limit, offset, requestType, callback) {
     let storedResultsObj = new Results();
     let cb = onRequestCompleted.bind(callback, storedResultsObj);
-    personalStatsReq(accessToken, limit, offset, cb, requestType);
+    personalStatsReq.call(this, accessToken, limit, offset, cb, requestType);
   }
 
-  function getAudioFeatures(accessToken, topTracks, callback){
+  static getAudioFeatures(accessToken, topTracks, callback){
+
+    // TO DO: REFACTOR AS THIS FUNCTION SHOULDN'T BE ACCESSABLE OUTSIDE OF THE MODULE.
+    // ISSUE: EXECUTION CONTEXT BINDING; TRACKS AND A REFERENCE TO THE SPOTIFYAPI CLASS
+    // BOTH NEED TO BE PASSED AROUND WITH THE CURRENT IMPLEMENTATION.
+
     let results = {};  
     let maxResults = 3; 
     let resultsCount = 0; 
@@ -148,72 +141,77 @@ const SpotifyApi = function(){
     // process all time, six months and four week periods
     for(let tracks in topTracks){
         let ids = getSpotifyIDs(topTracks[tracks]);
-        getRequest.call(tracks, accessToken, ids, cb);
+        let url = "https://api.spotify.com/v1/audio-features?ids=" + ids;
+        let header = this.generateAuthHeader(this.headerType.DATAREQ, null, url, accessToken);
+        request.get(header, (err, res, body) => {
+          let result = Utilities.validateReqCallback(err, res, body);
+          if(result !== true) throw result; 
+          cb(tracks, body.audio_features);
+        });
     }
   }
-
-  function getSpotifyIDs(obj){  
-    return Object.keys(obj).map((key) => {
-      return obj[key].id;      
-    });  
-  }
-
-  function storeResults(currentResult, resultsObj, time) {
-    switch (time) {
-      case timeRange.SHORT:
-        resultsObj.fourWeeks = currentResult;
-        break;
-      case timeRange.MEDIUM:
-        resultsObj.sixMonths = currentResult;
-        break;
-      case timeRange.LONG:
-        resultsObj.allTime = currentResult;
-        break;
-    }
-  }
-  
-  function personalStatsReq(accessToken, limit, offset, callback, requestType, url) {
-    if (!requestType) throw "get Request type is undefined";
-    let timeRangeValues = Object.values(timeRange); 
-    let createRequest = function(i) {
-      let currentTimeRange = timeRangeValues[i];
-      let queryString = "?" + generateQueryString(currentTimeRange, limit, offset);
-      let url = "https://api.spotify.com/v1/me/top/" + requestType + "" + queryString;
-      let header = generateAuthHeader(headerType.DATAREQ, null, url, accessToken);
-      debug("finalised header: " + header.headers);
-      request.get(header, (err, res, body) => {
-        let result = Utilities.validateReqCallback(err, res, body);
-        if(result !== true) throw result; 
-        callback(currentTimeRange, body.items);          
-      });
-    }
-    for (let i = 0; i <= 2; i++) {
-      createRequest.call(this, i);
-    }
-  }
-
-  function getRequest(accessToken, ids, callback){
-    let url = "https://api.spotify.com/v1/audio-features?ids=" + ids;
-    let header = generateAuthHeader(headerType.DATAREQ, null, url, accessToken);
-    request.get.call(this, header, (err, res, body) => {
-      let result = Utilities.validateReqCallback(err, res, body);
-      if(result !== true) throw result; 
-      callback(this, body.audio_features);
-    });
-  }
-
-  return {
-    redirectURI,
-    headerType,
-    requestType,    
-    requestTokens,
-    refreshAccessToken,
-    generateAuthHeader,
-    generateQueryString,
-    getPersonalStats,
-    getAudioFeatures
-  }
-
 }
 
-module.exports = new SpotifyApi();
+class Results { 
+  constructor(){
+    this.fourWeeks =  null;
+    this.sixMonths =  null;
+    this.allTime = null;
+  }  
+}
+
+const timeRange = {
+  SHORT: "short_term", // last 4 weeks
+  MEDIUM: "medium_term", // approx last 6 months
+  LONG: "long_term" // several years of data
+}
+
+function onRequestCompleted(storedResultsObj, timeRange, body){
+  let spotifyResults = body;
+  storeResults(body, storedResultsObj, timeRange);
+  if (storedResultsObj.allTime && storedResultsObj.sixMonths && storedResultsObj.fourWeeks) {
+    // send the results back up to the executing context callback function
+    // it will either be results of topArtists or topTracks
+    let sendResultsCallback = this;
+    sendResultsCallback(storedResultsObj);
+  }
+}
+
+function personalStatsReq(accessToken, limit, offset, callback, requestType, url) {
+  if (!requestType) throw "get Request type is undefined";
+  let timeRangeValues = Object.values(timeRange); 
+  let createRequest = function(i) {
+    let currentTimeRange = timeRangeValues[i];
+    let queryString = "?" + this.generateQueryString(currentTimeRange, limit, offset);
+    let url = "https://api.spotify.com/v1/me/top/" + requestType + "" + queryString;
+    let header = this.generateAuthHeader(this.headerType.DATAREQ, null, url, accessToken);
+    debug("finalised header: " + header.headers);
+    request.get(header, (err, res, body) => {
+      // let result = Utilities.validateReqCallback(err, res, body);        
+      callback(currentTimeRange, body.items);          
+    });
+  }
+  for (let i = 0; i <= 2; i++) {
+    createRequest.call(this, i);
+  }
+}
+
+function storeResults(currentResult, resultsObj, time) {
+  switch (time) {
+    case timeRange.SHORT:
+      resultsObj.fourWeeks = currentResult;
+      break;
+    case timeRange.MEDIUM:
+      resultsObj.sixMonths = currentResult;
+      break;
+    case timeRange.LONG:
+      resultsObj.allTime = currentResult;
+      break;
+  }
+}
+  
+function getSpotifyIDs(obj){  
+  return Object.keys(obj).map((key) => {
+    return obj[key].id;      
+  });  
+}
