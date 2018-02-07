@@ -25,7 +25,7 @@ export default class SpotifyApi {
 
   static validateAccessToken(accessToken, cb){
     // create a dummy request to test if our access token is still valid
-
+    let dummyRequestURL = "https://api.spotify.com/v1/artists/0OdUWJ0sBjDrqHygGUXeCF"; 
     let authHeader = this.generateAuthHeader(this.headerType.DATAREQ, null, dummyRequestURL, accessToken);
     request.get(authHeader, (err, res, body) => {
       cb(res.statusCode)

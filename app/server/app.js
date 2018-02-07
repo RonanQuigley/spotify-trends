@@ -84,9 +84,7 @@ app.use('/results', [
 ]);
 
 function redirectBackToMainPage(err, req, res, next){  
-  res.redirect("/", {
-    title : appTitle
-  });
+  res.redirect("/");
 }
 
 app.get("/refresh", (req, res) => {
