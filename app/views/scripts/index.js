@@ -54,5 +54,5 @@ window.onload = function(){
                 } 
             }
         }
-    }, 0)
+    }, 2000)
 }   

@@ -80,11 +80,24 @@ app.use('/results', [
   ResultsRouting.requestSpotifyData,
   ResultsRouting.processSpotifyData,
   ResultsRouting.renderResultsPage,
+  sendResultsForClientSideReact,
   redirectBackToMainPage
 ]);
 
+function sendResultsForClientSideReact(request, response){  
+
+  app.get("/react", (req, res) => {
+    res.send({
+      meanResults : response.locals.results.meanResults
+    }).end();
+    response.end();
+  })
+}
+
+
 function redirectBackToMainPage(err, req, res, next){  
-  res.redirect("/");
+  console.log(err);
+  if(err) res.redirect("/");
 }
 
 app.get("/refresh", (req, res) => {
@@ -100,11 +113,6 @@ app.get("/refresh", (req, res) => {
   });
 });
 
-app.get("/react", (req, res) => {
-  res.send({
-    maxValue : 1
-  })
-})
 
 console.log("app now listening on port " + port);
 

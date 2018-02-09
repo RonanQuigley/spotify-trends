@@ -3,21 +3,22 @@
 
 <p>This is a results page</p>
 
+{{!--
+    NOTE: FOR REACT COMPONENTS USE ~ TO REMOVE WHITESPACE,
+    OTHERWISE REACT WILL THROW WARNING ABOUT SERVER CLIENT MISMATCHES
+--}}
 
 {{#if Spotify}}  
     {{> spotify-results obj=Spotify}}
 {{/if}}
 
 {{#if ReactApps}}
-    <div class="react-apps-container" data="{{stringify meanResults}}">
-        {{#blockParams meanResults as |foo| }}
-            {{#each ReactApps}}
-                <div id="root-{{formatStringForDiv @key}}" attr="{{stringify foo}}">
-                    {{{this}}}
-                </div>
-            {{/each}}        
-        {{/blockParams }}
+    <div class="react-apps-container">
+        {{~#each ReactApps~}}
+            <div id="react-{{camelCaseToID @key}}">
+                {{~{this}~}}
+            </div>           
+        {{~/each~}}
     </div>
    <script src="scripts/react-bundle.min.js"></script>
 {{/if}}
-

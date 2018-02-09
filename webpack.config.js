@@ -30,13 +30,10 @@ module.exports = {
         ],
       },
     plugins : [
-      new HardSourceWebpackPlugin()
+      new HardSourceWebpackPlugin(),
+      // new webpack.optimize.UglifyJsPlugin(),
+      // new webpack.DefinePlugin({
+      //   '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })'
+      // }),
     ]
-    // ENABLE FOR PRODUCTION: SLOWS DOWN BUILD TIMES OTHERWISE
-    // plugins : [
-    //   // new webpack.optimize.UglifyJsPlugin(),
-    //   // new webpack.DefinePlugin({
-    //   //   '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })'
-    //   // }),
-    // ]
 }

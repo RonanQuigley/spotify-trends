@@ -2,8 +2,8 @@ import spotifyResults from '..//spotify/spotify-results';
 import spotifyApi from '..//spotify/spotify-api';
 import Debug from 'debug';
 import utilities from '../utilities';
-import PieChart from '../../react/react';
-import MeanChart from '../../react/mean';
+import KeySigContainer from '../../react/key-sig-container';
+import MeanContainer from '../../react/mean-container';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Tally from '../spotify/tally';
@@ -21,7 +21,6 @@ const debug = Debug('resultsdebug');
 export default class Results {
 
   static getTokensFromClient(req, res, next){
-    debug("querystring is: " + req.query);
     let accessToken = req.query ? req.query.access_token : req.headers.access_token;
     if (!accessToken) throw "no valid access token";
     spotifyApi.validateAccessToken(accessToken, (statusCode) => {
@@ -31,7 +30,7 @@ export default class Results {
       }
       else{
         res.locals.accessToken = accessToken;
-        next();        
+        return next();        
       }
     })
   }
@@ -74,31 +73,20 @@ export default class Results {
     let topArtists = spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS);
     let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
     spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {    
-      let Statistics = spotifyResults.getStatistics(audioFeatures, ["key", "mode"]);
-
-      // TO MOVE
+      let statistics = spotifyResults.getStatistics(audioFeatures, ["key", "mode"]);
+    
       const meanStatistics = new MeanStatistics();
-      let meanResults = meanStatistics.getMean(audioFeatures, MeanStatistics.types);
-      
-      let meanEnergySixMonths = ReactDOM.renderToString(<MeanChart maxValue={1}/>);
-      let pitchClassAllTime = ReactDOM.renderToString(<PieChart keySignatures={Statistics.allTime.key} timeRangeLabel="All Time" x="pitchClass" y="tally"/>);
-      let pitchClassFourWeeks = ReactDOM.renderToString(<PieChart keySignatures={Statistics.sixMonths.key} timeRangeLabel="Six Months" x="pitchClass" y="tally"/>);
-      let pitchClassSixMonths = ReactDOM.renderToString(<PieChart keySignatures={Statistics.fourWeeks.key} timeRangeLabel="Four Weeks" x="pitchClass" y="tally"/>);
-      let modalityFourWeeks = ReactDOM.renderToString(<PieChart keySignatures={Statistics.fourWeeks.mode} timeRangeLabel="Four Weeks" x="mode" y="tally"/>);
-      let modalitySixMonths = ReactDOM.renderToString(<PieChart keySignatures={Statistics.sixMonths.mode} timeRangeLabel="Six Months" x="mode" y="tally"/>);
-      let modalityAllTime = ReactDOM.renderToString(<PieChart keySignatures={Statistics.allTime.mode} timeRangeLabel="All Time" x="mode" y="tally"/>);
+      let meanResults = meanStatistics.getMean(audioFeatures, MeanStatistics.types);    
+      let keySigContainer = ReactDOM.renderToString(<KeySigContainer statistics={statistics}/>);
+      let meanContainer = ReactDOM.renderToString(<MeanContainer/>) 
+
       let Spotify = {
         topArtists,
         topTracks,
       }
       let ReactApps = {
-        pitchClassAllTime,
-        pitchClassFourWeeks,
-        pitchClassSixMonths,
-        modalityFourWeeks,
-        modalitySixMonths,
-        modalityAllTime,
-        meanEnergySixMonths
+        // keySigContainer,
+        meanContainer
       }         
       res.locals.results = {      
         Spotify,
@@ -118,5 +106,6 @@ export default class Results {
       meanResults,
       ReactApps,       
     });
+    next();
   }
 }

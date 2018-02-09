@@ -27,6 +27,9 @@ function formatDuration(key){
 function formatStringForDiv(string){
     return string.toLowerCase().replace(/\s+/g, '-');
 }
+function camelCaseToID(string){
+    return string.replace(/(?:^|\.?)([A-Z])/g, function (x,y){return "-" + y.toLowerCase()}).replace(/^_/, "");
+}
 function formatType(key){
     switch(key){
         case("topArtists") : 
@@ -58,7 +61,8 @@ export default class Handlebars {
                 formatDuration,
                 formatType,
                 formatStringForDiv,
-                blockParams
+                blockParams,
+                camelCaseToID
             },
             extname: "hbs",
             defaultLayout: "layout",

@@ -60,7 +60,7 @@
     "start:build:watch:no-debug": "npm-run-all -p build:all nodemon:views-dir nodemon:build-dir:no-debug",
     "start:watch:no-debug": "npm-run-all -p nodemon:views-dir nodemon:build-dir:no-debug",
     "start:debug:prod": "set DEBUG=* & npm run start",
-    "babel-watch": "babel-watch -I --watch app/ app/server/app.js",
+    "babel-watch": "babel-watch -I app/server/app.js --watch app/",
     "start:prod": "node build/server/app.js",
     "start:dev": "npm-run-all -p build:react-client babel-watch"
   },
