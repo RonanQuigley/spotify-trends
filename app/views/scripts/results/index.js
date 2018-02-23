@@ -8,8 +8,13 @@ fetch("react")
   .then(serverData => serverData.json())
   .then(serverData => {
     console.log(serverData);
+
     ReactDOM.hydrate(
       <ReactApp data={serverData.Spotify.topTracks} id="topTracks" />,
-      document.getElementById("react-main")
+      document.getElementById("react-top-tracks")
+    );
+    ReactDOM.hydrate(
+      <ReactApp data={serverData.Spotify.topArtists} id="topArtists" />,
+      document.getElementById("react-top-artists")
     );
   });

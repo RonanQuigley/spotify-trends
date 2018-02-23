@@ -77,31 +77,26 @@ export default class Results {
     let results = res.locals.results;
     let accessToken = res.locals.accessToken;
     if (utilities.isObjectEmpty(results)) throw "spotifyResults object is empty";  
-    let topArtists = spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS);
-    let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
+    let SpotifyData = {
+      topArtists : spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS),
+      topTracks : spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS),
+    }
     spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {    
-      let statistics = spotifyResults.getStatistics(audioFeatures, ["key", "mode"]);
-      const meanStatistics = new MeanStatistics();
-      
-      let meanResults = meanStatistics.getMean(audioFeatures, MeanStatistics.types);    
+      // let statistics = spotifyResults.getStatistics(audioFeatures, ["key", "mode"]);
+      // const meanStatistics = new MeanStatistics();      
+      // let meanResults = meanStatistics.getMean(audioFeatures, MeanStatistics.types);    
       // let keySigContainer = ReactDOM.renderToString(<KeySigContainer statistics={statistics}/>);
       // let meanContainer = ReactDOM.renderToString(<MeanContainer/>) 
 
-      let Spotify = {
-        topArtists,
-        topTracks,
-      }
-      let main = ReactDOM.renderToString(<ReactApp data={Spotify.topTracks} id="topTracks"/>)
+      let topTracks = ReactDOM.renderToString(<ReactApp data={SpotifyData.topTracks} id="topTracks"/>);
+      let topArtists = ReactDOM.renderToString(<ReactApp data={SpotifyData.topArtists} id="topArtists"/>)
       let ReactApps = {
-        // keySigContainer,
-        main,
-        // meanContainer
+        topTracks,
+        topArtists,
       }         
       res.locals.results = {      
-        topTracks,
-        meanResults,
         ReactApps, 
-        Spotify
+        SpotifyData
       };
       next();
     });
@@ -110,10 +105,10 @@ export default class Results {
     let results = res.locals.results; 
     let Spotify = results.Spotify;
     let ReactApps = results.ReactApps;
-    let meanResults = results.meanResults;
+    // let meanResults = results.meanResults;
     res.render("results", {
       Spotify, 
-      meanResults,
+      // meanResults,
       ReactApps,       
     });
     next();

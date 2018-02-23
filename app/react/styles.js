@@ -1,6 +1,6 @@
 export default {
     root : {
         width : '75rem',
-        margin : '0 auto'
+        margin : '1% auto'
     }
 }
