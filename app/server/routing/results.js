@@ -15,7 +15,6 @@ import MeanStatistics from '../spotify/mean';
 // import MeanContainer from '../../react/mean-container';
 import ReactApp from '../../react/index';
 
-
 const resultsType = spotifyResults.resultsType;
 const requestType = spotifyApi.requestType;
 const headerType = spotifyApi.headerType;

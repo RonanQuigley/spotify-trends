@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  max-width: 256rem; }
+
+#react-apps-container {
+  display: flex;
+  justify-content: space-evenly; }
+
+#react-top-tracks {
+  float: left; }
+
+#react-top-artists {
+  float: right; }
+
+.react-app {
+  width: 75rem; }

@@ -12,4 +12,7 @@ export default class Utilities {
     return string.replace(/(?:^|\.?)([A-Z])/g, 
         (x,y) => {return "-" + y.toLowerCase()}).replace(/^_/, "");
   }
+  static capitaliseWords(string){
+    return string.replace(/\b\w/g, l => l.toUpperCase())
+  }
 }

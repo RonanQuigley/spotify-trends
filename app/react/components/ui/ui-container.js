@@ -9,7 +9,6 @@ import { Paper } from "material-ui";
 class UIContainer extends React.PureComponent {
   render() {
     const { id, data, value, onChange, onChangeSwipe, classes } = this.props;
-
     return (
       <React.Fragment>
         <Paper classes={{ root: classes.root }}>

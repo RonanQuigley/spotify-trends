@@ -24,7 +24,7 @@ class ScrollElement extends React.PureComponent {
               <Typography variant="subheading">{data.name}</Typography>
               <Popularity popularity={data.popularity} data={data} />
               <Typography variant="caption">
-                {data.genres ? data.genres : null}
+                {data.genres ? Utilities.capitaliseWords(data.genres) : null}
               </Typography>
             </div>
             <div className={classes.cardTextRight}>
