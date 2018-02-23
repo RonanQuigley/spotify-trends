@@ -1,4 +1,4 @@
-<script src="scripts/results.js"></script>
+<script src="scripts/results/results.js"></script>
 <link rel="stylesheet" href="styles/results.css">
 
 <p>This is a results page</p>
@@ -8,17 +8,24 @@
     OTHERWISE REACT WILL THROW WARNING ABOUT SERVER CLIENT MISMATCHES
 --}}
 
-{{#if Spotify}}  
-    {{> spotify-results obj=Spotify}}
-{{/if}}
+
+
+
 
 {{#if ReactApps}}
+
     <div class="react-apps-container">
         {{~#each ReactApps~}}
-            <div id="react-{{camelCaseToID @key}}">
+            <div id="react-{{camelCaseToID @key}}" class="react-app">
                 {{~{this}~}}
             </div>           
         {{~/each~}}
+
     </div>
-   <script src="scripts/react-bundle.min.js"></script>
+
+   <script src="scripts/results/react-bundle.min.js"></script>
 {{/if}}
+
+
+{{!-- 
+{{> spotify-results obj=Spotify}} --}}

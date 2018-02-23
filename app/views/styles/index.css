@@ -1,49 +1,9 @@
 * {
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 html {
-  font-size: 62.5%;
-}
-
-body {
-  background-color: #fff;
-}
-
-h1, h2, h3, h4, h5, ul, li, p {
-  margin: 0;
-  padding: 0;
-}
-
-h1 {
-  font-size: 3rem;
-  text-align: center;
-  margin: 2%;
-}
-
-p {
-  font-size: 3rem;
-  text-align: center;
-  margin: 2%;
-}
-
-a {
-  font-size: 2rem;
-  display: block;
-  text-align: center;
-}
-
-li {
-  font-size: 2rem;
-  list-style-type: none;
-}
-
-img {
-  object-fit: cover;
-}
+  font-size: 62.5%; }
 
 #login-wrapper {
   height: auto;
-  margin: 0 auto;
-}
-/*# sourceMappingURL=index.css.map */
+  margin: 0 auto; }

@@ -88,7 +88,9 @@ function sendResultsForClientSideReact(request, response){
 
   app.get("/react", (req, res) => {
     res.send({
-      meanResults : response.locals.results.meanResults
+      meanResults : response.locals.results.meanResults,
+      topTracks : response.locals.results.topTracks,
+      Spotify :   response.locals.results.Spotify
     }).end();
     response.end();
   })

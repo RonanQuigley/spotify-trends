@@ -2,12 +2,19 @@ import spotifyResults from '..//spotify/spotify-results';
 import spotifyApi from '..//spotify/spotify-api';
 import Debug from 'debug';
 import utilities from '../utilities';
-import KeySigContainer from '../../react/key-sig-container';
-import MeanContainer from '../../react/mean-container';
+
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Tally from '../spotify/tally';
 import MeanStatistics from '../spotify/mean';
+
+
+// react components 
+// NEED TO UPDATE DIRECTORIES
+// import KeySigContainer from '../../react/key-sig-container';
+// import MeanContainer from '../../react/mean-container';
+import ReactApp from '../../react/index';
+
 
 const resultsType = spotifyResults.resultsType;
 const requestType = spotifyApi.requestType;
@@ -69,29 +76,32 @@ export default class Results {
   static processSpotifyData(req, res, next) {
     let results = res.locals.results;
     let accessToken = res.locals.accessToken;
-    if (utilities.isObjectEmpty(results)) throw "spotifyResults object is empty";
+    if (utilities.isObjectEmpty(results)) throw "spotifyResults object is empty";  
     let topArtists = spotifyResults.getRelevantData(results.topArtists, resultsType.ARTISTS);
     let topTracks = spotifyResults.getRelevantData(results.topTracks, resultsType.TRACKS);
     spotifyApi.getAudioFeatures(accessToken, results.topTracks, (audioFeatures) => {    
       let statistics = spotifyResults.getStatistics(audioFeatures, ["key", "mode"]);
-    
       const meanStatistics = new MeanStatistics();
+      
       let meanResults = meanStatistics.getMean(audioFeatures, MeanStatistics.types);    
-      let keySigContainer = ReactDOM.renderToString(<KeySigContainer statistics={statistics}/>);
-      let meanContainer = ReactDOM.renderToString(<MeanContainer/>) 
+      // let keySigContainer = ReactDOM.renderToString(<KeySigContainer statistics={statistics}/>);
+      // let meanContainer = ReactDOM.renderToString(<MeanContainer/>) 
 
       let Spotify = {
         topArtists,
         topTracks,
       }
+      let main = ReactDOM.renderToString(<ReactApp data={Spotify.topTracks} id="topTracks"/>)
       let ReactApps = {
         // keySigContainer,
-        meanContainer
+        main,
+        // meanContainer
       }         
       res.locals.results = {      
-        Spotify,
+        topTracks,
         meanResults,
         ReactApps, 
+        Spotify
       };
       next();
     });

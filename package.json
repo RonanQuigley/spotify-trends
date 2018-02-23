@@ -3,17 +3,20 @@
   "version": "1.0.0",
   "main": "./build/server/app.js",
   "dependencies": {
-    "cookie-parser": "^1.4.3",
     "es6-promise": "^4.2.4",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "hard-source-webpack-plugin": "^0.5.16",
     "isomorphic-fetch": "^2.2.1",
+    "jss": "^9.8.0",
+    "material-ui": "^1.0.0-beta.34",
+    "material-ui-icons": "^1.0.0-beta.17",
     "morgan": "^1.9.0",
     "nodemon": "^1.14.11",
     "querystring": "^0.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-swipeable-views": "^0.12.12",
     "reload": "^2.2.2",
     "request": "^2.83.0",
     "source-map-support": "^0.5.3",
@@ -31,8 +34,11 @@
     "babel-preset-stage-3": "^6.24.1",
     "babel-watch": "^2.0.7",
     "dotenv": "^4.0.0",
+    "gulp": "^3.9.1",
+    "gulp-cli": "^2.0.1",
+    "gulp-sass": "^3.1.0",
     "mkdirp": "^0.5.1",
-    "mongodb": "^3.0.1",
+    "node-sass": "^4.7.2",
     "npm-run-all": "^4.1.2",
     "util": "^0.10.3",
     "webpack": "^3.10.0"
@@ -40,29 +46,25 @@
   "config": {
     "ext": "js,jsx,css,scss,hbs"
   },
-  "babel": {
-    "presets": [
-      "env, stage-0, react"
-    ],
-    "sourceMaps": true,
-    "retainLines": true
-  },
   "scripts": {
     "copy:views": "mkdirp ./build/views && cp -R ./app/views/. ./build/views",
-    "build:react-client": "webpack --progress --colors",
+    "build:react-client:prod": "webpack --config webpack.config.prod.js --progress --colors",
+    "build:react-client:dev": "webpack --config webpack.config.dev.js --progress --colors",
     "build:server": "babel ./app/server -d ./build/server --source-maps --watch",
     "build:react-server": "babel ./app/react/ -d ./build/react/ --ignore react-client.js --source-maps --watch",
-    "build:all": "npm-run-all -p build:server build:react-server build:react-client",
+    "build:all:dev": "npm-run-all -p build:server build:react-server build:react-client:dev",
+    "build:all:prod": "npm-run-all -p build:server build:react-server build:react-client:prod",
     "nodemon:views-dir": "nodemon -e %npm_package_config_ext% --watch app/views/ --exec npm run copy:views",
     "nodemon:build-dir:debug": "nodemon -e %npm_package_config_ext% --watch build/ --exec npm run start:debug",
     "nodemon:build-dir:no-debug": "nodemon -e %npm_package_config_ext% --watch build/  --exec npm run start",
-    "start:build:watch:debug": "npm-run-all -p build:all nodemon:views-dir nodemon:build-dir:debug",
-    "start:build:watch:no-debug": "npm-run-all -p build:all nodemon:views-dir nodemon:build-dir:no-debug",
+    "start:build:watch:debug": "npm-run-all -p build:all:dev nodemon:views-dir nodemon:build-dir:debug",
+    "start:build:watch:no-debug": "npm-run-all -p build:all:dev nodemon:views-dir nodemon:build-dir:no-debug",
     "start:watch:no-debug": "npm-run-all -p nodemon:views-dir nodemon:build-dir:no-debug",
     "start:debug:prod": "set DEBUG=* & npm run start",
-    "babel-watch": "babel-watch -I app/server/app.js --watch app/",
     "start:prod": "node build/server/app.js",
-    "start:dev": "npm-run-all -p build:react-client babel-watch"
+    "start:dev": "npm-run-all -p build:react-client:dev babel-watch",
+    "babel-watch": "babel-watch app/server/app.js --watch app/",
+    "gulp": "gulp"
   },
   "author": "Ronan Quigley",
   "license": "ISC",
