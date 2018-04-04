@@ -1,9 +1,9 @@
-import path from "path";
+import path from 'path';
 
 export default {
     resolve: {
         alias: {
-            common: path.join(__dirname, "./../src/common")
+            common: path.join(__dirname, './../src/common')
         }
     }
 };
