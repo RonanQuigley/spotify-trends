@@ -3,6 +3,7 @@ import morgan from 'morgan';
 // colors modifies the string prototype
 // this will prevent eslint throwing no-unused-var errors
 import 'colors';
+import { getHostName } from './utilities';
 const app = express();
 
 if (process.env.DEBUG === 'true') {
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // let our unit tests handle listening
 if (process.env.NODE_ENV !== 'testing') {
-    app.listen(process.env.PORT || 3000, 'localhost', function(err) {
+    app.listen(process.env.PORT || 3000, getHostName(), function(err) {
         if (err) throw err;
         const addr = this.address();
         console.log('Listening at http://%s:%d', addr.address, addr.port);
