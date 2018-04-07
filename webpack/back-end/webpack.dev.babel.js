@@ -9,7 +9,7 @@ const dev = {
     // needed for mocha-webpack
     devtool: 'inline-cheap-eval-source-map',
     plugins: [
-        // need to specify NODE_ENV otherwise it will show undefined in code
+        // need to specify env vars otherwise it will show undefined in code
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'development'
         })

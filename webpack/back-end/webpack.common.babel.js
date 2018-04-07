@@ -32,8 +32,7 @@ const backEndCommon = {
                     partialDirs: [
                         path.join(
                             __dirname,
-                            '../../src/server/routes/views',
-                            'partials'
+                            '../../src/server/routes/views/partials'
                         )
                     ]
                 }

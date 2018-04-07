@@ -1,8 +1,6 @@
 import express from 'express';
-import index from './index.hbs';
-
-import { getHostName } from '../../utilities';
-import * as middleware from './login-middleware';
+import { getHostName } from '../../../utilities';
+import * as middleware from './middleware';
 const router = express.Router();
 
 router.get('/login', ...Object.values(middleware));

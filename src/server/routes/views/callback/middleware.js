@@ -1,5 +1,5 @@
 function redirect(req, res, next) {
-    res.redirect(200, '/results');
+    res.redirect(302, '/results');
 }
 
 export { redirect };
