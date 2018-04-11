@@ -1,10 +1,8 @@
 {
-  "name": "isomorphic-hot-reloading-boilerplate",
+  "name": "spotify",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/RonanQuigley/isomorphic-hot-reload-boilerplate.git",
-  "author": "ronanquigley <info@ronanquigley.com>",
-  "license": "MIT",
+  "description": "",
+  "main": "./src/index.js",
   "dependencies": {
     "chai": "^4.1.2",
     "chokidar": "^2.0.2",
@@ -17,6 +15,7 @@
     "npm-run-all": "^4.1.2",
     "opn": "^5.3.0",
     "query-string": "^6.0.0",
+    "querystring": "^0.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.0",
@@ -24,7 +23,7 @@
     "sinon": "^4.4.8",
     "sinon-chai": "^3.0.0",
     "source-map-support": "^0.5.4",
-    "typescript": "2.9.0-dev.20180407",
+    "typescript": "2.4.2",
     "webpack": "^4.2.0",
     "webpack-cli": "^2.0.13",
     "webpack-dev-middleware": "^3.0.1",
@@ -70,16 +69,22 @@
     "build:front-end": "webpack --config webpack/front-end/webpack.prod.babel.js",
     "build:full-stack": "webpack --config webpack/full-stack/webpack.babel.js",
     "build:full-stack:start": "npm-run-all -s build:full-stack start:prod",
-    "start:prod": "node ./dist/server.js",
-    "start": "cross-env NODE_ENV=development node --require @babel/register --require dotenv/config ./src/index.js",
+    "start:prod": "node DEBUG=false ./dist/server.js",
+    "start": "cross-env NODE_ENV=development DEBUG=true node --require @babel/register --require dotenv/config ./src/index.js",
     "watch:lint": "cross-env node node_modules/eslint-watch/bin/esw -w --fix",
     "test:front-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
-    "test:back-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
+    "test:back-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/**/*.test.js\"",
     "test:full-stack": "cross-env NODE_ENV=testing DEBUG=false npm-run-all -p test:front-end test:back-end",
     "test": "cross-env NODE_ENV=testing DEBUG=false mocha --watch --require @babel/register test.js"
   },
-  "bugs": {
-    "url": "https://github.com/RonanQuigley/isomorphic-hot-reload-boilerplate/issues"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RonanQuigley/spotify-trends.git"
   },
-  "homepage": "https://github.com/RonanQuigley/isomorphic-hot-reload-boilerplate#readme"
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RonanQuigley/spotify-trends/issues"
+  },
+  "homepage": "https://github.com/RonanQuigley/spotify-trends#readme"
 }

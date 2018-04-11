@@ -1,20 +1,19 @@
-function redirect(req, res, next) {
-    res.redirect(302, '/results');
+import * as api from '../../../api/';
+import { stringify } from 'querystring';
+
+export async function authUser(req, res, next) {
+    let authCode = req.query.code;
+    let authOptions = api.generateAuthOptions(authCode);
+    res.locals.tokens = await api.requestTokens(authOptions);
+    next();
 }
 
-export { redirect };
-
-// // log in successful, spotify authorizes access
-// app.get("/callback", (req, res) => {
-
-//     if (!authCode) throw 'authCode is undefined';
-//     // make a request for tokens
-//     let authOptions = spotifyApi.generateAuthHeader(headerType.LOGIN, authCode, null, null);
-//     spotifyApi.requestTokens(authOptions, (obj) => {
-//       res.redirect('results?' + utilities.generateQueryString({
-//         access_token : obj.accessToken,
-//         refresh_token : obj.refreshToken,
-//         expiry_in : obj.expiryIn
-//       }));
-//     });
-//   });
+// must be placed last in code
+export function redirect(req, res, next) {
+    let qs = stringify({
+        accessToken: res.locals.tokens.accessToken,
+        refreshToken: res.locals.tokens.refreshToken,
+        expiryIn: res.locals.tokens.expiryIn
+    });
+    res.redirect(302, '/results?' + qs);
+}

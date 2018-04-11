@@ -7,9 +7,7 @@ const urlString = stringify({
     redirect_uri: process.env.REDIRECT_URI // where spotify should redirect to
 });
 
-function authUser(req, res, next) {
+export function authUser(req, res, next) {
     // server requests authorization
     res.redirect('https://accounts.spotify.com/authorize?' + urlString);
 }
-
-export { authUser };
