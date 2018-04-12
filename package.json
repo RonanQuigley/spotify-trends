@@ -4,6 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "dependencies": {
+    "@types/chai-as-promised": "^7.1.0",
     "chai": "^4.1.2",
     "chokidar": "^2.0.2",
     "clean-webpack-plugin": "^0.1.19",
@@ -43,6 +44,7 @@
     "@babel/register": "7.0.0-beta.44",
     "@babel/runtime": "7.0.0-beta.44",
     "babel-loader": "^8.0.0-beta.0",
+    "chai-as-promised": "^7.1.1",
     "cross-env": "^5.1.4",
     "dotenv": "^5.0.1",
     "dotenv-webpack": "^1.5.5",
@@ -73,9 +75,9 @@
     "start": "cross-env NODE_ENV=development DEBUG=true node --require @babel/register --require dotenv/config ./src/index.js",
     "watch:lint": "cross-env node node_modules/eslint-watch/bin/esw -w --fix",
     "test:front-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
-    "test:back-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/**/*.test.js\"",
+    "test:back-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
     "test:full-stack": "cross-env NODE_ENV=testing DEBUG=false npm-run-all -p test:front-end test:back-end",
-    "test": "cross-env NODE_ENV=testing DEBUG=false mocha --watch --require @babel/register test.js"
+    "test": "mocha-webpack --help"
   },
   "repository": {
     "type": "git",

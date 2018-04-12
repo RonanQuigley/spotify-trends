@@ -34,52 +34,62 @@ function generateStubs() {
 
 function resetState() {
     sandbox.restore();
+    sandbox.resetBehavior();
+    sandbox.resetHistory();
     res.locals = {};
     res.body = null;
 }
 
-beforeEach(() => {
+function initTokens() {
     res.locals.tokens = {
         accessToken: 'fake',
         refreshToken: 'fake',
         expiryIn: 'fake'
     };
-    generateStubs();
-    middleware.redirect(req, res, nextStub);
-});
+}
 
-afterEach(function() {
-    resetState();
-});
-
-describe('GET /callback', () => {
-    it('should exist and respond', async () => {
-        await agent
-            .get('/callback')
-            .set('Accept', 'text/html')
-            .expect('Content-Type', /html/)
-            .expect(302);
+describe('callback route', () => {
+    beforeEach(() => {
+        initTokens();
+        generateStubs();
     });
-});
 
-describe('middleware', () => {
-    describe('redirect', () => {
-        it('should redirect to results', () => {
-            expect(redirectStub).to.be.calledOnce;
-        });
-        it('should generate a query string', () => {
-            expect(qsStub).to.be.calledOnce;
+    afterEach(function() {
+        resetState();
+    });
+
+    describe('endpoint', () => {
+        it('should exist and respond', async () => {
+            await agent
+                .get('/callback')
+                .set('Accept', 'text/html')
+                .expect('Content-Type', /html/)
+                .expect(302)
+                .catch(err => {
+                    throw err;
+                });
         });
     });
-    describe('auth user', () => {
-        beforeEach(async () => {
-            middleware.authUser(req, res, nextStub);
+
+    describe('middleware', () => {
+        describe('redirect', () => {
+            beforeEach(() => {
+                middleware.redirect(req, res, nextStub);
+            });
+            it('should redirect to results', () => {
+                expect(redirectStub).to.be.calledOnce;
+            });
+            it('should generate a query string', () => {
+                expect(qsStub).to.be.calledOnce;
+            });
         });
-        it('should pass tokens into res locals', () => {
-            expect(res.locals.tokens).to.be.a('object');
-        });
-        it('should call next', () => {
-            expect(nextStub).to.be.calledOnce;
+        describe('auth user', () => {
+            beforeEach(async () => {
+                middleware.authUser(req, res, nextStub);
+            });
+            it('should call next', async () => {
+                expect(nextStub).to.be.calledOnce;
+            });
         });
     });
 });

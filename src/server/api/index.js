@@ -20,17 +20,18 @@ export function generateAuthOptions(authCode) {
 }
 
 export async function requestTokens(authOptions) {
-    let res;
+    // let response;
     try {
-        res = await request.post(authOptions);
+        let res = await request.post(authOptions);
+        return {
+            accessToken: res.body.access_token,
+            refreshToken: res.body.refresh_token,
+            expiryIn: res.body.expires_in
+        };
     } catch (e) {
-        throw e;
+        return e;
     }
-    return {
-        accessToken: res.body.access_token,
-        refreshToken: res.body.refresh_token,
-        expiryIn: res.body.expires_in
-    };
+    // return response;
 }
 
 export function fake() {

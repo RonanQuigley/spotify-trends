@@ -16,17 +16,16 @@ let req;
 let res;
 let next = () => {};
 
-beforeEach(() => {
-    req = httpMocks.createRequest();
-    res = httpMocks.createResponse();
-    resStub = sandbox.stub(res, 'send');
-});
+describe('results route', () => {
+    beforeEach(() => {
+        req = httpMocks.createRequest();
+        res = httpMocks.createResponse();
+        resStub = sandbox.stub(res, 'send');
+    });
 
-afterEach(() => {
-    sandbox.restore();
-});
-
-describe('GET /results', () => {
+    afterEach(() => {
+        sandbox.restore();
+    });
     describe('endpoint', () => {
         it('should exist and respond', async () => {
             await agent

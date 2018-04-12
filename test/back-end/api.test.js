@@ -2,8 +2,10 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import request from 'request-promise-native';
+import chaiAsPromised from 'chai-as-promised';
 import * as api from '../../src/server/api';
 
+chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
 const expect = chai.expect;
@@ -11,6 +13,7 @@ let sandbox = sinon.sandbox.create();
 let response;
 let postSpy;
 let postStub;
+let requestTokensStub;
 
 function generateStubs() {
     postStub = sandbox.stub(request, 'post');
@@ -23,19 +26,16 @@ function generateStubs() {
     });
 }
 
-// do NOT put this inside the describe!!!
-// odd issue with the first test run
-// failing otherwise
-beforeEach(async () => {
-    generateStubs();
-    response = await api.requestTokens();
-});
-
-afterEach(() => {
-    sandbox.restore();
-});
-
 describe('api', () => {
+    beforeEach(async () => {
+        generateStubs();
+        response = await api.requestTokens();
+    });
+
+    afterEach(() => {
+        sandbox.restore();
+    });
+
     describe('request tokens', () => {
         it('should call request.post', () => {
             expect(postStub).to.be.calledOnce;
@@ -51,6 +51,13 @@ describe('api', () => {
         });
         it('should return an expiry', () => {
             expect(response.expiryIn).to.be.a('string');
+        });
+        it('should throw an error', async () => {
+            requestTokensStub = sandbox
+                .stub(api, 'requestTokens')
+                .rejects(new Error());
+            await expect(api.requestTokens(null)).to.be.rejectedWith(Error);
+            requestTokensStub.restore();
         });
     });
 

@@ -30,16 +30,16 @@ function createHttpMocks() {
     res = httpMocks.createResponse();
 }
 
-beforeEach(function() {
-    createHttpMocks();
-    generateStubs();
-});
+describe('login route', () => {
+    beforeEach(function() {
+        createHttpMocks();
+        generateStubs();
+    });
 
-afterEach(function() {
-    sandbox.restore();
-});
+    afterEach(function() {
+        sandbox.restore();
+    });
 
-describe('GET /login', () => {
     describe('endpoint', () => {
         it('should exist and respond', async () => {
             await agent
@@ -49,11 +49,12 @@ describe('GET /login', () => {
                 .expect(302);
         });
     });
-
-    describe('authUser', () => {
-        it('should redirect to callback', () => {
-            middleware.authUser(req, res, nextStub);
-            expect(spyStub).to.be.calledOnce;
+    describe('middleware', () => {
+        describe('authUser', () => {
+            it('should redirect to callback', () => {
+                middleware.authUser(req, res, nextStub);
+                expect(spyStub).to.be.calledOnce;
+            });
         });
     });
 });

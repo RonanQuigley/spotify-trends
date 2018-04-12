@@ -18,18 +18,18 @@ let res;
 let spy;
 let next;
 
-beforeEach(function() {
-    req = httpMocks.createRequest();
-    res = httpMocks.createResponse();
-    spy = sandbox.spy(res, 'redirect');
-    next = sandbox.spy();
-});
+describe('index route', () => {
+    beforeEach(function() {
+        req = httpMocks.createRequest();
+        res = httpMocks.createResponse();
+        spy = sandbox.spy(res, 'redirect');
+        next = sandbox.spy();
+    });
 
-afterEach(function() {
-    sandbox.restore();
-});
+    afterEach(function() {
+        sandbox.restore();
+    });
 
-describe('GET /', () => {
     describe('endpoint', () => {
         it('should exist and respond', async () => {
             await agent
