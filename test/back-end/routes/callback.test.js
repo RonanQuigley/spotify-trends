@@ -22,20 +22,16 @@ let qsStub;
 let apiStub;
 let nextStub;
 let redirectStub;
-let fake;
 
 function generateStubs() {
     qsStub = sandbox.stub(queryString, 'stringify');
-    fake = sandbox.stub(api, 'fake').returns('called by stub');
-    apiStub = sandbox.stub(api, 'requestTokens').returns({});
+    apiStub = sandbox.stub(api, 'requestTokens').resolves({});
     nextStub = sandbox.stub();
     redirectStub = sandbox.stub(res, 'redirect');
 }
 
 function resetState() {
     sandbox.restore();
-    sandbox.resetBehavior();
-    sandbox.resetHistory();
     res.locals = {};
     res.body = null;
 }
@@ -64,10 +60,7 @@ describe('callback route', () => {
                 .get('/callback')
                 .set('Accept', 'text/html')
                 .expect('Content-Type', /html/)
-                .expect(302)
-                .catch(err => {
-                    throw err;
-                });
+                .expect(302);
         });
     });
 

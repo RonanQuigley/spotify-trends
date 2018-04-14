@@ -1,7 +1,7 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import request from 'request-promise-native';
+import rp from 'request-promise';
 import chaiAsPromised from 'chai-as-promised';
 import * as api from '../../src/server/api';
 
@@ -11,18 +11,14 @@ chai.use(sinonChai);
 const expect = chai.expect;
 let sandbox = sinon.sandbox.create();
 let response;
-let postSpy;
 let postStub;
-let requestTokensStub;
 
 function generateStubs() {
-    postStub = sandbox.stub(request, 'post');
+    postStub = sandbox.stub(rp, 'post');
     postStub.resolves({
-        body: {
-            access_token: 'stub',
-            refresh_token: 'stub',
-            expires_in: 'stub'
-        }
+        access_token: 'stub',
+        refresh_token: 'stub',
+        expires_in: 'stub'
     });
 }
 
@@ -52,12 +48,9 @@ describe('api', () => {
         it('should return an expiry', () => {
             expect(response.expiryIn).to.be.a('string');
         });
-        it('should throw an error', async () => {
-            requestTokensStub = sandbox
-                .stub(api, 'requestTokens')
-                .rejects(new Error());
-            await expect(api.requestTokens(null)).to.be.rejectedWith(Error);
-            requestTokensStub.restore();
+        it('should be able to be rejected', async () => {
+            postStub.rejects();
+            await expect(api.requestTokens(null)).to.be.rejected;
         });
     });
 
@@ -69,7 +62,7 @@ describe('api', () => {
         it('should return an object', () => {
             expect(result).to.be.a('object');
         });
-        it('should contain a token api url', () => {
+        it('should contain a token api uri', () => {
             expect(result.url).to.equal(
                 'https://accounts.spotify.com/api/token'
             );

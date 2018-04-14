@@ -3,21 +3,15 @@
     "configurations": [
         {
             "type": "node",
-            "request": "launch",
-            "name": "Debug Prod",
-            "smartStep": true,
-            "program": "${workspaceFolder}/dist/server.js",
+            "request": "attach",
+            "name": "Attach by Process ID",
             "skipFiles": [
                 "${workspaceRoot}/node_modules/**/*.js",
                 "<node_internals>/**/*.js"
             ],
-            "envFile": "${workspaceFolder}/.env",
-            "env": {                
-                "NODE_ENV" : "production",
-            },
-            "outFiles": [
-                "${workspaceRoot}/dist/*.{js,.js.map}"
-            ]
+            "smartStep": true,
+            "processId": "${command:PickProcess}",
+            "outFiles": [ "${workspaceFolder}/dist/**/*.js" ]
         },
         {
             "type": "node",
@@ -31,13 +25,35 @@
             ],
             "envFile": "${workspaceFolder}/.env",
             "env": {
-                "NODE_ENV" : "development",        
+                "NODE_ENV" : "development",
+                "DEBUG" : "false"        
             },
             "runtimeArgs": [
-                "--nolazy",
+                "--lazy",
                 "--require",
                 "@babel/register"
             ],
+            "outFiles": [
+                "${workspaceRoot}/dist/*.{js,.js.map}"
+            ]
         },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Prod",
+            "smartStep": true,
+            "program": "${workspaceFolder}/dist/server.js",
+            "skipFiles": [
+                "${workspaceRoot}/node_modules/**/*.js",
+                "<node_internals>/**/*.js"
+            ],
+            "envFile": "${workspaceFolder}/.env",
+            "env": {                
+                "NODE_ENV" : "production",
+                "DEBUG" : "false"
+            },
+
+        },
+
     ]
 }

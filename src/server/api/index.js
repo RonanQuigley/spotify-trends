@@ -1,6 +1,6 @@
-import request from 'request-promise-native';
+import rp from 'request-promise';
 
-export function generateAuthOptions(authCode) {
+function generateAuthOptions(authCode) {
     return {
         url: 'https://accounts.spotify.com/api/token',
         form: {
@@ -19,22 +19,16 @@ export function generateAuthOptions(authCode) {
     };
 }
 
-export async function requestTokens(authOptions) {
-    // let response;
-    try {
-        let res = await request.post(authOptions);
-        return {
-            accessToken: res.body.access_token,
-            refreshToken: res.body.refresh_token,
-            expiryIn: res.body.expires_in
-        };
-    } catch (e) {
-        return e;
-    }
-    // return response;
+async function requestTokens(authOptions) {
+    let result = await rp.post(authOptions);
+    return {
+        accessToken: result.access_token,
+        refreshToken: result.refresh_token,
+        expiryIn: result.expires_in
+    };
 }
+export { generateAuthOptions, requestTokens };
 
-export function fake() {
-    console.log('CALLED ANYWAYS');
-    return 'foo';
-}
+// process.on('unhandledRejection', (reason, p) => {
+//     console.log('Unhandled Rejection at:', p, 'reason:', reason);
+// });
