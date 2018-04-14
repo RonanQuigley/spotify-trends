@@ -14,7 +14,6 @@ async function authUser(req, res, next) {
         .catch(next);
 }
 
-// must be placed last in code
 function redirect(req, res, next) {
     let qs = stringify({
         accessToken: res.locals.tokens.accessToken,
