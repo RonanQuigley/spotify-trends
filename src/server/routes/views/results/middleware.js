@@ -1,3 +1,5 @@
+import results from './results.hbs';
+
 export function render(req, res, next) {
-    res.send('This is a results page');
+    res.send(results());
 }
