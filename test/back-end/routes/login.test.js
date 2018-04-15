@@ -3,9 +3,9 @@ import app from '../../../src/server/';
 import * as api from '../../../src/server/api';
 import * as middleware from '../../../src/server/routes/views/login/middleware';
 import chai from 'chai';
+import httpMocks from 'node-mocks-http';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import httpMocks from 'node-mocks-http';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;

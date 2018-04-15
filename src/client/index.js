@@ -1,21 +1,9 @@
-import * as results from './results';
+import './pages/results';
 
-let res = results.getParameterByName('accessToken');
-
-console.log(res);
-
-function checkForServerChanges() {
-    // do not try to import this as it'll show up in production builds
-    const webpackHotMiddleware = require('webpack-hot-middleware/client');
-    webpackHotMiddleware.subscribe(message => {
-        if (message.reload === true) {
-            window.location.reload();
-        }
-    });
-}
+import './pages/index';
 
 if (process.env.NODE_ENV === 'development') {
-    checkForServerChanges();
+    require('./dev');
 }
 
 // import React from 'react';
