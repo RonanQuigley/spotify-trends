@@ -1,27 +1,28 @@
-import * as Token from '../../utilities/tokens';
+import 'whatwg-fetch';
 
-const names = Token.names;
-
-export function refreshAccessToken() {
-    // let expiredAccessToken = Token.getToken(names.accessToken);
-    // let refreshToken = Token.getToken(names.refreshToken);
-    // if (expiredAccessToken && refreshToken) {
-    // }
+export function fetchData(endpoint, body) {
+    return window.fetch(endpoint, body);
 }
 
-export function redirect(page, accessToken) {
-    let queryString = '?accessToken' + accessToken;
-    window.location.assign(page + queryString);
+export async function requestRefreshTokens(refreshToken) {
+    let body = {};
+
+    // TO DO : add refresh token and expiry
+    fetchData();
 }
 
-export function isExistingUser() {
-    const accessToken = Token.getValidAccessToken();
-    if (accessToken) {
-        this.redirect('results', accessToken);
-    } else {
-        this.refreshAccessToken();
-    }
-}
+// app.get("/refresh", (req, res) => {
+//     // requesting access token from refresh token
+//     let refresh_token = req.headers.refresh_token ? req.headers.refresh_token : req.query.refresh_token;
+//     if(!refresh_token) throw 'missing refresh token - check client side naming';
+//     let authOptions = spotifyApi.generateAuthHeader(headerType.REFRESH, null, null, refresh_token);
+//     spotifyApi.refreshAccessToken(authOptions, (accessToken, expiryIn) => {
+//       res.zsend({
+//         'access_token': accessToken,
+//         'expiry_in' : expiryIn
+//       });
+//     });
+//   });
 
 // window.onload = function(){
 //     // remove the timeout once finished
