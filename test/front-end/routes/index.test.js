@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import * as tokens from '../../../src/client/utilities/tokens';
 import * as index from '../../../src/client/pages/index/index';
+import * as serverFetch from '../../../src/client/utilities/server-fetch';
 import 'whatwg-fetch';
 chai.use(sinonChai);
 
@@ -44,20 +45,23 @@ describe('front end - index page', () => {
             expect(refreshStub).to.be.calledOnce;
         });
     });
-    // describe('refresh access token', () => {
-    //     let tokenStub;
-    //     let fetchStub;
-    //     beforeEach(() => {
-    //         tokenStub = sandbox.stub(tokens);
-    //         fetchStub = sandbox.stub(window, 'fetch');
-    //         fetchStub.resolves({ data: 'foo' });
-    //         index.refreshAccessToken();
-    //     });
-    //     afterEach(() => {
-    //         window.fetch.restore();
-    //     });
-    //     it('should call fetch', () => {
-    //         expect(fetchStub).to.be.called;
-    //     });
-    // });
+    describe('refresh access token', () => {
+        let tokenStub;
+        let newAccessTokenStub;
+        beforeEach(() => {
+            newAccessTokenStub = sandbox
+                .stub(serverFetch, 'getNewAccessToken')
+                .resolves({});
+            tokenStub = sandbox
+                .stub(tokens, 'getAccessAndRefreshTokens')
+                .returns({
+                    accessToken: 'fake',
+                    refreshToken: 'fake'
+                });
+            index.refreshAccessToken();
+        });
+        it('should call for a new access token', () => {
+            expect(newAccessTokenStub).to.be.calledOnce;
+        });
+    });
 });

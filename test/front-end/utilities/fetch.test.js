@@ -34,10 +34,30 @@ describe('front end - server fetch', () => {
 
     describe('request for refreshing tokens', () => {
         beforeEach(() => {
-            serverFetch.requestRefreshTokens('refresh', {});
+            sandbox.stub(serverFetch, 'generateHeader').returns({});
+            serverFetch.getNewAccessToken('refresh', {});
         });
-        it('shoud fetch for the data', () => {
+        it('should fetch for the data', () => {
             expect(window.fetch).to.be.calledOnce;
+        });
+        it('should generate a header', () => {
+            expect(serverFetch.generateHeader).to.be.calledOnce;
+        });
+    });
+
+    describe('refresh header', () => {
+        let result = serverFetch.generateHeader('fake refresh', 'fake access');
+        it('should return an object', () => {
+            expect(result).to.be.a('object');
+        });
+        it('should have content-type as json', () => {
+            expect(result.json).to.be.true;
+        });
+        it('should contain an access token', () => {
+            expect(result.headers.accessToken).to.be.a('string');
+        });
+        it('should contain a refresh token', () => {
+            expect(result.headers.refreshToken).to.be.a('string');
         });
     });
 });

@@ -4,11 +4,20 @@ export function fetchData(endpoint, body) {
     return window.fetch(endpoint, body);
 }
 
-export async function requestRefreshTokens(refreshToken) {
-    let body = {};
+export function generateHeader(refreshToken, expiredToken) {
+    return {
+        headers: {
+            refreshToken: refreshToken,
+            accessToken: expiredToken
+        },
+        json: true
+    };
+}
 
-    // TO DO : add refresh token and expiry
-    fetchData();
+export async function getNewAccessToken(refreshToken, expiredToken) {
+    let header = this.generateHeader(refreshToken, expiredToken);
+    let newTokens = await fetchData('/refresh', header);
+    console.log(newTokens);
 }
 
 // app.get("/refresh", (req, res) => {

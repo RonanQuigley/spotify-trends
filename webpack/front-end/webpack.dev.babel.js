@@ -5,7 +5,7 @@ import common from './webpack.common.babel';
 const dev = {
     mode: 'development',
     entry: ['whatwg-fetch', 'webpack-hot-middleware/client', './src/client'],
-    devtool: 'inline-source-map',
+    devtool: 'inline-module-source-map',
     plugins: [new webpack.HotModuleReplacementPlugin()]
 };
 

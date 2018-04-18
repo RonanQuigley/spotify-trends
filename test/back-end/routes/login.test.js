@@ -31,12 +31,12 @@ function createHttpMocks() {
 }
 
 describe('login route', () => {
-    beforeEach(function() {
+    beforeEach(() => {
         createHttpMocks();
         generateStubs();
     });
 
-    afterEach(function() {
+    afterEach(() => {
         sandbox.restore();
     });
 

@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
 import merge from 'webpack-merge';
+import DotEnv from 'dotenv-webpack';
 import common from '../webpack.common';
 const dist = path.join(__dirname, '../../dist');
 

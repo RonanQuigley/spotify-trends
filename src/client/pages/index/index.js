@@ -1,12 +1,14 @@
 import * as Token from '../../utilities/tokens';
-
+import { getNewAccessToken } from '../../utilities/server-fetch';
 const names = Token.names;
 
 export function refreshAccessToken() {
-    // let expiredAccessToken = Token.getToken(names.accessToken);
-    // let refreshToken = Token.getToken(names.refreshToken);
-    // if (expiredAccessToken && refreshToken) {
-    // }
+    // get the expired access token and the refresh token
+    let tokens = Token.getAccessAndRefreshTokens();
+    if (tokens.accessToken && tokens.refreshToken) {
+        getNewAccessToken(tokens.refreshToken);
+    } else {
+    }
 }
 
 export function redirect(page, accessToken) {
