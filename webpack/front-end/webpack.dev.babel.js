@@ -10,8 +10,13 @@ const dev = {
         index: ['whatwg-fetch', './src/client/pages/index/'],
         results: ['whatwg-fetch', './src/client/pages/results/']
     },
-    devtool: 'inline-module-source-map',
-    plugins: [new webpack.HotModuleReplacementPlugin()]
+    devtool: 'inline-cheap-module-source-map',
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: process.env.NODE_ENV
+        })
+    ]
 };
 
 export default merge(common, dev);

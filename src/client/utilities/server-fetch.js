@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 
 export function fetchData(endpoint, body) {
+    // we wrap window.fetch in a function for unit testing purposes
     return window.fetch(endpoint, body);
 }
 
@@ -15,9 +16,12 @@ export function generateHeader(refreshToken, expiredToken) {
 }
 
 export async function getNewAccessToken(refreshToken, expiredToken) {
-    let header = this.generateHeader(refreshToken, expiredToken);
-    let newTokens = await fetchData('/refresh', header);
-    console.log(newTokens);
+    const header = this.generateHeader(refreshToken, expiredToken);
+    const tokens = await this.fetchData('/refresh', header);
+    return {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.expiryIn
+    };
 }
 
 // app.get("/refresh", (req, res) => {
