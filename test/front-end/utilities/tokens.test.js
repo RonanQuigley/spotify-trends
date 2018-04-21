@@ -14,11 +14,15 @@ describe('front end - Tokens', () => {
     });
     describe('refresh access token', () => {
         beforeEach(() => {
-            sandbox.stub(serverFetch, 'getNewAccessToken').resolves({});
-            let fakeTokens = {
+            sandbox.stub(serverFetch, 'getNewAccessToken').resolves({
+                accessToken: 'fake',
+                expiryIn: 3600
+            });
+            const fakeTokens = {
                 accessToken: 'fake',
                 refreshToken: 'fake'
             };
+            sandbox.stub(Tokens, 'updateAccessToken');
             Tokens.refreshAccessToken(fakeTokens);
         });
         describe('outcome - expired token', () => {

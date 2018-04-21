@@ -1,7 +1,7 @@
-// based off of : http://kaaes.github.io/albums-availability/#18qY7zpuNqeXNGywRysjxx
-
 import { getQueryStringElement } from './uri';
 import { getNewAccessToken } from './server-fetch';
+
+import * as User from './user';
 
 export const names = {
     accessToken: 'accessToken',
@@ -15,6 +15,11 @@ export function setToken(name, value) {
 
 export function getToken(name) {
     return localStorage.getItem(name);
+}
+
+export function updateAccessToken(accessToken, expiryIn) {
+    setToken(names.accessToken, accessToken);
+    setToken(names.expiryIn, expiryIn);
 }
 
 export function getAccessAndRefreshTokens() {
@@ -62,9 +67,10 @@ export function updateTokens() {
     }
 }
 
-export function refreshAccessToken(tokens) {
+export async function refreshAccessToken(tokens) {
     if (tokens.accessToken && tokens.refreshToken) {
-        getNewAccessToken(tokens.refreshToken);
+        const results = await getNewAccessToken(tokens.refreshToken);
+        this.updateAccessToken(results.accessToken, results.expiry);
     }
 }
 

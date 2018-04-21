@@ -1,6 +1,5 @@
 import * as Token from './tokens';
 import { getNewAccessToken } from './server-fetch';
-const names = Token.names;
 
 export function redirectUser(page, accessToken) {
     let queryString = '?accessToken' + accessToken;
@@ -8,6 +7,7 @@ export function redirectUser(page, accessToken) {
 }
 
 export function isExistingUser() {
+    const names = Token.names;
     const token = Token.getToken(names.refreshToken);
     return token ? true : false;
 }
