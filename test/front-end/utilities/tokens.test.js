@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import * as Tokens from '../../../src/client/utilities/tokens';
 import * as serverFetch from '../../../src/client/utilities/server-fetch';
+
 chai.use(sinonChai);
 
 const expect = chai.expect;
@@ -29,6 +30,9 @@ describe('front end - Tokens', () => {
             it('should call for a new access token', () => {
                 expect(serverFetch.getNewAccessToken).to.be.calledOnce;
             });
+            // it('should update the tokens', () => {
+            //     expect(Tokens.updateAccessToken).to.be.calledOnce;
+            // });
         });
     });
 });

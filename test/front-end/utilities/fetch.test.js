@@ -36,7 +36,7 @@ describe('front end - server fetch', () => {
         let result;
         beforeEach(async () => {
             sandbox.stub(serverFetch, 'generateHeader').returns({});
-            sandbox.stub(serverFetch, 'fetchData').resolves({
+            sandbox.stub(serverFetch, 'fetchData').returns({
                 accessToken: 'fake',
                 expiryIn: 'fake'
             });

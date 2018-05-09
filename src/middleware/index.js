@@ -39,7 +39,7 @@ watcher.on('ready', () => {
 
 builtDevServer.waitUntilValid(() => {
     open('http://localhost:' + (process.env.PORT || 3000), {
-        // app: ['chrome', '--incognito']
+        app: ['chrome', '--remote-debugging-port=9222']
     });
 });
 

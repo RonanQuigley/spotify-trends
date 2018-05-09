@@ -14,7 +14,7 @@ let sandbox = sinon.sandbox.create();
 let resStub;
 let req;
 let res;
-let next = () => {};
+let next = () => { };
 
 describe('results route', () => {
     beforeEach(() => {

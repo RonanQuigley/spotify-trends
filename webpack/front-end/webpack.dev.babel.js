@@ -10,7 +10,7 @@ const dev = {
         index: ['whatwg-fetch', './src/client/pages/index/'],
         results: ['whatwg-fetch', './src/client/pages/results/']
     },
-    devtool: 'inline-cheap-module-source-map',
+    devtool: 'inline-source-map',
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.EnvironmentPlugin({

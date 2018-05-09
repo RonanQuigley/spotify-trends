@@ -4,7 +4,6 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
-
 const agent = supertest.agent(app);
 const expect = chai.expect;
 

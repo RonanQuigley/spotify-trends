@@ -1,7 +1,7 @@
 import { getQueryStringElement } from './uri';
 import { getNewAccessToken } from './server-fetch';
 
-import * as User from './user';
+console.log('MODULE BEING TESTED');
 
 export const names = {
     accessToken: 'accessToken',
@@ -17,10 +17,11 @@ export function getToken(name) {
     return localStorage.getItem(name);
 }
 
-export function updateAccessToken(accessToken, expiryIn) {
+export const updateAccessToken = (accessToken, expiryIn) => {
+    console.log('NOT STUBBED');
     setToken(names.accessToken, accessToken);
     setToken(names.expiryIn, expiryIn);
-}
+};
 
 export function getAccessAndRefreshTokens() {
     return {
@@ -69,8 +70,12 @@ export function updateTokens() {
 
 export async function refreshAccessToken(tokens) {
     if (tokens.accessToken && tokens.refreshToken) {
-        const results = await getNewAccessToken(tokens.refreshToken);
-        this.updateAccessToken(results.accessToken, results.expiry);
+        try {
+            const results = await getNewAccessToken(tokens.refreshToken);
+            updateAccessToken(results.accessToken, results.expiry);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
