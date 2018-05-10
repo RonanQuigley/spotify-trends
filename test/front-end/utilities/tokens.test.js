@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import * as Tokens from '../../../src/client/utilities/tokens';
 import * as serverFetch from '../../../src/client/utilities/server-fetch';
+
 chai.use(sinonChai);
 
 const expect = chai.expect;
@@ -14,11 +15,9 @@ describe('front end - Tokens', () => {
     });
 
     describe('refresh access token', () => {
+        let stub;
         beforeEach(() => {
-            sandbox.stub(serverFetch, 'getNewAccessToken').resolves({
-                accessToken: 'fake',
-                expiryIn: 3600
-            });
+            stub = sandbox.stub(serverFetch, 'foo');
             const fakeTokens = {
                 accessToken: 'fake',
                 refreshToken: 'fake'
@@ -28,7 +27,7 @@ describe('front end - Tokens', () => {
         });
         describe('outcome - expired token', () => {
             it('should call for a new access token', () => {
-                expect(serverFetch.getNewAccessToken).to.be.calledOnce;
+                expect(stub).to.be.calledOnce;
             });
         });
     });

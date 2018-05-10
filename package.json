@@ -5,6 +5,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@types/chai-as-promised": "^7.1.0",
+    "@types/rewire": "^2.5.28",
     "chai": "^4.1.2",
     "chokidar": "^2.0.2",
     "clean-webpack-plugin": "^0.1.19",
@@ -49,6 +50,7 @@
     "@babel/register": "7.0.0-beta.44",
     "@babel/runtime": "7.0.0-beta.44",
     "babel-loader": "^8.0.0-beta.2",
+    "babel-plugin-rewire": "^1.2.0-rc.1",
     "chai-as-promised": "^7.1.1",
     "cross-env": "^5.1.4",
     "dotenv": "^5.0.1",
@@ -82,7 +84,7 @@
     "test:front-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
     "test:back-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
     "test:full-stack": "cross-env NODE_ENV=testing DEBUG=false npm-run-all -p test:front-end test:back-end",
-    "test": "mocha-webpack --help"
+    "test": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/utilities/user.test.js\""
   },
   "repository": {
     "type": "git",

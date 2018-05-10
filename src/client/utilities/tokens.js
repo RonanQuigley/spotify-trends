@@ -70,7 +70,7 @@ export function updateTokens() {
 export async function refreshAccessToken(tokens) {
     if (tokens.accessToken && tokens.refreshToken) {
         const results = await getNewAccessToken(tokens.refreshToken);
-        this.updateAccessToken(results.accessToken, results.expiry);
+        updateAccessToken(results.accessToken, results.expiry);
     }
 }
 

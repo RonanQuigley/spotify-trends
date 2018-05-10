@@ -11,6 +11,13 @@
       "polyfill" : true
     }]
   ],
+  "env": {
+    "testing" : {
+      "plugins": [
+        "babel-plugin-rewire"
+      ]
+    }
+  },
   "sourceMaps": true,
   "retainLines": true
 }

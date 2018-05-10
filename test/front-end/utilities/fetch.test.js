@@ -11,7 +11,6 @@ const expect = chai.expect;
 const sandbox = sinon.sandbox.create();
 
 describe('front end - server fetch', () => {
-
     beforeEach(() => {
         sandbox.stub(window, 'fetch');
     });
@@ -21,33 +20,36 @@ describe('front end - server fetch', () => {
     });
 
     describe('fetch data', () => {
-        it('should be called with an endpoint', () => {
-            window.fetch.resolves({ data: 'fake' });
-            serverFetch.fetchData('refresh', {});
-            expect(window.fetch.firstCall.args[0]).to.be.a('string');
-        });
         it('should return a promise', () => {
-            window.fetch.returns(new Promise(() => { }, () => { }));
-            let result = serverFetch.fetchData('refresh', {});
+            window.fetch.returns(new Promise(() => {}, () => {}));
+            const result = serverFetch.fetchData('refresh', {});
             expect(result).to.be.a('Promise');
         });
     });
 
     describe('getting a new access token', () => {
         let result;
+        let fetchStub;
+        let headerStub;
         beforeEach(async () => {
-            sandbox.stub(serverFetch, 'generateHeader').returns({});
-            sandbox.stub(serverFetch, 'fetchData').resolves({
+            headerStub = sandbox.stub().returns({});
+            fetchStub = sandbox.stub().resolves({
                 accessToken: 'fake',
                 expiryIn: 'fake'
             });
+            // we need to use rewire to access the functions within
+            // the same module under test; rewire is on the default obj
+            serverFetch.default.__set__({
+                generateHeader: headerStub,
+                fetchData: fetchStub
+            });
             result = await serverFetch.getNewAccessToken('refresh', {});
         });
-        it('should fetch for the data', () => {
-            expect(serverFetch.fetchData).to.be.calledOnce;
-        });
         it('should generate a header', () => {
-            expect(serverFetch.generateHeader).to.be.calledOnce;
+            expect(headerStub).to.be.calledOnce;
+        });
+        it('should fetch for the data', () => {
+            expect(fetchStub).to.be.calledOnce;
         });
         it('should return an accessToken', () => {
             expect(result.accessToken).to.be.a('string');

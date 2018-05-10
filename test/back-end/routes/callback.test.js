@@ -48,7 +48,7 @@ describe('callback route', () => {
         generateStubs();
     });
 
-    afterEach(function () {
+    afterEach(() => {
         resetState();
     });
 
