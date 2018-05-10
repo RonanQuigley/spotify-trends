@@ -10,24 +10,22 @@ import httpMocks from 'node-mocks-http';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;
+
 chai.expect;
 chai.use(sinonChai);
 
-let sandbox = sinon.sandbox.create();
+const sandbox = sinon.sandbox.create();
 
 let req = httpMocks.createRequest();
 let res = httpMocks.createResponse();
 
-let qsStub;
-let apiStub;
 let nextStub;
-let redirectStub;
 
 function generateStubs() {
-    qsStub = sandbox.stub(queryString, 'stringify');
-    apiStub = sandbox.stub(api, 'requestTokens').resolves({});
+    sandbox.stub(queryString, 'stringify');
+    sandbox.stub(api, 'requestTokens').resolves({});
     nextStub = sandbox.stub();
-    redirectStub = sandbox.stub(res, 'redirect');
+    sandbox.stub(res, 'redirect');
 }
 
 function resetState() {
@@ -50,7 +48,7 @@ describe('callback route', () => {
         generateStubs();
     });
 
-    afterEach(function() {
+    afterEach(function () {
         resetState();
     });
 
@@ -70,10 +68,10 @@ describe('callback route', () => {
                 middleware.redirect(req, res, nextStub);
             });
             it('should redirect to results', () => {
-                expect(redirectStub).to.be.calledOnce;
+                expect(res.redirect).to.be.calledOnce;
             });
             it('should generate a query string', () => {
-                expect(qsStub).to.be.calledOnce;
+                expect(queryString.stringify).to.be.calledOnce;
             });
         });
         describe('auth user', () => {

@@ -11,6 +11,7 @@ const expect = chai.expect;
 const sandbox = sinon.sandbox.create();
 
 describe('front end - server fetch', () => {
+
     beforeEach(() => {
         sandbox.stub(window, 'fetch');
     });
@@ -26,7 +27,7 @@ describe('front end - server fetch', () => {
             expect(window.fetch.firstCall.args[0]).to.be.a('string');
         });
         it('should return a promise', () => {
-            window.fetch.returns(new Promise(() => {}, () => {}));
+            window.fetch.returns(new Promise(() => { }, () => { }));
             let result = serverFetch.fetchData('refresh', {});
             expect(result).to.be.a('Promise');
         });

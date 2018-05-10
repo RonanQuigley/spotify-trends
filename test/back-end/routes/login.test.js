@@ -1,6 +1,5 @@
 import supertest from 'supertest';
 import app from '../../../src/server/';
-import * as api from '../../../src/server/api';
 import * as middleware from '../../../src/server/routes/views/login/middleware';
 import chai from 'chai';
 import httpMocks from 'node-mocks-http';
@@ -17,11 +16,10 @@ chai.use(sinonChai);
 let sandbox = sinon.sandbox.create();
 let req;
 let res;
-let spyStub;
 let nextStub;
 
 function generateStubs() {
-    spyStub = sandbox.stub(res, 'redirect');
+    sandbox.stub(res, 'redirect');
     nextStub = sandbox.stub();
 }
 
@@ -49,11 +47,12 @@ describe('login route', () => {
                 .expect(302);
         });
     });
+
     describe('middleware', () => {
         describe('authUser', () => {
             it('should redirect to callback', () => {
-                middleware.authUser(req, res, nextStub);
-                expect(spyStub).to.be.calledOnce;
+                middleware.redirectUser(req, res, nextStub);
+                expect(res.redirect).to.be.calledOnce;
             });
         });
     });

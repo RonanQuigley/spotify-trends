@@ -12,6 +12,7 @@ describe('front end - Tokens', () => {
     afterEach(() => {
         sandbox.restore();
     });
+
     describe('refresh access token', () => {
         beforeEach(() => {
             sandbox.stub(serverFetch, 'getNewAccessToken').resolves({

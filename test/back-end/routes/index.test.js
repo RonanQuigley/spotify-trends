@@ -12,21 +12,19 @@ chai.expect;
 
 chai.use(sinonChai);
 
-let sandbox = sinon.sandbox.create();
+const sandbox = sinon.sandbox.create();
 let req;
 let res;
-let spy;
-let next;
 
 describe('index route', () => {
-    beforeEach(function() {
+
+    beforeEach(function () {
         req = httpMocks.createRequest();
         res = httpMocks.createResponse();
-        spy = sandbox.spy(res, 'redirect');
-        next = sandbox.spy();
+        sandbox.spy(res, 'redirect');
     });
 
-    afterEach(function() {
+    afterEach(function () {
         sandbox.restore();
     });
 
