@@ -90,10 +90,10 @@
     "start:prod": "cross-env DEBUG=false node ./dist/server.js",
     "start": "cross-env NODE_ENV=development node --require @babel/register --require dotenv/config ./src/index.js",
     "watch:lint": "cross-env node node_modules/eslint-watch/bin/esw -w --fix",
-    "test:front-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
-    "test:back-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
-    "test:full-stack": "cross-env NODE_ENV=testing DEBUG=false npm-run-all -p test:front-end test:back-end",
-    "test": "jest test --watch"
+    "test:front-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
+    "test:back-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
+    "test:full-stack": "cross-env NODE_ENV=test DEBUG=false npm-run-all -p test:front-end test:back-end",
+    "test": "jest ./test/back-end/routes/index.test.js --watch"
   },
   "repository": {
     "type": "git",

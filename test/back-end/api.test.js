@@ -1,56 +1,44 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
-import chaiAsPromised from 'chai-as-promised';
 import * as api from '../../src/server/api';
 
-chai.use(chaiAsPromised);
-chai.use(sinonChai);
-
-const expect = chai.expect;
-let sandbox = sinon.sandbox.create();
-let response;
-let postStub;
-
-function generateStubs() {
-    postStub = sandbox.stub(rp, 'post');
-    postStub.resolves({
-        access_token: 'stub',
-        refresh_token: 'stub',
-        expires_in: 'stub'
-    });
-}
-
 describe('api', () => {
+
+    let response;
+    let rpSpy;
+
     beforeEach(async () => {
-        generateStubs();
+        rpSpy = jest.spyOn(rp, 'post');
+        rpSpy.mockResolvedValue({
+            access_token: 'stub',
+            refresh_token: 'stub',
+            expires_in: 'stub'
+        });
         response = await api.requestTokens();
     });
 
     afterEach(() => {
-        sandbox.restore();
+        jest.restoreAllMocks();
     });
 
     describe('request tokens', () => {
         it('should call request.post', () => {
-            expect(postStub).to.be.calledOnce;
+            expect(rp.post).toHaveBeenCalledTimes(1);
         });
         it('should return an object', () => {
-            expect(response).to.be.a('object');
+            expect(typeof response).toBe('object');
         });
         it('should return an access token', () => {
-            expect(response.accessToken).to.be.a('string');
+            expect(typeof response.accessToken).toBe('string');
         });
         it('should return a refresh token', () => {
-            expect(response.refreshToken).to.be.a('string');
+            expect(typeof response.refreshToken).toBe('string');
         });
         it('should return an expiry', () => {
-            expect(response.expiryIn).to.be.a('string');
+            expect(typeof response.expiryIn).toBe('string');
         });
         it('should be able to be rejected', async () => {
-            postStub.rejects();
-            await expect(api.requestTokens(null)).to.be.rejected;
+            rpSpy.mockRejectedValue(null);
+            await expect(api.requestTokens(null)).rejects;
         });
     });
 
@@ -60,27 +48,25 @@ describe('api', () => {
             result = api.generateAuthOptions(null);
         });
         it('should return an object', () => {
-            expect(result).to.be.a('object');
+            expect(typeof result).toBe('object');
         });
         it('should contain a token api uri', () => {
-            expect(result.url).to.equal(
-                'https://accounts.spotify.com/api/token'
-            );
+            expect(result.url).toBe('https://accounts.spotify.com/api/token');
         });
         it('should contain a form object', () => {
-            expect(result.form).to.be.a('object');
+            expect(typeof result.form).toBe('object');
         });
         it('should have the correct grant type', () => {
-            expect(result.form.grant_type).to.equal('authorization_code');
+            expect(result.form.grant_type).toBe('authorization_code');
         });
         it('should contain a header object', () => {
-            expect(result.headers).to.be.a('object');
+            expect(typeof result.headers).toBe('object');
         });
         it('should contain an authorization', () => {
-            expect(result.headers.Authorization).to.be.a('string');
+            expect(typeof result.headers.Authorization).toBe('string');
         });
         it('should return json', () => {
-            expect(result.json).to.be.true;
+            expect(result.json).toBe(true);
         });
     });
 });

@@ -27,8 +27,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // let our unit tests handle listening
-if (process.env.NODE_ENV !== 'testing') {
-    app.listen(process.env.PORT || 3000, getHostName(), function(err) {
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(process.env.PORT || 3000, getHostName(), function (err) {
         if (err) throw err;
         const addr = this.address();
         console.log('Listening at http://%s:%d', addr.address, addr.port);

@@ -3,37 +3,18 @@ import app from '../../../src/server/';
 import * as api from '../../../src/server/api';
 import * as middleware from '../../../src/server/routes/views/callback/middleware';
 import queryString from 'querystring';
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 
 const agent = supertest.agent(app);
-const expect = chai.expect;
-chai.expect;
-chai.use(sinonChai);
-
-let sandbox = sinon.sandbox.create();
 
 let req = httpMocks.createRequest();
 let res = httpMocks.createResponse();
+let nextMock;
 
-let qsStub;
-let apiStub;
-let nextStub;
-let redirectStub;
-
-function generateStubs() {
-    qsStub = sandbox.stub(queryString, 'stringify');
-    apiStub = sandbox.stub(api, 'requestTokens').resolves({});
-    nextStub = sandbox.stub();
-    redirectStub = sandbox.stub(res, 'redirect');
-}
-
-function resetState() {
-    sandbox.restore();
-    res.locals = {};
-    res.body = null;
+function initSpies() {
+    jest.spyOn(queryString, 'stringify');
+    jest.spyOn(api, 'requestTokens').mockResolvedValue({});
+    jest.spyOn(res, 'redirect');
 }
 
 function initTokens() {
@@ -44,13 +25,21 @@ function initTokens() {
     };
 }
 
+function resetState() {
+    jest.restoreAllMocks();
+    res.locals = {};
+    res.body = null;
+}
+
 describe('callback route', () => {
+
     beforeEach(() => {
         initTokens();
-        generateStubs();
+        initSpies();
+        nextMock = jest.fn();
     });
 
-    afterEach(function() {
+    afterEach(function () {
         resetState();
     });
 
@@ -67,21 +56,21 @@ describe('callback route', () => {
     describe('middleware', () => {
         describe('redirect', () => {
             beforeEach(() => {
-                middleware.redirect(req, res, nextStub);
+                middleware.redirect(req, res, nextMock);
             });
             it('should redirect to results', () => {
-                expect(redirectStub).to.be.calledOnce;
+                expect(res.redirect).toHaveBeenCalledTimes(1);
             });
             it('should generate a query string', () => {
-                expect(qsStub).to.be.calledOnce;
+                expect(queryString.stringify).toHaveBeenCalledTimes(1);
             });
         });
         describe('auth user', () => {
             beforeEach(async () => {
-                middleware.authUser(req, res, nextStub);
+                middleware.authUser(req, res, nextMock);
             });
             it('should call next', async () => {
-                expect(nextStub).to.be.calledOnce;
+                expect(nextMock).toHaveBeenCalledTimes(1);
             });
         });
     });

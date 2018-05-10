@@ -16,8 +16,8 @@ export function generateHeader(refreshToken, expiredToken) {
 }
 
 export async function getNewAccessToken(refreshToken, expiredToken) {
-    const header = this.generateHeader(refreshToken, expiredToken);
-    const tokens = await this.fetchData('/refresh', header);
+    const header = generateHeader(refreshToken, expiredToken);
+    const tokens = await fetchData('/refresh', header);
     return {
         accessToken: tokens.accessToken,
         refreshToken: tokens.expiryIn

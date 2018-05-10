@@ -23,12 +23,12 @@ describe('front end - server fetch', () => {
         it('should be called with an endpoint', () => {
             window.fetch.resolves({ data: 'fake' });
             serverFetch.fetchData('refresh', {});
-            expect(window.fetch.firstCall.args[0]).to.be.a('string');
+            expect(typeof window.fetch.firstCall.args[0]).toBe('string');
         });
         it('should return a promise', () => {
             window.fetch.returns(new Promise(() => {}, () => {}));
             let result = serverFetch.fetchData('refresh', {});
-            expect(result).to.be.a('Promise');
+            expect(typeof result).toBe('Promise');
         });
     });
 
@@ -49,10 +49,10 @@ describe('front end - server fetch', () => {
             expect(serverFetch.generateHeader).to.be.calledOnce;
         });
         it('should return an accessToken', () => {
-            expect(result.accessToken).to.be.a('string');
+            expect(typeof result.accessToken).toBe('string');
         });
         it('should return a refreshToken', () => {
-            expect(result.refreshToken).to.be.a('string');
+            expect(typeof result.refreshToken).toBe('string');
         });
     });
 
@@ -62,16 +62,16 @@ describe('front end - server fetch', () => {
             'fake access'
         );
         it('should return an object', () => {
-            expect(result).to.be.a('object');
+            expect(typeof result).toBe('object');
         });
         it('should have content-type as json', () => {
-            expect(result.json).to.be.true;
+            expect(result.json).toBe(true);
         });
         it('should contain an access token', () => {
-            expect(result.headers.accessToken).to.be.a('string');
+            expect(typeof result.headers.accessToken).toBe('string');
         });
         it('should contain a refresh token', () => {
-            expect(result.headers.refreshToken).to.be.a('string');
+            expect(typeof result.headers.refreshToken).toBe('string');
         });
     });
 });

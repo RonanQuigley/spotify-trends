@@ -1,8 +1,6 @@
 import { getQueryStringElement } from './uri';
 import { getNewAccessToken } from './server-fetch';
 
-console.log('MODULE BEING TESTED');
-
 export const names = {
     accessToken: 'accessToken',
     refreshToken: 'refreshToken',
@@ -18,7 +16,6 @@ export function getToken(name) {
 }
 
 export const updateAccessToken = (accessToken, expiryIn) => {
-    console.log('NOT STUBBED');
     setToken(names.accessToken, accessToken);
     setToken(names.expiryIn, expiryIn);
 };

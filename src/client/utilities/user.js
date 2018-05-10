@@ -14,14 +14,20 @@ export function isExistingUser() {
 }
 
 export function processUser() {
-    const accessToken = Tokens.getValidAccessToken();
-    if (accessToken) {
-        // if the access token is valid, then we
-        // redirect straight to the the results page
-        this.redirectUser('/results', accessToken);
-    } else {
-        // get the expired access token and the refresh token
-        const tokens = Tokens.getAccessAndRefreshTokens();
-        Tokens.refreshAccessToken(tokens);
-    }
+    return redirectUser('/results', null);
+    // const accessToken = Tokens.getValidAccessToken();
+    // console.log(this);
+    // console.log(redirectUser)
+    // if (accessToken) {
+    //     // if the access token is valid, then we
+    //     // redirect straight to the the results page
+    //     redirectUser('/results', accessToken);
+    // } else {
+
+    //     console.log("HEEEEEEEEEEEEERE")
+
+    //     // get the expired access token and the refresh token
+    //     const tokens = Tokens.getAccessAndRefreshTokens();
+    //     Tokens.refreshAccessToken(tokens);
+    // }
 }
