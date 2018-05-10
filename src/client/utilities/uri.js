@@ -8,9 +8,9 @@ export function getLocationHref() {
 
 export function getQueryStringElement(name) {
     // this keyword is require for sinon stubs in our unit tests
-    let url = this.getLocationHref();
+    const url = getLocationHref();
     name = name.replace(/[\[\]]/g, '\\$&');
-    let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
     let results = regex.exec(url);
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }

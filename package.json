@@ -5,6 +5,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@types/chai-as-promised": "^7.1.0",
+    "babel-plugin-rewire-exports": "^1.0.0-alpha",
     "chai": "^4.1.2",
     "chokidar": "^2.0.2",
     "clean-webpack-plugin": "^0.1.19",
@@ -30,7 +31,7 @@
     "sinon-chai": "^3.0.0",
     "source-map-support": "^0.5.4",
     "typescript": "2.4.2",
-    "webpack": "^4.2.0",
+    "webpack": "^4.8.1",
     "webpack-cli": "^2.0.13",
     "webpack-dev-middleware": "^3.1.2",
     "webpack-hot-middleware": "^2.21.2",
@@ -82,7 +83,7 @@
     "test:front-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
     "test:back-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
     "test:full-stack": "cross-env NODE_ENV=testing DEBUG=false npm-run-all -p test:front-end test:back-end",
-    "test": "mocha-webpack --help"
+    "test": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/utilities/uri.test.js\""
   },
   "repository": {
     "type": "git",

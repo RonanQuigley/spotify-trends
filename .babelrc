@@ -9,7 +9,8 @@
     ["@babel/transform-runtime", {
       "regenerator" : true, 
       "polyfill" : true
-    }]
+    }],
+    "rewire-exports"
   ],
   "sourceMaps": true,
   "retainLines": true
