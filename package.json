@@ -14,7 +14,7 @@
     "fetch-mock": "^6.3.0",
     "handlebars": "^4.0.11",
     "isomorphic-fetch": "^2.2.1",
-    "jsdom": "^11.7.0",
+    "jsdom": "^11.10.0",
     "jsdom-global": "^3.0.2",
     "morgan": "^1.9.0",
     "nock": "^9.2.3",
@@ -83,7 +83,7 @@
     "test:front-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
     "test:back-end": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
     "test:full-stack": "cross-env NODE_ENV=testing DEBUG=false npm-run-all -p test:front-end test:back-end",
-    "test": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/utilities/uri.test.js\""
+    "test": "cross-env NODE_ENV=testing DEBUG=false mocha-webpack --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/setup.test.js\""
   },
   "repository": {
     "type": "git",

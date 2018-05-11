@@ -9,9 +9,15 @@
     ["@babel/transform-runtime", {
       "regenerator" : true, 
       "polyfill" : true
-    }],
-    "rewire-exports"
+    }]
   ],
+  "env": {
+    "testing" : {
+      "plugins" : [
+        "rewire-exports"
+      ]
+    }
+  },
   "sourceMaps": true,
   "retainLines": true
 }

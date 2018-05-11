@@ -6,11 +6,10 @@ export function getLocationHref() {
     return window.location.href;
 }
 
-export function getQueryStringElement(name) {
-    // this keyword is require for sinon stubs in our unit tests
-    const url = getLocationHref();
-    name = name.replace(/[\[\]]/g, '\\$&');
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-    let results = regex.exec(url);
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+export function getQueryStringElement(stringToFind) {
+    stringToFind = stringToFind.replace(/[\[\]]/g, '\\$&');
+    const urlToSearch = getLocationHref();
+    const regex = new RegExp('[?&]' + stringToFind + '(=([^&#]*)|&|#|$)');
+    const array = regex.exec(urlToSearch);
+    return decodeURIComponent(array[2].replace(/\+/g, ' '));
 }
