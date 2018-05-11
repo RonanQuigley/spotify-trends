@@ -93,7 +93,8 @@
     "test:front-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
     "test:back-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
     "test:full-stack": "cross-env NODE_ENV=test DEBUG=false npm-run-all -p test:front-end test:back-end",
-    "test": "jest ./test/back-end/routes/index.test.js --watch"
+    "test": "jest ./test/back-end/routes/index.test.js -o --watch", 
+    "clear-jest-cache" : "jest --clearCache"
   },
   "repository": {
     "type": "git",

@@ -1,15 +1,14 @@
 module.exports = {
     setupFiles: ['./setupFile.js'],
-    moduleFileExtensions: [
-        "js",
-        "json",
-        "jsx",
-    ],
+    moduleFileExtensions: ['js', 'json', 'jsx'],
     moduleNameMapper: {
-        "^.*[.](jpg|JPG|gif|GIF|png|PNG|sass|SASS|css|CSS)$": "<rootDir>/test/mocks/generic",
+        '^.*[.](jpg|JPG|gif|GIF|png|PNG|sass|SASS|css|CSS)$':
+            '<rootDir>/test/mocks/generic'
     },
     transform: {
-        "\\.js$": "babel-jest",
-        "\\.hbs$": "<rootDir>handlebars.js"
-    }
-}
+        '\\.js$': 'babel-jest',
+        '^.*[.](hbs)$': '<rootDir>handlebars.js'
+    },
+    roots: ['<rootDir>/test/', '<rootDir>/src'],
+    testEnvironment: 'node'
+};

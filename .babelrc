@@ -11,6 +11,5 @@
       "polyfill" : true
     }]
   ],
-  "sourceMaps": true,
-  "retainLines": true
+  "sourceMaps": true
 }
