@@ -87,7 +87,7 @@
     "test:back-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
     "test:full-stack": "cross-env NODE_ENV=test DEBUG=false npm-run-all -p test:front-end test:back-end",
     "test": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --require setup.test.js --watch --webpack-config ./webpack/front-end/webpack.cover.babel.js \"test/front-end/utilities/fetch.test.js\"",
-    "cover": "cross-env NODE_ENV=test DEBUG=false nyc --reporter=lcov --reporter=text mocha-webpack --require setup.test.js --webpack-config ./webpack/front-end/webpack.dev.babel.js test/front-end/utilities/fetch.test.js"
+    "test:coverage": "cross-env NODE_ENV=test DEBUG=false nyc --reporter=lcov --reporter=text mocha-webpack --require setup.test.js --webpack-config ./webpack/front-end/webpack.dev.babel.js test/front-end/utilities/fetch.test.js"
   },
   "nyc": {
     "include": [
