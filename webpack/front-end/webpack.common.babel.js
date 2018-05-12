@@ -6,7 +6,7 @@ import common from '../webpack.common';
 const dist = path.join(__dirname, '../../dist');
 
 // if we're testing, we run jsdom via node for for our unit tests
-const target = process.env.NODE_ENV === 'testing' ? 'node' : 'web';
+const target = process.env.NODE_ENV === 'test' ? 'node' : 'web';
 
 const frontEndCommon = {
     name: 'client',
