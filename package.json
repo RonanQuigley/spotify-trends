@@ -5,6 +5,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@types/chai-as-promised": "^7.1.0",
+    "babel-plugin-istanbul": "^4.1.6",
     "babel-plugin-rewire-exports": "^1.0.0-alpha",
     "chai": "^4.1.2",
     "chokidar": "^2.0.2",
@@ -14,11 +15,13 @@
     "fetch-mock": "^6.3.0",
     "handlebars": "^4.0.11",
     "isomorphic-fetch": "^2.2.1",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "jsdom": "^11.10.0",
     "jsdom-global": "^3.0.2",
     "morgan": "^1.9.0",
     "nock": "^9.2.3",
     "npm-run-all": "^4.1.2",
+    "nyc": "^11.7.3",
     "opn": "^5.3.0",
     "query-string": "^6.0.0",
     "querystring": "^0.2.0",
@@ -83,7 +86,15 @@
     "test:front-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
     "test:back-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
     "test:full-stack": "cross-env NODE_ENV=test DEBUG=false npm-run-all -p test:front-end test:back-end",
-    "test": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --require setup.test.js --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/utilities/fetch.test.js\""
+    "test": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --require setup.test.js --watch --webpack-config ./webpack/front-end/webpack.cover.babel.js \"test/front-end/utilities/fetch.test.js\"",
+    "cover": "cross-env NODE_ENV=test DEBUG=false nyc --reporter=lcov --reporter=text mocha-webpack --require setup.test.js --webpack-config ./webpack/front-end/webpack.dev.babel.js test/front-end/utilities/fetch.test.js"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.(js)"
+    ],
+    "instrument": false,
+    "sourceMap": false
   },
   "repository": {
     "type": "git",
