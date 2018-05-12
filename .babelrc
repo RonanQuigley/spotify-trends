@@ -14,7 +14,8 @@
   "env": {
     "test" : {
       "plugins": [
-        "istanbul"
+        "istanbul",
+        "rewire-exports"
       ]
     }
   },

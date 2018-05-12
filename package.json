@@ -76,18 +76,20 @@
     "webpack-hot-server-middleware": "^0.5.0"
   },
   "scripts": {
-    "build:back-end": "webpack -p --config webpack/back-end/webpack.prod.babel.js",
-    "build:front-end": "webpack --config webpack/front-end/webpack.prod.babel.js",
-    "build:full-stack": "webpack --config webpack/full-stack/webpack.babel.js",
-    "build:full-stack:start": "npm-run-all -s build:full-stack start:prod",
+    "build:back": "webpack -p --config webpack/back-end/webpack.prod.babel.js",
+    "build:front": "webpack --config webpack/front-end/webpack.prod.babel.js",
+    "build:all": "webpack --config webpack/full-stack/webpack.babel.js",
+    "build:all:start": "npm-run-all -s build:full-stack start:prod",
     "start:prod": "cross-env DEBUG=false node ./dist/server.js",
     "start": "cross-env NODE_ENV=development node --require @babel/register --require dotenv/config ./src/index.js",
-    "watch:lint": "cross-env node node_modules/eslint-watch/bin/esw -w --fix",
-    "test:front-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --require jsdom-global/register --watch --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
-    "test:back-end": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
-    "test:full-stack": "cross-env NODE_ENV=test DEBUG=false npm-run-all -p test:front-end test:back-end",
-    "test": "cross-env NODE_ENV=test DEBUG=false mocha-webpack --require setup.test.js --watch --webpack-config ./webpack/front-end/webpack.cover.babel.js \"test/front-end/utilities/fetch.test.js\"",
-    "test:coverage": "cross-env NODE_ENV=test DEBUG=false nyc --reporter=lcov --reporter=text mocha-webpack --require setup.test.js --webpack-config ./webpack/front-end/webpack.dev.babel.js test/front-end/utilities/fetch.test.js"
+    "watch:lint": "node node_modules/eslint-watch/bin/esw -w --fix",
+    "test:front": "mocha-webpack --require setup.test.js --watch --recursive --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
+    "test:back": "mocha-webpack --require setup.test.js --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
+    "test:all": "npm-run-all -p test:front-end test:back-end",
+    "coverage:front": "nyc --reporter=lcov --reporter=text --report-dir ./coverage/front mocha-webpack --require setup.test.js --webpack-config ./webpack/front-end/webpack.dev.babel.js \"test/front-end/**/*.test.js\"",
+    "coverage:back": "nyc --reporter=lcov --reporter=text --report-dir ./coverage/back mocha-webpack --require setup.test.js --webpack-config ./webpack/back-end/webpack.dev.babel.js \"test/back-end/**/*.test.js\"",
+    "coverage:all": "npm-run-all -p coverage:front coverage:back",
+    "help" : "nyc --help"
   },
   "nyc": {
     "include": [

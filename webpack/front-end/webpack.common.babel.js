@@ -7,6 +7,7 @@ const dist = path.join(__dirname, '../../dist');
 
 // if we're testing, we run jsdom via node for for our unit tests
 const target = process.env.NODE_ENV === 'test' ? 'node' : 'web';
+console.log(target);
 
 const frontEndCommon = {
     name: 'client',
