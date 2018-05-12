@@ -7,7 +7,7 @@ const dist = path.join(__dirname, '../../dist');
 
 const frontEndCommon = {
     name: 'client',
-    target: 'web',
+    target: 'node',
     output: {
         path: dist,
 
