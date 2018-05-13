@@ -22,7 +22,7 @@ function generateStubs() {
     });
 }
 
-describe('api', () => {
+describe('back end - api', () => {
     beforeEach(async () => {
         generateStubs();
         response = await api.requestTokens();

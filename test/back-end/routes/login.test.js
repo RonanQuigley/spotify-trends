@@ -15,25 +15,17 @@ chai.expect;
 chai.use(sinonChai);
 
 const sandbox = sinon.createSandbox();
+
 let req;
 let res;
-let spyStub;
-let nextStub;
+let nextSpy;
 
-function generateStubs() {
-    spyStub = sandbox.stub(res, 'redirect');
-    nextStub = sandbox.stub();
-}
-
-function createHttpMocks() {
-    req = httpMocks.createRequest();
-    res = httpMocks.createResponse();
-}
-
-describe('login route', () => {
+describe('back end - login route', () => {
     beforeEach(() => {
-        createHttpMocks();
-        generateStubs();
+        req = httpMocks.createRequest();
+        res = httpMocks.createResponse();
+        sandbox.spy(res, 'redirect');
+        nextSpy = sandbox.spy();
     });
 
     afterEach(() => {
@@ -52,8 +44,8 @@ describe('login route', () => {
     describe('middleware', () => {
         describe('authUser', () => {
             it('should redirect to callback', () => {
-                middleware.authUser(req, res, nextStub);
-                expect(spyStub).to.be.calledOnce;
+                middleware.authUser(req, res, nextSpy);
+                expect(res.redirect).to.be.calledOnce;
             });
         });
     });

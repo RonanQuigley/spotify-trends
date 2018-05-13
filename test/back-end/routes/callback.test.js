@@ -2,6 +2,7 @@ import supertest from 'supertest';
 import app from '../../../src/server/';
 import * as api from '../../../src/server/api';
 import * as middleware from '../../../src/server/routes/views/callback/middleware';
+import { fakeTokens } from '../../fakes';
 import queryString from 'querystring';
 import chai from 'chai';
 import sinon from 'sinon';
@@ -15,44 +16,30 @@ chai.use(sinonChai);
 
 const sandbox = sinon.createSandbox();
 
-let req = httpMocks.createRequest();
-let res = httpMocks.createResponse();
+let req;
+let res;
+let nextSpy;
 
-let qsStub;
-let apiStub;
-let nextStub;
-let redirectStub;
-
-function generateStubs() {
-    qsStub = sandbox.stub(queryString, 'stringify');
-    apiStub = sandbox.stub(api, 'requestTokens').resolves({});
-
-    redirectStub = sandbox.stub(res, 'redirect');
-}
-
-function resetState() {
-    sandbox.restore();
-    res.locals = {};
-    res.body = null;
-}
-
-function initTokens() {
+function initMiddlewareTests() {
+    req = httpMocks.createRequest();
+    res = httpMocks.createResponse();
     res.locals.tokens = {
-        accessToken: 'fake',
-        refreshToken: 'fake',
-        expiryIn: 'fake'
+        accessToken: fakeTokens.accessToken,
+        refreshToken: fakeTokens.refreshToken,
+        expiryIn: fakeTokens.expiryIn
     };
+    nextSpy = sandbox.spy();
+    sandbox.spy(res, 'redirect');
 }
 
-describe('callback route', () => {
+describe('back end - callback route', () => {
     beforeEach(() => {
-        initTokens();
-        generateStubs();
-        nextStub = sandbox.stub();
+        sandbox.stub(queryString, 'stringify');
+        sandbox.stub(api, 'requestTokens').resolves({});
     });
 
-    afterEach(function() {
-        resetState();
+    afterEach(() => {
+        sandbox.restore();
     });
 
     describe('endpoint', () => {
@@ -66,23 +53,31 @@ describe('callback route', () => {
     });
 
     describe('middleware', () => {
+        beforeEach(() => {
+            initMiddlewareTests();
+            middleware.redirect(req, res, nextSpy);
+        });
+
+        afterEach(() => {
+            res.locals = {};
+            res.body = null;
+        });
+
         describe('redirect', () => {
-            beforeEach(() => {
-                middleware.redirect(req, res, nextStub);
-            });
             it('should redirect to results', () => {
-                expect(redirectStub).to.be.calledOnce;
+                expect(res.redirect).to.be.calledOnce;
             });
             it('should generate a query string', () => {
-                expect(qsStub).to.be.calledOnce;
+                expect(queryString.stringify).to.be.calledOnce;
             });
         });
+
         describe('auth user', () => {
             beforeEach(async () => {
-                await middleware.authUser(req, res, nextStub);
+                await middleware.authUser(req, res, nextSpy);
             });
-            it('should call next', async () => {
-                expect(nextStub).to.be.calledOnce;
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
             });
         });
     });

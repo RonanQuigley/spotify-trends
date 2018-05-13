@@ -16,11 +16,11 @@ let req;
 let res;
 let next = () => {};
 
-describe('results route', () => {
+describe('back end - results route', () => {
     beforeEach(() => {
         req = httpMocks.createRequest();
         res = httpMocks.createResponse();
-        resStub = sandbox.stub(res, 'send');
+        sandbox.spy(res, 'send');
     });
 
     afterEach(() => {
@@ -39,7 +39,7 @@ describe('results route', () => {
         describe('render results page', () => {
             it('should call send', () => {
                 middleware.render(req, res, next);
-                expect(resStub).to.be.calledOnce;
+                expect(res.send).to.be.calledOnce;
             });
         });
     });

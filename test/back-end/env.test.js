@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-describe('env', () => {
+describe('back end - env', () => {
     it('should have a client id', () => {
         expect(process.env.CLIENT_ID).to.exist;
     });
