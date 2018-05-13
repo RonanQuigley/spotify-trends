@@ -1,6 +1,6 @@
 import rp from 'request-promise';
 
-function generateAuthOptions(authCode) {
+export function generateAuthOptions(authCode) {
     return {
         url: 'https://accounts.spotify.com/api/token',
         form: {
@@ -11,7 +11,7 @@ function generateAuthOptions(authCode) {
         headers: {
             Authorization:
                 'Basic ' +
-                new Buffer(
+                new Buffer.from(
                     process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
                 ).toString('base64')
         },
@@ -19,12 +19,11 @@ function generateAuthOptions(authCode) {
     };
 }
 
-async function requestTokens(authOptions) {
-    let result = await rp.post(authOptions);
+export async function requestTokens(authOptions) {
+    const result = await rp.post(authOptions);
     return {
         accessToken: result.access_token,
         refreshToken: result.refresh_token,
         expiryIn: result.expires_in
     };
 }
-export { generateAuthOptions, requestTokens };

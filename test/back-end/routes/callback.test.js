@@ -13,7 +13,7 @@ const expect = chai.expect;
 chai.expect;
 chai.use(sinonChai);
 
-let sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 
 let req = httpMocks.createRequest();
 let res = httpMocks.createResponse();
@@ -26,7 +26,7 @@ let redirectStub;
 function generateStubs() {
     qsStub = sandbox.stub(queryString, 'stringify');
     apiStub = sandbox.stub(api, 'requestTokens').resolves({});
-    nextStub = sandbox.stub();
+
     redirectStub = sandbox.stub(res, 'redirect');
 }
 
@@ -48,6 +48,7 @@ describe('callback route', () => {
     beforeEach(() => {
         initTokens();
         generateStubs();
+        nextStub = sandbox.stub();
     });
 
     afterEach(function() {
@@ -78,7 +79,7 @@ describe('callback route', () => {
         });
         describe('auth user', () => {
             beforeEach(async () => {
-                middleware.authUser(req, res, nextStub);
+                await middleware.authUser(req, res, nextStub);
             });
             it('should call next', async () => {
                 expect(nextStub).to.be.calledOnce;

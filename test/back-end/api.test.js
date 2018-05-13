@@ -9,7 +9,7 @@ chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
 const expect = chai.expect;
-let sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 let response;
 let postStub;
 

@@ -8,7 +8,7 @@ chai.use(sinonChai);
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
-const sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 
 describe('front end - server fetch', () => {
     beforeEach(() => {

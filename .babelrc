@@ -11,14 +11,13 @@
       "polyfill" : true
     }]
   ],
-  "env": {
+  "env" : {
     "test" : {
-      "plugins": [
-        "istanbul",
+      "plugins" : [
+        "istanbul", 
         "rewire-exports"
       ]
     }
   },
-  "sourceMaps": true,
-  "retainLines": true
+  "sourceMaps": true
 }

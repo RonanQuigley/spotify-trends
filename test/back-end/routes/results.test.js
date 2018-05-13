@@ -10,7 +10,7 @@ const expect = chai.expect;
 
 chai.use(sinonChai);
 
-let sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 let resStub;
 let req;
 let res;

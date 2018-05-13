@@ -12,7 +12,7 @@ chai.expect;
 
 chai.use(sinonChai);
 
-let sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 let req;
 let res;
 let spy;

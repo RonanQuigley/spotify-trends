@@ -10,7 +10,7 @@ import {
 const expect = chai.expect;
 chai.use(sinonChai);
 
-const sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 const fakeUrl =
     'http://localhost:3000/results?accessToken=fakeAccessToken&refreshToken=fakeRefreshToken&expiryIn=3600';
 

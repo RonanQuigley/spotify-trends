@@ -6,7 +6,7 @@ import * as serverFetch from '../../../src/client/utilities/server-fetch';
 chai.use(sinonChai);
 
 const expect = chai.expect;
-const sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 
 describe('front end - Tokens', () => {
     afterEach(() => {

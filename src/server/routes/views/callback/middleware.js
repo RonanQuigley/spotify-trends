@@ -2,20 +2,20 @@ import * as api from '../../../api/';
 import { stringify } from 'querystring';
 import rp from 'request-promise';
 
-async function authUser(req, res, next) {
-    let authCode = req.query.code;
-    let authOptions = api.generateAuthOptions(authCode);
-    api
-        .requestTokens(authOptions)
-        .then(tokens => {
-            res.locals.tokens = tokens;
-            next();
-        })
-        .catch(next);
+export async function authUser(req, res, next) {
+    const authCode = req.query.code;
+    const authOptions = api.generateAuthOptions(authCode);
+    try {
+        const tokens = await api.requestTokens(authOptions);
+        res.locals.tokens = tokens;
+        next();
+    } catch (error) {
+        next(error);
+    }
 }
 
-function redirect(req, res, next) {
-    let qs = stringify({
+export function redirect(req, res, next) {
+    const qs = stringify({
         accessToken: res.locals.tokens.accessToken,
         refreshToken: res.locals.tokens.refreshToken,
         expiryIn: res.locals.tokens.expiryIn
@@ -23,5 +23,3 @@ function redirect(req, res, next) {
 
     res.redirect(302, '/results?' + qs);
 }
-
-export { authUser, redirect };
