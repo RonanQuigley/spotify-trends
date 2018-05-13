@@ -1,18 +1,12 @@
 import * as uri from '../../../src/client/utilities/uri';
+import { fakeUrl, fakeTokens, fakeTokenNames } from '../../fakes';
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import {
-    rewire$getLocationHref,
-    restore
-} from '../../../src/client/utilities/uri';
-
 const expect = chai.expect;
 chai.use(sinonChai);
 
 const sandbox = sinon.createSandbox();
-const fakeUrl =
-    'http://localhost:3000/results?accessToken=fakeAccessToken&refreshToken=fakeRefreshToken&expiryIn=3600';
 
 describe('front end - uri', () => {
     afterEach(() => {
@@ -20,54 +14,34 @@ describe('front end - uri', () => {
     });
 
     describe('get query string element from url', () => {
+        let result;
+
         beforeEach(() => {
             const stub = sandbox.stub().returns(fakeUrl);
             sandbox.spy(global, 'decodeURIComponent');
-            console.log(window.decodeURIComponent);
-            rewire$getLocationHref(stub);
+            uri.rewire$getLocationHref(stub);
+            result = uri.getQueryStringElement(fakeTokenNames.accessToken);
         });
 
-        afterEach(() => {
-            restore();
+        it('should return a string', () => {
+            expect(result).to.be.a('string');
         });
-
-        it('should get the href from window.location', () => {
-            uri.getQueryStringElement('accessToken');
+        it('should return an access token', () => {
+            expect(result).to.equal(fakeTokens.accessToken);
+        });
+        it('should return a refresh token', () => {
+            result = uri.getQueryStringElement(fakeTokenNames.refreshToken);
+            expect(result).to.equal(fakeTokens.refreshToken);
+        });
+        it('should return an expiry', () => {
+            result = uri.getQueryStringElement(fakeTokenNames.expiryIn);
+            expect(result).to.equal(fakeTokens.expiryIn);
+        });
+        it('should get location href', () => {
             expect(uri.getLocationHref).to.be.calledOnce;
         });
+        it('should call decode uri component', () => {
+            expect(global.decodeURIComponent).to.be.calledOnce;
+        });
     });
-
-    // describe('get query string element', () => {
-    //     let result;
-    //     let windowStub;
-    //     let decodeSpy;
-    //     beforeEach(() => {
-    //         decodeSpy = sandbox.spy(global, 'decodeURIComponent');
-    //         rewire$getLocationHref((windowStub = sinon.stub()));
-    //         result = uri.getQueryStringElement('accessToken');
-    //     });
-    //     afterEach(() => {
-    //         restore();
-    //     });
-    //     it('should return a string', () => {
-    //         expect(result).to.be.a('string');
-    //     });
-    //     it('should return an access token', () => {
-    //         expect(result).to.equal('fake_access_token');
-    //     });
-    //     it('should return a refresh token', () => {
-    //         result = uri.getQueryStringElement('refreshToken');
-    //         expect(result).to.equal('fake_refresh_token');
-    //     });
-    //     it('should return an expiry', () => {
-    //         result = uri.getQueryStringElement('expiryIn');
-    //         expect(result).to.equal('fake_expiry_in');
-    //     });
-    //     it('should get location href', () => {
-    //         expect(windowStub).to.be.calledOnce;
-    //     });
-    //     it('should call decode uri component', () => {
-    //         expect(decodeSpy).to.be.calledOnce;
-    //     });
-    // });
 });

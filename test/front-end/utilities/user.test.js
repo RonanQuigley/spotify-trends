@@ -1,9 +1,9 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import { fakeTokens } from '../../fakes';
 import * as Token from '../../../src/client/utilities/tokens';
 import * as User from '../../../src/client/utilities/user';
-import 'whatwg-fetch';
 
 chai.use(sinonChai);
 
@@ -23,13 +23,13 @@ describe('front end - user', () => {
     });
     describe('is an existing user', () => {
         let result;
-        let stub;
+        let getTokenStub;
         beforeEach(() => {
-            stub = sandbox.stub(Token, 'getToken');
+            getTokenStub = sandbox.stub(Token, 'getToken');
         });
         describe('outcome - true', () => {
             beforeEach(() => {
-                stub.returns('fake');
+                getTokenStub.returns('a fake token');
                 result = User.isExistingUser();
             });
             it('should call get token', () => {
@@ -41,7 +41,7 @@ describe('front end - user', () => {
         });
         describe('outcome - false', () => {
             beforeEach(() => {
-                stub.returns(null);
+                getTokenStub.returns(null);
                 result = User.isExistingUser();
             });
             it("should return false if an access token doesn't exist", () => {
@@ -58,7 +58,7 @@ describe('front end - user', () => {
         });
         describe('outcome - redirect', () => {
             beforeEach(() => {
-                validAccessStub.returns('fake');
+                validAccessStub.returns(fakeTokens.accessToken);
                 User.processUser();
             });
             it('should get valid tokens', () => {
@@ -72,8 +72,8 @@ describe('front end - user', () => {
             beforeEach(() => {
                 validAccessStub.returns(null);
                 sandbox.stub(Token, 'getAccessAndRefreshTokens').returns({
-                    accessToken: 'fake',
-                    refreshToken: 'fake'
+                    accessToken: fakeTokens.accessToken,
+                    refreshToken: fakeTokens.refreshToken
                 });
                 User.processUser();
             });

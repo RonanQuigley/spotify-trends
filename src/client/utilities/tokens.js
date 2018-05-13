@@ -17,7 +17,7 @@ export function getToken(name) {
     return localStorage.getItem(name);
 }
 
-export function updateAccessToken(accessToken, expiryIn) {
+export function updateAccessAndExpiryTokens(accessToken, expiryIn) {
     setToken(names.accessToken, accessToken);
     setToken(names.expiryIn, expiryIn);
 }
@@ -30,7 +30,10 @@ export function getAccessAndRefreshTokens() {
 }
 
 export function getAccessTokenExpiry() {
-    return localStorage.getItem(names.expiryIn);
+    const value = localStorage.getItem(names.expiryIn);
+    /* local storage uses strings and undefined can show up 
+    as a string. we need to check for this */
+    return value !== 'undefined' ? value : null;
 }
 
 export function setAccessTokenExpiry(expiry) {
@@ -48,29 +51,31 @@ export function getValidAccessToken() {
     return !!token && !!value && value > now ? token : null;
 }
 
-export function updateTokens() {
-    // check if any of our access tokens needs updating
+export function updateTokenFromUrl(tokenToUpdate) {
+    const value = getQueryStringElement(tokenToUpdate);
+    tokenToUpdate !== names.expiryIn
+        ? setToken(tokenToUpdate, value)
+        : setAccessTokenExpiry(value);
+}
+
+export function updateAllTokens() {
     if (!getValidAccessToken()) {
-        const value = getQueryStringElement(names.accessToken);
-        setToken(names.accessToken, value);
+        /* access token is no longer valid
+        update both the access token and expiry */
+        updateTokenFromUrl(names.accessToken);
+        updateTokenFromUrl(names.expiryIn);
     }
-    // check if the refresh token exists first
-    // otherwise we can add one in for future use
     if (!getToken(names.refreshToken)) {
-        const value = getQueryStringElement(names.refreshToken);
-        setToken(names.refreshToken, value);
-    }
-    // check if the expiry time is defined
-    if (!getAccessTokenExpiry()) {
-        const expiry = getQueryStringElement(names.expiryIn);
-        setAccessTokenExpiry(expiry);
+        /* refresh tokens are indefinite; this means this 
+        should only be called for a new user */
+        updateTokenFromUrl(names.refreshToken);
     }
 }
 
 export async function refreshAccessToken(tokens) {
     if (tokens.accessToken && tokens.refreshToken) {
         const results = await getNewAccessToken(tokens.refreshToken);
-        updateAccessToken(results.accessToken, results.expiry);
+        updateAccessAndExpiryTokens(results.accessToken, results.expiry);
     }
 }
 

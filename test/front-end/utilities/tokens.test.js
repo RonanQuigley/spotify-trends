@@ -1,12 +1,9 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import { fakeTokens } from '../../fakes';
+import * as Uri from '../../../src/client/utilities/uri';
 import * as Tokens from '../../../src/client/utilities/tokens';
-import {
-    rewire$getNewAccessToken,
-    rewire$updateAccessToken,
-    restore
-} from '../../../src/client/utilities/tokens';
 import * as serverFetch from '../../../src/client/utilities/server-fetch';
 chai.use(sinonChai);
 
@@ -19,28 +16,26 @@ describe('front end - Tokens', () => {
     });
     describe('refresh access token', () => {
         beforeEach(() => {
-            const fakeTokens = {
-                accessToken: 'fake',
-                refreshToken: 'fake'
-            };
             const getNewAccessTokenStub = sandbox.stub().resolves({
-                accessToken: 'fake',
-                expiryIn: 3600
+                accessToken: fakeTokens.accessToken,
+                expiryIn: fakeTokens.expiryIn
             });
-            const updateAccessTokenStub = sandbox.stub();
-            rewire$getNewAccessToken(getNewAccessTokenStub);
-            rewire$updateAccessToken(updateAccessTokenStub);
-            Tokens.refreshAccessToken(fakeTokens);
+            Tokens.rewire$getNewAccessToken(getNewAccessTokenStub);
+            Tokens.rewire$updateAccessAndExpiryTokens(sandbox.stub());
+            Tokens.refreshAccessToken({
+                accessToken: fakeTokens.accessToken,
+                refreshToken: fakeTokens.refreshToken
+            });
         });
         afterEach(() => {
-            restore();
+            Tokens.restore();
         });
         describe('outcome - expired token', () => {
             it('should call for a new access token', () => {
                 expect(Tokens.getNewAccessToken).to.be.calledOnce;
             });
             it('should update the access token that is in local storage', () => {
-                expect(Tokens.updateAccessToken).to.be.calledOnce;
+                expect(Tokens.updateAccessAndExpiryTokens).to.be.calledOnce;
             });
         });
     });
@@ -50,10 +45,13 @@ describe('front end - Tokens', () => {
         beforeEach(async () => {
             sandbox.stub(serverFetch, 'generateHeader').returns({});
             sandbox.stub(serverFetch, 'fetchData').resolves({
-                accessToken: 'fake',
-                expiryIn: 'fake'
+                accessToken: fakeTokens.accessToken,
+                expiryIn: fakeTokens.expiryIn
             });
-            result = await Tokens.getNewAccessToken('refresh', {});
+            result = await Tokens.getNewAccessToken(
+                fakeTokens.refreshToken,
+                {}
+            );
         });
         it('should fetch for the data', () => {
             expect(serverFetch.fetchData).to.be.calledOnce;

@@ -1,5 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
+import { fakeTokens } from '../../fakes';
 import sinonChai from 'sinon-chai';
 import * as serverFetch from '../../../src/client/utilities/server-fetch';
 import chaiAsPromised from 'chai-as-promised';
@@ -27,15 +28,15 @@ describe('front end - server fetch', () => {
         });
         it('should return a promise', () => {
             window.fetch.returns(new Promise(() => {}, () => {}));
-            let result = serverFetch.fetchData('refresh', {});
+            const result = serverFetch.fetchData('refresh', {});
             expect(result).to.be.a('Promise');
         });
     });
 
     describe('generate header', () => {
         const result = serverFetch.generateHeader(
-            'fake refresh',
-            'fake access'
+            fakeTokens.refreshToken,
+            fakeTokens.accessToken
         );
         it('should return an object', () => {
             expect(result).to.be.a('object');
