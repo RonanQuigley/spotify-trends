@@ -15,15 +15,6 @@ export function generateHeader(refreshToken, expiredToken) {
     };
 }
 
-export async function getNewAccessToken(refreshToken, expiredToken) {
-    const header = this.generateHeader(refreshToken, expiredToken);
-    const tokens = await this.fetchData('/refresh', header);
-    return {
-        accessToken: tokens.accessToken,
-        refreshToken: tokens.expiryIn
-    };
-}
-
 // app.get("/refresh", (req, res) => {
 //     // requesting access token from refresh token
 //     let refresh_token = req.headers.refresh_token ? req.headers.refresh_token : req.query.refresh_token;

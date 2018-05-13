@@ -85,7 +85,7 @@
     "watch:lint": "node node_modules/eslint-watch/bin/esw -w --fix",
     "test:front": "mocha-webpack --require setup.test.js --watch --recursive --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
     "test:back": "mocha-webpack --require setup.test.js --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
-    "test:all": "npm-run-all -p test:front-end test:back-end",
+    "test:all": "npm-run-all -p test:front test:back",
     "coverage:front": "nyc --reporter=lcov --reporter=text --report-dir ./coverage/front mocha-webpack --require setup.test.js --webpack-config ./webpack/front-end/webpack.dev.babel.js \"test/front-end/**/*.test.js\"",
     "coverage:back": "nyc --reporter=lcov --reporter=text --report-dir ./coverage/back mocha-webpack --require setup.test.js --webpack-config ./webpack/back-end/webpack.dev.babel.js \"test/back-end/**/*.test.js\"",
     "coverage:all": "npm-run-all -p coverage:front coverage:back",

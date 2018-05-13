@@ -32,30 +32,6 @@ describe('front end - server fetch', () => {
         });
     });
 
-    describe('getting a new access token', () => {
-        let result;
-        beforeEach(async () => {
-            sandbox.stub(serverFetch, 'generateHeader').returns({});
-            sandbox.stub(serverFetch, 'fetchData').resolves({
-                accessToken: 'fake',
-                expiryIn: 'fake'
-            });
-            result = await serverFetch.getNewAccessToken('refresh', {});
-        });
-        it('should fetch for the data', () => {
-            expect(serverFetch.fetchData).to.be.calledOnce;
-        });
-        it('should generate a header', () => {
-            expect(serverFetch.generateHeader).to.be.calledOnce;
-        });
-        it('should return an accessToken', () => {
-            expect(result.accessToken).to.be.a('string');
-        });
-        it('should return a refreshToken', () => {
-            expect(result.refreshToken).to.be.a('string');
-        });
-    });
-
     describe('generate header', () => {
         const result = serverFetch.generateHeader(
             'fake refresh',

@@ -1,5 +1,5 @@
 import { getQueryStringElement } from './uri';
-import { getNewAccessToken } from './server-fetch';
+import { fetchData, generateHeader } from './server-fetch';
 
 import * as User from './user';
 
@@ -70,8 +70,17 @@ export function updateTokens() {
 export async function refreshAccessToken(tokens) {
     if (tokens.accessToken && tokens.refreshToken) {
         const results = await getNewAccessToken(tokens.refreshToken);
-        this.updateAccessToken(results.accessToken, results.expiry);
+        updateAccessToken(results.accessToken, results.expiry);
     }
+}
+
+export async function getNewAccessToken(refreshToken, expiredToken) {
+    const header = generateHeader(refreshToken, expiredToken);
+    const tokens = await fetchData('/refresh', header);
+    return {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.expiryIn
+    };
 }
 
 // window.onload = function(){
