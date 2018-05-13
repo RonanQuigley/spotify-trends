@@ -53,7 +53,7 @@ describe('front end - user', () => {
         let validAccessStub;
         beforeEach(() => {
             validAccessStub = sandbox.stub(Token, 'getValidAccessToken');
-            sandbox.stub(User, 'redirectUser');
+            User.rewire$redirectUser(sandbox.stub());
             sandbox.stub(Token, 'refreshAccessToken');
         });
         describe('outcome - redirect', () => {

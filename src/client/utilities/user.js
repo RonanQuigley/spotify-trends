@@ -2,7 +2,7 @@ import * as Token from './tokens';
 import { getNewAccessToken } from './server-fetch';
 
 export function redirectUser(page, accessToken) {
-    let queryString = '?accessToken' + accessToken;
+    const queryString = '?accessToken' + accessToken;
     window.location.assign(page + queryString);
 }
 
@@ -17,7 +17,7 @@ export function processUser() {
     if (accessToken) {
         // if the access token is valid, then we
         // redirect straight to the the results page
-        this.redirectUser('/results', accessToken);
+        redirectUser('/results', accessToken);
     } else {
         // get the expired access token and the refresh token
         const tokens = Token.getAccessAndRefreshTokens();
