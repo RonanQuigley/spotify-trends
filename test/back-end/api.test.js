@@ -4,7 +4,8 @@ import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
 import chaiAsPromised from 'chai-as-promised';
 import * as api from '../../src/server/api';
-
+import { fakeGrantType, fakeTokens } from '../fakes';
+import httpMocks from 'node-mocks-http';
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
@@ -16,9 +17,9 @@ let postStub;
 function generateStubs() {
     postStub = sandbox.stub(rp, 'post');
     postStub.resolves({
-        access_token: 'stub',
-        refresh_token: 'stub',
-        expires_in: 'stub'
+        access_token: fakeTokens.accessToken,
+        refresh_token: fakeTokens.refreshToken,
+        expires_in: fakeTokens.expiryIn
     });
 }
 
@@ -34,7 +35,7 @@ describe('back end - api', () => {
 
     describe('request tokens', () => {
         it('should call request.post', () => {
-            expect(postStub).to.be.calledOnce;
+            expect(rp.post).to.be.calledOnce;
         });
         it('should return an object', () => {
             expect(response).to.be.a('object');
@@ -57,7 +58,7 @@ describe('back end - api', () => {
     describe('authorisation options', () => {
         let result;
         beforeEach(() => {
-            result = api.generateAuthOptions(null);
+            result = api.generateAuthHeader('code', fakeGrantType.AUTHORIZE);
         });
         it('should return an object', () => {
             expect(result).to.be.a('object');
@@ -70,8 +71,12 @@ describe('back end - api', () => {
         it('should contain a form object', () => {
             expect(result.form).to.be.a('object');
         });
-        it('should have the correct grant type', () => {
+        it('should have the correct grant type - authorization', () => {
             expect(result.form.grant_type).to.equal('authorization_code');
+        });
+        it('should have the correct grant type - authorization', () => {
+            result = api.generateAuthHeader('code', fakeGrantType.REFRESH);
+            expect(result.form.grant_type).to.equal('refresh_token');
         });
         it('should contain a header object', () => {
             expect(result.headers).to.be.a('object');
@@ -81,6 +86,59 @@ describe('back end - api', () => {
         });
         it('should return json', () => {
             expect(result.json).to.be.true;
+        });
+    });
+
+    describe('refreshing an access token from the server', () => {
+        let result;
+        let req;
+        beforeEach(() => {
+            const spy = sandbox.spy();
+            api.rewire$generateAuthHeader(spy);
+            req = httpMocks.createRequest();
+            req.headers.refreshToken = fakeTokens.refreshToken;
+            result = api.refreshAccessToken(req);
+        });
+        afterEach(() => {
+            req.headers = null;
+            api.restore();
+        });
+        it('should generate an auth header', () => {
+            expect(api.generateAuthHeader).to.be.calledOnce;
+        });
+        it('should pass the correct args to generate auth header', () => {
+            expect(api.generateAuthHeader).to.be.calledWith(
+                fakeTokens.refreshToken,
+                fakeGrantType.REFRESH
+            );
+        });
+        it('should return a Promise', () => {
+            expect(result).to.be.a('Promise');
+        });
+        it('should reject gracefully', async () => {
+            postStub.rejects();
+            await expect(api.refreshAccessToken(req)).to.be.rejected;
+        });
+        describe('resolved promise', () => {
+            beforeEach(() => {
+                postStub.resolves({
+                    body: {
+                        access_token: fakeTokens.accessToken,
+                        expires_in: fakeTokens.expiryIn
+                    }
+                });
+                result = api.refreshAccessToken(req);
+            });
+            it('should return an object', async () => {
+                await expect(result).to.eventually.be.a('object');
+            });
+            it('should return a new access token', async () => {
+                const obj = {
+                    accessToken: fakeTokens.accessToken,
+                    expiryIn: fakeTokens.expiryIn
+                };
+                await expect(result).to.eventually.deep.equal(obj);
+            });
         });
     });
 });

@@ -1,12 +1,12 @@
-import * as api from '../../../api/';
+import { grantType, generateAuthHeader, requestTokens } from '../../../api/';
 import { stringify } from 'querystring';
 import rp from 'request-promise';
 
 export async function authUser(req, res, next) {
     const authCode = req.query.code;
-    const authOptions = api.generateAuthOptions(authCode);
+    const authOptions = generateAuthHeader(authCode, grantType.AUTHORIZE);
     try {
-        const tokens = await api.requestTokens(authOptions);
+        const tokens = await requestTokens(authOptions);
         res.locals.tokens = tokens;
         next();
     } catch (error) {

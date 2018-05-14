@@ -66,6 +66,7 @@
     "eslint-watch": "^3.1.4",
     "handlebars-loader": "^1.7.0",
     "mocha": "^5.0.4",
+    "mocha-clean": "^1.0.0",
     "mocha-webpack": "^2.0.0-beta.0",
     "node-mocks-http": "^1.5.8",
     "prettier": "^1.11.1",
@@ -83,13 +84,13 @@
     "start:prod": "cross-env DEBUG=false node ./dist/server.js",
     "start": "cross-env NODE_ENV=development node --require @babel/register --require dotenv/config ./src/index.js",
     "watch:lint": "node node_modules/eslint-watch/bin/esw -w --fix",
-    "test:front": "mocha-webpack --require setup.test.js --watch --recursive --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
-    "test:back": "mocha-webpack --require setup.test.js --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
+    "test:front": "mocha-webpack --require mocha-clean --require setup.test.js --watch --recursive --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
+    "test:back": "mocha-webpack --require mocha-clean --require setup.test.js --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",
     "test:all": "npm-run-all -p test:front test:back",
     "coverage:front": "nyc --reporter=lcov --reporter=text --report-dir ./coverage/front mocha-webpack --require setup.test.js --webpack-config ./webpack/front-end/webpack.dev.babel.js \"test/front-end/**/*.test.js\"",
     "coverage:back": "nyc --reporter=lcov --reporter=text --report-dir ./coverage/back mocha-webpack --require setup.test.js --webpack-config ./webpack/back-end/webpack.dev.babel.js \"test/back-end/**/*.test.js\"",
     "coverage:all": "npm-run-all -p coverage:front coverage:back",
-    "help" : "nyc --help"
+    "help": "nyc --help"
   },
   "nyc": {
     "include": [
