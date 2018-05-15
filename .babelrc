@@ -2,14 +2,11 @@
   "presets": [
     "@babel/preset-env",
     "@babel/preset-react",
-    "@babel/stage-0"
+    ["@babel/stage-0", {"decoratorsLegacy" : true}],
+    "@babel/stage-3"
   ],
   "plugins": [
-    "react-hot-loader/babel",
-    ["@babel/transform-runtime", {
-      "regenerator" : true, 
-      "polyfill" : true
-    }]
+    "react-hot-loader/babel"
   ],
   "env" : {
     "test" : {

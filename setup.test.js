@@ -1,3 +1,4 @@
+require('babel-polyfill');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 

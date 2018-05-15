@@ -12,7 +12,9 @@
 
 <body>
     {{{body}}}
-    <script src="/dev.js"></script>
+    {{#if dev}}
+        <script src="/dev.js"></script>
+    {{/if}}
 </body>
 
 </html>
