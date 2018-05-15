@@ -74,8 +74,11 @@ export function updateAllTokens() {
 
 export async function refreshAccessToken(tokens) {
     if (tokens.accessToken && tokens.refreshToken) {
-        const results = await getNewAccessToken(tokens.refreshToken);
-        updateAccessAndExpiryTokens(results.accessToken, results.expiry);
+        const results = await getNewAccessToken(
+            tokens.refreshToken,
+            tokens.accessToken
+        );
+        updateAccessAndExpiryTokens(results.accessToken, results.expiryIn);
     }
 }
 

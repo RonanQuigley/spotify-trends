@@ -1,23 +1,28 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "chrome",
             "request": "attach",
             "name": "Attach to Chrome",
             "port": 9222,
+            "trace": true,
+            "smartStep": true,
             "webRoot": "${workspaceFolder}",
+            "skipFiles": [
+                "${workspaceRoot}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+            ],
         },
         {
             "type": "node",
             "request": "attach",
+            "port": 3000,
             "name": "Attach by Process ID",
-            "skipFiles": [
-                "${workspaceRoot}/node_modules/**/*.js",
-                "<node_internals>/**/*.js"
-            ],
-            "smartStep": true,
             "processId": "${command:PickProcess}",
+            "protocol": "inspector",
+            "smartStep": true,
             "outFiles": [ "${workspaceFolder}/dist/**/*.js" ]
         },
         {

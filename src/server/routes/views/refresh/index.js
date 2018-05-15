@@ -1,8 +1,7 @@
 import express from 'express';
+import * as middleware from './middleware';
 const router = express.Router();
 
-router.get('/refresh', (req, res, next) => {
-    res.send('refresh');
-});
+router.post('/refresh', middleware.processRequest);
 
 export default router;

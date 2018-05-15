@@ -17,7 +17,6 @@ const frontEndCommon = {
         // this is a multi-page app; let webpack
         // set the filename through our entry config
         // filename: 'client.js',
-
         // workaround for a bug with webpack :
         // https://github.com/webpack/webpack/issues/6642
         globalObject: 'this'

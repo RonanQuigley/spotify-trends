@@ -1,9 +1,8 @@
 {
   "presets": [
-    "@babel/preset-env",
+    "@babel/preset-env", 
     "@babel/preset-react",
     ["@babel/stage-0", {"decoratorsLegacy" : true}],
-    "@babel/stage-3"
   ],
   "plugins": [
     "react-hot-loader/babel"
@@ -14,6 +13,18 @@
         "istanbul", 
         "rewire-exports"
       ]
+    },
+    "development" : {
+        "presets": [
+          ["@babel/preset-env", {
+            "targets": {
+              "browsers": ["last 2 Chrome versions"],
+              "node" : "current"
+            }
+          }],
+          "@babel/preset-react",
+          ["@babel/stage-0", {"decoratorsLegacy" : true}]
+        ] 
     }
   },
   "sourceMaps": true

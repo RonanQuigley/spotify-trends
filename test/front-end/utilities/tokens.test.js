@@ -32,10 +32,16 @@ describe('front end - Tokens', () => {
         });
         describe('outcome - expired token', () => {
             it('should call for a new access token', () => {
-                expect(Tokens.getNewAccessToken).to.be.calledOnce;
+                expect(Tokens.getNewAccessToken).to.be.calledWith(
+                    fakeTokens.refreshToken,
+                    fakeTokens.accessToken
+                ).calledOnce;
             });
             it('should update the access token that is in local storage', () => {
-                expect(Tokens.updateAccessAndExpiryTokens).to.be.calledOnce;
+                expect(Tokens.updateAccessAndExpiryTokens).to.be.calledWith(
+                    fakeTokens.accessToken,
+                    fakeTokens.expiryIn
+                ).calledOnce;
             });
         });
     });

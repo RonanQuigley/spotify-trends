@@ -85,7 +85,7 @@
     "build:all": "webpack --config webpack/full-stack/webpack.babel.js",
     "build:all:start": "npm-run-all -s build:all start:prod",
     "start:prod": "cross-env DEBUG=false node ./dist/server.js",
-    "start": "cross-env NODE_ENV=development node --require @babel/register --require dotenv/config ./src/index.js",
+    "start": "cross-env NODE_ENV=development node --inspect --require @babel/register --require dotenv/config ./src/index.js",
     "watch:lint": "node node_modules/eslint-watch/bin/esw -w --fix",
     "test:front": "mocha-webpack --require mocha-clean --require setup.test.js --watch --recursive --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
     "test:back": "mocha-webpack --require mocha-clean --require setup.test.js --watch --recursive --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",

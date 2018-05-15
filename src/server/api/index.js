@@ -46,6 +46,7 @@ export async function requestTokens(authOptions) {
 
 export async function refreshAccessToken(req) {
     const refreshToken = req.headers.refreshToken;
+    console.log(refreshToken);
     const authOptions = generateAuthHeader(refreshToken, grantType.REFRESH);
     try {
         const result = await rp.post(authOptions);

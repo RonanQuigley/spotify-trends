@@ -34,21 +34,46 @@ describe('front end - server fetch', () => {
     });
 
     describe('generate header', () => {
-        const result = serverFetch.generateHeader(
-            fakeTokens.refreshToken,
-            fakeTokens.accessToken
-        );
+        let result;
+        beforeEach(() => {
+            sandbox.spy(JSON, 'stringify');
+            result = serverFetch.generateHeader(
+                fakeTokens.refreshToken,
+                fakeTokens.accessToken
+            );
+        });
         it('should return an object', () => {
             expect(result).to.be.a('object');
         });
-        it('should have content-type as json', () => {
-            expect(result.json).to.be.true;
+        describe('headers', () => {
+            it('should be a object ', () => {
+                expect(result.headers).to.be.a('object');
+            });
+            it('should contain the correct content-type', () => {
+                expect(result.headers['Content-Type']).to.equal(
+                    'application/json'
+                );
+            });
+            it('should contain the correct response acceptance', () => {
+                expect(result.headers['Content-Type']).to.equal(
+                    'application/json'
+                );
+            });
         });
-        it('should contain an access token', () => {
-            expect(result.headers.accessToken).to.be.a('string');
+        describe('body', () => {
+            it('should be a string', () => {
+                expect(result.body).to.be.a('string');
+            });
+            it('call stringify', () => {
+                const obj = {
+                    expiredToken: fakeTokens.accessToken,
+                    refreshToken: fakeTokens.refreshToken
+                };
+                expect(JSON.stringify).to.be.calledWith(obj).calledOnce;
+            });
         });
-        it('should contain a refresh token', () => {
-            expect(result.headers.refreshToken).to.be.a('string');
+        it('should contain a post method', () => {
+            expect(result.method).to.equal('POST');
         });
     });
 });
