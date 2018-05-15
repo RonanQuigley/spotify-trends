@@ -13,12 +13,13 @@
             "skipFiles": [
                 "${workspaceRoot}/node_modules/**/*.js",
                 "<node_internals>/**/*.js",
+                "webpack:///webpack/bootstrap",
+                
             ],
         },
         {
             "type": "node",
             "request": "attach",
-            "port": 3000,
             "name": "Attach by Process ID",
             "processId": "${command:PickProcess}",
             "protocol": "inspector",

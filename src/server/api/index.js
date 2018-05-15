@@ -10,6 +10,7 @@ export function _initHeader() {
         url: 'https://accounts.spotify.com/api/token',
         json: true,
         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
             Authorization:
                 'Basic ' +
                 new Buffer.from(
@@ -19,34 +20,38 @@ export function _initHeader() {
     };
 }
 
-export function _generateForm(authCode, grantType) {
+export function _generateBody(token, grant) {
     return {
         form: {
-            code: authCode, // the authorizaton code string
+            code: token, // the authorizaton code string
             redirect_uri: process.env.REDIRECT_URI, // the callback uri
-            grant_type: grantType
+            grant_type: grant
         }
     };
 }
 
-export function generateAuthHeader(authCode, grantType) {
-    const initHeader = _initHeader();
-    const form = _generateForm(authCode, grantType);
-    return Object.assign({}, form, initHeader);
+export function generateAuthHeader(token, grant) {
+    // the incoming token for spotify is a refresh token
+    const header = _initHeader();
+    const body = _generateBody(token, grant);
+    return Object.assign({}, body, header);
 }
 
 export async function requestTokens(authOptions) {
-    const result = await rp.post(authOptions);
-    return {
-        accessToken: result.access_token,
-        refreshToken: result.refresh_token,
-        expiryIn: result.expires_in
-    };
+    try {
+        const result = await rp.post(authOptions);
+        return {
+            accessToken: result.access_token,
+            refreshToken: result.refresh_token,
+            expiryIn: result.expires_in
+        };
+    } catch (error) {
+        return error;
+    }
 }
 
 export async function refreshAccessToken(req) {
-    const refreshToken = req.headers.refreshToken;
-    console.log(refreshToken);
+    const refreshToken = req.body.refreshToken;
     const authOptions = generateAuthHeader(refreshToken, grantType.REFRESH);
     try {
         const result = await rp.post(authOptions);

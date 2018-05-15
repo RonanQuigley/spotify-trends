@@ -7,7 +7,7 @@ const dev = {
     target: 'node',
     entry: './src/server/routes',
     //
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     plugins: [
         // need to specify NODE_ENV otherwise it will show undefined in code
         new webpack.EnvironmentPlugin({

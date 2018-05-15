@@ -74,11 +74,20 @@ export function updateAllTokens() {
 
 export async function refreshAccessToken(tokens) {
     if (tokens.accessToken && tokens.refreshToken) {
-        const results = await getNewAccessToken(
-            tokens.refreshToken,
-            tokens.accessToken
-        );
-        updateAccessAndExpiryTokens(results.accessToken, results.expiryIn);
+        try {
+            const results = await getNewAccessToken(
+                tokens.refreshToken,
+                tokens.accessToken
+            );
+            if (
+                typeof results.accessToken === 'undefined' ||
+                typeof results.expiryIn === 'undefined'
+            )
+                throw new Error('server side error; missing tokens');
+            updateAccessAndExpiryTokens(results.accessToken, results.expiryIn);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 

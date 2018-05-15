@@ -3,8 +3,8 @@ import { stringify } from 'querystring';
 import rp from 'request-promise';
 
 export async function authUser(req, res, next) {
-    const authCode = req.query.code;
-    const authOptions = generateAuthHeader(authCode, grantType.AUTHORIZE);
+    const token = req.query.code;
+    const authOptions = generateAuthHeader(token, grantType.AUTHORIZE);
     try {
         const tokens = await requestTokens(authOptions);
         res.locals.tokens = tokens;

@@ -4,7 +4,13 @@ import morgan from 'morgan';
 // this will prevent eslint throwing no-unused-var errors
 import 'colors';
 import { getHostName } from './utilities';
+import bodyParser from 'body-parser';
+
 const app = express();
+
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 if (process.env.DEBUG === 'true') {
     console.log('DEBUG LOGGING ENABLED'.green);
