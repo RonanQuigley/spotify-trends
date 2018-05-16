@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-if (process.env.DEBUG === 'true') {
-    console.log('DEBUG LOGGING ENABLED'.green);
+if (process.env.ENABLE_LOGGING === 'true') {
+    console.log('LOGGING ENABLED'.green);
     // morgan must be used by the app first
     app.use(morgan('dev'));
 }

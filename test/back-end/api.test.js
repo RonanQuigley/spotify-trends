@@ -99,7 +99,7 @@ describe('back end - api', () => {
             const spy = sandbox.spy();
             api.rewire$generateAuthHeader(spy);
             req = httpMocks.createRequest();
-            req.headers.refreshToken = fakeTokens.refreshToken;
+            req.body.refreshToken = fakeTokens.refreshToken;
             result = api.refreshAccessToken(req);
         });
         afterEach(() => {
@@ -107,13 +107,10 @@ describe('back end - api', () => {
             api.restore();
         });
         it('should generate an auth header', () => {
-            expect(api.generateAuthHeader).to.be.calledOnce;
-        });
-        it('should pass the correct args to generate auth header', () => {
             expect(api.generateAuthHeader).to.be.calledWith(
                 fakeTokens.refreshToken,
                 fakeGrantType.REFRESH
-            );
+            ).calledOnce;
         });
         it('should return a Promise', () => {
             expect(result).to.be.a('Promise');

@@ -7,18 +7,10 @@ describe('back end - index route', () => {
     describe('endpoint', () => {
         it('should exist and respond', async () => {
             await agent
-                .get('/login')
+                .get('/')
                 .set('Accept', 'text/html')
                 .expect('Content-Type', /html/)
-                .expect(302);
+                .expect(200);
         });
-    });
-
-    it('should exist and respond', async () => {
-        await agent
-            .get('/')
-            .set('Accept', 'text/html')
-            .expect('Content-Type', /html/)
-            .expect(200);
     });
 });

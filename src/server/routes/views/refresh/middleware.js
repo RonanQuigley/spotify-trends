@@ -5,6 +5,6 @@ export async function processRequest(req, res, next) {
         const result = await refreshAccessToken(req);
         res.send(result);
     } catch (error) {
-        next(error);
+        return next(error);
     }
 }

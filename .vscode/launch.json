@@ -45,20 +45,20 @@
             // Automatically stop program after launch.
             "stopOnEntry": false,
             // Command line arguments passed to the program (mocha in this case).
-            "args": ["--recursive", "--require", "@babel/register", "--no-timeouts", "test/dud.test.js"],
+            "args": ["--opts", "mocha.opts", "--require", "@babel/register", "--no-timeouts", "test/**/*.js"],
             // Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.
             "cwd": "${workspaceRoot}",            
             // Workspace relative or absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.
             "runtimeExecutable": null,
-            "outFiles": ["${workspaceRoot}/test/**/*.js"],
             "sourceMaps": true,
-            "smartStep": true,
+            // if you don't want to step into the source files for debugging
+            // then set this to true 
+            "smartStep": false,        
             // Environment variables passed to the program.
-            "env": { "NODE_ENV": "test"},
+            "env": {"DEBUG" : "true"},
             "skipFiles": [
                 "${workspaceRoot}/node_modules/**/*.js",
                 "<node_internals>/**/*.js",
-                "C:/users/Ronan/appdata/roaming/npm/node_modules/**/*.js"
             ],
         },
         {

@@ -75,16 +75,15 @@ describe('back end - callback route', () => {
         });
 
         describe('auth user', () => {
-            beforeEach(async () => {
+            it('should call next', async () => {
                 await middleware.authUser(req, res, nextSpy);
+                expect(nextSpy).to.be.calledWith().calledOnce;
             });
-            it('should call next', () => {
-                expect(nextSpy).to.be.calledOnce;
-            });
-            it('should call next with an error object in the event of a rejection', () => {
+            it('should call next with an error in the event of a rejection', async () => {
                 const error = new Error('fake error');
-                requestTokensStub.rejects('error');
-                expect(nextSpy).to.be.calledWithMatch('error');
+                requestTokensStub.rejects(error);
+                await middleware.authUser(req, res, nextSpy);
+                expect(nextSpy).to.be.calledWithMatch(error);
             });
         });
     });

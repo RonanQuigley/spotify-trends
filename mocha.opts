@@ -1,0 +1,6 @@
+--recursive
+--watch
+--require mocha-clean
+--require mocha.setup.js
+--colors
+--reporter nyan

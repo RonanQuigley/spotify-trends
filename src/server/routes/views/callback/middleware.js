@@ -6,11 +6,11 @@ export async function authUser(req, res, next) {
     const token = req.query.code;
     const authOptions = generateAuthHeader(token, grantType.AUTHORIZE);
     try {
-        const tokens = await requestTokens(authOptions);
-        res.locals.tokens = tokens;
-        next();
+        const newTokens = await requestTokens(authOptions);
+        res.locals.tokens = newTokens;
+        return next();
     } catch (error) {
-        next(error);
+        return next(error);
     }
 }
 

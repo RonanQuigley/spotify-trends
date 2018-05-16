@@ -27,7 +27,6 @@ describe('back end - refresh route', () => {
     beforeEach(() => {
         req = httpMocks.createRequest();
         res = httpMocks.createResponse();
-        res.contentType('json');
         req.headers.refreshToken = fakeTokens.refreshToken;
         refreshAccessTokenStub = sandbox.stub(api, 'refreshAccessToken');
         sandbox.spy(res, 'send');
@@ -41,11 +40,12 @@ describe('back end - refresh route', () => {
 
     describe('endpoint', () => {
         it('should exist and respond', async () => {
-            refreshAccessTokenStub.resolves({});
+            refreshAccessTokenStub.resolves({
+                data: 'fake'
+            });
             await agent
-                .get('/refresh')
+                .post('/refresh')
                 .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
                 .expect(200);
         });
     });
