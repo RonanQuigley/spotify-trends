@@ -7,6 +7,7 @@ const dist = path.join(__dirname, '../../dist');
 
 const backEndCommon = {
     name: 'server',
+    target: 'node',
     output: {
         path: dist,
         filename: 'server.js',

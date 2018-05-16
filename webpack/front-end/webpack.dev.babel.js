@@ -12,6 +12,7 @@ const dev = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.EnvironmentPlugin({
+            // we use this for hot reloading the client
             NODE_ENV: process.env.NODE_ENV
         })
     ]
