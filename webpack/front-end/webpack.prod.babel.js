@@ -2,7 +2,7 @@ import merge from 'webpack-merge';
 import common from './webpack.common.babel';
 
 const prod = {
-    mode: 'development',
+    mode: 'production',
     // entry: ['whatwg-fetch', './src/client'],
     entry: {
         index: ['whatwg-fetch', './src/client/pages/index/'],

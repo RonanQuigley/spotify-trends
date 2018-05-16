@@ -4,7 +4,6 @@ import merge from 'webpack-merge';
 
 const dev = {
     mode: 'development',
-    target: 'node',
     entry: './src/server/routes',
     plugins: [
         // need to specify NODE_ENV otherwise it will show undefined in code
