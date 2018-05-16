@@ -61,7 +61,7 @@ describe('back end - api', () => {
     describe('authorisation options', () => {
         let result;
         beforeEach(() => {
-            result = api.generateAuthHeader('code', fakeGrantType.AUTHORIZE);
+            result = api.generateAuthHeader('code', fakeGrantType.AUTH);
         });
         it('should return an object', () => {
             expect(result).to.be.a('object');

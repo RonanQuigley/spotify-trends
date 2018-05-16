@@ -1,7 +1,7 @@
 import rp from 'request-promise';
 
 export const grantType = {
-    AUTHORIZE: 'authorization_code',
+    AUTH: 'authorization_code',
     REFRESH: 'refresh_token'
 };
 
@@ -20,20 +20,35 @@ export function _initHeader() {
     };
 }
 
-export function _generateBody(token, grant) {
+export function _generateAccessBody(token) {
     return {
         form: {
-            code: token, // the authorizaton code string
+            /* the auth code string the user first recieves 
+            from an initial auth login to spotify  
+            */
+            code: token,
             redirect_uri: process.env.REDIRECT_URI, // the callback uri
-            grant_type: grant
+            grant_type: grantType.AUTH
+        }
+    };
+}
+
+export function _generateRefreshBody(token) {
+    return {
+        form: {
+            refresh_token: token,
+            grant_type: grantType.REFRESH
         }
     };
 }
 
 export function generateAuthHeader(token, grant) {
-    // the incoming token for spotify is a refresh token
+    // the incoming code is either an access or refresh token
     const header = _initHeader();
-    const body = _generateBody(token, grant);
+    const body =
+        grant === grantType.AUTH
+            ? _generateAccessBody(token)
+            : _generateRefreshBody(token);
     return Object.assign({}, body, header);
 }
 

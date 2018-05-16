@@ -44,7 +44,7 @@ describe('back end - login route', () => {
     describe('middleware', () => {
         describe('authUser', () => {
             it('should redirect to callback', () => {
-                middleware.authUser(req, res, nextSpy);
+                middleware.redirectToAuth(req, res, nextSpy);
                 expect(res.redirect).to.be.calledOnce;
             });
         });

@@ -17,7 +17,9 @@
                 "file:\\webpack\\bootstrap",
                 "file:///webpack/bootstrap",
                 "webpack:///webpack/bootstrap",
-                "webpack\\bootstrap"
+                "webpack://webpack/bootstrap",
+                "webpack\\bootstrap",
+                
             ],
         },
         {
