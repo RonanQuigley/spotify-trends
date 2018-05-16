@@ -9,7 +9,6 @@ const prod = {
     optimization: {
         minimize: false
     },
-    devtool: 'source-map',
     plugins: [
         // need to specify NODE_ENV otherwise it will show undefined in code
         new webpack.EnvironmentPlugin({

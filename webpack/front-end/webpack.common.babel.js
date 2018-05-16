@@ -13,7 +13,6 @@ const frontEndCommon = {
     target: target,
     output: {
         path: dist,
-
         // this is a multi-page app; let webpack
         // set the filename through our entry config
         // filename: 'client.js',
