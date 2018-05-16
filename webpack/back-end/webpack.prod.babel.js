@@ -4,7 +4,6 @@ import common from './webpack.common.babel';
 
 const prod = {
     mode: 'production',
-    target: 'node',
     entry: './src/index',
     optimization: {
         minimize: false
