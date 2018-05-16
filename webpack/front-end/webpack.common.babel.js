@@ -9,19 +9,30 @@ const dist = path.join(__dirname, '../../dist');
 const target = process.env.NODE_ENV === 'test' ? 'node' : 'web';
 
 /* for vscode-chrome-debugger to work correctly we need to 
-change the devtool for testing and development this is because 
-vscode-chrome require non-inline source maps whilst mocha-webpack 
-works best with cheap and inlined source maps
+change the devtool for testing and development. This is because 
+vscode-chrome debugger requires non-inline source maps whilst 
+mocha-webpack works best with cheap and inlined source maps
 */
 
-const devtool =
-    process.env.NODE_ENV === 'test'
-        ? 'inline-cheap-module-source-map'
-        : 'source-map';
+let devtool;
+
+switch (process.env.NODE_ENV) {
+    case 'test':
+        devtool = 'inline-cheap-module-source-map';
+        break;
+    case 'production':
+        devtool = 'source-map';
+        break;
+    default:
+        // development mode
+        devtool = 'module-source-map';
+        break;
+}
 
 const frontEndCommon = {
     name: 'client',
     target: target,
+    devtool: devtool,
     output: {
         path: dist,
         // this is a multi-page app; let webpack
@@ -29,6 +40,9 @@ const frontEndCommon = {
         // filename: 'client.js',
         // workaround for a bug with webpack :
         // https://github.com/webpack/webpack/issues/6642
+        devtoolModuleFilenameTemplate(info) {
+            return `file:///${info.absoluteResourcePath.replace(/\\/g, '/')}`;
+        },
         globalObject: 'this'
     },
     plugins: [new webpack.NamedModulesPlugin()],

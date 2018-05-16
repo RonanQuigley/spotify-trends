@@ -11,26 +11,13 @@
             "smartStep": true,
             "webRoot": "${workspaceFolder}",
             "skipFiles": [
-                "${workspaceFolder}/node_modules/**/*.js",
-                "${worspaceRoot}/node_modules/**/*.js",
-                "${workspaceFolder}\\node_modules/**\\*.js",
-                "${worspaceRoot}\\node_modules\\**\\*.js",
-                "${workspaceFolder}/webpack/**/*.js",
                 "${workspaceRoot}/node_modules/**/*.js",
-                "${workspaceFolder}\\webpack\\**\\*.js",
-                "${workspaceRoot}\\node_modules\\**\\*.js",
                 "<node_internals>/**/*.js",
+                "${workspaceRoot}\\node_modules/**\\*.js",     
+                "file:\\webpack\\bootstrap",
+                "file:///webpack/bootstrap",
                 "webpack:///webpack/bootstrap",
-                "webpack:\\webpack\\bootstrap",
-                "webpack://webpack/bootstrap",
-                "${workspaceFolder}/webpack/bootstrap",
-                "${workspaceRoot}/webpack/bootstrap",
-                "${workspaceRoot}/webpack",
-                "${workspaceFolder}/webpack/bootstrap",
-                "localhost:3000/webpack/bootstrap",
-                "top/localhost:3000/webpack/bootstrap",
-                "webpack://"
-                
+                "webpack\\bootstrap"
             ],
         },
         {

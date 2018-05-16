@@ -63,26 +63,3 @@ export async function refreshAccessToken(req) {
         throw error;
     }
 }
-
-// request.post(authOptions, (err, res, body) => {
-//     let result = Utilities.validateReqCallback(err, res, body);
-//     if (result !== true) throw result;
-//     let accessToken = body.access_token;
-//     if (!accessToken) throw 'no access token';
-//     let expiryIn = body.expires_in;
-//     if (!expiryIn) throw 'no expires in time';
-//     callback(accessToken, expiryIn);
-// });
-
-// app.get("/refresh", (req, res) => {
-//     // requesting access token from refresh token
-//     let refresh_token = req.headers.refresh_token ? req.headers.refresh_token : req.query.refresh_token;
-//     if(!refresh_token) throw 'missing refresh token - check client side naming';
-//     let authOptions = spotifyApi.generateAuthHeader(headerType.REFRESH, null, null, refresh_token);
-//     spotifyApi.refreshAccessToken(authOptions, (accessToken, expiryIn) => {
-//       res.zsend({
-//         'access_token': accessToken,
-//         'expiry_in' : expiryIn
-//       });
-//     });
-//   });
