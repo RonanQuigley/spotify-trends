@@ -94,7 +94,7 @@
     "coverage:front": "nyc --reporter=lcov --reporter=text --report-dir ./coverage/front mocha-webpack --require setup.test.js --webpack-config ./webpack/front-end/webpack.dev.babel.js \"test/front-end/**/*.test.js\"",
     "coverage:back": "nyc --reporter=lcov --reporter=text --report-dir ./coverage/back mocha-webpack --require setup.test.js --webpack-config ./webpack/back-end/webpack.dev.babel.js \"test/back-end/**/*.test.js\"",
     "coverage:all": "npm-run-all -p coverage:front coverage:back",
-    "help": "nyc --help"
+    "mocha-debug": "mocha --watch --require @babel/register ./test/dud.test.js"
   },
   "nyc": {
     "include": [

@@ -12,7 +12,7 @@ const devtool =
         : 'source-map';
 
 export default {
-    devtool: devtool,
+    devtool: 'source-map',
     resolve: {
         alias: {
             common: path.join(__dirname, './../src/common')
