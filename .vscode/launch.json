@@ -68,7 +68,19 @@
             "processId": "${command:PickProcess}",
             "protocol": "inspector",
             "smartStep": true,
-            "outFiles": [ "${workspaceFolder}/dist/**/*.js" ]
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/dist/*.{.js.map}"
+            ],
+            "skipFiles": [
+                "${workspaceRoot}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "*.hbs",
+                "webpack:///webpack/bootstrap",
+                "webpack:\\webpack\\bootstrap",
+                "webpack://webpack/bootstrap",
+                "webpack/bootstrap",
+            ],
         },
         {
             "type": "node",

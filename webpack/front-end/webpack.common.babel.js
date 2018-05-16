@@ -8,6 +8,17 @@ const dist = path.join(__dirname, '../../dist');
 // if we're testing, we run jsdom via node for our unit tests
 const target = process.env.NODE_ENV === 'test' ? 'node' : 'web';
 
+/* for vscode-chrome-debugger to work correctly we need to 
+change the devtool for testing and development this is because 
+vscode-chrome require non-inline source maps whilst mocha-webpack 
+works best with cheap and inlined source maps
+*/
+
+const devtool =
+    process.env.NODE_ENV === 'test'
+        ? 'inline-cheap-module-source-map'
+        : 'source-map';
+
 const frontEndCommon = {
     name: 'client',
     target: target,
