@@ -46,7 +46,7 @@ export async function requestTokens(authOptions) {
             expiryIn: result.expires_in
         };
     } catch (error) {
-        return error;
+        throw error;
     }
 }
 

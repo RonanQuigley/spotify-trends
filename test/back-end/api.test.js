@@ -49,9 +49,12 @@ describe('back end - api', () => {
         it('should return an expiry', () => {
             expect(response.expiryIn).to.be.a('string');
         });
-        it('should be able to be rejected', async () => {
-            postStub.rejects();
-            await expect(api.requestTokens(null)).to.be.rejected;
+        it('should return the error in the event of an error', async () => {
+            const error = new Error('fake error');
+            postStub.rejects(error);
+            await expect(api.requestTokens(null)).to.eventually.be.rejectedWith(
+                error
+            );
         });
     });
 

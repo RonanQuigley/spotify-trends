@@ -33,9 +33,11 @@ function initMiddlewareTests() {
 }
 
 describe('back end - callback route', () => {
+    let requestTokensStub;
     beforeEach(() => {
         sandbox.stub(queryString, 'stringify');
-        sandbox.stub(api, 'requestTokens').resolves({});
+        requestTokensStub = sandbox.stub(api, 'requestTokens');
+        requestTokensStub.resolves({});
     });
 
     afterEach(() => {
@@ -78,6 +80,11 @@ describe('back end - callback route', () => {
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;
+            });
+            it('should call next with an error object in the event of a rejection', () => {
+                const error = new Error('fake error');
+                requestTokensStub.rejects('error');
+                expect(nextSpy).to.be.calledWithMatch('error');
             });
         });
     });
