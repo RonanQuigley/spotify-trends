@@ -71,8 +71,8 @@ export async function refreshAccessToken(req) {
     try {
         const result = await rp.post(authOptions);
         return {
-            accessToken: result.body.access_token,
-            expiryIn: result.body.expires_in
+            accessToken: result.access_token,
+            expiryIn: result.expires_in
         };
     } catch (error) {
         throw error;

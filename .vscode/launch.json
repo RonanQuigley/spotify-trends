@@ -1,10 +1,11 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "chrome",
             "request": "attach",
-            "name": "Attach to Chrome",
+            "name": "Attach to Client",
             "port": 9222,
             "trace": true,
             "timeout": 1000,
@@ -18,8 +19,28 @@
                 "file:///webpack/bootstrap",
                 "webpack:///webpack/bootstrap",
                 "webpack://webpack/bootstrap",
-                "webpack\\bootstrap",
-                
+                "webpack\\bootstrap",            
+            ],
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Server",
+            "processId": "${command:PickProcess}",
+            "protocol": "inspector",
+            "smartStep": true,
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/dist/*.{.js.map}"
+            ],
+            "skipFiles": [
+                "${workspaceRoot}/node_modules/**/*.js",
+                "<node_internals>/**/*.js",
+                "*.hbs",
+                "webpack:///webpack/bootstrap",
+                "webpack:\\webpack\\bootstrap",
+                "webpack://webpack/bootstrap",
+                "webpack/bootstrap",
             ],
         },
         {
@@ -52,29 +73,8 @@
         },
         {
             "type": "node",
-            "request": "attach",
-            "name": "Attach by Process ID",
-            "processId": "${command:PickProcess}",
-            "protocol": "inspector",
-            "smartStep": true,
-            "sourceMaps": true,
-            "outFiles": [
-                "${workspaceRoot}/dist/*.{.js.map}"
-            ],
-            "skipFiles": [
-                "${workspaceRoot}/node_modules/**/*.js",
-                "<node_internals>/**/*.js",
-                "*.hbs",
-                "webpack:///webpack/bootstrap",
-                "webpack:\\webpack\\bootstrap",
-                "webpack://webpack/bootstrap",
-                "webpack/bootstrap",
-            ],
-        },
-        {
-            "type": "node",
             "request": "launch",
-            "name": "Debug Dev",
+            "name": "Debug Dev Server Setup",
             "smartStep": true,
             "program": "${workspaceFolder}/src/index.js",
             "skipFiles": [
@@ -98,7 +98,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug Prod",
+            "name": "Debug Prod Build",
             "smartStep": true,
             "program": "${workspaceFolder}/dist/server.js",
             "skipFiles": [

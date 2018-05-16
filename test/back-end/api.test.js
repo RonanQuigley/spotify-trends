@@ -122,10 +122,8 @@ describe('back end - api', () => {
         describe('resolved promise', () => {
             beforeEach(() => {
                 postStub.resolves({
-                    body: {
-                        access_token: fakeTokens.accessToken,
-                        expires_in: fakeTokens.expiryIn
-                    }
+                    access_token: fakeTokens.accessToken,
+                    expires_in: fakeTokens.expiryIn
                 });
                 result = api.refreshAccessToken(req);
             });

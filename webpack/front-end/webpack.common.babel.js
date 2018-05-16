@@ -2,11 +2,16 @@ import webpack from 'webpack';
 import path from 'path';
 import merge from 'webpack-merge';
 import DotEnv from 'dotenv-webpack';
+import nodeExternals from 'webpack-node-externals';
 import common from '../webpack.common';
 const dist = path.join(__dirname, '../../dist');
 
-// if we're testing, we run jsdom via node for our unit tests
+/* if we're testing, we run jsdom via node for our unit tests
+we also need to use nodeExternals to prevent warnings for fetch-mock
+*/
+
 const target = process.env.NODE_ENV === 'test' ? 'node' : 'web';
+const externals = process.env.NODE_ENV === 'test' ? nodeExternals() : null;
 
 /* for vscode-chrome-debugger to work correctly we need to 
 change the devtool for testing and development. This is because 
@@ -18,7 +23,7 @@ let devtool;
 
 switch (process.env.NODE_ENV) {
     case 'test':
-        devtool = 'inline-cheap-module-source-map';
+        devtool = 'source-map';
         break;
     case 'production':
         devtool = 'source-map';
@@ -29,23 +34,38 @@ switch (process.env.NODE_ENV) {
         break;
 }
 
+let output;
+
+// workaround for a bug with webpack :
+// https://github.com/webpack/webpack/issues/6642
+const globalObject = 'this';
+
+if (process.env.NODE_ENV === 'test') {
+    /*
+        our unit call stack traces will become unclickable in vscode
+        with devtoolModuleFilenameTemplate. we need to remove it in test
+    */
+    output = {
+        path: dist,
+        globalObject: globalObject
+    };
+} else {
+    output = {
+        path: dist,
+        devtoolModuleFilenameTemplate(info) {
+            return `file:///${info.absoluteResourcePath.replace(/\\/g, '/')}`;
+        },
+        globalObject: globalObject
+    };
+}
+
 const frontEndCommon = {
     name: 'client',
     target: target,
     devtool: devtool,
-    output: {
-        path: dist,
-        // this is a multi-page app; let webpack
-        // set the filename through our entry config
-        // filename: 'client.js',
-        // workaround for a bug with webpack :
-        // https://github.com/webpack/webpack/issues/6642
-        devtoolModuleFilenameTemplate(info) {
-            return `file:///${info.absoluteResourcePath.replace(/\\/g, '/')}`;
-        },
-        globalObject: 'this'
-    },
+    output: output,
     plugins: [new webpack.NamedModulesPlugin()],
+    externals: externals,
     module: {
         rules: [
             {
