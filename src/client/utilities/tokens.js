@@ -19,7 +19,7 @@ export function getToken(name) {
 
 export function updateAccessAndExpiryTokens(accessToken, expiryIn) {
     setToken(names.accessToken, accessToken);
-    setToken(names.expiryIn, expiryIn);
+    setAccessTokenExpiry(expiryIn);
 }
 
 export function getAccessAndRefreshTokens() {
@@ -85,8 +85,10 @@ export async function refreshAccessToken(tokens) {
             )
                 throw new Error('server side error; missing tokens');
             updateAccessAndExpiryTokens(results.accessToken, results.expiryIn);
+            return;
         } catch (error) {
             console.error(error);
+            return;
         }
     }
 }
@@ -94,9 +96,9 @@ export async function refreshAccessToken(tokens) {
 export async function getNewAccessToken(refreshToken, expiredToken) {
     const header = generateHeader(refreshToken, expiredToken);
     const response = await fetchData('/refresh', header);
-    const tokens = response.json();
+    const tokens = await response.json();
     return {
         accessToken: tokens.accessToken,
-        refreshToken: tokens.expiryIn
+        expiryIn: tokens.expiryIn
     };
 }

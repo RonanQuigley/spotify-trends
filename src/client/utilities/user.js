@@ -12,7 +12,7 @@ export function isExistingUser() {
     return token ? true : false;
 }
 
-export function processUser() {
+export async function processUser() {
     const accessToken = Token.getValidAccessToken();
     if (accessToken) {
         // if the access token is valid, then we
@@ -21,6 +21,6 @@ export function processUser() {
     } else {
         // get the expired access token and the refresh token
         const tokens = Token.getAccessAndRefreshTokens();
-        Token.refreshAccessToken(tokens);
+        await Token.refreshAccessToken(tokens);
     }
 }

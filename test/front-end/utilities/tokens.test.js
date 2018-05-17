@@ -38,7 +38,7 @@ describe('front end - Tokens', () => {
                     fakeTokens.accessToken
                 ).calledOnce;
             });
-            it('should update the access token that is in local storage', () => {
+            it('should update the tokens that are in local storage', () => {
                 expect(Tokens.updateAccessAndExpiryTokens).to.be.calledWith(
                     fakeTokens.accessToken,
                     fakeTokens.expiryIn
@@ -49,13 +49,15 @@ describe('front end - Tokens', () => {
 
     describe('getting a new access token', () => {
         let result;
+        let responseSpy;
         beforeEach(async () => {
             const obj = {
                 accessToken: fakeTokens.accessToken,
                 expiryIn: fakeTokens.expiryIn
             };
+            responseSpy = sandbox.spy(async () => obj);
             const fakeResponse = {
-                json: sandbox.spy(() => obj)
+                json: responseSpy
             };
             sandbox.stub(serverFetch, 'generateHeader').returns({});
             sandbox.stub(serverFetch, 'fetchData').resolves(fakeResponse);
@@ -70,11 +72,14 @@ describe('front end - Tokens', () => {
         it('should generate a header', () => {
             expect(serverFetch.generateHeader).to.be.calledOnce;
         });
-        it('should return an accessToken', () => {
+        it('should return a new accessToken', () => {
             expect(result.accessToken).to.be.a('string');
         });
-        it('should return a refreshToken', () => {
-            expect(result.refreshToken).to.be.a('string');
+        it('should return a new expiry', () => {
+            expect(result.expiryIn).to.be.a('string');
+        });
+        it('should call response json', () => {
+            expect(responseSpy).to.be.calledOnce;
         });
     });
 });
