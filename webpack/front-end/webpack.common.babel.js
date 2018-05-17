@@ -20,43 +20,38 @@ mocha-webpack works best with cheap and inlined source maps
 */
 
 let devtool;
-
-switch (process.env.NODE_ENV) {
-    case 'test':
-        devtool = 'source-map';
-        break;
-    case 'production':
-        devtool = 'source-map';
-        break;
-    default:
-        // development mode
-        devtool = 'module-source-map';
-        break;
-}
-
 let output;
 
 // workaround for a bug with webpack :
 // https://github.com/webpack/webpack/issues/6642
 const globalObject = 'this';
 
-if (process.env.NODE_ENV === 'test') {
-    /*
-        our unit call stack traces will become unclickable in vscode
-        with devtoolModuleFilenameTemplate. we need to remove it in test
-    */
-    output = {
-        path: dist,
-        globalObject: globalObject
-    };
-} else {
-    output = {
-        path: dist,
-        devtoolModuleFilenameTemplate(info) {
-            return `file:///${info.absoluteResourcePath.replace(/\\/g, '/')}`;
-        },
-        globalObject: globalObject
-    };
+switch (process.env.NODE_ENV) {
+    case 'development':
+        devtool = 'module-source-map';
+        output = {
+            path: dist,
+            devtoolModuleFilenameTemplate(info) {
+                return `file:///${info.absoluteResourcePath.replace(
+                    /\\/g,
+                    '/'
+                )}`;
+            },
+            globalObject: globalObject
+        };
+        break;
+    default:
+        /*
+            our unit call stack traces will become unclickable in vscode
+            with devtoolModuleFilenameTemplate. we need to remove it in test.
+            we can also use this for production 
+        */
+        devtool = 'source-map';
+        output = {
+            path: dist,
+            globalObject: globalObject
+        };
+        break;
 }
 
 const frontEndCommon = {

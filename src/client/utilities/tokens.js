@@ -85,10 +85,8 @@ export async function refreshAccessToken(tokens) {
             )
                 throw new Error('server side error; missing tokens');
             updateAccessAndExpiryTokens(results.accessToken, results.expiryIn);
-            return;
         } catch (error) {
             console.error(error);
-            return;
         }
     }
 }
