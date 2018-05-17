@@ -11,7 +11,7 @@ we also need to use nodeExternals to prevent warnings for fetch-mock
 */
 
 const target = process.env.NODE_ENV === 'test' ? 'node' : 'web';
-const externals = process.env.NODE_ENV === 'test' ? nodeExternals() : null;
+const externals = process.env.NODE_ENV === 'test' ? nodeExternals() : [];
 
 /* for vscode-chrome-debugger to work correctly we need to 
 change the devtool for testing and development. This is because 
