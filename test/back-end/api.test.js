@@ -4,7 +4,7 @@ import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
 import chaiAsPromised from 'chai-as-promised';
 import * as api from '../../src/server/api';
-import { fakeGrantType, fakeTokens } from '../fakes';
+import { fakeGrantType, fakeTokens } from '../fixtures';
 import httpMocks from 'node-mocks-http';
 chai.use(chaiAsPromised);
 chai.use(sinonChai);

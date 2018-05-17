@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import app from '../../../src/server/';
 import chai from 'chai';
 import httpMocks from 'node-mocks-http';
-import { fakeTokens } from '../../fakes';
+import { fakeTokens } from '../../fixtures';
 import sinon from 'sinon';
 import * as middleware from '../../../src/server/routes/views/refresh/middleware';
 import * as api from '../../../src/server/api';

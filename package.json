@@ -5,6 +5,7 @@
   "main": "./src/index.js",
   "dependencies": {
     "@types/chai-as-promised": "^7.1.0",
+    "@types/fetch-mock": "^6.0.1",
     "babel-plugin-istanbul": "^4.1.6",
     "babel-plugin-rewire-exports": "^1.0.0-alpha",
     "body-parser": "^1.18.3",

@@ -1,5 +1,4 @@
 import { getQueryStringElement } from './uri';
-import fetchMock from 'fetch-mock';
 import { fetchData, generateHeader } from './server-fetch';
 
 import * as User from './user';
@@ -97,7 +96,7 @@ export async function getNewAccessToken(refreshToken, expiredToken) {
     const response = await fetchData('/refresh', header);
     const tokens = response.json();
     return {
-        accessToken: response.accessToken,
-        refreshToken: response.expiryIn
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.expiryIn
     };
 }

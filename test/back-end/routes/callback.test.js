@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import app from '../../../src/server/';
 import * as api from '../../../src/server/api';
 import * as middleware from '../../../src/server/routes/views/callback/middleware';
-import { fakeTokens } from '../../fakes';
+import { fakeTokens } from '../../fixtures';
 import queryString from 'querystring';
 import chai from 'chai';
 import sinon from 'sinon';

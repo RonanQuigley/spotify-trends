@@ -1,10 +1,11 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { fakeTokens } from '../../fakes';
+import { fakeTokens } from '../../fixtures';
 import * as Uri from '../../../src/client/utilities/uri';
 import * as Tokens from '../../../src/client/utilities/tokens';
 import * as serverFetch from '../../../src/client/utilities/server-fetch';
+
 chai.use(sinonChai);
 
 const expect = chai.expect;
@@ -49,11 +50,15 @@ describe('front end - Tokens', () => {
     describe('getting a new access token', () => {
         let result;
         beforeEach(async () => {
-            sandbox.stub(serverFetch, 'generateHeader').returns({});
-            sandbox.stub(serverFetch, 'fetchData').resolves({
+            const obj = {
                 accessToken: fakeTokens.accessToken,
                 expiryIn: fakeTokens.expiryIn
-            });
+            };
+            const fakeResponse = {
+                json: sandbox.spy(() => obj)
+            };
+            sandbox.stub(serverFetch, 'generateHeader').returns({});
+            sandbox.stub(serverFetch, 'fetchData').resolves(fakeResponse);
             result = await Tokens.getNewAccessToken(
                 fakeTokens.refreshToken,
                 {}

@@ -1,5 +1,5 @@
 import * as uri from '../../../src/client/utilities/uri';
-import { fakeUrl, fakeTokens, fakeTokenNames } from '../../fakes';
+import { fakeUrl, fakeTokens, fakeTokenNames } from '../../fixtures';
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';

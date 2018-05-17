@@ -1,6 +1,7 @@
-// keep our unit tests consistent with our chosen token naming convention
-import { names } from '../../src/client/utilities/tokens';
-import { grantType } from '../../src/server/api';
+/*
+    Don't import code from either the front-end or back-end.
+    Fixtures should be entirely self-contained.
+*/
 
 export const fakeTokens = {
     accessToken: 'fakeAccessToken',
@@ -8,12 +9,15 @@ export const fakeTokens = {
     expiryIn: 'fakeExpiryIn'
 };
 
-export const fakeGrantType = grantType;
+export const fakeGrantType = {
+    AUTH: 'authorization_code',
+    REFRESH: 'refresh_token'
+};
 
 export const fakeTokenNames = {
-    accessToken: names.accessToken,
-    refreshToken: names.refreshToken,
-    expiryIn: names.expiryIn
+    accessToken: 'accessToken',
+    refreshToken: 'refreshToken',
+    expiryIn: 'expiryIn'
 };
 
 export const fakeUrl =

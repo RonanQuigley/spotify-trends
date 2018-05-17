@@ -1,7 +1,7 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { fakeTokens } from '../../fakes';
+import { fakeTokens } from '../../fixtures';
 import * as Token from '../../../src/client/utilities/tokens';
 import * as User from '../../../src/client/utilities/user';
 
