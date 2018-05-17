@@ -1,9 +1,9 @@
 import express from 'express';
-import index from './views/index';
-import login from './views/login';
-import callback from './views/callback';
-import results from './views/results';
-import refresh from './views/refresh';
+import index from './endpoints/index';
+import login from './endpoints/login';
+import callback from './endpoints/callback';
+import results from './endpoints/results';
+import refresh from './endpoints/refresh';
 const router = express.Router();
 
 router.use(
