@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import app from '../../../src/server/';
 import chai from 'chai';
 import sinon from 'sinon';
-import { fakeTokens } from '../../fixtures';
+import { fakeTokens } from '../../fixtures/authentication/';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as middleware from '../../../src/server/router/views/results/middleware';
@@ -12,7 +12,6 @@ const expect = chai.expect;
 chai.use(sinonChai);
 
 const sandbox = sinon.createSandbox();
-let resStub;
 let req;
 let res;
 let nextSpy;

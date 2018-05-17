@@ -5,7 +5,7 @@ import rp from 'request-promise';
 import chaiAsPromised from 'chai-as-promised';
 import * as Tokens from '../../../src/server/api/authentication/tokens';
 import * as Header from '../../../src/server/api/authentication/header';
-import { fakeGrantType, fakeTokens } from '../../fixtures';
+import { fakeGrantType, fakeTokens } from '../../fixtures/authentication/';
 import httpMocks from 'node-mocks-http';
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
