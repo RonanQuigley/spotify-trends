@@ -4,7 +4,7 @@ import chai from 'chai';
 import httpMocks from 'node-mocks-http';
 import { fakeTokens } from '../../fixtures';
 import sinon from 'sinon';
-import * as middleware from '../../../src/server/routes/views/refresh/middleware';
+import * as middleware from '../../../src/server/router/endpoints/refresh/middleware';
 import * as Tokens from '../../../src/server/api/authentication/tokens';
 import sinonChai from 'sinon-chai';
 

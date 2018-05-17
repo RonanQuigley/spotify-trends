@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import app from '../../../src/server/';
 import * as Tokens from '../../../src/server/api/authentication/tokens';
-import * as middleware from '../../../src/server/routes/views/callback/middleware';
+import * as middleware from '../../../src/server/router/endpoints/callback/middleware';
 import { fakeTokens } from '../../fixtures';
 import queryString from 'querystring';
 import chai from 'chai';

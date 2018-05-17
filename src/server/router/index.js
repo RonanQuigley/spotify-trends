@@ -1,8 +1,8 @@
 import express from 'express';
-import index from './endpoints/index';
+import index from './views/index';
 import login from './endpoints/login';
 import callback from './endpoints/callback';
-import results from './endpoints/results';
+import results from './views/results';
 import refresh from './endpoints/refresh';
 const router = express.Router();
 

@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { fakeTokens } from '../../fixtures';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
-import * as middleware from '../../../src/server/routes/views/results/middleware';
+import * as middleware from '../../../src/server/router/views/results/middleware';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 

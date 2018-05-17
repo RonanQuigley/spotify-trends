@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import app from '../../../src/server/';
-import * as middleware from '../../../src/server/routes/views/login/middleware';
+import * as middleware from '../../../src/server/router/endpoints/login/middleware';
 import chai from 'chai';
 import httpMocks from 'node-mocks-http';
 import sinon from 'sinon';

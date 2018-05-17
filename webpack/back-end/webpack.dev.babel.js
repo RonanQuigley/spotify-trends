@@ -4,7 +4,9 @@ import merge from 'webpack-merge';
 
 const dev = {
     mode: 'development',
-    entry: './src/server/routes',
+    /* in development we go straight to the express router 
+    as the initial hot reloading setup is done outside webpack */
+    entry: './src/server/router',
     plugins: [
         // need to specify NODE_ENV otherwise it will show undefined in code
         new webpack.EnvironmentPlugin({

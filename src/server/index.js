@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'development') {
         express.static(__dirname),
         // call default as function as it is exported
         // that way for development purposes
-        require('./routes').default()
+        require('./router').default()
     );
 }
 
