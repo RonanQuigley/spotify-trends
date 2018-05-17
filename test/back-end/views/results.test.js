@@ -3,9 +3,12 @@ import app from '../../../src/server/';
 import chai from 'chai';
 import sinon from 'sinon';
 import { fakeTokens } from '../../fixtures/authentication/';
+import { fakeTopArtists } from '../../fixtures/spotify/artists';
+import { fakeUrl } from '../../fixtures/spotify/data-access';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as middleware from '../../../src/server/router/views/results/middleware';
+import * as UserData from '../../../src/server/api/user-data';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -16,12 +19,17 @@ let req;
 let res;
 let nextSpy;
 
-describe('back end - results route', () => {
+describe('back end - results view', () => {
     beforeEach(() => {
         req = httpMocks.createRequest();
         res = httpMocks.createResponse();
         sandbox.spy(res, 'send');
+        sandbox.spy(res, 'redirect');
         nextSpy = sandbox.spy();
+        sandbox
+            .stub(UserData, 'requestData')
+            .callsFake(async (token, url) => {})
+            .resolves(fakeTopArtists);
     });
 
     afterEach(() => {
@@ -61,11 +69,27 @@ describe('back end - results route', () => {
         });
 
         describe('get user data', () => {
-            beforeEach(() => {
-                middleware.getUserData(req, res, nextSpy);
+            beforeEach(async () => {
+                await middleware.getUserData(req, res, nextSpy);
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;
+            });
+            it('should make a call to request data', () => {
+                expect(UserData.requestData).to.be.calledOnce;
+            });
+            it('should pass the results into res.locals with no modifications', () => {
+                expect(res.locals.userData).to.deep.equal(fakeTopArtists);
+            });
+        });
+
+        describe('error handling for an expired access token', () => {
+            beforeEach(() => {
+                const error = () => {};
+                middleware.handleExpiredRejection(error, req, res, nextSpy);
+            });
+            it('should trigger a redirect back to the home page', () => {
+                expect(res.redirect).to.be.calledWith('/').calledOnce;
             });
         });
     });
