@@ -1,8 +1,8 @@
 import * as Token from './tokens';
 import { getNewAccessToken } from './server-fetch';
 
-export function redirectUser(page, accessToken) {
-    const queryString = '?accessToken' + accessToken;
+export function redirectUser(page, token) {
+    const queryString = '?accessToken=' + token;
     window.location.assign(page + queryString);
 }
 

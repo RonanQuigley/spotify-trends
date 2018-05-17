@@ -5,7 +5,7 @@ import httpMocks from 'node-mocks-http';
 import { fakeTokens } from '../../fixtures';
 import sinon from 'sinon';
 import * as middleware from '../../../src/server/routes/views/refresh/middleware';
-import * as api from '../../../src/server/api';
+import * as Tokens from '../../../src/server/api/authentication/tokens';
 import sinonChai from 'sinon-chai';
 
 const agent = supertest.agent(app);
@@ -28,7 +28,7 @@ describe('back end - refresh route', () => {
         req = httpMocks.createRequest();
         res = httpMocks.createResponse();
         req.headers.refreshToken = fakeTokens.refreshToken;
-        refreshAccessTokenStub = sandbox.stub(api, 'refreshAccessToken');
+        refreshAccessTokenStub = sandbox.stub(Tokens, 'refreshAccessToken');
         sandbox.spy(res, 'send');
         nextSpy = sandbox.spy();
     });
@@ -75,7 +75,8 @@ describe('back end - refresh route', () => {
             it('should call refresh access token', async () => {
                 refreshAccessTokenStub.resolves({});
                 await middleware.processRequest(req, res, nextSpy);
-                expect(api.refreshAccessToken).to.be.calledWith(req).calledOnce;
+                expect(Tokens.refreshAccessToken).to.be.calledWith(req)
+                    .calledOnce;
             });
         });
     });

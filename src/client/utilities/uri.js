@@ -1,8 +1,7 @@
 export function getLocationHref() {
-    // this function looks trivial,
-    // but I need to wrap the property in
-    // a function for unit testing purposes
-    // otherwise, you can't stub href.
+    /* this function looks trivial,
+    but I need to wrap the property in
+    a function for unit testing */
     return window.location.href;
 }
 

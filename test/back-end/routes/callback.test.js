@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import app from '../../../src/server/';
-import * as api from '../../../src/server/api';
+import * as Tokens from '../../../src/server/api/authentication/tokens';
 import * as middleware from '../../../src/server/routes/views/callback/middleware';
 import { fakeTokens } from '../../fixtures';
 import queryString from 'querystring';
@@ -36,7 +36,7 @@ describe('back end - callback route', () => {
     let requestTokensStub;
     beforeEach(() => {
         sandbox.stub(queryString, 'stringify');
-        requestTokensStub = sandbox.stub(api, 'requestTokens');
+        requestTokensStub = sandbox.stub(Tokens, 'requestTokens');
         requestTokensStub.resolves({});
     });
 

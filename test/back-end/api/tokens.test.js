@@ -3,8 +3,9 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
 import chaiAsPromised from 'chai-as-promised';
-import * as api from '../../src/server/api';
-import { fakeGrantType, fakeTokens } from '../fixtures';
+import * as Tokens from '../../../src/server/api/authentication/tokens';
+import * as Header from '../../../src/server/api/authentication/header';
+import { fakeGrantType, fakeTokens } from '../../fixtures';
 import httpMocks from 'node-mocks-http';
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
@@ -12,21 +13,21 @@ chai.use(sinonChai);
 const expect = chai.expect;
 const sandbox = sinon.createSandbox();
 let response;
-let postStub;
+let rpStub;
 
 function generateStubs() {
-    postStub = sandbox.stub(rp, 'post');
-    postStub.resolves({
+    rpStub = sandbox.stub(rp, 'post');
+    rpStub.resolves({
         access_token: fakeTokens.accessToken,
         refresh_token: fakeTokens.refreshToken,
         expires_in: fakeTokens.expiryIn
     });
 }
 
-describe('back end - api', () => {
+describe('back end - api - tokens', () => {
     beforeEach(async () => {
         generateStubs();
-        response = await api.requestTokens();
+        response = await Tokens.requestTokens();
     });
 
     afterEach(() => {
@@ -51,44 +52,10 @@ describe('back end - api', () => {
         });
         it('should return the error in the event of an error', async () => {
             const error = new Error('fake error');
-            postStub.rejects(error);
-            await expect(api.requestTokens(null)).to.eventually.be.rejectedWith(
-                error
-            );
-        });
-    });
-
-    describe('authorisation options', () => {
-        let result;
-        beforeEach(() => {
-            result = api.generateAuthHeader('code', fakeGrantType.AUTH);
-        });
-        it('should return an object', () => {
-            expect(result).to.be.a('object');
-        });
-        it('should contain a token api uri', () => {
-            expect(result.url).to.equal(
-                'https://accounts.spotify.com/api/token'
-            );
-        });
-        it('should contain a form object', () => {
-            expect(result.form).to.be.a('object');
-        });
-        it('should have the correct grant type - authorization', () => {
-            expect(result.form.grant_type).to.equal('authorization_code');
-        });
-        it('should have the correct grant type - authorization', () => {
-            result = api.generateAuthHeader('code', fakeGrantType.REFRESH);
-            expect(result.form.grant_type).to.equal('refresh_token');
-        });
-        it('should contain a header object', () => {
-            expect(result.headers).to.be.a('object');
-        });
-        it('should contain an authorization', () => {
-            expect(result.headers.Authorization).to.be.a('string');
-        });
-        it('should return json', () => {
-            expect(result.json).to.be.true;
+            rpStub.rejects(error);
+            await expect(
+                Tokens.requestTokens(null)
+            ).to.eventually.be.rejectedWith(error);
         });
     });
 
@@ -96,18 +63,17 @@ describe('back end - api', () => {
         let result;
         let req;
         beforeEach(() => {
-            const spy = sandbox.spy();
-            api.rewire$generateAuthHeader(spy);
+            sandbox.spy(Header, 'generateAuthHeader');
             req = httpMocks.createRequest();
             req.body.refreshToken = fakeTokens.refreshToken;
-            result = api.refreshAccessToken(req);
+            result = Tokens.refreshAccessToken(req);
         });
         afterEach(() => {
             req.headers = null;
-            api.restore();
+            Tokens.restore();
         });
         it('should generate an auth header', () => {
-            expect(api.generateAuthHeader).to.be.calledWith(
+            expect(Header.generateAuthHeader).to.be.calledWith(
                 fakeTokens.refreshToken,
                 fakeGrantType.REFRESH
             ).calledOnce;
@@ -116,16 +82,16 @@ describe('back end - api', () => {
             expect(result).to.be.a('Promise');
         });
         it('should reject gracefully', async () => {
-            postStub.rejects();
-            await expect(api.refreshAccessToken(req)).to.be.rejected;
+            rpStub.rejects();
+            await expect(Tokens.refreshAccessToken(req)).to.be.rejected;
         });
         describe('resolved promise', () => {
             beforeEach(() => {
-                postStub.resolves({
+                rpStub.resolves({
                     access_token: fakeTokens.accessToken,
                     expires_in: fakeTokens.expiryIn
                 });
-                result = api.refreshAccessToken(req);
+                result = Tokens.refreshAccessToken(req);
             });
             it('should return an object', async () => {
                 await expect(result).to.eventually.be.a('object');

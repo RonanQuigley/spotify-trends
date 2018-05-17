@@ -1,4 +1,4 @@
-import { refreshAccessToken } from '../../../api';
+import { refreshAccessToken } from '../../../api/authentication/tokens';
 
 export async function processRequest(req, res, next) {
     try {

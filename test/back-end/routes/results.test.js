@@ -2,6 +2,7 @@ import supertest from 'supertest';
 import app from '../../../src/server/';
 import chai from 'chai';
 import sinon from 'sinon';
+import { fakeTokens } from '../../fixtures';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as middleware from '../../../src/server/routes/views/results/middleware';
@@ -14,13 +15,14 @@ const sandbox = sinon.createSandbox();
 let resStub;
 let req;
 let res;
-let next = () => {};
+let nextSpy;
 
 describe('back end - results route', () => {
     beforeEach(() => {
         req = httpMocks.createRequest();
         res = httpMocks.createResponse();
         sandbox.spy(res, 'send');
+        nextSpy = sandbox.spy();
     });
 
     afterEach(() => {
@@ -37,10 +39,34 @@ describe('back end - results route', () => {
     });
 
     describe('middleware', () => {
+        describe('getting the access token', () => {
+            beforeEach(() => {
+                req.query.accessToken = fakeTokens.accessToken;
+                middleware.getAccessToken(req, res, nextSpy);
+            });
+
+            it('should return call next', () => {
+                expect(nextSpy).to.be.calledOnce;
+            });
+
+            it('should assign the access token to res.locals', () => {
+                expect(res.locals.accessToken).to.equal(fakeTokens.accessToken);
+            });
+        });
+
         describe('render results page', () => {
             it('should call send', () => {
-                middleware.render(req, res, next);
+                middleware.renderResults(req, res, nextSpy);
                 expect(res.send).to.be.calledOnce;
+            });
+        });
+
+        describe('get user data', () => {
+            beforeEach(() => {
+                middleware.getUserData(req, res, nextSpy);
+            });
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
             });
         });
     });

@@ -1,4 +1,8 @@
-import { grantType, generateAuthHeader, requestTokens } from '../../../api/';
+import { requestTokens } from '../../../api/authentication/tokens';
+import {
+    generateAuthHeader,
+    grantType
+} from '../../../api/authentication/header';
 import { stringify } from 'querystring';
 import rp from 'request-promise';
 
