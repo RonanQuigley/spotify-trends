@@ -5,7 +5,7 @@ const router = express.Router();
 router.get(
     '/results',
     middleware.getAccessToken,
-    middleware.getUserData,
+    middleware.getrequestHandler,
     middleware.renderResults,
     middleware.handleExpiredRejection
 );

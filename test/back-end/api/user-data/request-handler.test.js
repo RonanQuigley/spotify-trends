@@ -2,11 +2,11 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
-import { fakeTokens } from '../../fixtures/authentication/index';
-import { fakeUrl, fakeOptions } from '../../fixtures/spotify/data-access';
-import { fakeTopTracks } from '../../fixtures/spotify/tracks';
+import { fakeTokens } from '../../../fixtures/authentication/index';
+import { fakeUrl, fakeOptions } from '../../../fixtures/spotify/data-access';
+import { fakeTopTracks } from '../../../fixtures/spotify/tracks';
 import chaiAsPromised from 'chai-as-promised';
-import * as UserData from '../../../src/server/api/user-data';
+import * as requestHandler from '../../../../src/server/api/user-data/request-handler';
 
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
@@ -26,7 +26,7 @@ describe('back end - api - user data', () => {
             const spy = sandbox.spy(() => {
                 return fakeOptions;
             });
-            UserData.rewire$_generateOptions(spy);
+            requestHandler.rewire$_generateOptions(spy);
             jsonSpy = sandbox.spy(async () => {
                 return {};
             });
@@ -34,7 +34,7 @@ describe('back end - api - user data', () => {
                 .stub(rp, 'get')
                 .callsFake(async options => {})
                 .resolves(fakeTopTracks);
-            result = await UserData.requestData(
+            result = await requestHandler.requestData(
                 fakeTokens.accessToken,
                 fakeUrl
             );
@@ -44,7 +44,7 @@ describe('back end - api - user data', () => {
             expect(result).to.be.a('object');
         });
         it('should create the authorisation details', () => {
-            expect(UserData._generateOptions).to.be.calledWith(
+            expect(requestHandler._generateOptions).to.be.calledWith(
                 fakeTokens.accessToken,
                 fakeUrl
             ).calledOnce;

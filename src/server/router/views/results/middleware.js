@@ -1,5 +1,5 @@
 import results from './results.hbs';
-import * as UserData from '../../../api/user-data';
+import * as requestHandler from '../../../api/user-data/request-handler';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -7,13 +7,13 @@ export function getAccessToken(req, res, next) {
     return next();
 }
 
-export async function getUserData(req, res, next) {
+export async function getrequestHandler(req, res, next) {
     const token = res.locals.accessToken;
     const url =
         'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=1&offset=0';
     try {
-        const result = await UserData.requestData(token, url);
-        res.locals.userData = result;
+        const result = await requestHandler.requestData(token, url);
+        res.locals.requestHandler = result;
         return next();
     } catch (error) {
         return next(error);

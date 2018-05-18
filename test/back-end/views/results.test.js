@@ -8,7 +8,7 @@ import { fakeUrl } from '../../fixtures/spotify/data-access';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as middleware from '../../../src/server/router/views/results/middleware';
-import * as UserData from '../../../src/server/api/user-data';
+import * as requestHandler from '../../../src/server/api/user-data/request-handler';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -27,7 +27,7 @@ describe('back end - results view', () => {
         sandbox.spy(res, 'redirect');
         nextSpy = sandbox.spy();
         sandbox
-            .stub(UserData, 'requestData')
+            .stub(requestHandler, 'requestData')
             .callsFake(async (token, url) => {})
             .resolves(fakeTopArtists);
     });
@@ -70,16 +70,16 @@ describe('back end - results view', () => {
 
         describe('get user data', () => {
             beforeEach(async () => {
-                await middleware.getUserData(req, res, nextSpy);
+                await middleware.getrequestHandler(req, res, nextSpy);
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;
             });
             it('should make a call to request data', () => {
-                expect(UserData.requestData).to.be.calledOnce;
+                expect(requestHandler.requestData).to.be.calledOnce;
             });
             it('should pass the results into res.locals with no modifications', () => {
-                expect(res.locals.userData).to.deep.equal(fakeTopArtists);
+                expect(res.locals.requestHandler).to.deep.equal(fakeTopArtists);
             });
         });
 
