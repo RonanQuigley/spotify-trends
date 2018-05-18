@@ -1,4 +1,4 @@
-import * as uri from '../../../src/client/utilities/uri';
+import * as Url from '../../../src/client/utilities/url';
 import {
     fakeUrl,
     fakeTokens,
@@ -17,14 +17,22 @@ describe('front end - uri', () => {
         sandbox.restore();
     });
 
+    describe('redirect user', () => {
+        it('should call window.location.assign', () => {
+            sandbox.stub(window.location, 'assign');
+            Url.redirect();
+            expect(window.location.assign).to.be.calledOnce;
+        });
+    });
+
     describe('get query string element from url', () => {
         let result;
 
         beforeEach(() => {
             const stub = sandbox.stub().returns(fakeUrl);
             sandbox.spy(global, 'decodeURIComponent');
-            uri.rewire$getLocationHref(stub);
-            result = uri.getQueryStringElement(fakeTokenNames.accessToken);
+            Url.rewire$getLocationHref(stub);
+            result = Url.getQueryStringElement(fakeTokenNames.accessToken);
         });
 
         it('should return a string', () => {
@@ -34,15 +42,15 @@ describe('front end - uri', () => {
             expect(result).to.equal(fakeTokens.accessToken);
         });
         it('should return a refresh token', () => {
-            result = uri.getQueryStringElement(fakeTokenNames.refreshToken);
+            result = Url.getQueryStringElement(fakeTokenNames.refreshToken);
             expect(result).to.equal(fakeTokens.refreshToken);
         });
         it('should return an expiry', () => {
-            result = uri.getQueryStringElement(fakeTokenNames.expiryIn);
-            expect(result).to.equal(fakeTokens.expiryIn);
+            result = Url.getQueryStringElement(fakeTokenNames.expiryIn);
+            expect(result).to.equal(fakeTokens.expiryIn.toString());
         });
         it('should get location href', () => {
-            expect(uri.getLocationHref).to.be.calledOnce;
+            expect(Url.getLocationHref).to.be.calledOnce;
         });
         it('should call decode uri component', () => {
             expect(global.decodeURIComponent).to.be.calledOnce;

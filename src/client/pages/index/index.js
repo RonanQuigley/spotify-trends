@@ -9,6 +9,5 @@ import { debug } from 'util';
 (async () => {
     if (isExistingUser()) {
         await processUser();
-        redirectUser('/results', getToken(names.accessToken));
     }
 })();

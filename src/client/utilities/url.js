@@ -12,3 +12,8 @@ export function getQueryStringElement(stringToFind) {
     const array = regex.exec(urlToSearch);
     return decodeURIComponent(array[2].replace(/\+/g, ' '));
 }
+
+export function redirect(page, qsData) {
+    const queryString = '?accessToken=' + qsData;
+    window.location.assign(page + queryString);
+}

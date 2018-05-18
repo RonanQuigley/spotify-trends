@@ -4,6 +4,7 @@ import sinonChai from 'sinon-chai';
 import { fakeTokens } from '../../fixtures/authentication/';
 import * as Tokens from '../../../src/client/utilities/tokens';
 import * as User from '../../../src/client/utilities/user';
+import * as Url from '../../../src/client/utilities/url';
 
 chai.use(sinonChai);
 
@@ -13,13 +14,6 @@ const sandbox = sinon.createSandbox();
 describe('front end - user', () => {
     afterEach(() => {
         sandbox.restore();
-    });
-    describe('redirect user', () => {
-        it('should call window.location.assign', () => {
-            sandbox.stub(window.location, 'assign');
-            User.redirectUser();
-            expect(window.location.assign).to.be.calledOnce;
-        });
     });
     describe('is an existing user', () => {
         let result;
@@ -50,38 +44,59 @@ describe('front end - user', () => {
         });
     });
     describe('process user', () => {
-        let validAccessStub;
+        let isAccessTokenValidStub;
         beforeEach(() => {
-            validAccessStub = sandbox.stub(Tokens, 'getValidAccessToken');
-            User.rewire$redirectUser(sandbox.stub());
-            sandbox.stub(Tokens, 'refreshAccessToken');
+            isAccessTokenValidStub = sandbox.stub(Tokens, 'isAccessTokenValid');
+            sandbox
+                .stub(Tokens, 'getAccessToken')
+                .returns(fakeTokens.accessToken);
+            sandbox.stub(Url, 'redirect');
         });
         describe('outcome - redirect', () => {
-            beforeEach(() => {
-                validAccessStub.returns(fakeTokens.accessToken);
-                User.processUser();
+            beforeEach(async () => {
+                isAccessTokenValidStub.returns(true);
+                await User.processUser();
             });
-            it('should get valid tokens', () => {
-                expect(Tokens.getValidAccessToken).to.be.calledOnce;
+            it('should check if the access token is valid', () => {
+                expect(Tokens.isAccessTokenValid).to.be.calledOnce;
             });
             it('should call redirect if a valid access token exists', () => {
-                expect(User.redirectUser).to.be.calledOnce;
+                expect(Url.redirect).to.be.calledWith(
+                    '/results',
+                    fakeTokens.accessToken
+                ).calledOnce;
             });
         });
-        describe('outcome - refresh', () => {
-            beforeEach(() => {
-                validAccessStub.returns(null);
-                sandbox.stub(Tokens, 'getAccessAndRefreshTokens').returns({
+        describe('outcome - refresh then redirect', () => {
+            beforeEach(async () => {
+                isAccessTokenValidStub.returns(null);
+                sandbox
+                    .stub(Tokens, 'getRefreshToken')
+                    .returns(fakeTokens.refreshToken);
+                sandbox.stub(Tokens, 'refreshAccessToken').resolves({
                     accessToken: fakeTokens.accessToken,
-                    refreshToken: fakeTokens.refreshToken
+                    expiryIn: fakeTokens.expiryIn
                 });
-                User.processUser();
+                sandbox.stub(Tokens, 'updateAccessAndExpiryTokens');
+                await User.processUser();
             });
             it('should get the access (expired) and refresh tokens', () => {
-                expect(Tokens.getAccessAndRefreshTokens).to.be.calledOnce;
+                expect(Tokens.getRefreshToken).to.be.calledOnce;
             });
             it('should pass the tokens for refreshing', () => {
                 expect(Tokens.refreshAccessToken).to.be.calledOnce;
+            });
+            it('should update the access tokens', () => {
+                expect(Tokens.updateAccessAndExpiryTokens).to.be.calledWith(
+                    fakeTokens.accessToken,
+                    fakeTokens.expiryIn
+                ).calledOnce;
+            });
+            it('should redirect the user', () => {
+                expect(Url.redirect).to.be.calledWith(
+                    '/results',
+                    fakeTokens.accessToken
+                ).calledOnce;
             });
         });
     });

@@ -66,7 +66,6 @@ describe('front end - server fetch', () => {
             });
             it('call stringify', () => {
                 const obj = {
-                    expiredToken: fakeTokens.accessToken,
                     refreshToken: fakeTokens.refreshToken
                 };
                 expect(JSON.stringify).to.be.calledWith(obj).calledOnce;

@@ -4,9 +4,9 @@ import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
 import { fakeTokens } from '../../fixtures/authentication/index';
 import { fakeUrl, fakeOptions } from '../../fixtures/spotify/data-access';
+import { fakeTopTracks } from '../../fixtures/spotify/tracks';
 import chaiAsPromised from 'chai-as-promised';
 import * as UserData from '../../../src/server/api/user-data';
-import httpMocks from 'node-mocks-http';
 
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
@@ -33,9 +33,7 @@ describe('back end - api - user data', () => {
             sandbox
                 .stub(rp, 'get')
                 .callsFake(async options => {})
-                .resolves({
-                    json: jsonSpy
-                });
+                .resolves(fakeTopTracks);
             result = await UserData.requestData(
                 fakeTokens.accessToken,
                 fakeUrl
@@ -53,9 +51,6 @@ describe('back end - api - user data', () => {
         });
         it('should perform a get request', () => {
             expect(rp.get).to.be.calledWith(fakeOptions).calledOnce;
-        });
-        it('should get json from the resolved promise', () => {
-            expect(jsonSpy).to.be.calledOnce;
         });
     });
 });

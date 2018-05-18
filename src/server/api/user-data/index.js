@@ -11,6 +11,5 @@ export function _generateOptions(token, url) {
 
 export async function requestData(token, url) {
     const options = _generateOptions(token, url);
-    const response = await rp.get(options);
-    return await response.json();
+    return await rp.get(options);
 }

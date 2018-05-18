@@ -5,10 +5,10 @@ export function fetchData(endpoint, header) {
     return window.fetch(endpoint, header);
 }
 
-export function generateHeader(refreshToken, expiredToken) {
+export function generateHeader(refreshToken) {
     return {
         method: 'POST',
-        body: JSON.stringify({ refreshToken, expiredToken }),
+        body: JSON.stringify({ refreshToken }),
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'

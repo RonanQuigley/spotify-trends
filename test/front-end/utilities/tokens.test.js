@@ -2,7 +2,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { fakeTokens, fakeTokenNames } from '../../fixtures/authentication/';
-import * as Uri from '../../../src/client/utilities/uri';
+import * as Url from '../../../src/client/utilities/url';
 import * as Tokens from '../../../src/client/utilities/tokens';
 import * as localStorage from '../../../src/client/utilities/local-storage';
 import * as serverFetch from '../../../src/client/utilities/server-fetch';
@@ -16,62 +16,30 @@ describe('front end - Tokens', () => {
     afterEach(() => {
         sandbox.restore();
     });
-    describe('refresh access token', () => {
-        beforeEach(() => {
-            const getNewAccessTokenStub = sandbox.stub().resolves({
-                accessToken: fakeTokens.accessToken,
-                expiryIn: fakeTokens.expiryIn
-            });
-            Tokens.rewire$getNewAccessToken(getNewAccessTokenStub);
-            Tokens.rewire$updateAccessAndExpiryTokens(sandbox.stub());
-            Tokens.refreshAccessToken({
-                accessToken: fakeTokens.accessToken,
-                refreshToken: fakeTokens.refreshToken
-            });
-        });
-        afterEach(() => {
-            Tokens.restore();
-        });
-        describe('outcome - expired token', () => {
-            it('should call for a new access token', () => {
-                expect(Tokens.getNewAccessToken).to.be.calledWith(
-                    fakeTokens.refreshToken,
-                    fakeTokens.accessToken
-                ).calledOnce;
-            });
-            it('should update the tokens that are in local storage', () => {
-                expect(Tokens.updateAccessAndExpiryTokens).to.be.calledWith(
-                    fakeTokens.accessToken,
-                    fakeTokens.expiryIn
-                ).calledOnce;
-            });
-        });
-    });
-
-    describe('getting a new access token', () => {
+    describe('refreshing an access token', () => {
         let result;
         let responseSpy;
         beforeEach(async () => {
-            const obj = {
+            const responseObj = {
                 accessToken: fakeTokens.accessToken,
                 expiryIn: fakeTokens.expiryIn
             };
-            responseSpy = sandbox.spy(async () => obj);
-            const fakeResponse = {
+            responseSpy = sandbox.spy(async () => responseObj);
+            const response = {
                 json: responseSpy
             };
             sandbox.stub(serverFetch, 'generateHeader').returns({});
-            sandbox.stub(serverFetch, 'fetchData').resolves(fakeResponse);
-            result = await Tokens.getNewAccessToken(
-                fakeTokens.refreshToken,
-                {}
-            );
+            sandbox.stub(serverFetch, 'fetchData').resolves(response);
+            result = await Tokens.refreshAccessToken(fakeTokens.refreshToken);
         });
         it('should fetch for the data', () => {
-            expect(serverFetch.fetchData).to.be.calledOnce;
+            expect(serverFetch.fetchData).to.be.calledWith('/refresh', {})
+                .calledOnce;
         });
         it('should generate a header', () => {
-            expect(serverFetch.generateHeader).to.be.calledOnce;
+            expect(serverFetch.generateHeader).to.be.calledWith(
+                fakeTokens.refreshToken
+            ).calledOnce;
         });
         it('should return a new accessToken', () => {
             expect(result.accessToken).to.be.a('string');
@@ -87,7 +55,7 @@ describe('front end - Tokens', () => {
             let result;
             beforeEach(() => {
                 sandbox.stub(localStorage, 'setItem');
-                result = Tokens.setAccessTokenExpiry(fakeTokens.expiryIn);
+                result = Tokens.setExpiry(fakeTokens.expiryIn);
             });
             it('should set the correct item in local storage', () => {
                 expect(localStorage.setItem).to.be.calledOnce;

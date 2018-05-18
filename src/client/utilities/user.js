@@ -1,26 +1,24 @@
 import * as Tokens from './tokens';
-import { getNewAccessToken } from './server-fetch';
-import { getItem, names } from './local-storage';
+import { redirect } from './url';
 
-export function redirectUser(page, token) {
-    const queryString = '?accessToken=' + token;
-    window.location.assign(page + queryString);
-}
+const page = '/results';
 
 export function isExistingUser() {
+    /* fastest way is to check if a refresh token exists */
     const token = Tokens.getRefreshToken();
     return token ? true : false;
 }
 
 export async function processUser() {
-    const accessToken = Tokens.getValidAccessToken();
-    if (accessToken) {
+    if (Tokens.isAccessTokenValid()) {
         // if the access token is valid, then we
         // redirect straight to the the results page
-        redirectUser('/results', accessToken);
+        redirect(page, Tokens.getAccessToken());
     } else {
         // get the expired access token and the refresh token
-        const tokens = Tokens.getAccessAndRefreshTokens();
-        await Tokens.refreshAccessToken(tokens);
+        const refreshToken = Tokens.getRefreshToken();
+        const result = await Tokens.refreshAccessToken(refreshToken);
+        Tokens.updateAccessAndExpiryTokens(result.accessToken, result.expiryIn);
+        redirect(page, Tokens.getAccessToken());
     }
 }

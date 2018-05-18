@@ -29,6 +29,5 @@ export function renderResults(req, res, next) {
 }
 
 export function handleExpiredRejection(error, req, res, next) {
-    console.error(error);
-    res.redirect('/');
+    res.send(error.toString());
 }
