@@ -1,4 +1,5 @@
 import rp from 'request-promise';
+import { endpoints, timeRange, generateUrl } from './url';
 
 export function _generateOptions(token, url) {
     return {
@@ -9,8 +10,20 @@ export function _generateOptions(token, url) {
 }
 
 export async function requestData(token, url) {
-    const options = _generateOptions(token, url);
-    return await rp.get(options);
+    // const options = _generateOptions(token, url);
+    // return await rp.get(options);
+    let results = [];
+    for (const key in endpoints) {
+        const endpoint = endpoints[key];
+        for (const key in timeRange) {
+            const range = timeRange[key];
+            const url = generateUrl(endpoint, range);
+            const options = _generateOptions(token, url);
+            const result = await rp.get(options);
+            results.push(result);
+        }
+    }
+    return results;
 }
 
 // https://blog.lavrton.com/javascript-loops-how-to-handle-async-await-6252dd3c795

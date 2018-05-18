@@ -5,6 +5,7 @@ import rp from 'request-promise';
 import { fakeTokens } from 'fixtures/authentication/index';
 import { fakeUrl, fakeOptions } from 'fixtures/spotify/data-access';
 import { fakeTopTracks } from 'fixtures/spotify/tracks';
+import * as Url from 'src/server/api/user-data/url';
 import chaiAsPromised from 'chai-as-promised';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
 
@@ -33,24 +34,27 @@ describe('back end - api - user data', () => {
             sandbox
                 .stub(rp, 'get')
                 .callsFake(async options => {})
-                .resolves(fakeTopTracks);
+                .resolves({
+                    data: 'fake'
+                });
+            sandbox.spy(Url, 'generateUrl');
             result = await requestHandler.requestData(
                 fakeTokens.accessToken,
                 fakeUrl
             );
         });
 
-        it('should return an object', () => {
-            expect(result).to.be.a('object');
+        it('should return an array', () => {
+            expect(result).to.be.a('array');
         });
-        it('should create the authorisation details', () => {
-            expect(requestHandler._generateOptions).to.be.calledWith(
-                fakeTokens.accessToken,
-                fakeUrl
-            ).calledOnce;
+        it('should create the authorisation details for every request', () => {
+            expect(requestHandler._generateOptions).callCount(6);
         });
-        it('should perform a get request', () => {
-            expect(rp.get).to.be.calledWith(fakeOptions).calledOnce;
+        it('should perform a get request for every request', () => {
+            expect(rp.get).callCount(6);
+        });
+        it('should generate a url for every request', () => {
+            expect(Url.generateUrl).callCount(6);
         });
     });
 });
