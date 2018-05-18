@@ -2,7 +2,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { fakeTokens } from '../../fixtures/authentication/';
-import * as Token from '../../../src/client/utilities/tokens';
+import * as Tokens from '../../../src/client/utilities/tokens';
 import * as User from '../../../src/client/utilities/user';
 
 chai.use(sinonChai);
@@ -25,7 +25,7 @@ describe('front end - user', () => {
         let result;
         let getTokenStub;
         beforeEach(() => {
-            getTokenStub = sandbox.stub(Token, 'getToken');
+            getTokenStub = sandbox.stub(Tokens, 'getRefreshToken');
         });
         describe('outcome - true', () => {
             beforeEach(() => {
@@ -33,7 +33,7 @@ describe('front end - user', () => {
                 result = User.isExistingUser();
             });
             it('should call get token', () => {
-                expect(Token.getToken).to.be.calledOnce;
+                expect(Tokens.getRefreshToken).to.be.calledOnce;
             });
             it('should return true if a token exists', () => {
                 expect(result).to.be.true;
@@ -52,9 +52,9 @@ describe('front end - user', () => {
     describe('process user', () => {
         let validAccessStub;
         beforeEach(() => {
-            validAccessStub = sandbox.stub(Token, 'getValidAccessToken');
+            validAccessStub = sandbox.stub(Tokens, 'getValidAccessToken');
             User.rewire$redirectUser(sandbox.stub());
-            sandbox.stub(Token, 'refreshAccessToken');
+            sandbox.stub(Tokens, 'refreshAccessToken');
         });
         describe('outcome - redirect', () => {
             beforeEach(() => {
@@ -62,7 +62,7 @@ describe('front end - user', () => {
                 User.processUser();
             });
             it('should get valid tokens', () => {
-                expect(Token.getValidAccessToken).to.be.calledOnce;
+                expect(Tokens.getValidAccessToken).to.be.calledOnce;
             });
             it('should call redirect if a valid access token exists', () => {
                 expect(User.redirectUser).to.be.calledOnce;
@@ -71,17 +71,17 @@ describe('front end - user', () => {
         describe('outcome - refresh', () => {
             beforeEach(() => {
                 validAccessStub.returns(null);
-                sandbox.stub(Token, 'getAccessAndRefreshTokens').returns({
+                sandbox.stub(Tokens, 'getAccessAndRefreshTokens').returns({
                     accessToken: fakeTokens.accessToken,
                     refreshToken: fakeTokens.refreshToken
                 });
                 User.processUser();
             });
             it('should get the access (expired) and refresh tokens', () => {
-                expect(Token.getAccessAndRefreshTokens).to.be.calledOnce;
+                expect(Tokens.getAccessAndRefreshTokens).to.be.calledOnce;
             });
             it('should pass the tokens for refreshing', () => {
-                expect(Token.refreshAccessToken).to.be.calledOnce;
+                expect(Tokens.refreshAccessToken).to.be.calledOnce;
             });
         });
     });

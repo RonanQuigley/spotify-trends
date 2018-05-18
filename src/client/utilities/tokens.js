@@ -1,21 +1,8 @@
 import { getQueryStringElement } from './uri';
 import { fetchData, generateHeader } from './server-fetch';
+import { names, getItem, setItem } from './local-storage';
 
 import * as User from './user';
-
-export const names = {
-    accessToken: 'accessToken',
-    refreshToken: 'refreshToken',
-    expiryIn: 'expiryIn'
-};
-
-export function setToken(name, value) {
-    localStorage.setItem(name, value);
-}
-
-export function getToken(name) {
-    return localStorage.getItem(name);
-}
 
 export function updateAccessAndExpiryTokens(accessToken, expiryIn) {
     setToken(names.accessToken, accessToken);
@@ -24,13 +11,17 @@ export function updateAccessAndExpiryTokens(accessToken, expiryIn) {
 
 export function getAccessAndRefreshTokens() {
     return {
-        accessToken: localStorage.getItem(names.accessToken),
-        refreshToken: localStorage.getItem(names.refreshToken)
+        accessToken: getItem(names.accessToken),
+        refreshToken: getItem(names.refreshToken)
     };
 }
 
+export function getRefreshToken() {
+    return getItem(names.refreshToken);
+}
+
 export function getAccessTokenExpiry() {
-    const value = localStorage.getItem(names.expiryIn);
+    const value = getItem(names.expiryIn);
     /* local storage uses strings and undefined can show up 
     as a string. we need to check for this */
     return value !== 'undefined' ? value : null;
@@ -41,12 +32,12 @@ export function setAccessTokenExpiry(expiry) {
     // add the number of ms to seconds, then
     // x 1000 to create an hour from now.
     const value = now + parseInt(expiry, 10) * 1000;
-    localStorage.setItem(names.expiryIn, value);
+    setItem(names.expiryIn, value);
 }
 
 export function getValidAccessToken() {
-    const value = parseInt(localStorage.getItem(names.expiryIn), 10);
-    const token = localStorage.getItem(names.accessToken);
+    const value = parseInt(getItem(names.expiryIn), 10);
+    const token = getItem(names.accessToken);
     const now = Date.now();
     return !!token && !!value && value > now ? token : null;
 }

@@ -6,7 +6,7 @@
 export const fakeTokens = {
     accessToken: 'fakeAccessToken',
     refreshToken: 'fakeRefreshToken',
-    expiryIn: 'fakeExpiryIn'
+    expiryIn: 3600
 };
 
 export const fakeGrantType = {

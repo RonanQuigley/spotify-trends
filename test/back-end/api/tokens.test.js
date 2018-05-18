@@ -48,7 +48,7 @@ describe('back end - api - tokens', () => {
             expect(response.refreshToken).to.be.a('string');
         });
         it('should return an expiry', () => {
-            expect(response.expiryIn).to.be.a('string');
+            expect(response.expiryIn).to.be.a('number');
         });
         it('should return the error in the event of an error', async () => {
             const error = new Error('fake error');
