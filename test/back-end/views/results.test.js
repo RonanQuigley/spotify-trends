@@ -4,7 +4,6 @@ import chai from 'chai';
 import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
 import { fakeTopArtists } from 'fixtures/spotify/artists';
-import { fakeUrl } from 'fixtures/spotify/data-access';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as middleware from 'src/server/router/views/results/middleware';
@@ -28,7 +27,7 @@ describe('back end - results view', () => {
         nextSpy = sandbox.spy();
         sandbox
             .stub(requestHandler, 'requestData')
-            .callsFake(async (token, url) => {})
+            .callsFake(async token => {})
             .resolves(fakeTopArtists);
     });
 
@@ -70,16 +69,19 @@ describe('back end - results view', () => {
 
         describe('get user data', () => {
             beforeEach(async () => {
-                await middleware.getrequestHandler(req, res, nextSpy);
+                res.locals.accessToken = fakeTokens.accessToken;
+                await middleware.getUserData(req, res, nextSpy);
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;
             });
             it('should make a call to request data', () => {
-                expect(requestHandler.requestData).to.be.calledOnce;
+                expect(requestHandler.requestData).to.be.calledWith(
+                    fakeTokens.accessToken
+                );
             });
             it('should pass the results into res.locals with no modifications', () => {
-                expect(res.locals.requestHandler).to.deep.equal(fakeTopArtists);
+                expect(res.locals.data).to.deep.equal(fakeTopArtists);
             });
         });
 
