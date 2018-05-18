@@ -1,14 +1,14 @@
 import supertest from 'supertest';
-import app from '../../../src/server/';
+import app from 'src/server/';
 import chai from 'chai';
 import sinon from 'sinon';
-import { fakeTokens } from '../../fixtures/authentication/';
-import { fakeTopArtists } from '../../fixtures/spotify/artists';
-import { fakeUrl } from '../../fixtures/spotify/data-access';
+import { fakeTokens } from 'fixtures/authentication/';
+import { fakeTopArtists } from 'fixtures/spotify/artists';
+import { fakeUrl } from 'fixtures/spotify/data-access';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
-import * as middleware from '../../../src/server/router/views/results/middleware';
-import * as requestHandler from '../../../src/server/api/user-data/request-handler';
+import * as middleware from 'src/server/router/views/results/middleware';
+import * as requestHandler from 'src/server/api/user-data/request-handler';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 

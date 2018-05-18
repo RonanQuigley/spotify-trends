@@ -1,11 +1,11 @@
 import supertest from 'supertest';
-import app from '../../../src/server/';
+import app from 'src/server/';
 import chai from 'chai';
 import httpMocks from 'node-mocks-http';
-import { fakeTokens } from '../../fixtures/authentication/';
+import { fakeTokens } from 'fixtures/authentication/';
 import sinon from 'sinon';
-import * as middleware from '../../../src/server/router/endpoints/refresh/middleware';
-import * as Tokens from '../../../src/server/api/authentication/tokens';
+import * as middleware from 'src/server/router/endpoints/refresh/middleware';
+import * as Tokens from 'src/server/api/authentication/tokens';
 import sinonChai from 'sinon-chai';
 
 const agent = supertest.agent(app);

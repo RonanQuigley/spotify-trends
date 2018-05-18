@@ -2,8 +2,8 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
-import * as Header from '../../../../src/server/api/authentication/header';
-import { fakeGrantType } from '../../../fixtures/authentication';
+import * as Header from 'src/server/api/authentication/header';
+import { fakeGrantType } from 'fixtures/authentication';
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 

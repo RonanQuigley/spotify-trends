@@ -1,8 +1,8 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import { fakeTokens } from '../../fixtures/authentication/';
+import { fakeTokens } from 'fixtures/authentication/';
 import sinonChai from 'sinon-chai';
-import * as serverFetch from '../../../src/client/utilities/server-fetch';
+import * as serverFetch from 'src/client/utilities/server-fetch';
 import chaiAsPromised from 'chai-as-promised';
 
 chai.use(sinonChai);

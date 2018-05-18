@@ -2,11 +2,11 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
-import { fakeTokens } from '../../../fixtures/authentication/index';
-import { fakeUrl, fakeOptions } from '../../../fixtures/spotify/data-access';
-import { fakeTopTracks } from '../../../fixtures/spotify/tracks';
+import { fakeTokens } from 'fixtures/authentication/index';
+import { fakeUrl, fakeOptions } from 'fixtures/spotify/data-access';
+import { fakeTopTracks } from 'fixtures/spotify/tracks';
 import chaiAsPromised from 'chai-as-promised';
-import * as requestHandler from '../../../../src/server/api/user-data/request-handler';
+import * as requestHandler from 'src/server/api/user-data/request-handler';
 
 chai.use(sinonChai);
 chai.use(chaiAsPromised);

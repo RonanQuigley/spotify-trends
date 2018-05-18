@@ -1,9 +1,5 @@
-import * as Url from '../../../src/client/utilities/url';
-import {
-    fakeUrl,
-    fakeTokens,
-    fakeTokenNames
-} from '../../fixtures/authentication/';
+import * as Url from 'src/client/utilities/url';
+import { fakeUrl, fakeTokens, fakeTokenNames } from 'fixtures/authentication/';
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';

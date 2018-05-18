@@ -1,10 +1,4 @@
-import {
-    isExistingUser,
-    redirectUser,
-    processUser
-} from '../../utilities/user';
-import { getToken, names } from '../../utilities/tokens';
-import { debug } from 'util';
+import { isExistingUser, processUser } from '../../utilities/user';
 
 (async () => {
     if (isExistingUser()) {

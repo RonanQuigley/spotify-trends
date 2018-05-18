@@ -1,10 +1,10 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { fakeTokens } from '../../fixtures/authentication/';
-import * as Tokens from '../../../src/client/utilities/tokens';
-import * as User from '../../../src/client/utilities/user';
-import * as Url from '../../../src/client/utilities/url';
+import { fakeTokens } from 'fixtures/authentication/';
+import * as Tokens from 'src/client/utilities/tokens';
+import * as User from 'src/client/utilities/user';
+import * as Url from 'src/client/utilities/url';
 
 chai.use(sinonChai);
 
