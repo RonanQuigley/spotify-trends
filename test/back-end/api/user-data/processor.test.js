@@ -3,7 +3,8 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import * as Processor from '../../../../src/server/api/user-data/processor';
-import fakeSpotifyData from 'fixtures/spotify/data-response';
+import fakeSpotifyData from 'fixtures/spotify/raw-data';
+import fakeProcessedData from 'fixtures/spotify/processed-data';
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
 
@@ -14,13 +15,10 @@ describe('back end - api - processor', () => {
     afterEach(() => {
         sandbox.restore();
     });
-    describe('get relevant data', () => {
-        let result;
-        beforeEach(() => {
-            result = Processor.getRelevantData(fakeSpotifyData);
-        });
-        it('should return an array', () => {
-            expect(result).to.be.a('array');
+    describe('process data', () => {
+        it('should return a correctly processed object', () => {
+            const result = Processor.processData(fakeSpotifyData);
+            expect(result).to.deep.equal(fakeProcessedData);
         });
     });
 });

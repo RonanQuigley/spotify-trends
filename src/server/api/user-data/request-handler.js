@@ -9,14 +9,14 @@ export function _generateOptions(token, url) {
     };
 }
 
-export async function requestData(token) {
+export async function requestData(token, limit) {
     let results = {};
     for (const endpoint in endpoints) {
         const currentEndpoint = endpoints[endpoint];
         let obj = {};
         for (const timeRange in timeRanges) {
             const currentTimeRange = timeRanges[timeRange];
-            const url = generateUrl(currentEndpoint, currentTimeRange);
+            const url = generateUrl(currentEndpoint, currentTimeRange, limit);
             const options = _generateOptions(token, url);
             const result = await rp.get(options);
             obj[timeRange] = result;
@@ -24,17 +24,4 @@ export async function requestData(token) {
         results[currentEndpoint] = obj;
     }
     return results;
-
-    // let results = {};
-    // for (const endpoint in endpoints) {
-    //     const currentEndpoint = endpoints[endpoint];
-    //     for (const timeRange in timeRanges) {
-    //         const currentTimeRange = timeRanges[timeRange];
-    //         const url = generateUrl(currentEndpoint, currentTimeRange);
-    //         const options = _generateOptions(token, url);
-    //         const result = await rp.get(options);
-    //         test.push(result);
-    //     }
-    // }
-    // return results;
 }

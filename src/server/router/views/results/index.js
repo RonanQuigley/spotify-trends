@@ -6,8 +6,9 @@ router.get(
     '/results',
     middleware.getAccessToken,
     middleware.getUserData,
+    middleware.processUserData,
     middleware.renderResults,
-    middleware.handleExpiredRejection
+    middleware.errorHandler
 );
 
 export default router;

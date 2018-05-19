@@ -44,8 +44,8 @@ describe('back end - api - user data', () => {
             );
         });
 
-        it('should return an array', () => {
-            expect(result).to.be.a('array');
+        it('should return an object', () => {
+            expect(result).to.be.a('object');
         });
         it('should create the authorisation details for every request', () => {
             expect(requestHandler._generateOptions).callCount(6);

@@ -9,6 +9,6 @@ export const timeRanges = {
     LONG: 'long_term'
 };
 
-export function generateUrl(endpoint, timeRange) {
-    return `https://api.spotify.com/v1/me/top/${endpoint}?time_range=${timeRange}&limit=3`;
+export function generateUrl(endpoint, timeRange, limit) {
+    return `https://api.spotify.com/v1/me/top/${endpoint}?time_range=${timeRange}&limit=${limit}`;
 }

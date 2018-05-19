@@ -4,6 +4,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
 import { fakeTopArtists, fakeTopTracks } from 'fixtures/spotify/artists';
+import { fakeExpiredError } from 'fixtures/spotify/errors';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as middleware from 'src/server/router/views/results/middleware';
@@ -96,13 +97,25 @@ describe('back end - results view', () => {
             });
         });
 
-        describe('error handling for an expired access token', () => {
-            beforeEach(() => {
-                const error = () => {};
-                middleware.handleExpiredRejection(error, req, res, nextSpy);
+        describe('error handling', () => {
+            describe('outcome - expired token', () => {
+                it('should redirect back to the home page if the error is an expired token', () => {
+                    middleware.errorHandler(
+                        fakeExpiredError,
+                        req,
+                        res,
+                        nextSpy
+                    );
+                    expect(res.redirect).to.be.calledWith('/').calledOnce;
+                });
             });
-            it('should trigger a redirect back to the home page', () => {
-                expect(res.redirect).to.be.calledWith('/').calledOnce;
+            describe('outcome - server error', () => {
+                it('should send a 500 internal server error for everything else', () => {
+                    sandbox.spy(res, 'status');
+                    middleware.errorHandler({}, req, res, nextSpy);
+                    expect(res.status).to.be.calledWith(500);
+                    expect(res.send).to.be.calledOnce;
+                });
             });
         });
     });
