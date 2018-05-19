@@ -1,4 +1,4 @@
-export const fakeTopTracks = {
+export default {
     items: [
         {
             album: {

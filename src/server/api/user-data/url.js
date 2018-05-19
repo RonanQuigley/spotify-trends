@@ -10,5 +10,5 @@ export const timeRanges = {
 };
 
 export function generateUrl(endpoint, timeRange) {
-    return `https://api.spotify.com/v1/me/top/${endpoint}?time_range=${timeRange}&limit=50`;
+    return `https://api.spotify.com/v1/me/top/${endpoint}?time_range=${timeRange}&limit=3`;
 }

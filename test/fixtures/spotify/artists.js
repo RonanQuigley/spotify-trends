@@ -1,4 +1,4 @@
-export const fakeTopArtists = {
+export default {
     items: [
         {
             external_urls: {

@@ -18,6 +18,11 @@ export async function getUserData(req, res, next) {
     }
 }
 
+export function processUserData(req, res, next) {
+    const userData = res.locals.data;
+    next();
+}
+
 export function renderResults(req, res, next) {
     res.send(
         results({

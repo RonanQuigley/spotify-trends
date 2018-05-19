@@ -37,12 +37,14 @@
     "sinon-chai": "^3.0.0",
     "source-map-support": "^0.5.4",
     "typescript": "2.8.3",
+    "util": "^0.10.3",
     "webpack": "^4.8.1",
     "webpack-cli": "^2.0.13",
     "webpack-dev-middleware": "^3.1.2",
     "webpack-hot-middleware": "^2.22.2",
     "webpack-merge": "^4.1.2",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.6.0",
+    "winston": "^3.0.0-rc5"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.47",
@@ -89,7 +91,7 @@
     "build:all": "webpack --config webpack/full-stack/webpack.babel.js",
     "build:all:start": "npm-run-all -s build:all start:prod",
     "start:prod": "cross-env NODE_ENV=production DEBUG=false node ./dist/server.js",
-    "start": "cross-env NODE_ENV=development node --inspect --require @babel/register --require dotenv/config ./src/index.js",
+    "start": "cross-env NODE_ENV=development node --inspect --require @babel/register --require dotenv/config ./src/index.js > text.txt",
     "watch:lint": "node node_modules/eslint-watch/bin/esw -w --fix",
     "test:front": "mocha-webpack --opts mocha.opts --webpack-config ./webpack/front-end/webpack.dev.js \"test/front-end/**/*.test.js\"",
     "test:back": "mocha-webpack --opts mocha.opts --webpack-config ./webpack/back-end/webpack.dev.js \"test/back-end/**/*.test.js\"",

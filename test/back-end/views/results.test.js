@@ -3,7 +3,7 @@ import app from 'src/server/';
 import chai from 'chai';
 import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
-import { fakeTopArtists } from 'fixtures/spotify/artists';
+import { fakeTopArtists, fakeTopTracks } from 'fixtures/spotify/artists';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as middleware from 'src/server/router/views/results/middleware';
@@ -82,6 +82,17 @@ describe('back end - results view', () => {
             });
             it('should pass the results into res.locals with no modifications', () => {
                 expect(res.locals.data[0]).to.deep.equal(fakeTopArtists);
+            });
+        });
+
+        describe('processing user data', () => {
+            beforeEach(() => {
+                const obj = Object.assign({}, fakeTopArtists, fakeTopTracks);
+                res.locals.data = obj;
+                middleware.processUserData(req, res, nextSpy);
+            });
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
             });
         });
 
