@@ -9,7 +9,7 @@ export function _generateOptions(token, url) {
     };
 }
 
-export async function requestData(token, limit) {
+export async function requestPersonalData(token, limit) {
     let results = {};
     for (const endpoint in endpoints) {
         const currentEndpoint = endpoints[endpoint];

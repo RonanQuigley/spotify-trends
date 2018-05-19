@@ -4,7 +4,6 @@ import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
 import { fakeTokens } from 'fixtures/authentication/index';
 import { fakeUrl, fakeOptions } from 'fixtures/spotify/data-access';
-import { fakeTopTracks } from 'fixtures/spotify/tracks';
 import * as Url from 'src/server/api/user-data/url';
 import chaiAsPromised from 'chai-as-promised';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
@@ -38,7 +37,7 @@ describe('back end - api - user data', () => {
                     data: 'fake'
                 });
             sandbox.spy(Url, 'generateUrl');
-            result = await requestHandler.requestData(
+            result = await requestHandler.requestPersonalData(
                 fakeTokens.accessToken,
                 fakeUrl
             );

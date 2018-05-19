@@ -4,11 +4,10 @@ import chai from 'chai';
 import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
 import { fakeTopArtists, fakeTopTracks } from 'fixtures/spotify/artists';
-import { fakeExpiredError } from 'fixtures/spotify/errors';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
-import * as middleware from 'src/server/router/views/results/middleware';
-import * as requestHandler from 'src/server/api/user-data/request-handler';
+// import * as middleware from 'src/server/router/views/results/middleware';
+// import * as requestHandler from 'src/server/api/user-data/request-handler';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -27,7 +26,7 @@ describe('back end - results view', () => {
         sandbox.spy(res, 'redirect');
         nextSpy = sandbox.spy();
         sandbox
-            .stub(requestHandler, 'requestData')
+            .stub(requestHandler, 'requestPersonalData')
             .callsFake(async token => {})
             .resolves([fakeTopArtists]);
     });
@@ -77,7 +76,7 @@ describe('back end - results view', () => {
                 expect(nextSpy).to.be.calledOnce;
             });
             it('should make a call to request data', () => {
-                expect(requestHandler.requestData).to.be.calledWith(
+                expect(requestHandler.requestPersonalData).to.be.calledWith(
                     fakeTokens.accessToken
                 );
             });
