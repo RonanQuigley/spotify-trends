@@ -28,7 +28,7 @@ describe('back end - results view', () => {
         sandbox
             .stub(requestHandler, 'requestData')
             .callsFake(async token => {})
-            .resolves(fakeTopArtists);
+            .resolves([fakeTopArtists]);
     });
 
     afterEach(() => {
@@ -81,7 +81,7 @@ describe('back end - results view', () => {
                 );
             });
             it('should pass the results into res.locals with no modifications', () => {
-                expect(res.locals.data).to.deep.equal(fakeTopArtists);
+                expect(res.locals.data[0]).to.deep.equal(fakeTopArtists);
             });
         });
 
