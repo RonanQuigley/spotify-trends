@@ -19,7 +19,7 @@ describe('back end - api - user data', () => {
         sandbox.restore();
     });
 
-    describe('data request', () => {
+    describe('personal data request', () => {
         let result;
         let jsonSpy;
         beforeEach(async () => {
@@ -54,6 +54,12 @@ describe('back end - api - user data', () => {
         });
         it('should generate a url for every request', () => {
             expect(Url.generateUrl).callCount(6);
+        });
+    });
+
+    describe('audio features request', () => {
+        beforeEach(() => {
+            requestHandler.requestAudioFeatures(fakeTokens.accessToken);
         });
     });
 });

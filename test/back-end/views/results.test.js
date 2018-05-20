@@ -3,11 +3,12 @@ import app from 'src/server/';
 import chai from 'chai';
 import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
-import { fakeTopArtists, fakeTopTracks } from 'fixtures/spotify/artists';
+import { fakeExpiredError } from 'fixtures/spotify/errors';
+import fakeRawData from 'fixtures/spotify/raw-data';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
-// import * as middleware from 'src/server/router/views/results/middleware';
-// import * as requestHandler from 'src/server/api/user-data/request-handler';
+import * as middleware from 'src/server/router/views/results/middleware';
+import * as requestHandler from 'src/server/api/user-data/request-handler';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -27,8 +28,8 @@ describe('back end - results view', () => {
         nextSpy = sandbox.spy();
         sandbox
             .stub(requestHandler, 'requestPersonalData')
-            .callsFake(async token => {})
-            .resolves([fakeTopArtists]);
+            .callsFake(async (token, limit) => {})
+            .resolves(fakeRawData);
     });
 
     afterEach(() => {
@@ -81,14 +82,13 @@ describe('back end - results view', () => {
                 );
             });
             it('should pass the results into res.locals with no modifications', () => {
-                expect(res.locals.data[0]).to.deep.equal(fakeTopArtists);
+                expect(res.locals.data).to.deep.equal(fakeRawData);
             });
         });
 
         describe('processing user data', () => {
             beforeEach(() => {
-                const obj = Object.assign({}, fakeTopArtists, fakeTopTracks);
-                res.locals.data = obj;
+                res.locals.data = fakeRawData;
                 middleware.processUserData(req, res, nextSpy);
             });
             it('should call next', () => {

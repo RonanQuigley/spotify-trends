@@ -25,3 +25,5 @@ export async function requestPersonalData(token, limit) {
     }
     return results;
 }
+
+export async function requestAudioFeatures(token, tracks) {}
