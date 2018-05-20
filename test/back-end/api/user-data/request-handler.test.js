@@ -59,7 +59,7 @@ describe('back end - api - user data', () => {
 
     describe('audio features request', () => {
         beforeEach(() => {
-            requestHandler.requestAudioFeatures(fakeTokens.accessToken);
+            requestHandler.requestAudioFeatures(fakeTokens.accessToken, tracks);
         });
     });
 });
