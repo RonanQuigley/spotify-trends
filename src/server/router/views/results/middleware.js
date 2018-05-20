@@ -26,7 +26,7 @@ export async function processUserData(req, res, next) {
     const userData = res.locals.data;
     const token = res.locals.accessToken;
     const processedData = processData(userData);
-    requestAudioFeatures(token, processedData.tracks);
+    res.locals.data = await requestAudioFeatures(token, processedData.tracks);
     return next();
 }
 

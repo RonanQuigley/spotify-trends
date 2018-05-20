@@ -5,11 +5,13 @@ import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
 import { fakeExpiredError } from 'fixtures/spotify/errors';
 import fakeRawData from 'fixtures/spotify/raw-data';
-import fakeProcessedData from 'fixtures/spotify/processed-data';
+import fakeProcessedData from 'fixtures/spotify/processed-data/tracks';
+import fakeAudioFeatures from 'fixtures/spotify/processed-data/audio-features';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
-import * as middleware from 'src/server/router/views/results/middleware';
+import * as Middleware from 'src/server/router/views/results/middleware';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
+import * as Processor from 'src/server/api/user-data/processor';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -31,6 +33,10 @@ describe('back end - results view', () => {
             .stub(requestHandler, 'requestPersonalData')
             .callsFake(async (token, limit) => {})
             .resolves(fakeRawData);
+        sandbox
+            .stub(requestHandler, 'requestAudioFeatures')
+            .callsFake(async (token, tracks) => {})
+            .resolves(fakeAudioFeatures);
     });
 
     afterEach(() => {
@@ -51,7 +57,7 @@ describe('back end - results view', () => {
         describe('getting the access token', () => {
             beforeEach(() => {
                 req.query.accessToken = fakeTokens.accessToken;
-                middleware.getAccessToken(req, res, nextSpy);
+                Middleware.getAccessToken(req, res, nextSpy);
             });
 
             it('should return call next', () => {
@@ -65,7 +71,7 @@ describe('back end - results view', () => {
 
         describe('render results page', () => {
             it('should call send', () => {
-                middleware.renderResults(req, res, nextSpy);
+                Middleware.renderResults(req, res, nextSpy);
                 expect(res.send).to.be.calledOnce;
             });
         });
@@ -73,7 +79,7 @@ describe('back end - results view', () => {
         describe('get user data', () => {
             beforeEach(async () => {
                 res.locals.accessToken = fakeTokens.accessToken;
-                await middleware.getUserData(req, res, nextSpy);
+                await Middleware.getUserData(req, res, nextSpy);
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;
@@ -89,19 +95,41 @@ describe('back end - results view', () => {
         });
 
         describe('processing user data', () => {
-            beforeEach(() => {
+            beforeEach(async () => {
                 res.locals.data = fakeRawData;
-                middleware.processUserData(req, res, nextSpy);
+                res.locals.accessToken = fakeTokens.accessToken;
+                // we use a default export on the processor module
+                sandbox
+                    .stub(Processor, 'default')
+                    .callsFake(data => {})
+                    .returns({
+                        tracks: fakeProcessedData
+                    });
+
+                await Middleware.processUserData(req, res, nextSpy);
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;
+            });
+            it('should call process data', () => {
+                expect(Processor.default).to.be.calledWith(fakeRawData)
+                    .calledOnce;
+            });
+            it('should call request audio features', () => {
+                expect(requestHandler.requestAudioFeatures).to.be.calledWith(
+                    fakeTokens.accessToken,
+                    fakeProcessedData
+                ).calledOnce;
+            });
+            it('should pass the processed results into res.locals', () => {
+                expect(res.locals.data).to.deep.equal(fakeAudioFeatures);
             });
         });
 
         describe('error handling', () => {
             describe('outcome - expired token', () => {
                 it('should redirect back to the home page if the error is an expired token', () => {
-                    middleware.errorHandler(
+                    Middleware.errorHandler(
                         fakeExpiredError,
                         req,
                         res,
@@ -113,7 +141,7 @@ describe('back end - results view', () => {
             describe('outcome - server error', () => {
                 it('should send a 500 internal server error for everything else', () => {
                     sandbox.spy(res, 'status');
-                    middleware.errorHandler({}, req, res, nextSpy);
+                    Middleware.errorHandler({}, req, res, nextSpy);
                     expect(res.status).to.be.calledWith(500);
                     expect(res.send).to.be.calledOnce;
                 });
