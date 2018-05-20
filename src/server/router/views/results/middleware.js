@@ -1,6 +1,9 @@
 import results from './results.hbs';
-import { requestPersonalData } from '../../../api/user-data/request-handler';
-import { processData } from '../../../api/user-data/processor';
+import {
+    requestPersonalData,
+    requestAudioFeatures
+} from '../../../api/user-data/request-handler';
+import processData from '../../../api/user-data/processor';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -19,9 +22,11 @@ export async function getUserData(req, res, next) {
     }
 }
 
-export function processUserData(req, res, next) {
+export async function processUserData(req, res, next) {
     const userData = res.locals.data;
-    processData(userData);
+    const token = res.locals.accessToken;
+    const processedData = processData(userData);
+    requestAudioFeatures(token, processedData.tracks);
     return next();
 }
 

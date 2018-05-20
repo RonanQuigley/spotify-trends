@@ -23,6 +23,7 @@ function getTrackData(obj) {
         name: obj.name ? obj.name : null,
         uri: obj.uri ? obj.uri : null,
         popularity: obj.popularity ? obj.popularity : null,
+        id: obj.id ? obj.id : null,
         image: image
     };
 }
@@ -63,7 +64,7 @@ function getRelevantData(rawData, type) {
     return result;
 }
 
-export function processData(rawData) {
+export default function processData(rawData) {
     let result = {};
     for (const type in rawData) {
         result[type] = getRelevantData(rawData[type], type);

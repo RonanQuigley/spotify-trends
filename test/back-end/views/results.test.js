@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
 import { fakeExpiredError } from 'fixtures/spotify/errors';
 import fakeRawData from 'fixtures/spotify/raw-data';
+import fakeProcessedData from 'fixtures/spotify/processed-data';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as middleware from 'src/server/router/views/results/middleware';
@@ -35,6 +36,7 @@ describe('back end - results view', () => {
     afterEach(() => {
         sandbox.restore();
     });
+
     describe('endpoint', () => {
         it('should exist and respond', async () => {
             await agent
@@ -81,7 +83,7 @@ describe('back end - results view', () => {
                     fakeTokens.accessToken
                 );
             });
-            it('should pass the results into res.locals with no modifications', () => {
+            it('should pass the raw data into res.locals ', () => {
                 expect(res.locals.data).to.deep.equal(fakeRawData);
             });
         });

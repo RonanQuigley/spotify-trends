@@ -4,6 +4,7 @@ import sinonChai from 'sinon-chai';
 import rp from 'request-promise';
 import { fakeTokens } from 'fixtures/authentication/index';
 import { fakeUrl, fakeOptions } from 'fixtures/spotify/data-access';
+import fakeTopTracks from 'fixtures/spotify/processed-data/tracks';
 import * as Url from 'src/server/api/user-data/url';
 import chaiAsPromised from 'chai-as-promised';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
@@ -26,7 +27,7 @@ describe('back end - api - user data', () => {
             const spy = sandbox.spy(() => {
                 return fakeOptions;
             });
-            requestHandler.rewire$_generateOptions(spy);
+            requestHandler.rewire$generateOptions(spy);
             jsonSpy = sandbox.spy(async () => {
                 return {};
             });
@@ -36,7 +37,7 @@ describe('back end - api - user data', () => {
                 .resolves({
                     data: 'fake'
                 });
-            sandbox.spy(Url, 'generateUrl');
+            sandbox.spy(Url, 'generatePersonalDataUrl');
             result = await requestHandler.requestPersonalData(
                 fakeTokens.accessToken,
                 fakeUrl
@@ -47,19 +48,32 @@ describe('back end - api - user data', () => {
             expect(result).to.be.a('object');
         });
         it('should create the authorisation details for every request', () => {
-            expect(requestHandler._generateOptions).callCount(6);
+            expect(requestHandler.generateOptions).callCount(6);
         });
         it('should perform a get request for every request', () => {
             expect(rp.get).callCount(6);
         });
         it('should generate a url for every request', () => {
-            expect(Url.generateUrl).callCount(6);
+            expect(Url.generatePersonalDataUrl).callCount(6);
         });
     });
 
     describe('audio features request', () => {
-        beforeEach(() => {
-            requestHandler.requestAudioFeatures(fakeTokens.accessToken, tracks);
+        let result;
+        beforeEach(async () => {
+            sandbox
+                .stub(rp, 'get')
+                .callsFake(async options => {})
+                .resolves({
+                    audio_features: {}
+                });
+            result = await requestHandler.requestAudioFeatures(
+                fakeTokens.accessToken,
+                fakeTopTracks.tracks
+            );
+        });
+        it('should return an object', () => {
+            expect(result).to.be.a('object');
         });
     });
 });

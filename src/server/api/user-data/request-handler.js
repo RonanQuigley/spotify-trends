@@ -1,7 +1,14 @@
 import rp from 'request-promise';
-import { endpoints, timeRanges, generateUrl } from './url';
+import {
+    endpoints,
+    timeRanges,
+    generatePersonalDataUrl,
+    generateAudioFeaturesUrl
+} from './url';
 
-export function _generateOptions(token, url) {
+import util from 'util';
+
+export function generateOptions(token, url) {
     return {
         url: url,
         headers: { Authorization: 'Bearer ' + token },
@@ -16,8 +23,12 @@ export async function requestPersonalData(token, limit) {
         let obj = {};
         for (const timeRange in timeRanges) {
             const currentTimeRange = timeRanges[timeRange];
-            const url = generateUrl(currentEndpoint, currentTimeRange, limit);
-            const options = _generateOptions(token, url);
+            const url = generatePersonalDataUrl(
+                currentEndpoint,
+                currentTimeRange,
+                limit
+            );
+            const options = generateOptions(token, url);
             const result = await rp.get(options);
             obj[timeRange] = result;
         }
@@ -26,4 +37,18 @@ export async function requestPersonalData(token, limit) {
     return results;
 }
 
-export async function requestAudioFeatures(token, tracks) {}
+export async function requestAudioFeatures(token, tracks) {
+    let results = {};
+    for (const timeRange in tracks) {
+        const ids = getSpotifyIDs(tracks[timeRange]);
+        const url = generateAudioFeaturesUrl(ids);
+        const options = generateOptions(token, url);
+        const result = await rp.get(options);
+        results[timeRange] = result.audio_features;
+    }
+    return results;
+}
+
+function getSpotifyIDs(arr) {
+    return arr.map(obj => obj.id);
+}
