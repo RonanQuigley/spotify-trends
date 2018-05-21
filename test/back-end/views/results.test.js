@@ -5,13 +5,14 @@ import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
 import { fakeExpiredError } from 'fixtures/spotify/errors';
 import fakeRawData from 'fixtures/spotify/raw-data';
-import fakeProcessedData from 'fixtures/spotify/processed-data/tracks';
+import fakeProcessedData from 'fixtures/spotify/processed-data';
 import fakeAudioFeatures from 'fixtures/spotify/processed-data/audio-features';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as Middleware from 'src/server/router/views/results/middleware';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
+import * as Mean from 'src/server/api/statistics/mean';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -37,6 +38,7 @@ describe('back end - results view', () => {
             .stub(requestHandler, 'requestAudioFeatures')
             .callsFake(async (token, tracks) => {})
             .resolves(fakeAudioFeatures);
+        sandbox.stub(Mean, 'processMean').returns({});
     });
 
     afterEach(() => {
@@ -102,9 +104,7 @@ describe('back end - results view', () => {
                 sandbox
                     .stub(Processor, 'default')
                     .callsFake(data => {})
-                    .returns({
-                        tracks: fakeProcessedData
-                    });
+                    .returns(fakeProcessedData);
 
                 await Middleware.processUserData(req, res, nextSpy);
             });
@@ -118,11 +118,32 @@ describe('back end - results view', () => {
             it('should call request audio features', () => {
                 expect(requestHandler.requestAudioFeatures).to.be.calledWith(
                     fakeTokens.accessToken,
-                    fakeProcessedData
+                    fakeProcessedData.tracks
                 ).calledOnce;
             });
             it('should pass the processed results into res.locals', () => {
-                expect(res.locals.data).to.deep.equal(fakeAudioFeatures);
+                expect(res.locals.data).to.deep.equal({
+                    userData: fakeProcessedData,
+                    audioFeatures: fakeAudioFeatures
+                });
+            });
+        });
+
+        describe('calculating user statistics', () => {
+            beforeEach(() => {
+                res.locals.data = {
+                    userData: fakeProcessedData,
+                    audioFeatures: fakeAudioFeatures
+                };
+
+                Middleware.calculateStatistics(req, res, nextSpy);
+            });
+            it('should calculate the mean statistics', () => {
+                expect(Mean.processMean).to.be.calledWith(fakeAudioFeatures)
+                    .calledOnce;
+            });
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
             });
         });
 

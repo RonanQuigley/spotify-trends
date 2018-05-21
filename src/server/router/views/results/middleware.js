@@ -4,7 +4,7 @@ import {
     requestAudioFeatures
 } from '../../../api/user-data/request-handler';
 import processData from '../../../api/user-data/processor';
-
+import { processMean } from '../../../api/statistics/mean';
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
     res.locals.accessToken = token;
@@ -23,10 +23,22 @@ export async function getUserData(req, res, next) {
 }
 
 export async function processUserData(req, res, next) {
-    const userData = res.locals.data;
+    const rawData = res.locals.data;
     const token = res.locals.accessToken;
-    const processedData = processData(userData);
-    res.locals.data = await requestAudioFeatures(token, processedData.tracks);
+    const processedData = processData(rawData);
+    const audioFeatures = await requestAudioFeatures(
+        token,
+        processedData.tracks
+    );
+    res.locals.data = {
+        userData: processedData,
+        audioFeatures: audioFeatures
+    };
+    return next();
+}
+
+export function calculateStatistics(req, res, next) {
+    processMean(res.locals.data.audioFeatures);
     return next();
 }
 
