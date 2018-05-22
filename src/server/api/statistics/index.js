@@ -1,4 +1,3 @@
-import { timeRanges } from 'src/server/api/user-data/url';
 import util from 'util';
 
 const pitchClass = {
@@ -18,10 +17,10 @@ const pitchClass = {
 
 const calcType = {
     SUM: 'calculates the sum',
-    MEAN: 'calculates the mean'
+    AVERAGE: 'calculates the mean'
 };
 
-const meanKeys = [
+const keysToAverage = [
     'loudness',
     'energy',
     'danceability',
@@ -29,32 +28,32 @@ const meanKeys = [
     'acousticness'
 ];
 
-const tallyKeys = ['mode', 'key'];
+const keysToCount = ['mode', 'key'];
 
 export function getStatistics(tracks) {
     return Object.assign(
         ...Object.keys(tracks).map(timeRange => {
             return {
-                [timeRange]: calculateStatistics(tracks[timeRange])
+                [timeRange]: processTracks(tracks[timeRange])
             };
         })
     );
     // console.log(util.inspect(result, { showHidden: false, depth: null }));
 }
 
-function calculateStatistics(array) {
+function processTracks(array) {
     return {
-        MEAN: processCalculation(array, meanKeys, calcType.MEAN),
-        TALLY: processCalculation(array, tallyKeys, calcType.SUM)
+        average: calculateValues(array, keysToAverage, calcType.AVERAGE),
+        tally: calculateValues(array, keysToCount, calcType.SUM)
     };
 }
 
-function processCalculation(array, filterer, type) {
-    const data = filterData(array, filterer);
-    return calculateData(data, filterer, type);
+function calculateValues(array, filterer, type) {
+    const filteredData = filter(array, filterer);
+    return setupResults(filteredData, filterer, type);
 }
 
-function calculateData(array, filterer, type) {
+function setupResults(array, filterer, type) {
     return Object.assign(
         ...filterer.map(filter => {
             return {
@@ -65,40 +64,40 @@ function calculateData(array, filterer, type) {
 }
 
 function calculate(array, filter, type) {
-    if (type === calcType.MEAN) {
+    if (type === calcType.AVERAGE) {
         return mean(array, filter);
     } else {
-        return tally(array, filter);
+        return count(array, filter);
     }
 }
 
-function tally(array, key) {
-    const values = getValuesToTally(array, key);
+function count(array, key) {
+    const values = getValuesToCount(array, key);
     if (key === 'mode') {
-        return getModeTally(values, key);
+        return getModeCount(values, key);
     } else {
-        return getKeySignatureTally(values, key);
+        return getKeySignatureCount(values, key);
     }
 }
 
-function getValuesToTally(array, key) {
+function getValuesToCount(array, key) {
     return array.map(obj => obj[key]);
 }
 
-function getModeTally(array, key) {
+function getModeCount(array, key) {
     // from spotify: major = 1, minor = 0
     return {
-        major: tallyMode(array, 1),
-        minor: tallyMode(array, 0)
+        major: countMode(array, 1),
+        minor: countMode(array, 0)
     };
 }
 
-function tallyMode(array, mode) {
-    // mode is either major or minor - 1 or 0
+function countMode(array, mode) {
+    // mode is either major - 1 - or minor - 0
     return array.filter(elem => elem === mode).length;
 }
 
-function getKeySignatureTally(array) {
+function getKeySignatureCount(array) {
     return array.reduce((tally, value) => {
         const pitch = numToPitchClass(value);
         tally[pitch] = (tally[pitch] || 0) + 1;
@@ -143,7 +142,7 @@ function mean(array, key) {
     return sum(array, key) / array.length;
 }
 
-function filterData(array, filterer) {
+function filter(array, filterer) {
     return array.map(obj => {
         return filterObject(obj, filterer);
     });
