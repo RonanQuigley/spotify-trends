@@ -32,14 +32,14 @@ const meanKeys = [
 const tallyKeys = ['mode', 'key'];
 
 export function getStatistics(tracks) {
-    const result = Object.assign(
+    return Object.assign(
         ...Object.keys(tracks).map(timeRange => {
             return {
                 [timeRange]: calculateStatistics(tracks[timeRange])
             };
         })
     );
-    console.log(util.inspect(result, { showHidden: false, depth: null }));
+    // console.log(util.inspect(result, { showHidden: false, depth: null }));
 }
 
 function calculateStatistics(array) {
