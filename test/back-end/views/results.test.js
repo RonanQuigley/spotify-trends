@@ -12,7 +12,7 @@ import httpMocks from 'node-mocks-http';
 import * as Middleware from 'src/server/router/views/results/middleware';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
-import * as Mean from 'src/server/api/statistics/mean';
+import * as Statistics from 'src/server/api/statistics';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -38,7 +38,7 @@ describe('back end - results view', () => {
             .stub(requestHandler, 'requestAudioFeatures')
             .callsFake(async (token, tracks) => {})
             .resolves(fakeAudioFeatures);
-        sandbox.stub(Mean, 'processMean').returns({});
+        sandbox.stub(Statistics, 'getStatistics').returns({});
     });
 
     afterEach(() => {
@@ -136,11 +136,12 @@ describe('back end - results view', () => {
                     audioFeatures: fakeAudioFeatures
                 };
 
-                Middleware.calculateStatistics(req, res, nextSpy);
+                Middleware.getAudioStats(req, res, nextSpy);
             });
-            it('should calculate the mean statistics', () => {
-                expect(Mean.processMean).to.be.calledWith(fakeAudioFeatures)
-                    .calledOnce;
+            it('should calculate the statistics', () => {
+                expect(Statistics.getStatistics).to.be.calledWith(
+                    fakeAudioFeatures
+                ).calledOnce;
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;

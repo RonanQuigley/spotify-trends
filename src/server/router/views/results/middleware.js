@@ -4,7 +4,7 @@ import {
     requestAudioFeatures
 } from '../../../api/user-data/request-handler';
 import processData from '../../../api/user-data/processor';
-import { processMean } from '../../../api/statistics/mean';
+import { getStatistics } from '../../../api/statistics';
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
     res.locals.accessToken = token;
@@ -37,8 +37,8 @@ export async function processUserData(req, res, next) {
     return next();
 }
 
-export function calculateStatistics(req, res, next) {
-    processMean(res.locals.data.audioFeatures);
+export function getAudioStats(req, res, next) {
+    getStatistics(res.locals.data.audioFeatures);
     return next();
 }
 
@@ -56,6 +56,7 @@ export function errorHandler(err, req, res, next) {
         redirect back to the main page for a refresh */
         res.redirect('/');
     } else {
+        console.error(err.message);
         res.status(500).send('Internal Server Error');
     }
 }

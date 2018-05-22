@@ -25,7 +25,7 @@ export default {
         {
             danceability: 0.366,
             energy: 0.963,
-            key: 11,
+            key: 0,
             loudness: -5.301,
             mode: 0,
             speechiness: 0.142,

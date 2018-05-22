@@ -7,7 +7,7 @@ router.get(
     middleware.getAccessToken,
     middleware.getUserData,
     middleware.processUserData,
-    middleware.calculateStatistics,
+    middleware.getAudioStats,
     middleware.renderResults,
     middleware.errorHandler
 );
