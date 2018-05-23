@@ -10,7 +10,7 @@ export const timeRanges = {
 };
 
 export function generatePersonalDataUrl(endpoint, timeRange, limit) {
-    return `https://api.spotify.com/v1/me/top/${endpoint}?time_range=${timeRange}&limit=3&offset=30`;
+    return `https://api.spotify.com/v1/me/top/${endpoint}?time_range=${timeRange}&limit=${limit}`;
 }
 
 export function generateAudioFeaturesUrl(ids) {
