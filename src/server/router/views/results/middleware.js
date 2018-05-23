@@ -57,9 +57,12 @@ export function renderResults(req, res, next) {
         const payload = results({
             dev: process.env.NODE_ENV !== 'production' ? true : false,
             data: {
+                // averaged and mean data
                 statistics: res.locals.data.statistics,
-                userData: res.locals.data.userData,
-                audioFeatures: res.locals.data.audioFeatures
+                // top tracks
+                tracks: res.locals.data.userData.tracks,
+                // top artists
+                artists: res.locals.data.userData.artists
             }
         });
         res.send(payload);

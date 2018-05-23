@@ -148,16 +148,12 @@ describe('back end - results view', () => {
         });
 
         describe('render results page', () => {
-            const payload = {
-                dev: true,
-                data: {
-                    statistics: fakeStatistics,
-                    userData: fakeUserData,
-                    audioFeatures: fakeAudioFeatures
-                }
-            };
             beforeEach(() => {
                 sandbox.spy(resultsPage, 'default');
+                res.locals.data = {
+                    userData: fakeUserData,
+                    statistics: fakeStatistics
+                };
                 Middleware.renderResults(req, res, nextSpy);
             });
             it('should call send', () => {
@@ -165,8 +161,14 @@ describe('back end - results view', () => {
                     .calledOnce;
             });
             it('should render the handlebars page ', () => {
-                expect(resultsPage.default).to.be.calledWith(payload)
-                    .calledOnce;
+                expect(resultsPage.default).to.be.calledWith({
+                    dev: true,
+                    data: {
+                        statistics: res.locals.data.statistics,
+                        tracks: res.locals.data.userData.tracks,
+                        artists: res.locals.data.userData.artists
+                    }
+                }).calledOnce;
             });
         });
 
