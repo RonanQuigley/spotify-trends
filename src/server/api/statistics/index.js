@@ -1,34 +1,13 @@
 import util from 'util';
-
-const pitchClass = {
-    C: 'C',
-    'C#/Db': 'C#/Db',
-    D: 'D',
-    'D#/Eb': 'D#/Eb',
-    E: 'E',
-    F: 'F',
-    'F#/Gb': 'F#/Gb',
-    G: 'G',
-    'G#/Ab': 'G#/Ab',
-    A: 'A',
-    'A#/Bb': 'A#/Bb',
-    B: 'B'
-};
+import { countKeys, averageKeys } from './keys';
+import { countData } from './count';
+import { filterArrayOfObj } from './filter';
+import { averageData } from './math';
 
 const calcType = {
     SUM: 'calculates the sum',
     AVERAGE: 'calculates the average'
 };
-
-const keysToAverage = [
-    'loudness',
-    'energy',
-    'danceability',
-    'valence',
-    'acousticness'
-];
-
-const keysToCount = ['mode', 'key'];
 
 export function getStatistics(tracks) {
     return Object.assign(
@@ -38,14 +17,15 @@ export function getStatistics(tracks) {
             };
         })
     );
+    // console.log(util.inspect(results, { showHidden: false, depth: null }));
 }
 
 function processTracks(array) {
-    const average = filterData(array, keysToAverage);
-    const count = filterData(array, keysToCount);
+    const average = filterArrayOfObj(array, averageKeys);
+    const count = filterArrayOfObj(array, countKeys);
     return {
-        average: calculateResults(average, keysToAverage, calcType.AVERAGE),
-        tally: calculateResults(count, keysToCount, calcType.SUM)
+        average: calculateResults(average, averageKeys, calcType.AVERAGE),
+        tally: calculateResults(count, countKeys, calcType.SUM)
     };
 }
 
@@ -61,94 +41,8 @@ function calculateResults(array, filterer, type) {
 
 function calculate(array, filter, type) {
     if (type === calcType.AVERAGE) {
-        return mean(array, filter);
+        return averageData(array, filter);
     } else {
-        return count(array, filter);
+        return countData(array, filter);
     }
-}
-
-function count(array, key) {
-    const values = getValuesToCount(array, key);
-    if (key === 'mode') {
-        return getModeCount(values, key);
-    } else {
-        return getKeySignatureCount(values, key);
-    }
-}
-
-function getValuesToCount(array, key) {
-    return array.map(obj => obj[key]);
-}
-
-function getModeCount(array, key) {
-    // from spotify: major = 1, minor = 0
-    return {
-        major: countMode(array, 1),
-        minor: countMode(array, 0)
-    };
-}
-
-function countMode(array, mode) {
-    // mode is either major - 1 - or minor - 0
-    return array.filter(elem => elem === mode).length;
-}
-
-function getKeySignatureCount(array) {
-    return array.reduce((tally, value) => {
-        const pitch = numToPitchClass(value);
-        tally[pitch] = (tally[pitch] || 0) + 1;
-        return tally;
-    }, {});
-}
-
-function numToPitchClass(num) {
-    switch (num) {
-        case 0:
-            return 'C';
-        case 1:
-            return 'C#/Db';
-        case 2:
-            return 'D';
-        case 3:
-            return 'D#/Eb';
-        case 4:
-            return 'E';
-        case 5:
-            return 'F';
-        case 6:
-            return 'F#/Gb';
-        case 7:
-            return 'G';
-        case 8:
-            return 'G#/Ab';
-        case 9:
-            return 'A';
-        case 10:
-            return 'A#/Bb';
-        case 11:
-            return 'B';
-    }
-}
-
-function sum(array, key) {
-    return array.reduce((total, current) => total + current[key], 0);
-}
-
-function mean(array, key) {
-    return sum(array, key) / array.length;
-}
-
-function filterData(array, filterer) {
-    return array.map(obj => {
-        return filterObject(obj, filterer);
-    });
-}
-
-function filterObject(obj, filterer) {
-    return Object.keys(obj)
-        .filter(key => filterer.includes(key))
-        .reduce((filteredObj, key) => {
-            filteredObj[key] = obj[key];
-            return filteredObj;
-        }, {});
 }
