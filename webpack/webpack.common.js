@@ -1,12 +1,12 @@
 import path from 'path';
 
-let obj;
+let aliases;
 
 const common = path.join(__dirname, './../src/common');
 const src = path.join(__dirname, './../src/');
 
 if (process.env.NODE_ENV === 'test') {
-    obj = {
+    aliases = {
         resolve: {
             alias: {
                 common: common,
@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'test') {
         }
     };
 } else {
-    obj = {
+    aliases = {
         resolve: {
             alias: {
                 common: common,
@@ -27,4 +27,4 @@ if (process.env.NODE_ENV === 'test') {
     };
 }
 
-export default obj;
+export default aliases;

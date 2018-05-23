@@ -3,7 +3,11 @@ import * as middleware from './middleware';
 const router = express.Router();
 
 if (process.env.NODE_ENV === 'development') {
-    router.get('/results', middleware.renderResults);
+    router.get(
+        '/results',
+        middleware.renderReactAssets,
+        middleware.renderResults
+    );
 } else {
     router.get(
         '/results',
@@ -11,6 +15,7 @@ if (process.env.NODE_ENV === 'development') {
         middleware.getUserData,
         middleware.processUserData,
         middleware.getAudioStats,
+        middleware.renderReactAssets,
         middleware.renderResults,
         middleware.errorHandler
     );

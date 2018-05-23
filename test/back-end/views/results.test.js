@@ -15,7 +15,7 @@ import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
 import * as resultsPage from 'src/server/router/views/results/results.hbs';
-
+import * as React from 'src/server/api/react/index';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -141,6 +141,22 @@ describe('back end - results view', () => {
             });
             it('should pass the results into res.locals', () => {
                 expect(res.locals.data.statistics).to.be.a('object');
+            });
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
+            });
+        });
+
+        describe('rendering react assets', () => {
+            beforeEach(() => {
+                sandbox.spy(React, 'renderAppToString');
+                Middleware.renderReactAssets(req, res, nextSpy);
+            });
+            it('should render the react app', () => {
+                expect(React.renderAppToString).to.be.calledOnce;
+            });
+            it('should pass the rendered app into res.locals', () => {
+                expect(res.locals.data.react).to.be.a('string');
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;

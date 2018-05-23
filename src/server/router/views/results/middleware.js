@@ -5,6 +5,7 @@ import {
 } from '../../../api/user-data/request-handler';
 import processData from '../../../api/user-data/processor';
 import { getStatistics } from '../../../api/statistics';
+import { renderAppToString } from '../../../api/react';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -43,14 +44,34 @@ export function getAudioStats(req, res, next) {
     return next();
 }
 
+export function renderReactAssets(req, res, next) {
+    /* if we're in development mode, the res.locals.data will
+    not have been set up. we need to check for this. */
+    if (res.locals.data) {
+        res.locals.data.react = renderAppToString();
+        return next();
+    } else {
+        res.locals.data = {
+            react: renderAppToString()
+        };
+        return next();
+    }
+}
+
 export function renderResults(req, res, next) {
     if (process.env.NODE_ENV === 'development') {
-        /* in dev mode, rather than make requests to ext. servers, 
-        slowing down dev efficiency, use data from fixtures as 
-        the payload and render that as dummy data to work with */
+        /* 
+            in dev mode, rather than make requests to ext. servers, 
+            use data from fixtures as a dummy payload to work with 
+        */
+        const data = Object.assign(
+            {},
+            require('fixtures/spotify/processed-data/payload').default,
+            res.locals.data.react
+        );
         const payload = results({
             dev: true,
-            data: require('fixtures/spotify/processed-data/payload').default
+            data: data
         });
         res.send(payload);
     } else {

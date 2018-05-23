@@ -4,6 +4,7 @@
         "baseUrl": "./",
         "paths": {
             "fixtures/*": ["test/fixtures/*"],
+            "common/*" : ["src/common/*"],
             "src/*": ["src/*"]
         }   
     },
