@@ -5,6 +5,7 @@ import {
 } from '../../../api/user-data/request-handler';
 import processData from '../../../api/user-data/processor';
 import { getStatistics } from '../../../api/statistics';
+
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
     res.locals.accessToken = token;
