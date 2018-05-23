@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === 'test') {
         resolve: {
             alias: {
                 common: common,
+                fixtures: path.join(__dirname, './../test/fixtures'),
                 src: src
             }
         }

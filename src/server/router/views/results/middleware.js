@@ -44,15 +44,26 @@ export function getAudioStats(req, res, next) {
 }
 
 export function renderResults(req, res, next) {
-    const payload = results({
-        dev: process.env.NODE_ENV !== 'production' ? true : false,
-        data: {
-            statistics: res.locals.data.statistics,
-            userData: res.locals.data.userData,
-            audioFeatures: res.locals.data.audioFeatures
-        }
-    });
-    res.send(payload);
+    if (process.env.NODE_ENV === 'development') {
+        /* in dev mode, rather than make requests to ext. servers, 
+        slowing down dev efficiency, use data from fixtures as 
+        the payload and render that as dummy data to work with */
+        const payload = results({
+            dev: true,
+            data: require('fixtures/spotify/processed-data/payload')
+        });
+        res.send(payload);
+    } else {
+        const payload = results({
+            dev: process.env.NODE_ENV !== 'production' ? true : false,
+            data: {
+                statistics: res.locals.data.statistics,
+                userData: res.locals.data.userData,
+                audioFeatures: res.locals.data.audioFeatures
+            }
+        });
+        res.send(payload);
+    }
 }
 
 export function errorHandler(err, req, res, next) {
