@@ -50,7 +50,7 @@ export function renderResults(req, res, next) {
         the payload and render that as dummy data to work with */
         const payload = results({
             dev: true,
-            data: require('fixtures/spotify/processed-data/payload')
+            data: require('fixtures/spotify/processed-data/payload').default
         });
         res.send(payload);
     } else {

@@ -1,9 +1,8 @@
 <script src="/results.js"></script>
 This is the results page
 
-
-{{#if data}}
-    <div>USER DATA</div>
-{{/if}}
+{{#each data.tracks.SHORT as |track|}}
+    <div>{{name}}</div>
+{{/each}}
 
 {{> layout}}
