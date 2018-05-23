@@ -19,15 +19,13 @@ global.navigator = {
     userAgent: 'node.js'
 };
 
-if (process.env.DEBUG === 'true') {
-    const requireHacker = require('require-hacker');
+// const requireHacker = require('require-hacker');
 
-    function fakeHandlebars() {
-        return '';
-    }
+// function fakeHandlebars() {
+//     return '';
+// }
 
-    requireHacker.hook('hbs', () => `module.exports = ${fakeHandlebars}`);
-}
+// requireHacker.hook('hbs', () => `module.exports = ${fakeHandlebars}`);
 
 process.env.NODE_ENV = 'test';
 process.env.ENABLE_LOGGING = 'false';

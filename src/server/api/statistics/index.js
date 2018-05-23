@@ -1,4 +1,3 @@
-import util from 'util';
 import { countKeys, averageKeys } from './keys';
 import { countData } from './count';
 import { filterArrayOfObj } from './filter';
@@ -17,7 +16,6 @@ export function getStatistics(tracks) {
             };
         })
     );
-    // console.log(util.inspect(results, { showHidden: false, depth: null }));
 }
 
 function processTracks(array) {

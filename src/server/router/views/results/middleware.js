@@ -39,16 +39,20 @@ export async function processUserData(req, res, next) {
 }
 
 export function getAudioStats(req, res, next) {
-    getStatistics(res.locals.data.audioFeatures);
+    res.locals.data.statistics = getStatistics(res.locals.data.audioFeatures);
     return next();
 }
 
 export function renderResults(req, res, next) {
-    res.send(
-        results({
-            dev: process.env.NODE_ENV === 'development' ? true : false
-        })
-    );
+    const payload = results({
+        dev: process.env.NODE_ENV !== 'production' ? true : false,
+        data: {
+            statistics: res.locals.data.statistics,
+            userData: res.locals.data.userData,
+            audioFeatures: res.locals.data.audioFeatures
+        }
+    });
+    res.send(payload);
 }
 
 export function errorHandler(err, req, res, next) {
@@ -57,7 +61,9 @@ export function errorHandler(err, req, res, next) {
         redirect back to the main page for a refresh */
         res.redirect('/');
     } else {
-        console.error(err.message);
+        if (process.env.NODE_ENV !== 'test') {
+            console.error(err.message);
+        }
         res.status(500).send('Internal Server Error');
     }
 }
