@@ -17,7 +17,7 @@ const pitchClass = {
 
 const calcType = {
     SUM: 'calculates the sum',
-    AVERAGE: 'calculates the mean'
+    AVERAGE: 'calculates the average'
 };
 
 const keysToAverage = [
@@ -38,22 +38,18 @@ export function getStatistics(tracks) {
             };
         })
     );
-    // console.log(util.inspect(result, { showHidden: false, depth: null }));
 }
 
 function processTracks(array) {
+    const average = filterData(array, keysToAverage);
+    const count = filterData(array, keysToCount);
     return {
-        average: calculateValues(array, keysToAverage, calcType.AVERAGE),
-        tally: calculateValues(array, keysToCount, calcType.SUM)
+        average: calculateResults(average, keysToAverage, calcType.AVERAGE),
+        tally: calculateResults(count, keysToCount, calcType.SUM)
     };
 }
 
-function calculateValues(array, filterer, type) {
-    const filteredData = filter(array, filterer);
-    return setupResults(filteredData, filterer, type);
-}
-
-function setupResults(array, filterer, type) {
+function calculateResults(array, filterer, type) {
     return Object.assign(
         ...filterer.map(filter => {
             return {
@@ -142,7 +138,7 @@ function mean(array, key) {
     return sum(array, key) / array.length;
 }
 
-function filter(array, filterer) {
+function filterData(array, filterer) {
     return array.map(obj => {
         return filterObject(obj, filterer);
     });

@@ -44,34 +44,6 @@
             ],
         },
         {
-            // Name of configuration; appears in the launch configuration drop down menu.
-            "name": "Debug Mocha",
-            // Type of configuration. Possible values: "node", "mono".
-            "type": "node",
-            // Request type "launch" or "attach"
-            "request": "launch",
-            // Workspace relative or absolute path to the program.
-            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-            // Automatically stop program after launch.
-            "stopOnEntry": false,
-            // Command line arguments passed to the program (mocha in this case).
-            "args": ["--opts", "mocha.opts", "--require", "@babel/register", "--no-timeouts", "test/**/*.js"],
-            // Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.
-            "cwd": "${workspaceRoot}",            
-            // Workspace relative or absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.
-            "runtimeExecutable": null,
-            "sourceMaps": true,
-            // if you don't want to step into the source files for debugging
-            // then set this to true 
-            "smartStep": false,        
-            // Environment variables passed to the program.
-            "env": {"DEBUG" : "true"},
-            "skipFiles": [
-                "${workspaceRoot}/node_modules/**/*.js",
-                "<node_internals>/**/*.js",
-            ],
-        },
-        {
             "type": "node",
             "request": "launch",
             "name": "Debug Dev Server Setup",
@@ -84,7 +56,7 @@
             "envFile": "${workspaceFolder}/.env",
             "env": {
                 "NODE_ENV" : "development",
-                "DEBUG" : "false"        
+                "ENABLE_LOGGING" : "false"        
             },
             "runtimeArgs": [
                 "--lazy",
@@ -108,7 +80,7 @@
             "envFile": "${workspaceFolder}/.env",
             "env": {                
                 "NODE_ENV" : "production",
-                "DEBUG" : "false"
+                "ENABLE_LOGGING" : "false"
             },
 
         },
