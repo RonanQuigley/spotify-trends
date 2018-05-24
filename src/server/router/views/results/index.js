@@ -6,7 +6,8 @@ if (process.env.NODE_ENV === 'development') {
     router.get(
         '/results',
         middleware.renderReactAssets,
-        middleware.renderResults
+        middleware.renderResults,
+        middleware.errorHandler
     );
 } else {
     router.get(

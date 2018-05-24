@@ -21,6 +21,12 @@ function setHBSLoader() {
                         __dirname,
                         '../../src/server/router/views/partials'
                     )
+                ],
+                helperDirs: [
+                    path.join(
+                        __dirname,
+                        '../../src/server/router/views/helpers'
+                    )
                 ]
             }
         };

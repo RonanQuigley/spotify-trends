@@ -5,7 +5,7 @@ import {
 } from '../../../api/user-data/request-handler';
 import processData from '../../../api/user-data/processor';
 import { getStatistics } from '../../../api/statistics';
-import { renderAppToString } from '../../../api/react';
+import { renderReactApp } from '../../../api/react';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -48,11 +48,14 @@ export function renderReactAssets(req, res, next) {
     /* if we're in development mode, the res.locals.data will
     not have been set up. we need to check for this. */
     if (res.locals.data) {
-        res.locals.data.react = renderAppToString();
+        res.locals.data.react = renderReactApp();
         return next();
     } else {
         res.locals.data = {
-            react: renderAppToString()
+            react: {
+                artists: renderReactApp(),
+                tracks: renderReactApp()
+            }
         };
         return next();
     }
@@ -67,13 +70,17 @@ export function renderResults(req, res, next) {
         const data = Object.assign(
             {},
             require('fixtures/spotify/processed-data/payload').default,
-            res.locals.data.react
+            {
+                react: res.locals.data.react
+            }
         );
+
         const payload = results({
             dev: true,
             data: data
         });
         res.send(payload);
+        return next();
     } else {
         const payload = results({
             dev: process.env.NODE_ENV !== 'production' ? true : false,
@@ -83,10 +90,12 @@ export function renderResults(req, res, next) {
                 // top tracks
                 tracks: res.locals.data.userData.tracks,
                 // top artists
-                artists: res.locals.data.userData.artists
+                artists: res.locals.data.userData.artists,
+                react: res.locals.data.userData.react
             }
         });
         res.send(payload);
+        return next();
     }
 }
 

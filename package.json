@@ -33,6 +33,7 @@
     "request-promise": "^4.2.2",
     "request-promise-native": "^1.0.5",
     "require-hacker": "^3.0.1",
+    "serialize-javascript": "^1.5.0",
     "sinon": "^5.0.7",
     "sinon-chai": "^3.0.0",
     "source-map-support": "^0.5.4",

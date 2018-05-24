@@ -1,8 +1,8 @@
 <script src="/results.js"></script>
 This is the results page
 
-{{#each data.tracks.SHORT as |track|}}
-    <div>{{name}}</div>
-{{/each}}
-
 {{> layout}}
+
+<script id="react">
+    window.__initial_state__ = {{{state data}}}
+</script>
