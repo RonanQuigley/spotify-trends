@@ -44,18 +44,23 @@ export function getAudioStats(req, res, next) {
     return next();
 }
 
+function getApps(userData) {
+    return {
+        artists: renderReactApp(userData.artists),
+        tracks: renderReactApp(userData.tracks)
+    };
+}
+
 export function renderReactAssets(req, res, next) {
     /* if we're in development mode, the res.locals.data will
     not have been set up. we need to check for this. */
     if (res.locals.data) {
-        res.locals.data.react = renderReactApp();
+        res.locals.data.react = getApps(res.locals.data.userData);
         return next();
     } else {
+        // development mode
         res.locals.data = {
-            react: {
-                artists: renderReactApp(),
-                tracks: renderReactApp()
-            }
+            react: getApps(res.locals.data.userData)
         };
         return next();
     }
@@ -74,7 +79,6 @@ export function renderResults(req, res, next) {
                 react: res.locals.data.react
             }
         );
-
         const payload = results({
             dev: true,
             data: data

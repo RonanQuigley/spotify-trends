@@ -6,8 +6,16 @@ const dev = {
     mode: 'development',
     entry: {
         dev: ['webpack-hot-middleware/client', './src/client/dev'],
-        index: ['whatwg-fetch', './src/client/pages/index/'],
-        results: ['whatwg-fetch', './src/client/pages/results/']
+        index: [
+            'webpack-hot-middleware/client',
+            'whatwg-fetch',
+            './src/client/pages/index/'
+        ],
+        results: [
+            'webpack-hot-middleware/client',
+            'whatwg-fetch',
+            './src/client/pages/results/'
+        ]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),

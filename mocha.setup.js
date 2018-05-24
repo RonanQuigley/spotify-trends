@@ -19,13 +19,12 @@ global.navigator = {
     userAgent: 'node.js'
 };
 
-// const requireHacker = require('require-hacker');
+/* react will emit a warning about request animation frame,
+so we declare a mock one for use */
 
-// function fakeHandlebars() {
-//     return '';
-// }
-
-// requireHacker.hook('hbs', () => `module.exports = ${fakeHandlebars}`);
+global.requestAnimationFrame = cb => {
+    return setTimeout(cb, 0);
+};
 
 process.env.NODE_ENV = 'test';
 process.env.ENABLE_LOGGING = 'false';

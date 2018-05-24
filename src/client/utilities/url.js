@@ -5,8 +5,8 @@ export function getLocationHref() {
     return window.location.href;
 }
 
-export function getQueryStringElement(stringToFind) {
-    stringToFind = stringToFind.replace(/[\[\]]/g, '\\$&');
+export function getQueryStringElement(string) {
+    const stringToFind = string.replace(/[\[\]]/g, '\\$&');
     const urlToSearch = getLocationHref();
     const regex = new RegExp('[?&]' + stringToFind + '(=([^&#]*)|&|#|$)');
     const array = regex.exec(urlToSearch);

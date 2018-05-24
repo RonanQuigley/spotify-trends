@@ -149,14 +149,16 @@ describe('back end - results view', () => {
 
         describe('rendering react assets', () => {
             beforeEach(() => {
-                sandbox.spy(React, 'renderReactApp');
+                sandbox.stub(React, 'renderReactApp').returns('fake react app');
                 Middleware.renderReactAssets(req, res, nextSpy);
             });
-            it('should render the react app', () => {
-                expect(React.renderReactApp).to.be.calledOnce;
+            it('should render the react apps', () => {
+                React.renderReactApp.getCalls().forEach(call => {
+                    expect(call).to.be.calledWith(sinon.match.object);
+                });
             });
             it('should pass the rendered app into res.locals', () => {
-                expect(res.locals.data.react).to.be.a('string');
+                expect(res.locals.data.react).to.be.a('object');
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;

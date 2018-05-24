@@ -38,9 +38,9 @@ watcher.on('ready', () => {
 });
 
 builtDevServer.waitUntilValid(() => {
-    open('http://localhost:' + (process.env.PORT || 3000), {
-        app: ['chrome', '--remote-debugging-port=9222']
-    });
+    // open('http://localhost:' + (process.env.PORT || 3000), {
+    //     app: ['chrome', '--remote-debugging-port=9222']
+    // });
 });
 
 router.use(builtDevServer);

@@ -27,7 +27,11 @@ const globalObject = 'this';
 
 switch (process.env.NODE_ENV) {
     case 'development':
-        devtool = 'module-source-map';
+        /* devtool choices : 
+            module-source-map, -- slower rebuild, better debugging 
+            cheap-module-eval-source-map -- faster rebuild, worse debugging
+        */
+        devtool = 'cheap-module-eval-source-map';
         output = {
             path: dist,
             devtoolModuleFilenameTemplate(info) {

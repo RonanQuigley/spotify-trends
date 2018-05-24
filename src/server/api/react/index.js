@@ -3,6 +3,6 @@ import { renderToString } from 'react-dom/server';
 
 import App from 'common/react/index';
 
-export function renderReactApp() {
-    return renderToString(<App />);
+export function renderReactApp(data) {
+    return renderToString(<App data={data} />);
 }
