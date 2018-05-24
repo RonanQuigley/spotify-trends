@@ -44,35 +44,27 @@ export function getAudioStats(req, res, next) {
     return next();
 }
 
-function getApps(userData) {
-    return {
-        artists: renderReactApp(userData.artists),
-        tracks: renderReactApp(userData.tracks)
+export function setupDevelopmentAssets(req, res, next) {
+    /* if we're in development mode, the res.locals.data will
+        not have been set up. we need to check for this. We also use dummy
+        data to speed up dev so we're not continuosly making spotify server requests
+    */
+    const fakeData = require('fixtures/spotify/processed-data/payload').default;
+    res.locals.data = {
+        userData: {
+            artists: fakeData.artists,
+            tracks: fakeData.tracks
+        }
     };
+    return next();
 }
 
 export function renderReactAssets(req, res, next) {
-    if (process.env.NODE_ENV === 'development') {
-        /* if we're in development mode, the res.locals.data will
-        not have been set up. we need to check for this. We also use dummy
-        data to speed up dev so we're not continuosly making spotify server requests
-        */
-        const fakeData = require('fixtures/spotify/processed-data/payload')
-            .default;
-        res.locals.data = {
-            userData: {
-                artists: fakeData.artists,
-                tracks: fakeData.tracks
-            }
-        };
-        res.locals.data = {
-            react: getApps(res.locals.data.userData)
-        };
-        return next();
-    } else {
-        res.locals.data.react = getApps(res.locals.data.userData);
-        return next();
-    }
+    res.locals.data.react = {
+        artists: renderReactApp(res.locals.data.userData.artists),
+        tracks: renderReactApp(res.locals.data.userData.tracks)
+    };
+    return next();
 }
 
 export function renderResults(req, res, next) {
@@ -100,7 +92,7 @@ export function errorHandler(err, req, res, next) {
         res.redirect('/');
     } else {
         if (process.env.NODE_ENV !== 'test') {
-            console.error(err.message);
+            console.error(err.stack);
         }
         res.status(500).send('Internal Server Error');
     }

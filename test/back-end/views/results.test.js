@@ -6,6 +6,7 @@ import { fakeTokens } from 'fixtures/authentication/';
 import { fakeExpiredError } from 'fixtures/spotify/errors';
 import fakeRawData from 'fixtures/spotify/raw-data';
 import fakeUserData from 'fixtures/spotify/processed-data';
+import fakePayload from 'fixtures/spotify/processed-data/payload';
 import fakeAudioFeatures from 'fixtures/spotify/processed-data/audio-features';
 import fakeStatistics from 'fixtures/spotify/processed-data/statistics';
 import sinonChai from 'sinon-chai';
@@ -30,6 +31,11 @@ describe('back end - results view', () => {
     beforeEach(() => {
         req = httpMocks.createRequest();
         res = httpMocks.createResponse();
+        res.locals.data = {
+            userData: fakeUserData,
+            audioFeatures: fakeAudioFeatures,
+            statistics: fakeStatistics
+        };
         sandbox.spy(res, 'send');
         sandbox.spy(res, 'redirect');
         nextSpy = sandbox.spy();
@@ -42,11 +48,6 @@ describe('back end - results view', () => {
             .callsFake(async (token, tracks) => {})
             .resolves(fakeAudioFeatures);
         sandbox.stub(Statistics, 'getStatistics').returns({});
-        res.locals.data = {
-            userData: fakeUserData,
-            audioFeatures: fakeAudioFeatures,
-            statistics: fakeStatistics
-        };
     });
 
     afterEach(() => {
@@ -141,6 +142,20 @@ describe('back end - results view', () => {
             });
             it('should pass the results into res.locals', () => {
                 expect(res.locals.data.statistics).to.be.a('object');
+            });
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
+            });
+        });
+
+        describe('setting up dev assets for react', () => {
+            beforeEach(() => {
+                res.locals.data = null;
+                Middleware.setupDevelopmentAssets(req, res, nextSpy);
+            });
+            it('should setup res.locals correctly', () => {
+                expect(res.locals.data.userData.tracks).to.be.a('object');
+                expect(res.locals.data.userData.artists).to.be.a('object');
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;

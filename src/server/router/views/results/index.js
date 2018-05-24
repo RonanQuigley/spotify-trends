@@ -5,6 +5,7 @@ const router = express.Router();
 if (process.env.NODE_ENV === 'development') {
     router.get(
         '/results',
+        middleware.setupDevelopmentAssets,
         middleware.renderReactAssets,
         middleware.renderResults,
         middleware.errorHandler
