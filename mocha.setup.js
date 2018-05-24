@@ -2,7 +2,9 @@ require('babel-polyfill');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-const { document } = new JSDOM('').window;
+const { document } = new JSDOM(
+    '<!doctype html><html><body></body></html>'
+).window;
 
 // setup our globals with jsdom for unit tests
 global.document = document;
@@ -22,9 +24,7 @@ global.navigator = {
 /* react will emit a warning about request animation frame,
 so we declare a mock one for use */
 
-global.requestAnimationFrame = cb => {
-    return setTimeout(cb, 0);
-};
+global.requestAnimationFrame = cb => setTimeout(cb, 0);
 
 process.env.NODE_ENV = 'test';
 process.env.ENABLE_LOGGING = 'false';

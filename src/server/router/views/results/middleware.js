@@ -52,55 +52,45 @@ function getApps(userData) {
 }
 
 export function renderReactAssets(req, res, next) {
-    /* if we're in development mode, the res.locals.data will
-    not have been set up. we need to check for this. */
-    if (res.locals.data) {
-        res.locals.data.react = getApps(res.locals.data.userData);
-        return next();
-    } else {
-        // development mode
+    if (process.env.NODE_ENV === 'development') {
+        /* if we're in development mode, the res.locals.data will
+        not have been set up. we need to check for this. We also use dummy
+        data to speed up dev so we're not continuosly making spotify server requests
+        */
+        const fakeData = require('fixtures/spotify/processed-data/payload')
+            .default;
+        res.locals.data = {
+            userData: {
+                artists: fakeData.artists,
+                tracks: fakeData.tracks
+            }
+        };
         res.locals.data = {
             react: getApps(res.locals.data.userData)
         };
+        return next();
+    } else {
+        res.locals.data.react = getApps(res.locals.data.userData);
         return next();
     }
 }
 
 export function renderResults(req, res, next) {
-    if (process.env.NODE_ENV === 'development') {
-        /* 
-            in dev mode, rather than make requests to ext. servers, 
-            use data from fixtures as a dummy payload to work with 
-        */
-        const data = Object.assign(
-            {},
-            require('fixtures/spotify/processed-data/payload').default,
-            {
-                react: res.locals.data.react
-            }
-        );
-        const payload = results({
-            dev: true,
-            data: data
-        });
-        res.send(payload);
-        return next();
-    } else {
-        const payload = results({
-            dev: process.env.NODE_ENV !== 'production' ? true : false,
-            data: {
-                // averaged and mean data
-                statistics: res.locals.data.statistics,
-                // top tracks
-                tracks: res.locals.data.userData.tracks,
-                // top artists
-                artists: res.locals.data.userData.artists,
-                react: res.locals.data.userData.react
-            }
-        });
-        res.send(payload);
-        return next();
-    }
+    const payload = results({
+        dev: process.env.NODE_ENV !== 'production' ? true : false,
+        data: {
+            // averaged and mean data
+            statistics: res.locals.data.statistics,
+            // top tracks
+            tracks: res.locals.data.userData.tracks,
+            // top artists
+            artists: res.locals.data.userData.artists,
+            // react apps
+            react: res.locals.data.userData.react
+        }
+    });
+    res.send(payload);
+    return next();
 }
 
 export function errorHandler(err, req, res, next) {
