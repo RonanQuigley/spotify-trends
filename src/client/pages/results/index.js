@@ -5,7 +5,7 @@ import { updateAllTokens } from '../../utilities/tokens';
 if (process.env.NODE_ENV !== 'development') {
     updateAllTokens();
 } else {
-    console.warn(`In react dev mode; tokens won't be updated`);
+    console.warn(`In dev mode for react; tokens won't be updated`);
 }
 
 const root = document.getElementById('root');

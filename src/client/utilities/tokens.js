@@ -60,13 +60,6 @@ export function updateAllTokens() {
         updateTokenFromUrl(names.accessToken);
         updateTokenFromUrl(names.expiryIn);
     }
-    // if (!getRefreshToken()) {
-    //     /* refresh tokens are indefinite;
-    //     this function isn't needed on the results page */
-    //     updateTokenFromUrl(names.refreshToken);
-    // } else {
-    //     console.error('refresh token is missing');
-    // }
 }
 
 export async function refreshAccessToken(refreshToken) {

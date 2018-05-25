@@ -4,7 +4,7 @@ import { hot } from 'react-hot-loader';
 class App extends React.Component {
     render() {
         const { data } = this.props;
-        return <div>React App</div>;
+        return <div>React Thing</div>;
     }
 }
 

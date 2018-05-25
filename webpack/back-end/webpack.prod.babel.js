@@ -1,6 +1,6 @@
 import webpack from 'webpack';
 import merge from 'webpack-merge';
-import common from './webpack.common';
+import common from './webpack.common.babel';
 
 const prod = {
     mode: 'production',

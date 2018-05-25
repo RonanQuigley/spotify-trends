@@ -8,6 +8,6 @@ export function renderApp(root) {
 }
 
 function getRenderMethod() {
-    // use render in development, hydrate in production
+    // if module.hot exists, use render in dev hydrate in prod
     return !!module.hot ? ReactDOM.render : ReactDOM.hydrate;
 }

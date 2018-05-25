@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import common from './webpack.common';
+import common from './webpack.common.babel';
 import merge from 'webpack-merge';
 
 const dev = {
