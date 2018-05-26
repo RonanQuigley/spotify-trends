@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
-import Button from '@material-ui/core/Button';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from 'common/react/theme/index';
+import Header from './components/header';
+
 class App extends Component {
     render() {
+        const { data, id } = this.props;
         return (
             <CssBaseline>
                 <MuiThemeProvider theme={theme}>
-                    <div>Hello World</div>
+                    <Header />
                 </MuiThemeProvider>
             </CssBaseline>
         );

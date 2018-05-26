@@ -18,7 +18,7 @@ describe('common - react - index', () => {
     afterEach(() => {
         sandbox.restore();
     });
-    it('', () => {
+    it('should pass in the data via', () => {
         // const wrapper = shallow(<App />);
         // wrapper.instance().props;
     });
