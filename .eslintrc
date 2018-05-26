@@ -5,9 +5,10 @@
         "es6": true,
         "node": true
     },
+    "parser": "babel-eslint",
     "extends": ["prettier"],
     "parserOptions": {
-        "ecmaVersion": 8, 
+        "ecmaVersion": 9, 
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
             "jsx": true
@@ -16,6 +17,7 @@
     },
     "plugins": ["prettier", "react", "mocha"],
     "rules": {
+        "strict" : 0, 
         "prettier/prettier": "error",
         "no-console": "off",
         "no-unused-vars": [1, { "argsIgnorePattern": "next" }],

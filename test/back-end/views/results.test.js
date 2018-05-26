@@ -6,7 +6,6 @@ import { fakeTokens } from 'fixtures/authentication/';
 import { fakeExpiredError } from 'fixtures/spotify/errors';
 import fakeRawData from 'fixtures/spotify/raw-data';
 import fakeUserData from 'fixtures/spotify/processed-data';
-import fakePayload from 'fixtures/spotify/processed-data/payload';
 import fakeAudioFeatures from 'fixtures/spotify/processed-data/audio-features';
 import fakeStatistics from 'fixtures/spotify/processed-data/statistics';
 import sinonChai from 'sinon-chai';

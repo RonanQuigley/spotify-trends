@@ -1,11 +1,27 @@
-import React from 'react';
-import { hot } from 'react-hot-loader';
+import React, { PropTypes } from 'react';
+export default class Sample extends React.Component {
+    constructor(...args) {
+        super(...args);
+        this.sampleMethod = this.sampleMethod.bind(this);
+    }
 
-class App extends React.Component {
+    componentDidMount() {}
+
+    boundFunction = () => {
+        console.log('i am a bound function');
+    };
+
+    sampleMethod() {
+        console.log('sample');
+    }
+
     render() {
-        const { data } = this.props;
-        return <div>React Thing</div>;
+        this.boundFunction();
+        return (
+            <div>
+                <input id="checked" defaultChecked={true} />
+                <input id="not" defaultChecked={false} />
+            </div>
+        );
     }
 }
-
-export default hot(module)(App);
