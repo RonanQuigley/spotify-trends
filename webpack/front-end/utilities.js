@@ -38,10 +38,17 @@ export function setDevTool() {
         case 'production':
             return 'source-map';
         default:
-            /* devtool choices : 
-                module-source-map, -- slower rebuild, better debugging 
-                cheap-module-eval-source-map -- faster rebuild, worse debugging
+            /* we use a second flag to decide our devtool choice : 
+                module-source-map: 
+                    -- slower rebuild
+                    -- much better debugging 
+                cheap-module-eval-source-map:
+                    -- faster rebuild
+                    -- chrome debugger will show errors in debug console, 
+                    however it still seems to work somewhat okay in use
             */
-            return 'source-map';
+            return process.env.DEBUG === 'true'
+                ? 'source-map'
+                : 'cheap-module-eval-source-map';
     }
 }

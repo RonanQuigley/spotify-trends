@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "target": "es2017",
         "baseUrl": "./",
         "paths": {
             "fixtures/*": ["test/fixtures/*"],
@@ -8,5 +7,4 @@
             "src/*": ["src/*"]
         }   
     },
-    "exclude": ["node_modules", "dist", "old-project-code", "coverage"]
 }

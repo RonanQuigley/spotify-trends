@@ -1,27 +1,20 @@
-import React, { PropTypes } from 'react';
-export default class Sample extends React.Component {
-    constructor(...args) {
-        super(...args);
-        this.sampleMethod = this.sampleMethod.bind(this);
-    }
-
-    componentDidMount() {}
-
-    boundFunction = () => {
-        console.log('i am a bound function');
-    };
-
-    sampleMethod() {
-        console.log('sample');
-    }
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { hot } from 'react-hot-loader';
+import Button from '@material-ui/core/Button';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from 'common/react/theme/index';
+class App extends Component {
     render() {
-        this.boundFunction();
         return (
-            <div>
-                <input id="checked" defaultChecked={true} />
-                <input id="not" defaultChecked={false} />
-            </div>
+            <CssBaseline>
+                <MuiThemeProvider theme={theme}>
+                    <div>Hello World</div>
+                </MuiThemeProvider>
+            </CssBaseline>
         );
     }
 }
+
+export default hot(module)(App);

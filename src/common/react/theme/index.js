@@ -1,5 +1,5 @@
-import { createMuiTheme } from '@material-ui/styles';
-import * as MuiColors from '@material-ui/colors';
+import { createMuiTheme } from '@material-ui/core/styles';
+
 const Colors = {
     primary: {
         light: '#6d6d6d',
@@ -14,15 +14,6 @@ const Colors = {
         contrastText: '#000000'
     }
 };
-
-// const Colors = {
-//   primary : {
-//     main : MuiColors.yellow[900],
-//   },
-//   secondary : {
-//     main : MuiColors.yellow['A200'],
-//   }
-// }
 
 const theme = createMuiTheme({
     palette: {

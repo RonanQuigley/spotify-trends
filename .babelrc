@@ -23,8 +23,6 @@
               "node" : "current"
             }
           }],
-          "@babel/preset-react",
-          ["@babel/stage-0", {"decoratorsLegacy" : true}]
         ] 
     }
   },

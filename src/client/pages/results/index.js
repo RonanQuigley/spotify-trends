@@ -1,5 +1,5 @@
-import { renderApp } from '../../react';
-import { updateAllTokens } from '../../utilities/tokens';
+import renderApps from 'src/client/react/index';
+import { updateAllTokens } from 'src/client/utilities/tokens';
 
 // when working with react & data fixtures, we don't need to update tokens
 if (process.env.NODE_ENV !== 'development') {
@@ -8,9 +8,7 @@ if (process.env.NODE_ENV !== 'development') {
     console.warn(`In dev mode for react; tokens won't be updated`);
 }
 
-const root = document.getElementById('root');
-
-renderApp(root);
+renderApps();
 
 if (module.hot) {
     module.hot.accept();
