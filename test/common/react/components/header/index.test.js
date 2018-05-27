@@ -46,7 +46,7 @@ describe('common - react - component - header', () => {
         it('should have a value attribute', () => {
             expect(tabContainer.props().value).to.be.a('number');
         });
-        it('should call props.onChange on a tab change', () => {
+        it('should call props.onChange when the tab has been changed', () => {
             const onChange = sandbox.spy();
             const wrapper = shallow(<Header value={0} onChange={onChange} />);
             wrapper.find(Tabs).simulate('change');

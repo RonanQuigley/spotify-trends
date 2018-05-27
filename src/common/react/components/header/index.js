@@ -5,18 +5,10 @@ import { labels } from 'common/react/utilities';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 
 class Header extends PureComponent {
-    // state = {
-    //     value: 0
-    // };
-
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         value: PropTypes.number.isRequired
     };
-
-    // handleChange = (event, value) => {
-    //     this.setState({ value });
-    // };
 
     generateLabels = () => {
         return labels.map(label => {
