@@ -4,8 +4,8 @@ import sinonChai from 'sinon-chai';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
-import Header from 'common/react/components/header';
-import { Typography, Tabs, Tab } from '@material-ui/core';
+import Header from 'common/react/components/header/index';
+import { Tabs, Tab } from '@material-ui/core';
 
 chai.use(sinonChai);
 Enzyme.configure({ adapter: new Adapter() });
@@ -15,8 +15,9 @@ const sandbox = sinon.createSandbox();
 
 describe('common - react - component - header', () => {
     let wrapper;
+
     beforeEach(() => {
-        wrapper = shallow(<Header />);
+        wrapper = shallow(<Header value={0} onChange={() => {}} />);
     });
     afterEach(() => {
         sandbox.restore();
@@ -26,7 +27,7 @@ describe('common - react - component - header', () => {
             expect(wrapper.render()).to.not.be.null;
         });
     });
-    describe('Tabs', () => {
+    describe('Tab', () => {
         it('should have labelling', () => {
             const tabs = wrapper.find(Tab);
             tabs.forEach(elem => {
@@ -34,7 +35,7 @@ describe('common - react - component - header', () => {
             });
         });
     });
-    describe('Tab Container', () => {
+    describe('Tabs Container', () => {
         let tabContainer;
         beforeEach(() => {
             tabContainer = wrapper.find(Tabs);
@@ -45,9 +46,11 @@ describe('common - react - component - header', () => {
         it('should have a value attribute', () => {
             expect(tabContainer.props().value).to.be.a('number');
         });
-        it('should handle a click change', () => {
-            tabContainer.props().onChange({}, 1);
-            expect(wrapper.state('value')).to.equal(1);
+        it('should call props.onChange on a tab change', () => {
+            const onChange = sandbox.spy();
+            const wrapper = shallow(<Header value={0} onChange={onChange} />);
+            wrapper.find(Tabs).simulate('change');
+            expect(onChange).to.be.calledOnce;
         });
     });
 });

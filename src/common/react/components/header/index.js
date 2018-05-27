@@ -1,16 +1,22 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { labels } from 'common/react/utilities';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 
 class Header extends PureComponent {
-    state = {
-        value: 0
+    // state = {
+    //     value: 0
+    // };
+
+    static propTypes = {
+        onChange: PropTypes.func.isRequired,
+        value: PropTypes.number.isRequired
     };
 
-    handleChange = (event, value) => {
-        this.setState({ value });
-    };
+    // handleChange = (event, value) => {
+    //     this.setState({ value });
+    // };
 
     generateLabels = () => {
         return labels.map(label => {
@@ -19,13 +25,10 @@ class Header extends PureComponent {
     };
 
     render() {
+        const { value, onChange } = this.props;
         return (
             <AppBar>
-                <Tabs
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                    centered={true}
-                >
+                <Tabs value={value} onChange={onChange} centered={true}>
                     {this.generateLabels()}
                 </Tabs>
             </AppBar>
