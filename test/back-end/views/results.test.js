@@ -15,7 +15,9 @@ import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
 import * as resultsPage from 'src/server/router/views/results/results.hbs';
-import * as React from 'src/server/api/react/index';
+import ReactDOMServer from 'react-dom/server';
+import * as ReactAPI from 'common/react/api/index';
+
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -163,16 +165,42 @@ describe('back end - results view', () => {
 
         describe('rendering react assets', () => {
             beforeEach(() => {
-                sandbox.stub(React, 'renderReactApp').returns('fake react app');
+                sandbox.spy(ReactDOMServer, 'renderToString');
+                sandbox.spy(ReactAPI, 'buildApp');
                 Middleware.renderReactAssets(req, res, nextSpy);
             });
-            it('should render the react apps', () => {
-                React.renderReactApp.getCalls().forEach(call => {
+            it('should build the apps', () => {
+                ReactAPI.buildApp.getCalls().forEach(call => {
+                    expect(call).to.be.calledWith(
+                        sinon.match.object,
+                        sinon.match('tracks').or(sinon.match('artists'))
+                    );
+                });
+            });
+            it('should render the apps', () => {
+                ReactDOMServer.renderToString.getCalls().forEach(call => {
                     expect(call).to.be.calledWith(sinon.match.object);
                 });
             });
-            it('should pass the rendered app into res.locals', () => {
-                expect(res.locals.data.react).to.be.a('object');
+            describe('res.locals', () => {
+                it('should pass in the rendered apps', () => {
+                    expect(res.locals.data.react).to.be.a('object');
+                });
+                it('should contain the tracks', () => {
+                    expect(res.locals.data.react.tracks).to.be.a('string');
+                });
+                it('should contain artists', () => {
+                    expect(res.locals.data.react.artists).to.be.a('string');
+                });
+            });
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
+            });
+        });
+
+        describe('rendering styling', () => {
+            beforeEach(() => {
+                Middleware.renderStyling(req, res, nextSpy);
             });
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;

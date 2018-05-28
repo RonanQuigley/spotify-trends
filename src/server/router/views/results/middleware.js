@@ -5,7 +5,12 @@ import {
 } from '../../../api/user-data/request-handler';
 import processData from '../../../api/user-data/processor';
 import { getStatistics } from '../../../api/statistics';
-import { renderReactApp } from '../../../api/react';
+import { buildApp, id } from 'common/react/api';
+import { renderToString } from 'react-dom/server';
+import { createGenerateClassName } from '@material-ui/core/styles';
+import { SheetsRegistry } from 'react-jss/lib/jss';
+import JssProvider from 'react-jss/lib/JssProvider';
+import theme from 'common/react/theme';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -60,10 +65,16 @@ export function setupDevelopmentAssets(req, res, next) {
 }
 
 export function renderReactAssets(req, res, next) {
+    const tracks = buildApp(res.locals.data.userData.tracks, id.TRACKS);
+    const artists = buildApp(res.locals.data.userData.artists, id.ARTISTS);
     res.locals.data.react = {
-        artists: renderReactApp(res.locals.data.userData.artists),
-        tracks: renderReactApp(res.locals.data.userData.tracks)
+        artists: renderToString(artists),
+        tracks: renderToString(tracks)
     };
+    return next();
+}
+
+export function renderStyling(req, res, next) {
     return next();
 }
 

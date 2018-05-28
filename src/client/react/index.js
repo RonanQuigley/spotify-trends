@@ -1,19 +1,20 @@
-import React from 'react';
+import { id, buildApp } from 'common/react/api/index';
 import ReactDOM from 'react-dom';
-import App from 'common/react';
-
 export default function renderApps() {
-    const tracksRoot = document.getElementById('tracks');
-    const artistsRoot = document.getElementById('artists');
+    const roots = {
+        tracks: document.getElementById('tracks'),
+        artists: document.getElementById('artists')
+    };
     const data = getInitialState();
-    renderApp(tracksRoot, data.tracks);
-    renderApp(artistsRoot, data.artists);
+    renderApp(roots.tracks, data.tracks, id.TRACKS);
+    renderApp(roots.artists, data.artists, id.ARTISTS);
     clearInitialState();
 }
 
-function renderApp(root, data) {
-    const renderMethod = getRenderMethod();
-    renderMethod(<App data={data} />, root);
+function renderApp(root, data, id) {
+    const render = getRenderMethod();
+    const app = buildApp(data, id);
+    render(app, root);
 }
 
 function getRenderMethod() {

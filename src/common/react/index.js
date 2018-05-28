@@ -5,7 +5,6 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from 'common/react/theme/index';
 import Header from './components/header';
-
 class App extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired,

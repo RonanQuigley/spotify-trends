@@ -1,4 +1,4 @@
-import renderApps from 'src/client/react/index';
+import renderApps from 'src/client/react';
 import { updateAllTokens } from 'src/client/utilities/tokens';
 
 // when working with react & data fixtures, we don't need to update tokens
