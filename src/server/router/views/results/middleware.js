@@ -70,10 +70,6 @@ export function generateReactApps(req, res, next) {
     return next();
 }
 
-export function renderStyling(req, res, next) {
-    return next();
-}
-
 export function renderResults(req, res, next) {
     const payload = results({
         dev: process.env.NODE_ENV !== 'production' ? true : false,

@@ -202,15 +202,6 @@ describe('back end - results view', () => {
             });
         });
 
-        describe('rendering styling', () => {
-            beforeEach(() => {
-                Middleware.renderStyling(req, res, nextSpy);
-            });
-            it('should call next', () => {
-                expect(nextSpy).to.be.calledOnce;
-            });
-        });
-
         describe('render results page', () => {
             beforeEach(() => {
                 sandbox.spy(resultsPage, 'default');

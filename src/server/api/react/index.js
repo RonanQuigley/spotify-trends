@@ -1,10 +1,7 @@
-import { createGenerateClassName } from '@material-ui/core/styles';
+import { renderToString } from 'react-dom/server';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import React from 'react';
-import JssProvider from 'react-jss/lib/JssProvider';
-import { renderToString } from 'react-dom/server';
-import App from 'common/react/index';
-import PropTypes from 'prop-types';
+import Build from './build';
 
 export function renderApp(build) {
     return {
@@ -20,21 +17,3 @@ export function buildApp(data, id) {
         registry: registry
     };
 }
-
-const Build = props => {
-    const generateClassName = createGenerateClassName();
-    return (
-        <JssProvider
-            registry={props.registry}
-            generateClassName={generateClassName}
-        >
-            <App data={props.data} id={props.id.tracks} />
-        </JssProvider>
-    );
-};
-
-Build.propTypes = {
-    registry: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired
-};
