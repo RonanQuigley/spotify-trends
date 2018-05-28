@@ -115,8 +115,8 @@ describe('back end - results view', () => {
                 expect(nextSpy).to.be.calledOnce;
             });
             it('should call process data', () => {
-                expect(Processor.default).to.be.calledWith(fakeRawData)
-                    .calledOnce;
+                expect(Processor.default).to.be.calledWith(fakeRawData).and.to
+                    .be.calledOnce;
             });
             it('should call request audio features', () => {
                 expect(requestHandler.requestAudioFeatures).to.be.calledWith(
@@ -206,16 +206,8 @@ describe('back end - results view', () => {
                     .calledOnce;
             });
             it('should render the handlebars page ', () => {
-                // expect(resultsPage.default).to.be.calledWith({
-                //     dev: true,
-                //     data: {
-                //         statistics: res.locals.data.statistics,
-                //         tracks: res.locals.data.userData.tracks,
-                //         artists: res.locals.data.userData.artists
-                //     }
-                // }).and.to.be.calledOnce;;
                 expect(resultsPage.default).to.be.calledWith(sinon.match.object)
-                    .calledOnce;
+                    .and.to.be.calledOnce;
             });
         });
 

@@ -33,8 +33,8 @@ describe('front end - Tokens', () => {
             result = await Tokens.refreshAccessToken(fakeTokens.refreshToken);
         });
         it('should fetch for the data', () => {
-            expect(serverFetch.fetchData).to.be.calledWith('/refresh', {})
-                .calledOnce;
+            expect(serverFetch.fetchData).to.be.calledWith('/refresh', {}).and
+                .to.be.calledOnce;
         });
         it('should generate a header', () => {
             expect(serverFetch.generateHeader).to.be.calledWith(

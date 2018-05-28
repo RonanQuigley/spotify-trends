@@ -76,8 +76,8 @@ describe('back end - refresh route', () => {
             it('should call refresh access token', async () => {
                 refreshAccessTokenStub.resolves({});
                 await middleware.processRequest(req, res, nextSpy);
-                expect(Tokens.refreshAccessToken).to.be.calledWith(req)
-                    .calledOnce;
+                expect(Tokens.refreshAccessToken).to.be.calledWith(req).and.to
+                    .be.calledOnce;
             });
         });
     });
