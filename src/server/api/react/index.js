@@ -5,8 +5,8 @@ import Build from './build';
 
 export function renderApp(build) {
     return {
-        app: renderToString(build.app),
-        registry: build.registry
+        html: renderToString(build.app),
+        css: build.registry
     };
 }
 

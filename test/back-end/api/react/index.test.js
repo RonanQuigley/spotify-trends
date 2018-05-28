@@ -36,10 +36,10 @@ describe('back end - api - react', () => {
                 expect(result).to.be.a('object');
             });
             it('should contain an app', () => {
-                expect(result.app).to.be.a('string');
+                expect(result.html).to.be.a('string');
             });
             it('should contain a style sheet registry', () => {
-                expect(result.registry).to.be.a('object');
+                expect(result.css).to.be.a('object');
             });
         });
         it('should render the app to a string', () => {
