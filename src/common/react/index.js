@@ -5,6 +5,8 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from 'common/react/theme/index';
 import Header from './components/header';
+import { SheetsManager } from 'react-jss/lib/jss';
+
 class App extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired,
@@ -23,11 +25,11 @@ class App extends Component {
         const { data, id } = this.props;
         const { value } = this.state;
         return (
-            <CssBaseline>
-                <MuiThemeProvider theme={theme}>
+            <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+                <CssBaseline>
                     <Header value={value} onChange={this.onChange} />
-                </MuiThemeProvider>
-            </CssBaseline>
+                </CssBaseline>
+            </MuiThemeProvider>
         );
     }
 }

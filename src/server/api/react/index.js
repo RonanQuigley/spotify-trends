@@ -3,17 +3,13 @@ import { SheetsRegistry } from 'react-jss/lib/jss';
 import React from 'react';
 import Build from './build';
 
-export function renderApp(build) {
-    return {
-        html: renderToString(build.app),
-        css: build.registry
-    };
-}
-
-export function buildApp(data, id) {
+export default function renderApp(data, id) {
     const registry = new SheetsRegistry();
+    const app = <Build data={data} id={id} registry={registry} />;
+    const html = renderToString(app);
+    const css = registry.toString();
     return {
-        app: <Build data={data} id={id} registry={registry} />,
-        registry: registry
+        html: html,
+        css: css
     };
 }

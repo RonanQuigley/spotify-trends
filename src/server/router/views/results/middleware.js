@@ -6,7 +6,8 @@ import {
 import processData from '../../../api/user-data/processor';
 import { getStatistics } from '../../../api/statistics';
 import { id } from 'common/react/api';
-import { renderApp, buildApp } from 'src/server/api/react/index';
+import renderApp from 'src/server/api/react/index';
+import { render } from 'enzyme';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -61,11 +62,11 @@ export function setupDevelopmentAssets(req, res, next) {
 }
 
 export function generateReactApps(req, res, next) {
-    const artists = buildApp(res.locals.data.userData.artists, id.ARTISTS);
-    const tracks = buildApp(res.locals.data.userData.tracks, id.TRACKS);
+    const artists = renderApp(res.locals.data.userData.artists, id.ARTISTS);
+    const tracks = renderApp(res.locals.data.userData.tracks, id.TRACKS);
     res.locals.data.react = {
-        artists: renderApp(artists),
-        tracks: renderApp(tracks)
+        artists: artists,
+        tracks: tracks
     };
     return next();
 }

@@ -15,7 +15,8 @@ import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
 import * as resultsPage from 'src/server/router/views/results/results.hbs';
-import * as ReactAPI from 'src/server/api/react/index';
+import * as renderApp from 'src/server/api/react/index';
+import { render } from 'enzyme';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;
@@ -164,25 +165,14 @@ describe('back end - results view', () => {
 
         describe('rendering react assets', () => {
             beforeEach(() => {
-                sandbox.spy(ReactAPI, 'buildApp');
-                sandbox.spy(ReactAPI, 'renderApp');
+                sandbox.spy(renderApp, 'default');
                 Middleware.generateReactApps(req, res, nextSpy);
             });
-            it('should build the apps', () => {
-                ReactAPI.buildApp.getCalls().forEach(call => {
-                    expect(call).to.be.calledWith(
-                        sinon.match.object,
-                        sinon.match('tracks').or(sinon.match('artists'))
-                    );
-                });
-            });
             it('should render the apps', () => {
-                ReactAPI.renderApp.getCalls().forEach(call => {
+                expect(renderApp.default).to.be.called;
+                renderApp.default.getCalls().forEach(call => {
                     expect(call).to.be.calledWith(
-                        sinon.match({
-                            app: sinon.match.object,
-                            registry: sinon.match.object
-                        })
+                        sinon.match(sinon.match.object, sinon.match.string)
                     );
                 });
             });
