@@ -197,7 +197,8 @@ describe('back end - results view', () => {
                 sandbox.spy(resultsPage, 'default');
                 res.locals.data = {
                     userData: fakeUserData,
-                    statistics: fakeStatistics
+                    statistics: fakeStatistics,
+                    react: {}
                 };
                 Middleware.renderResults(req, res, nextSpy);
             });
@@ -206,8 +207,17 @@ describe('back end - results view', () => {
                     .calledOnce;
             });
             it('should render the handlebars page ', () => {
-                expect(resultsPage.default).to.be.calledWith(sinon.match.object)
-                    .and.to.be.calledOnce;
+                expect(resultsPage.default).to.be.calledWith(
+                    sinon.match({
+                        dev: sinon.match.bool,
+                        data: {
+                            statistics: sinon.match.object,
+                            tracks: sinon.match.object,
+                            artists: sinon.match.object,
+                            react: sinon.match.object
+                        }
+                    })
+                ).and.to.be.calledOnce;
             });
         });
 

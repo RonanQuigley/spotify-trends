@@ -13,11 +13,11 @@ This is the results page
 </script>
 
 
-{{#if data.react.tracks}}
+{{#if data.react.tracks.css}}
     exists
 {{/if}}
 
-<style id="jss-server-side"></style>
+<style id="jss-server-side">{{data.react.tracks.css}}</style>
 
 
 <!-- CALL THIS LAST --> 

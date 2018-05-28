@@ -72,7 +72,7 @@ export function generateReactApps(req, res, next) {
 }
 
 export function renderResults(req, res, next) {
-    const payload = results({
+    const obj = {
         dev: process.env.NODE_ENV !== 'production' ? true : false,
         data: {
             // averaged and mean data
@@ -82,9 +82,10 @@ export function renderResults(req, res, next) {
             // top artists
             artists: res.locals.data.userData.artists,
             // react apps
-            react: res.locals.data.userData.react
+            react: res.locals.data.react
         }
-    });
+    };
+    const payload = results(obj);
     res.send(payload);
     return next();
 }
