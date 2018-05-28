@@ -15,8 +15,7 @@ import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
 import * as resultsPage from 'src/server/router/views/results/results.hbs';
-import ReactDOMServer from 'react-dom/server';
-import * as ReactAPI from 'common/react/api/index';
+import * as ReactAPI from 'src/server/api/react/index';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;
@@ -165,9 +164,9 @@ describe('back end - results view', () => {
 
         describe('rendering react assets', () => {
             beforeEach(() => {
-                sandbox.spy(ReactDOMServer, 'renderToString');
                 sandbox.spy(ReactAPI, 'buildApp');
-                Middleware.renderReactAssets(req, res, nextSpy);
+                sandbox.spy(ReactAPI, 'renderApp');
+                Middleware.generateReactApps(req, res, nextSpy);
             });
             it('should build the apps', () => {
                 ReactAPI.buildApp.getCalls().forEach(call => {
@@ -178,8 +177,13 @@ describe('back end - results view', () => {
                 });
             });
             it('should render the apps', () => {
-                ReactDOMServer.renderToString.getCalls().forEach(call => {
-                    expect(call).to.be.calledWith(sinon.match.object);
+                ReactAPI.renderApp.getCalls().forEach(call => {
+                    expect(call).to.be.calledWith(
+                        sinon.match({
+                            app: sinon.match.object,
+                            registry: sinon.match.object
+                        })
+                    );
                 });
             });
             describe('res.locals', () => {
@@ -187,10 +191,10 @@ describe('back end - results view', () => {
                     expect(res.locals.data.react).to.be.a('object');
                 });
                 it('should contain the tracks', () => {
-                    expect(res.locals.data.react.tracks).to.be.a('string');
+                    expect(res.locals.data.react.tracks).to.be.a('object');
                 });
                 it('should contain artists', () => {
-                    expect(res.locals.data.react.artists).to.be.a('string');
+                    expect(res.locals.data.react.artists).to.be.a('object');
                 });
             });
             it('should call next', () => {

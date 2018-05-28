@@ -5,12 +5,8 @@ import {
 } from '../../../api/user-data/request-handler';
 import processData from '../../../api/user-data/processor';
 import { getStatistics } from '../../../api/statistics';
-import { buildApp, id } from 'common/react/api';
-import { renderToString } from 'react-dom/server';
-import { createGenerateClassName } from '@material-ui/core/styles';
-import { SheetsRegistry } from 'react-jss/lib/jss';
-import JssProvider from 'react-jss/lib/JssProvider';
-import theme from 'common/react/theme';
+import { id } from 'common/react/api';
+import { renderApp, buildApp } from 'src/server/api/react/index';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -64,12 +60,12 @@ export function setupDevelopmentAssets(req, res, next) {
     return next();
 }
 
-export function renderReactAssets(req, res, next) {
-    const tracks = buildApp(res.locals.data.userData.tracks, id.TRACKS);
+export function generateReactApps(req, res, next) {
     const artists = buildApp(res.locals.data.userData.artists, id.ARTISTS);
+    const tracks = buildApp(res.locals.data.userData.tracks, id.TRACKS);
     res.locals.data.react = {
-        artists: renderToString(artists),
-        tracks: renderToString(tracks)
+        artists: renderApp(artists),
+        tracks: renderApp(tracks)
     };
     return next();
 }
