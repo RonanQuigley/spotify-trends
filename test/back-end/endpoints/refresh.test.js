@@ -68,7 +68,8 @@ describe('back end - refresh route', () => {
             it('should send the response', async () => {
                 const result = refreshAccessTokenStub.returns({});
                 middleware.processRequest(req, res, nextSpy).then(() => {
-                    expect(res.send).to.be.calledWith(result).calledOnce;
+                    expect(res.send).to.be.calledWith(result).and.to.be
+                        .calledOnce;
                 });
             });
 

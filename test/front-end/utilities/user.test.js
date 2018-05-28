@@ -64,7 +64,7 @@ describe('front end - user', () => {
                 expect(Url.redirect).to.be.calledWith(
                     '/results',
                     fakeTokens.accessToken
-                ).calledOnce;
+                ).and.to.be.calledOnce;
             });
         });
         describe('outcome - refresh then redirect', () => {
@@ -90,13 +90,13 @@ describe('front end - user', () => {
                 expect(Tokens.updateAccessAndExpiryTokens).to.be.calledWith(
                     fakeTokens.accessToken,
                     fakeTokens.expiryIn
-                ).calledOnce;
+                ).and.to.be.calledOnce;
             });
             it('should redirect the user', () => {
                 expect(Url.redirect).to.be.calledWith(
                     '/results',
                     fakeTokens.accessToken
-                ).calledOnce;
+                ).and.to.be.calledOnce;
             });
         });
     });

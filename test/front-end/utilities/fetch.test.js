@@ -68,7 +68,8 @@ describe('front end - server fetch', () => {
                 const obj = {
                     refreshToken: fakeTokens.refreshToken
                 };
-                expect(JSON.stringify).to.be.calledWith(obj).calledOnce;
+                expect(JSON.stringify).to.be.calledWith(obj).and.to.be
+                    .calledOnce;
             });
         });
         it('should contain a post method', () => {

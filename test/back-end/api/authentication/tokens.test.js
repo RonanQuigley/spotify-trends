@@ -76,7 +76,7 @@ describe('back end - api - tokens', () => {
             expect(Header.generateAuthHeader).to.be.calledWith(
                 fakeTokens.refreshToken,
                 fakeGrantType.REFRESH
-            ).calledOnce;
+            ).and.to.be.calledOnce;
         });
         it('should return a Promise', () => {
             expect(result).to.be.a('Promise');

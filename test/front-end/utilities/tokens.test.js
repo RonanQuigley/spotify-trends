@@ -39,7 +39,7 @@ describe('front end - Tokens', () => {
         it('should generate a header', () => {
             expect(serverFetch.generateHeader).to.be.calledWith(
                 fakeTokens.refreshToken
-            ).calledOnce;
+            ).and.to.be.calledOnce;
         });
         it('should return a new accessToken', () => {
             expect(result.accessToken).to.be.a('string');

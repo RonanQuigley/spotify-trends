@@ -122,7 +122,7 @@ describe('back end - results view', () => {
                 expect(requestHandler.requestAudioFeatures).to.be.calledWith(
                     fakeTokens.accessToken,
                     fakeUserData.tracks
-                ).calledOnce;
+                ).and.to.be.calledOnce;
             });
             it('should pass the processed results into res.locals', () => {
                 expect(res.locals.data).to.deep.equal({
@@ -139,7 +139,7 @@ describe('back end - results view', () => {
             it('should get the statistics', () => {
                 expect(Statistics.getStatistics).to.be.calledWith(
                     fakeAudioFeatures
-                ).calledOnce;
+                ).and.to.be.calledOnce;
             });
             it('should pass the results into res.locals', () => {
                 expect(res.locals.data.statistics).to.be.a('object');
@@ -213,7 +213,7 @@ describe('back end - results view', () => {
                 //         tracks: res.locals.data.userData.tracks,
                 //         artists: res.locals.data.userData.artists
                 //     }
-                // }).calledOnce;
+                // }).and.to.be.calledOnce;;
                 expect(resultsPage.default).to.be.calledWith(sinon.match.object)
                     .calledOnce;
             });
@@ -228,7 +228,8 @@ describe('back end - results view', () => {
                         res,
                         nextSpy
                     );
-                    expect(res.redirect).to.be.calledWith('/').calledOnce;
+                    expect(res.redirect).to.be.calledWith('/').and.to.be
+                        .calledOnce;
                 });
             });
             describe('outcome - server error', () => {
