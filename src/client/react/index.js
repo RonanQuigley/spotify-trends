@@ -17,21 +17,19 @@ export default function renderApps() {
 }
 
 function renderApp(root, data, id) {
-    const render = getRenderMethod();
-
+    // const render = getRenderMethod();
     const app = (
         <MuiThemeProvider theme={theme}>
             <App data={data} id={id} />{' '}
         </MuiThemeProvider>
     );
-    render(app, root);
+    ReactDOM.hydrate(app, root);
 }
 
-function getRenderMethod() {
-    // if module.hot exists, use render in dev hydrate in prod
-
-    return ReactDOM.hydrate;
-}
+// function getRenderMethod() {
+//     // if module.hot exists, use render in dev hydrate in prod
+//     return !!module.hot ? ReactDOM.render : ReactDOM.hydrate;
+// }
 
 function getInitialState() {
     return window.__initial_state__;

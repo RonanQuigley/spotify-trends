@@ -5,7 +5,7 @@ import React from 'react';
 import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from '../../../src/common/react/index';
-import Header from '../../../src/common/react/components/header';
+import UI from '../../../src/common/react/components/ui';
 import chaiEnzyme from 'chai-enzyme';
 chai.use(sinonChai);
 chai.use(chaiEnzyme());
@@ -28,7 +28,7 @@ describe('common - react - index', () => {
     describe('Header', () => {
         let header;
         beforeEach(() => {
-            header = wrapper.find(Header);
+            header = wrapper.find(UI);
         });
         it('should have a value attribute', () => {
             expect(header.props().value).to.be.a('number');
@@ -43,7 +43,7 @@ describe('common - react - index', () => {
         it('should update the value attribute with onChange events', () => {
             header.props().onChange({}, 1);
             wrapper.update();
-            expect(wrapper.find(Header).props().value).to.equal(1);
+            expect(wrapper.find(UI).props().value).to.equal(1);
         });
     });
 });

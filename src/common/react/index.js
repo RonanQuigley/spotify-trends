@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Header from './components/header';
+import UI from './components/ui';
 class App extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired,
@@ -30,7 +30,7 @@ class App extends Component {
         const { value } = this.state;
         return (
             <CssBaseline>
-                <Header value={value} onChange={this.onChange} />
+                <UI value={value} onChange={this.onChange} />
             </CssBaseline>
         );
     }
