@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from './components/header';
-let count = 0;
 class App extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired,
@@ -27,8 +26,6 @@ class App extends Component {
     };
 
     render() {
-        count++;
-        console.log(count);
         const { data, id } = this.props;
         const { value } = this.state;
         return (
