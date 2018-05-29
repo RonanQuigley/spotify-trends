@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== 'development') {
     updateAllTokens();
 } else {
     console.warn(`In dev mode for react; tokens won't be updated`);
+    console.warn(`In dev mode for react; window __initial_state__ not cleared`);
 }
 
 renderApps();

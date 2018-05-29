@@ -1,25 +1,36 @@
+import React from 'react';
+import App from 'common/react/index';
 import { id, buildApp } from 'common/react/api/index';
+import theme from 'common/react/theme';
 import ReactDOM from 'react-dom';
+import { MuiThemeProvider } from '@material-ui/core';
+
 export default function renderApps() {
     const roots = {
-        tracks: document.getElementById('tracks'),
-        artists: document.getElementById('artists')
+        tracks: document.getElementById('tracks')
+        // artists: document.getElementById('artists')
     };
     const data = getInitialState();
     renderApp(roots.tracks, data.tracks, id.TRACKS);
-    renderApp(roots.artists, data.artists, id.ARTISTS);
+    // renderApp(roots.artists, data.artists, id.ARTISTS);
     clearInitialState();
 }
 
 function renderApp(root, data, id) {
     const render = getRenderMethod();
-    const app = buildApp(data, id);
+
+    const app = (
+        <MuiThemeProvider theme={theme}>
+            <App data={data} id={id} />{' '}
+        </MuiThemeProvider>
+    );
     render(app, root);
 }
 
 function getRenderMethod() {
     // if module.hot exists, use render in dev hydrate in prod
-    return !!module.hot ? ReactDOM.render : ReactDOM.hydrate;
+
+    return ReactDOM.hydrate;
 }
 
 function getInitialState() {

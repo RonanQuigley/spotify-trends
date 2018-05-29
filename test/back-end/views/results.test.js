@@ -16,7 +16,6 @@ import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
 import * as resultsPage from 'src/server/router/views/results/results.hbs';
 import * as renderApp from 'src/server/api/react/index';
-import { render } from 'enzyme';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;
@@ -210,6 +209,7 @@ describe('back end - results view', () => {
                 expect(resultsPage.default).to.be.calledWith(
                     sinon.match({
                         dev: sinon.match.bool,
+                        title: sinon.match.string,
                         data: {
                             statistics: sinon.match.object,
                             tracks: sinon.match.object,

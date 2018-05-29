@@ -16,12 +16,15 @@
                 "${workspaceRoot}/node_modules/**/*.*.js",
                 "<node_internals>/**/*.js",
                 "<node_internals>/**/*.*.js",
+                "node_modules/**/*.js",
                 "${workspaceRoot}\\node_modules/**\\*.js",     
                 "file:\\webpack\\bootstrap",
                 "file:///webpack/bootstrap",
+ 
                 "webpack:///webpack/bootstrap",
                 "webpack://webpack/bootstrap",
-                "webpack\\bootstrap",    
+                "webpack\\bootstrap", 
+                "webpack-internal://**/*.js",                   
             ],
         },
         {

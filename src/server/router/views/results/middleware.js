@@ -56,7 +56,8 @@ export function setupDevelopmentAssets(req, res, next) {
         userData: {
             artists: fakeData.artists,
             tracks: fakeData.tracks
-        }
+        },
+        statistics: fakeData.statistics
     };
     return next();
 }
@@ -74,14 +75,15 @@ export function generateReactApps(req, res, next) {
 export function renderResults(req, res, next) {
     const obj = {
         dev: process.env.NODE_ENV !== 'production' ? true : false,
+        title: 'Results',
         data: {
-            // averaged and mean data
+            // averaged and tallied data
             statistics: res.locals.data.statistics,
             // top tracks
             tracks: res.locals.data.userData.tracks,
             // top artists
             artists: res.locals.data.userData.artists,
-            // react apps
+            // react apps - rendered to html - and css
             react: res.locals.data.react
         }
     };

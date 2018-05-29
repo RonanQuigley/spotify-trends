@@ -1,24 +1,14 @@
-
-This is the results page
+{{> layout }}
 
 <div id="root">
-    <div id="tracks"></div>
-    <div id="artists"></div>
+    <div id="tracks">{{{data.react.tracks.html}}}</div>
+    <div style="transform: translateY(4rem)" id="second"></div>
 </div>
 
-{{> layout}}
 
 <script id="react">
-    window.__initial_state__ = {{{state data}}}
+    window.__initial_state__ = {{{get-data-for-react data}}}
 </script>
 
-
-{{#if data.react.tracks.css}}
-    exists
-{{/if}}
-
-<style id="jss-server-side">{{data.react.tracks.css}}</style>
-
-
-<!-- CALL THIS LAST --> 
+<!-- CALL THIS LAST -->
 <script src="/results.js"></script>
