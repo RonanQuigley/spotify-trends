@@ -1,14 +1,13 @@
 import results from './results.hbs';
+import { id, header } from 'src/server/api/react/utilities';
+import { renderApp } from 'src/server/api/react/render';
+import { setupProps } from 'src/server/api/react/utilities';
+import processData from 'src/server/api/user-data/processor';
+import { getStatistics } from 'src/server/api/statistics';
 import {
     requestPersonalData,
     requestAudioFeatures
-} from '../../../api/user-data/request-handler';
-import processData from '../../../api/user-data/processor';
-import { getStatistics } from '../../../api/statistics';
-import { id } from 'common/react/api';
-import renderApp from 'src/server/api/react/index';
-import { render } from 'enzyme';
-
+} from 'src/server/api/user-data/request-handler';
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
     res.locals.accessToken = token;
@@ -62,10 +61,33 @@ export function setupDevelopmentAssets(req, res, next) {
     return next();
 }
 
-export function generateReactApps(req, res, next) {
-    const artists = renderApp(res.locals.data.userData.artists, id.ARTISTS);
-    const tracks = renderApp(res.locals.data.userData.tracks, id.TRACKS);
+export function setupReactProps(req, res, next) {
+    const artistProps = setupProps(
+        res.locals.data.userData.artists,
+        id.ARTISTS,
+        header.ARTISTS
+    );
+
+    const tracksProps = setupProps(
+        res.locals.data.userData.tracks,
+        id.TRACKS,
+        header.TRACKS
+    );
+
     res.locals.data.react = {
+        props: {
+            artists: artistProps,
+            tracks: tracksProps
+        }
+    };
+
+    return next();
+}
+
+export function generateReactApps(req, res, next) {
+    const artists = renderApp(res.locals.data.react.props.artists);
+    const tracks = renderApp(res.locals.data.react.props.tracks);
+    res.locals.data.react.apps = {
         artists: artists,
         tracks: tracks
     };
@@ -76,15 +98,9 @@ export function renderResults(req, res, next) {
     const obj = {
         dev: process.env.NODE_ENV !== 'production' ? true : false,
         title: 'Results',
-        data: {
-            // averaged and tallied data
-            statistics: res.locals.data.statistics,
-            // top tracks
-            tracks: res.locals.data.userData.tracks,
-            // top artists
-            artists: res.locals.data.userData.artists,
-            // react apps - rendered to html - and css
-            react: res.locals.data.react
+        react: {
+            props: res.locals.data.react.props,
+            apps: res.locals.data.react.apps
         }
     };
     const payload = results(obj);

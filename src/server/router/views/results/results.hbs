@@ -1,13 +1,13 @@
 {{> layout }}
 
 <div id="root">
-    <div id="tracks">{{{data.react.tracks.html}}}</div>
+    <div id="tracks">{{{react.apps.tracks.html}}}</div>
     <div style="transform: translateY(4rem)" id="second"></div>
 </div>
 
 
 <script id="react">
-    window.__initial_state__ = {{{get-data-for-react data}}}
+    window.__initial_state__ = {{{get-data-for-react react.props}}}
 </script>
 
 <!-- CALL THIS LAST -->

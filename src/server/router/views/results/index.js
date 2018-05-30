@@ -6,6 +6,7 @@ if (process.env.NODE_ENV === 'development') {
     router.get(
         '/results',
         middleware.setupDevelopmentAssets,
+        middleware.setupReactProps,
         middleware.generateReactApps,
         middleware.renderResults,
         middleware.errorHandler
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV === 'development') {
         middleware.getUserData,
         middleware.processUserData,
         middleware.getAudioStats,
+        middleware.setupReactProps,
         middleware.generateReactApps,
         middleware.renderResults,
         middleware.errorHandler

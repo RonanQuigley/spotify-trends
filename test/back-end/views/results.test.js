@@ -15,8 +15,8 @@ import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
 import * as resultsPage from 'src/server/router/views/results/results.hbs';
-import * as renderApp from 'src/server/api/react/index';
-
+import * as Render from 'src/server/api/react/render';
+import * as Utilities from 'src/server/api/react/utilities';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -39,6 +39,10 @@ describe('back end - results view', () => {
         sandbox.spy(res, 'send');
         sandbox.spy(res, 'redirect');
         nextSpy = sandbox.spy();
+        /* 
+            we don't want to make requests to spotify servers
+            so stub all operations that involve data requests 
+        */
         sandbox
             .stub(requestHandler, 'requestPersonalData')
             .callsFake(async (token, limit) => {})
@@ -47,7 +51,6 @@ describe('back end - results view', () => {
             .stub(requestHandler, 'requestAudioFeatures')
             .callsFake(async (token, tracks) => {})
             .resolves(fakeAudioFeatures);
-        sandbox.stub(Statistics, 'getStatistics').returns({});
     });
 
     afterEach(() => {
@@ -133,6 +136,7 @@ describe('back end - results view', () => {
 
         describe('user statistics', () => {
             beforeEach(() => {
+                sandbox.spy(Statistics, 'getStatistics');
                 Middleware.getAudioStats(req, res, nextSpy);
             });
             it('should get the statistics', () => {
@@ -162,28 +166,63 @@ describe('back end - results view', () => {
             });
         });
 
-        describe('rendering react assets', () => {
+        describe('setting up react props', () => {
             beforeEach(() => {
-                sandbox.spy(renderApp, 'default');
+                sandbox.spy(Utilities, 'setupProps');
+                Middleware.setupReactProps(req, res, nextSpy);
+            });
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
+            });
+            describe('props setup', () => {
+                it('should be called', () => {
+                    expect(Utilities.setupProps).to.be.called;
+                });
+                it('should pass the results into res.locals', () => {
+                    expect(res.locals.data.react.props).to.be.a('object').and.to
+                        .not.be.empty;
+                });
+            });
+        });
+
+        describe('generating react assets', () => {
+            beforeEach(() => {
+                sandbox.spy(Render, 'renderApp');
+                res.locals.data.react = {
+                    props: {}
+                };
+                res.locals.data.react.props.artists = Utilities.setupProps(
+                    fakeUserData.artists,
+                    Utilities.id.ARTISTS,
+                    Utilities.header.ARTISTS
+                );
+
+                res.locals.data.react.props.tracks = Utilities.setupProps(
+                    fakeUserData.tracks,
+                    Utilities.id.TRACKS,
+                    Utilities.header.TRACKS
+                );
                 Middleware.generateReactApps(req, res, nextSpy);
             });
             it('should render the apps', () => {
-                expect(renderApp.default).to.be.called;
-                renderApp.default.getCalls().forEach(call => {
+                expect(Render.renderApp).to.be.called;
+                Render.renderApp.getCalls().forEach(call => {
                     expect(call).to.be.calledWith(
-                        sinon.match(sinon.match.object, sinon.match.string)
-                    );
+                        sinon.match(sinon.match.object)
+                    ).and.to.not.be.empty;
                 });
             });
             describe('res.locals', () => {
                 it('should pass in the rendered apps', () => {
-                    expect(res.locals.data.react).to.be.a('object');
+                    expect(res.locals.data.react.apps).to.be.a('object');
                 });
                 it('should contain the tracks', () => {
-                    expect(res.locals.data.react.tracks).to.be.a('object');
+                    expect(res.locals.data.react.apps.tracks).to.be.a('object');
                 });
                 it('should contain artists', () => {
-                    expect(res.locals.data.react.artists).to.be.a('object');
+                    expect(res.locals.data.react.apps.artists).to.be.a(
+                        'object'
+                    );
                 });
             });
             it('should call next', () => {
@@ -192,32 +231,54 @@ describe('back end - results view', () => {
         });
 
         describe('render results page', () => {
+            let fakeData;
             beforeEach(() => {
                 sandbox.spy(resultsPage, 'default');
-                res.locals.data = {
-                    userData: fakeUserData,
-                    statistics: fakeStatistics,
-                    react: {}
+
+                fakeData = res.locals.data.react = {
+                    props: {
+                        artists: {},
+                        tracks: {},
+                        statistics: {}
+                    },
+                    apps: {
+                        artists: {
+                            html: 'fake rendered app html',
+                            css: 'fake rendered css'
+                        },
+                        tracks: {
+                            html: 'fake rendered app html',
+                            css: 'fake rendered css'
+                        }
+                    }
                 };
                 Middleware.renderResults(req, res, nextSpy);
             });
             it('should call send', () => {
-                expect(res.send).to.be.calledWith(sinon.match.string)
+                expect(res.send).to.be.calledWith(sinon.match.string).and.to.be
                     .calledOnce;
             });
-            it('should render the handlebars page ', () => {
-                expect(resultsPage.default).to.be.calledWith(
-                    sinon.match({
-                        dev: sinon.match.bool,
-                        title: sinon.match.string,
-                        data: {
-                            statistics: sinon.match.object,
-                            tracks: sinon.match.object,
-                            artists: sinon.match.object,
-                            react: sinon.match.object
-                        }
-                    })
-                ).and.to.be.calledOnce;
+            describe('rendering payload', () => {
+                it('should render the handlebars page ', () => {
+                    expect(resultsPage.default).to.be.calledOnce;
+                });
+                describe('call arguments', () => {
+                    let args;
+                    beforeEach(() => {
+                        args = resultsPage.default.getCall(0).args[0];
+                    });
+                    it('should have a props property that contains the props data', () => {
+                        expect(args.react.props).to.deep.equal(fakeData.props);
+                    });
+                    it('should have a react property that contains the react data', () => {
+                        expect(args.react.apps).to.deep.equal(fakeData.apps);
+                    });
+                    it('should contain a dev property', () => {
+                        expect(args)
+                            .to.have.property('dev')
+                            .and.to.be.a('boolean');
+                    });
+                });
             });
         });
 

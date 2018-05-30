@@ -1,35 +1,24 @@
 import React from 'react';
 import App from 'common/react/index';
-import { id, buildApp } from 'common/react/api/index';
-import theme from 'common/react/theme';
 import ReactDOM from 'react-dom';
-import { MuiThemeProvider } from '@material-ui/core';
 
 export default function renderApps() {
     const roots = {
         tracks: document.getElementById('tracks')
         // artists: document.getElementById('artists')
     };
-    const data = getInitialState();
-    renderApp(roots.tracks, data.tracks, id.TRACKS);
+    const props = getInitialState();
+    renderApp(roots.tracks, props.tracks);
     // renderApp(roots.artists, data.artists, id.ARTISTS);
-    clearInitialState();
+    // TO DO: ERASE THE DATA THAT IS BAKED RENDERED INTO THE HTML PAGE
+    // clearInitialState();
 }
 
-function renderApp(root, data, id) {
+function renderApp(root, props) {
     // const render = getRenderMethod();
-    const app = (
-        <MuiThemeProvider theme={theme}>
-            <App data={data} id={id} />{' '}
-        </MuiThemeProvider>
-    );
+    const app = <App {...props} />;
     ReactDOM.hydrate(app, root);
 }
-
-// function getRenderMethod() {
-//     // if module.hot exists, use render in dev hydrate in prod
-//     return !!module.hot ? ReactDOM.render : ReactDOM.hydrate;
-// }
 
 function getInitialState() {
     return window.__initial_state__;
