@@ -12,8 +12,8 @@ const styles = {
         color: 'red'
     }
 };
-
-class App extends Component {
+@withRoot
+export default class App extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired,
         id: PropTypes.string.isRequired,
@@ -39,6 +39,3 @@ class App extends Component {
         );
     }
 }
-
-// we wrap the app with our css baseline and theme
-export default withRoot(App);

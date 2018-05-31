@@ -4,7 +4,8 @@ import { hot } from 'react-hot-loader';
 import { labels } from 'common/react/utilities';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 
-class Header extends PureComponent {
+@hot(module)
+export default class Header extends PureComponent {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         value: PropTypes.number.isRequired
@@ -27,5 +28,3 @@ class Header extends PureComponent {
         );
     }
 }
-
-export default hot(module)(Header);

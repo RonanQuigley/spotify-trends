@@ -19,8 +19,8 @@ const sandbox = sinon.createSandbox();
 describe('common - react - index', () => {
     let wrapper;
     beforeEach(() => {
-        /* the component under test is wrapped in a HOC. We need to 
-        repeatedly use dive to access the component we want to test 
+        /* the component under test is wrapped in a HOC. We need to
+        repeatedly use dive to access the component we want to test
         as using mount won't work */
         wrapper = shallow(
             <App data={{}} id={'fake'} header={'Fake'} map={new Map()} />

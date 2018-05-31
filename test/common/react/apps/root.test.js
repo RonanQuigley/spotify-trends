@@ -2,10 +2,9 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import React from 'react';
-import Enzyme, { shallow, mount } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import withRoot from 'src/common/react/root';
-import App from 'src/common/react/index';
 import chaiEnzyme from 'chai-enzyme';
 import { MuiThemeProvider } from '@material-ui/core';
 chai.use(sinonChai);
@@ -15,10 +14,14 @@ Enzyme.configure({ adapter: new Adapter() });
 const expect = chai.expect;
 const sandbox = sinon.createSandbox();
 
+const Fake = () => {
+    return <div />;
+};
+
 describe('common - react - root (Higher Order Component) ', () => {
     let wrapper;
     beforeEach(() => {
-        const HOC = withRoot(App);
+        const HOC = withRoot(Fake);
         wrapper = shallow(<HOC map={new Map()} />);
     });
     afterEach(() => {

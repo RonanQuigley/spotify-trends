@@ -2,11 +2,12 @@
   "presets": [
     "@babel/preset-env", 
     "@babel/preset-react",
-    ["@babel/stage-0", {"decoratorsLegacy" : true}],
+    ["@babel/stage-0", {"decoratorsLegacy" : true}]
   ],
   "plugins": [
     "react-hot-loader/babel",
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    ["@babel/plugin-proposal-decorators", { "legacy": true }]
   ],
   "env" : {
     "test" : {
