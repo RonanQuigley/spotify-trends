@@ -1,30 +1,17 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
-import { labels } from 'common/react/utilities';
-import { AppBar, Tabs, Tab } from '@material-ui/core';
+import Interface from './components/interface';
 
 @hot(module)
-export default class Header extends PureComponent {
+export default class UI extends Component {
     static propTypes = {
-        onChange: PropTypes.func.isRequired,
-        value: PropTypes.number.isRequired
-    };
-
-    generateLabels = () => {
-        return labels.map(label => {
-            return <Tab key={label} label={label} />;
-        });
+        value: PropTypes.number.isRequired,
+        onChange: PropTypes.func.isRequired
     };
 
     render() {
         const { value, onChange } = this.props;
-        return (
-            <AppBar position="static">
-                <Tabs value={value} onChange={onChange} centered={true}>
-                    {this.generateLabels()}
-                </Tabs>
-            </AppBar>
-        );
+        return <Interface value={value} onChange={onChange} />;
     }
 }

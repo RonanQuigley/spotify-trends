@@ -28,7 +28,7 @@ describe('common - react - root (Higher Order Component) ', () => {
         sandbox.restore();
     });
     it('should render', () => {
-        expect(wrapper.render()).to.not.be.null;
+        expect(wrapper.isEmptyRender()).to.be.false;
     });
     describe('MuiThemeProvider', () => {
         let muiTheme;

@@ -29,7 +29,7 @@ describe('back end - react - api - styles', () => {
     });
 
     it('should be able to render', () => {
-        expect(wrapper.render()).to.not.be.null;
+        expect(wrapper.isEmptyRender()).to.be.false;
     });
     describe('JssProvider', () => {
         it('should exist', () => {

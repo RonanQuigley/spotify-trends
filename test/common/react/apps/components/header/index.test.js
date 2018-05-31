@@ -16,7 +16,7 @@ describe('common - react - components - header', () => {
         wrapper = shallow(<Header header={'Fake'} />).dive();
     });
     it('should be able to render', () => {
-        expect(wrapper.render()).to.not.be.null;
+        expect(wrapper.isEmptyRender()).to.be.false;
     });
     describe('App Bar', () => {
         let appBar;

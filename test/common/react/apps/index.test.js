@@ -1,6 +1,4 @@
 import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import React from 'react';
 import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -8,13 +6,13 @@ import App from 'src/common/react/index';
 import UI from 'src/common/react/components/ui';
 import Header from 'src/common/react/components/header';
 import chaiEnzyme from 'chai-enzyme';
-import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
-chai.use(sinonChai);
+import { CssBaseline } from '@material-ui/core';
+import Content from 'common/react/components/content';
+
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
 
 const expect = chai.expect;
-const sandbox = sinon.createSandbox();
 
 describe('common - react - index', () => {
     let wrapper;
@@ -26,13 +24,14 @@ describe('common - react - index', () => {
             <App data={{}} id={'fake'} header={'Fake'} map={new Map()} />
         )
             .dive()
+            .dive()
             .dive();
     });
-    afterEach(() => {
-        sandbox.restore();
-    });
     it('should render', () => {
-        expect(wrapper.render()).to.not.be.null;
+        wrapper = shallow(
+            <App data={{}} id={'fake'} header={'Fake'} map={new Map()} />
+        );
+        expect(wrapper.isEmptyRender()).to.be.false;
     });
     describe('UI', () => {
         let ui;
@@ -75,6 +74,21 @@ describe('common - react - index', () => {
         });
         it('should have a header attribute', () => {
             expect(header.props().header).to.be.a('string');
+        });
+    });
+    describe('Content', () => {
+        let content;
+        beforeEach(() => {
+            content = wrapper.find(Content);
+        });
+        it('should exist', () => {
+            expect(content).to.have.length(1);
+        });
+        it('should have a value attribute', () => {
+            expect(content.props().value).to.be.a('number');
+        });
+        it('should have a data attribute', () => {
+            expect(content.props().data).to.be.a('object');
         });
     });
 });

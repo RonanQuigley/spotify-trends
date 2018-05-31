@@ -1,65 +1,34 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
+import chai, { expect } from 'chai';
+import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import React from 'react';
-import UI from 'common/react/components/ui';
-import { Tabs, Tab, AppBar } from '@material-ui/core';
-
-chai.use(sinonChai);
+import UI from 'src/common/react/components/ui';
+import Interface from 'src/common/react/components/ui/components/interface';
 Enzyme.configure({ adapter: new Adapter() });
 
-const expect = chai.expect;
-const sandbox = sinon.createSandbox();
-
-describe('common - react - component - ui', () => {
+describe('common - react - components - ui - container', () => {
     let wrapper;
-
     beforeEach(() => {
-        wrapper = shallow(<UI value={0} onChange={() => {}} />);
+        wrapper = shallow(<UI onChange={() => {}} value={0} />);
     });
-    afterEach(() => {
-        sandbox.restore();
+
+    it('should be able to render', () => {
+        expect(wrapper.isEmptyRender()).to.be.false;
     });
-    describe('rendering', () => {
-        it('should render', () => {
-            expect(wrapper.render()).to.not.be.null;
-        });
-    });
-    describe('App bar', () => {
-        let appBar;
+
+    describe('UI Interface', () => {
+        let uiInterface;
         beforeEach(() => {
-            appBar = wrapper.find(AppBar);
+            uiInterface = wrapper.find(Interface);
         });
         it('should exist', () => {
-            expect(appBar.props().position).to.equal('static');
-        });
-    });
-    describe('Tab', () => {
-        it('should have labelling', () => {
-            const tabs = wrapper.find(Tab);
-            tabs.forEach(elem => {
-                expect(elem.props().label).to.be.a('string');
-            });
-        });
-    });
-    describe('Tabs Container', () => {
-        let tabContainer;
-        beforeEach(() => {
-            tabContainer = wrapper.find(Tabs);
-        });
-        it('should be centred', () => {
-            expect(tabContainer.props().centered).to.be.true;
+            expect(uiInterface).to.have.length(1);
         });
         it('should have a value attribute', () => {
-            expect(tabContainer.props().value).to.be.a('number');
+            expect(uiInterface.props().value).to.equal(0);
         });
-        it('should call props.onChange when the tab has been changed', () => {
-            const onChange = sandbox.spy();
-            const wrapper = shallow(<UI value={0} onChange={onChange} />);
-            wrapper.find(Tabs).simulate('change');
-            expect(onChange).to.be.calledOnce;
+        it('should have a onChange attribute', () => {
+            expect(uiInterface.props().onChange).to.be.a('function');
         });
     });
 });

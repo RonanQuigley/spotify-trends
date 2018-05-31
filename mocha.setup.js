@@ -28,3 +28,14 @@ global.requestAnimationFrame = cb => setTimeout(cb, 0);
 
 process.env.NODE_ENV = 'test';
 process.env.ENABLE_LOGGING = 'false';
+
+/* react propTypes warnings do not produce full stack traces.
+by using error we can get around that */
+
+const error = console.error;
+console.error = function(warning, ...args) {
+    if (/(Invalid prop|Failed prop type)/.test(warning)) {
+        throw new Error(warning);
+    }
+    error.apply(console, [warning, ...args]);
+};
