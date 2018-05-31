@@ -5,7 +5,7 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import UI from 'common/react/components/ui';
-import { Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab, AppBar } from '@material-ui/core';
 
 chai.use(sinonChai);
 Enzyme.configure({ adapter: new Adapter() });
@@ -25,6 +25,15 @@ describe('common - react - component - ui', () => {
     describe('rendering', () => {
         it('should render', () => {
             expect(wrapper.render()).to.not.be.null;
+        });
+    });
+    describe('App bar', () => {
+        let appBar;
+        beforeEach(() => {
+            appBar = wrapper.find(AppBar);
+        });
+        it('should exist', () => {
+            expect(appBar.props().position).to.equal('static');
         });
     });
     describe('Tab', () => {

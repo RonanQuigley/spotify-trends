@@ -19,7 +19,7 @@ class Header extends PureComponent {
     render() {
         const { value, onChange } = this.props;
         return (
-            <AppBar>
+            <AppBar position="static">
                 <Tabs value={value} onChange={onChange} centered={true}>
                     {this.generateLabels()}
                 </Tabs>

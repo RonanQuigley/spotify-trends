@@ -4,7 +4,7 @@ import { hot } from 'react-hot-loader';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
+import { withStyles } from '@material-ui/core';
 class Header extends PureComponent {
     static propTypes = {
         header: PropTypes.string.isRequired
@@ -12,9 +12,11 @@ class Header extends PureComponent {
     render() {
         const { header } = this.props;
         return (
-            <AppBar>
+            <AppBar position="static">
                 <Toolbar>
-                    <Typography>{header}</Typography>
+                    <Typography variant="title" color="inherit">
+                        {header}
+                    </Typography>
                 </Toolbar>
             </AppBar>
         );

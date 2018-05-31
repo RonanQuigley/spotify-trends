@@ -2,14 +2,13 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from 'src/common/react/index';
 import UI from 'src/common/react/components/ui';
 import Header from 'src/common/react/components/header';
 import chaiEnzyme from 'chai-enzyme';
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
-
 chai.use(sinonChai);
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -20,9 +19,14 @@ const sandbox = sinon.createSandbox();
 describe('common - react - index', () => {
     let wrapper;
     beforeEach(() => {
+        /* the component under test is wrapped in a HOC. We need to 
+        repeatedly use dive to access the component we want to test 
+        as using mount won't work */
         wrapper = shallow(
             <App data={{}} id={'fake'} header={'Fake'} map={new Map()} />
-        );
+        )
+            .dive()
+            .dive();
     });
     afterEach(() => {
         sandbox.restore();
@@ -30,35 +34,24 @@ describe('common - react - index', () => {
     it('should render', () => {
         expect(wrapper.render()).to.not.be.null;
     });
-    describe('MuiThemeProvider', () => {
-        let muiTheme;
-        beforeEach(() => {
-            muiTheme = wrapper.find(MuiThemeProvider);
-        });
-        it('should have a theme', () => {
-            expect(muiTheme.props().theme).to.be.a('object');
-        });
-        it('should have a sheets manager', () => {
-            expect(muiTheme.props().sheetsManager).to.be.instanceof(Map);
-        });
-    });
     describe('UI', () => {
-        let header;
+        let ui;
         beforeEach(() => {
-            header = wrapper.find(UI);
+            ui = wrapper.find(UI);
         });
         it('should have a value attribute', () => {
-            expect(header.props().value).to.be.a('number');
+            expect(ui.props().value).to.be.a('number');
         });
         it('should have an onChange attribute', () => {
-            expect(header.props().onChange).to.be.a('function');
+            expect(ui.props().onChange).to.be.a('function');
         });
         it('should update the state with onChange events', () => {
-            header.props().onChange({}, 1);
+            ui.props().onChange({}, 1);
+
             expect(wrapper.state().value).to.equal(1);
         });
         it('should update the value attribute with onChange events', () => {
-            header.props().onChange({}, 1);
+            ui.props().onChange({}, 1);
             wrapper.update();
             expect(wrapper.find(UI).props().value).to.equal(1);
         });

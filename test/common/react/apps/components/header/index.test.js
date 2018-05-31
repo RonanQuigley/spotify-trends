@@ -26,6 +26,18 @@ describe('common - react - components - header', () => {
     it('should be able to render', () => {
         expect(wrapper.render()).to.not.be.null;
     });
+    describe('App Bar', () => {
+        let appBar;
+        beforeEach(() => {
+            appBar = wrapper.find(AppBar);
+        });
+        it('should exist', () => {
+            expect(appBar).to.have.length(1);
+        });
+        it('should have a position attribute', () => {
+            expect(appBar.props().position).to.equal('static');
+        });
+    });
     describe('Typography', () => {
         let typography;
         beforeEach(() => {
