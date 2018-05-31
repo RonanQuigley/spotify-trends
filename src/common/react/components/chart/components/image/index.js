@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core';
 import styles from './styles';
 @hot(module)
 @withStyles(styles)
-export default class App extends Component {
+export default class Image extends Component {
     static propTypes = {
         image: PropTypes.string.isRequired,
         uri: PropTypes.string.isRequired,

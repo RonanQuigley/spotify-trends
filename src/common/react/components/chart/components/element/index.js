@@ -4,24 +4,25 @@ import { hot } from 'react-hot-loader';
 import { Card, CardContent, withStyles } from '@material-ui/core';
 import styles from './styles';
 import Image from '../image';
+import Popularity from '../popularity';
 
 @hot(module)
 @withStyles(styles)
-export default class App extends Component {
+export default class Element extends Component {
     static propTypes = {
         item: PropTypes.object.isRequired,
         classes: PropTypes.object
     };
     render() {
         const { item, classes } = this.props;
-        const { media, card } = classes;
-        const { name, popularity, uri, image } = item;
+        const { card } = classes;
+        const { name, uri, image, popularity } = item;
         return (
             <Card className={card}>
                 <Image uri={uri} image={image} />
-                <CardContent component="p">
+                <CardContent>
                     {name}
-                    {popularity}
+                    <Popularity rating={popularity} />
                     {uri}
                 </CardContent>
             </Card>

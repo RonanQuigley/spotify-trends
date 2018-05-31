@@ -7,6 +7,7 @@ import Element from 'common/react/components/chart/components/element';
 import Image from 'common/react/components/chart/components/image';
 import Payload from 'fixtures/spotify/processed-data/payload';
 import { Card, CardContent } from '@material-ui/core';
+import Popularity from 'common/react/components/chart/components/popularity';
 
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -37,7 +38,7 @@ describe('common - react - components - chart -> element', () => {
             expect(cardContent).to.have.length(1);
         });
     });
-    describe('image', () => {
+    describe('Image', () => {
         let image;
         beforeEach(() => {
             image = wrapper.find(Image);
@@ -52,6 +53,20 @@ describe('common - react - components - chart -> element', () => {
         });
         it('should contain a image attribute', () => {
             expect(image.props().image).to.be.a('string').and.to.not.be.empty;
+        });
+    });
+    describe('Popularity', () => {
+        let popularity;
+        beforeEach(() => {
+            popularity = wrapper.find(Popularity);
+        });
+        it('should exist', () => {
+            expect(popularity).to.have.length(1);
+        });
+        it('should have a rating attribute', () => {
+            expect(popularity.props().rating)
+                .to.be.a('number')
+                .and.to.be.within(0, 100);
         });
     });
 });
