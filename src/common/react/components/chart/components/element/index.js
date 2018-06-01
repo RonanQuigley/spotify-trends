@@ -21,9 +21,7 @@ export default class Element extends Component {
             <Card className={card}>
                 <Image uri={uri} image={image} />
                 <CardContent>
-                    {name}
                     <Popularity rating={popularity} />
-                    {uri}
                 </CardContent>
             </Card>
         );

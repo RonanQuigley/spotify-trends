@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
+import Icon from 'common/react/components/chart/components/icon';
 
 @hot(module)
 export default class Popularity extends Component {
@@ -36,6 +37,7 @@ export default class Popularity extends Component {
 
     render() {
         const { rating } = this.props;
-        return <div>{this.setPopularity(rating)}</div>;
+        const popularity = this.setPopularity(rating);
+        return <Icon popularity={popularity} />;
     }
 }
