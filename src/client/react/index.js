@@ -4,17 +4,21 @@ import ReactDOM from 'react-dom';
 
 export default function renderApps() {
     const roots = {
-        tracks: document.getElementById('tracks')
-        // artists: document.getElementById('artists')
+        tracks: document.getElementById('tracks'),
+        artists: document.getElementById('artists'),
+        mode: document.getElementById('mode')
     };
     const props = getInitialState();
-    renderApp(roots.tracks, props.tracks);
-    // renderApp(roots.artists, data.artists, id.ARTISTS);
+    renderChartApp(roots.tracks, props.tracks);
+    renderChartApp(roots.artists, props.artists);
+
     // TO DO: ERASE THE DATA THAT IS BAKED RENDERED INTO THE HTML PAGE
     // clearInitialState();
 }
 
-function renderApp(root, props) {
+function renderPieApp(root, props) {}
+
+function renderChartApp(root, props) {
     // const render = getRenderMethod();
     const app = <App {...props} />;
     ReactDOM.hydrate(app, root);

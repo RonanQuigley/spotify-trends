@@ -1,8 +1,11 @@
 {{> layout }}
 
 <div id="root">
-    <div id="tracks">{{{react.apps.tracks.html}}}</div>
-    <div style="transform: translateY(4rem)" id="second"></div>
+    <div id="mode">{{{react.apps.mode.html}}}</div>
+    <div id="top-charts-container">
+        <div style="width: 50%; float: left;" id="tracks">{{{react.apps.tracks.html}}}</div>
+        <div style="width: 50%; float: right;"id="artists">{{{react.apps.artists.html}}}</div>
+    </div>    
 </div>
 
 

@@ -34,7 +34,7 @@ export default class Element extends Component {
                         <div className={cardTextLeft}>
                             <Typography variant="subheading">{name}</Typography>
                             <Popularity rating={popularity} />
-                            {genres && <Genre />}
+                            {genres && <Genre genre={genres} />}
                         </div>
                         <div className={cardTextRight}>
                             <Rank rank={rank} />
