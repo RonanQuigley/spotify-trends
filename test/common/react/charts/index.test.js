@@ -14,7 +14,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const expect = chai.expect;
 
-describe('common - react - index', () => {
+describe('react - charts - index', () => {
     let wrapper;
     beforeEach(() => {
         /* the component under test is wrapped in a HOC. We need to

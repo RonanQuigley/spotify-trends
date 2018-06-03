@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const testValue = 1;
 
-describe('common - react - components - chart -> rank', () => {
+describe('react - charts - components - chart -> rank', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<Rank rank={testValue} />).dive();

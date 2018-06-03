@@ -9,7 +9,7 @@ import Icon from 'charts/components/chart/components/icon';
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('common - react - components - chart -> popularity', () => {
+describe('react - charts - components - chart -> popularity', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<Popularity rating={5} />);

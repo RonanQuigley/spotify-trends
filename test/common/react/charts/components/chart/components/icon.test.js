@@ -9,7 +9,7 @@ import { Star, StarHalf } from '@material-ui/icons';
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('common - react - components - chart -> icon', () => {
+describe('react - charts - components - chart -> icon', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<Icon popularity={5} />);

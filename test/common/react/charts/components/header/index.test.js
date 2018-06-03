@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('common - react - components - header', () => {
+describe('react - charts - components - header', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<Header header={'Fake'} />).dive();

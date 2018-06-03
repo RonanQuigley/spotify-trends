@@ -8,7 +8,7 @@ import Element from 'charts/components/chart/components/element';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('common - react - components - chart', () => {
+describe('react - charts - components - chart', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<Chart data={Payload.tracks.LONG} />);

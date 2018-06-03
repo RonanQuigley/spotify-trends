@@ -18,7 +18,7 @@ const fakeTrackData = Payload.tracks.LONG[0];
 const fakeArtistData = Payload.artists.LONG[0];
 const testRank = 1;
 
-describe('common - react - components - chart -> element', () => {
+describe('react - charts - components - chart -> element', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(

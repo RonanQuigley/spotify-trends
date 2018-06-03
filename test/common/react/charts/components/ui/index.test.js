@@ -6,7 +6,7 @@ import UI from 'charts/components/ui';
 import Interface from 'charts/components/ui/components/interface';
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('common - react - components - ui - container', () => {
+describe('react - charts - components - ui - container', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<UI onChange={() => {}} value={0} />);

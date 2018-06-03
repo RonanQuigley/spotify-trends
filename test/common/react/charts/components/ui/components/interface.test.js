@@ -13,7 +13,7 @@ Enzyme.configure({ adapter: new Adapter() });
 const expect = chai.expect;
 const sandbox = sinon.createSandbox();
 
-describe('common - react - component - ui', () => {
+describe('react - charts - component - ui', () => {
     let wrapper;
 
     beforeEach(() => {
