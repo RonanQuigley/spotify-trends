@@ -1,7 +1,9 @@
 import React from 'react';
-import App from 'charts/index';
+import Chart from 'charts';
+import Pie from 'pie';
 import ReactDOM from 'react-dom';
 import { appID } from 'common/utilities';
+import { renderApp } from 'src/server/api/react/render';
 
 export default function renderApps() {
     const roots = {
@@ -17,11 +19,14 @@ export default function renderApps() {
     // clearInitialState();
 }
 
-function renderPieApp(root, props) {}
+function renderPieApp(root, props) {
+    const app = <Pie {...props} />;
+    ReactDOM.hydrate(app, root);
+}
 
 function renderChartApp(root, props) {
     // const render = getRenderMethod();
-    const app = <App {...props} />;
+    const app = <Chart {...props} />;
     ReactDOM.hydrate(app, root);
 }
 

@@ -2130,17 +2130,37 @@ export default {
         ]
     },
     statistics: {
-        SHORT: {
-            average: {
+        average: {
+            SHORT: {
                 loudness: -24.601,
                 energy: 0.14676180000000003,
                 danceability: 0.22442400000000004,
                 valence: 0.09487199999999998,
                 acousticness: 0.744534
             },
-            tally: {
-                mode: { major: 30, minor: 20 },
-                key: {
+            MEDIUM: {
+                loudness: -17.28032,
+                energy: 0.33889479999999994,
+                danceability: 0.29619400000000007,
+                valence: 0.161178,
+                acousticness: 0.45509067999999997
+            },
+            LONG: {
+                loudness: -15.506379999999996,
+                energy: 0.43353080000000005,
+                danceability: 0.34390799999999994,
+                valence: 0.22594,
+                acousticness: 0.39421048
+            }
+        },
+        tally: {
+            mode: {
+                SHORT: { major: 30, minor: 20 },
+                MEDIUM: { major: 38, minor: 12 },
+                LONG: { major: 37, minor: 13 }
+            },
+            key: {
+                SHORT: {
                     'G#/Ab': 7,
                     C: 6,
                     A: 4,
@@ -2153,20 +2173,8 @@ export default {
                     'F#/Gb': 2,
                     B: 2,
                     D: 1
-                }
-            }
-        },
-        MEDIUM: {
-            average: {
-                loudness: -17.28032,
-                energy: 0.33889479999999994,
-                danceability: 0.29619400000000007,
-                valence: 0.161178,
-                acousticness: 0.45509067999999997
-            },
-            tally: {
-                mode: { major: 38, minor: 12 },
-                key: {
+                },
+                MEDIUM: {
                     C: 11,
                     G: 7,
                     A: 4,
@@ -2177,20 +2185,8 @@ export default {
                     'G#/Ab': 6,
                     'A#/Bb': 1,
                     D: 1
-                }
-            }
-        },
-        LONG: {
-            average: {
-                loudness: -15.506379999999996,
-                energy: 0.43353080000000005,
-                danceability: 0.34390799999999994,
-                valence: 0.22594,
-                acousticness: 0.39421048
-            },
-            tally: {
-                mode: { major: 37, minor: 13 },
-                key: {
+                },
+                LONG: {
                     C: 6,
                     E: 3,
                     G: 8,

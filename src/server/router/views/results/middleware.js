@@ -75,6 +75,12 @@ export function setupReactProps(req, res, next) {
         header.TRACKS
     );
 
+    const modeProps = setupProps(
+        res.locals.data.statistics,
+        styleID.MODE,
+        header.TRACKS
+    );
+
     res.locals.data.react = {
         props: {
             artists: artistProps,

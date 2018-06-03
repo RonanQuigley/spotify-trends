@@ -7,3 +7,8 @@ export const averageKeys = [
 ];
 
 export const countKeys = ['mode', 'key'];
+
+export const formatKeys = {
+    AVERAGE: 'average',
+    TALLY: 'tally'
+};

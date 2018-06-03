@@ -2,6 +2,7 @@ import { countKeys, averageKeys } from './keys';
 import { countData } from './count';
 import { filterArrayOfObj } from './filter';
 import { averageData } from './math';
+import format from './formatter';
 
 const calcType = {
     SUM: 'calculates the sum',
@@ -9,13 +10,23 @@ const calcType = {
 };
 
 export function getStatistics(tracks) {
-    return Object.assign(
+    const statistics = Object.assign(
         ...Object.keys(tracks).map(timeRange => {
             return {
                 [timeRange]: processTracks(tracks[timeRange])
             };
         })
     );
+    return format(statistics);
+}
+
+function processTracks(array) {
+    const average = filterArrayOfObj(array, averageKeys);
+    const count = filterArrayOfObj(array, countKeys);
+    return {
+        average: calculateResults(average, averageKeys, calcType.AVERAGE),
+        tally: calculateResults(count, countKeys, calcType.SUM)
+    };
 }
 
 function processTracks(array) {
