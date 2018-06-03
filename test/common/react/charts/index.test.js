@@ -2,7 +2,7 @@ import chai from 'chai';
 import React from 'react';
 import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import App from 'charts/index';
+import Charts from 'charts/index';
 import UI from 'charts/components/ui';
 import Header from 'charts/components/header';
 import chaiEnzyme from 'chai-enzyme';
@@ -22,7 +22,7 @@ describe('react - charts - index', () => {
         repeatedly use dive to access the component we want to test
         as using mount won't work */
         wrapper = shallow(
-            <App
+            <Charts
                 data={{}}
                 ssrID={styleID.ARTISTS}
                 header={'Fake'}
@@ -35,7 +35,7 @@ describe('react - charts - index', () => {
     });
     it('should render', () => {
         wrapper = shallow(
-            <App data={{}} id={'fake'} header={'Fake'} map={new Map()} />
+            <Charts data={{}} ssrID={'fake'} header={'Fake'} map={new Map()} />
         );
         expect(wrapper.isEmptyRender()).to.be.false;
     });

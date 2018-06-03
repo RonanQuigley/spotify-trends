@@ -1,7 +1,7 @@
 import results from './results.hbs';
-import { header, styleID } from 'src/server/api/react/utilities';
+import { headerID, styleID } from 'src/server/api/react/utilities';
 import { appID } from 'common/utilities';
-import { renderApp } from 'src/server/api/react/render';
+import { renderApp, type } from 'src/server/api/react/render';
 import { setupProps } from 'src/server/api/react/utilities';
 import processData from 'src/server/api/user-data/processor';
 import { getStatistics } from 'src/server/api/statistics';
@@ -63,28 +63,45 @@ export function setupDevelopmentAssets(req, res, next) {
 }
 
 export function setupReactProps(req, res, next) {
+    /* TO DO : USE LOOP CONSTRUCT FOR THIS */
+
     const artistProps = setupProps(
         res.locals.data.userData.artists,
         styleID.ARTISTS,
-        header.ARTISTS
+        headerID.ARTISTS
     );
 
     const tracksProps = setupProps(
         res.locals.data.userData.tracks,
         styleID.TRACKS,
-        header.TRACKS
+        headerID.TRACKS
     );
 
     const modeProps = setupProps(
-        res.locals.data.statistics,
+        res.locals.data.statistics.tally.mode,
         styleID.MODE,
-        header.TRACKS
+        headerID.MODE
+    );
+
+    const keyProps = setupProps(
+        res.locals.data.statistics.tally.key,
+        styleID.KEY,
+        headerID.KEY
+    );
+
+    const avgProps = setupProps(
+        res.locals.data.statistics.average,
+        styleID.AVERAGE,
+        headerID.AVERAGE
     );
 
     res.locals.data.react = {
         props: {
             artists: artistProps,
-            tracks: tracksProps
+            tracks: tracksProps,
+            mode: modeProps,
+            key: keyProps,
+            average: avgProps
         }
     };
 
@@ -92,11 +109,19 @@ export function setupReactProps(req, res, next) {
 }
 
 export function generateReactApps(req, res, next) {
-    const artists = renderApp(res.locals.data.react.props.artists);
-    const tracks = renderApp(res.locals.data.react.props.tracks);
+    /* TO DO : USER A LOOP CONSTRUCT INSTEAD OF CALLING EACH ONE INDIVIDUALLY */
+    const artists = renderApp(res.locals.data.react.props.artists, type.CHARTS);
+    const tracks = renderApp(res.locals.data.react.props.tracks, type.CHARTS);
+    const mode = renderApp(res.locals.data.react.props.mode, type.PIE);
+    const key = renderApp(res.locals.data.react.props.key, type.PIE);
+    const average = renderApp(res.locals.data.react.props.average, type.PIE);
+
     res.locals.data.react.apps = {
         artists: artists,
-        tracks: tracks
+        tracks: tracks,
+        average: average,
+        key: key,
+        mode: mode
     };
     return next();
 }

@@ -6,9 +6,12 @@ export function setupProps(data, ssrID, header) {
     };
 }
 
-export const header = {
+export const headerID = {
     ARTISTS: 'Top Artists',
-    TRACKS: 'Top Tracks'
+    TRACKS: 'Top Tracks',
+    MODE: 'Major/Minor',
+    KEY: 'Key Signatures',
+    AVERAGE: 'Average Audio Features'
 };
 
 export const styleID = {

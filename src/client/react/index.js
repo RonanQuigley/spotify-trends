@@ -9,11 +9,16 @@ export default function renderApps() {
     const roots = {
         tracks: document.getElementById(appID.TRACKS),
         artists: document.getElementById(appID.ARTISTS),
-        mode: document.getElementById(appID.MODE)
+        mode: document.getElementById(appID.MODE),
+        key: document.getElementById(appID.KEY),
+        average: document.getElementById(appID.AVERAGE)
     };
     const props = getInitialState();
     renderChartApp(roots.tracks, props.tracks);
     renderChartApp(roots.artists, props.artists);
+    renderPieApp(roots.mode, props.mode);
+    renderPieApp(roots.key, props.key);
+    renderPieApp(roots.average, props.average);
 
     // TO DO: ERASE THE DATA THAT IS BAKED RENDERED INTO THE HTML PAGE
     // clearInitialState();

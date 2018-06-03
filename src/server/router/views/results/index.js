@@ -1,8 +1,8 @@
 import express from 'express';
 import * as middleware from './middleware';
 const router = express.Router();
-console.warn('need to change router middlewre for results page');
-if (process.env.NODE_ENV === 'CHANGE ME BACK TO DEVELOPMENT') {
+
+if (process.env.NODE_ENV === 'development') {
     router.get(
         '/results',
         middleware.setupDevelopmentAssets,

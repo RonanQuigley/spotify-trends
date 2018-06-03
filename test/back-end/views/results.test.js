@@ -176,40 +176,64 @@ describe('back end - results view', () => {
                 expect(nextSpy).to.be.calledOnce;
             });
             describe('props setup', () => {
-                it('should be called', () => {
+                it('should be called at least once', () => {
                     expect(Utilities.setupProps).to.be.called;
                 });
-                it('should pass the results into res.locals', () => {
-                    expect(res.locals.data.react.props).to.be.a('object').and.to
-                        .not.be.empty;
+                it('should have the correct arguments for each call', () => {
+                    Utilities.setupProps.getCalls().forEach(call => {
+                        expect(call).to.be.calledWith(
+                            sinon.match.object,
+                            sinon.match.string,
+                            sinon.match.string
+                        );
+                        expect(call.args[0]).to.be.a('object').and.to.not.be
+                            .empty;
+                    });
+                });
+                describe('res.locals', () => {
+                    it('should pass the results into res.locals', () => {
+                        expect(res.locals.data.react.props).to.be.a('object')
+                            .and.to.not.be.empty;
+                    });
+                    it('should be that each property passed is an object', () => {
+                        const obj = res.locals.data.react.props;
+                        Object.keys(obj).map(key => {
+                            expect(obj[key]).to.be.a('object').and.to.not.be
+                                .empty;
+                        });
+                    });
                 });
             });
         });
 
         describe('generating react assets', () => {
             beforeEach(() => {
-                sandbox.spy(Render, 'renderApp');
+                sandbox.stub(Render, 'renderApp').returns({});
                 res.locals.data.react = {
                     props: {}
                 };
-                res.locals.data.react.props.artists = Utilities.setupProps(
-                    fakeUserData.artists,
-                    appID.ARTISTS,
-                    Utilities.header.ARTISTS
-                );
 
-                res.locals.data.react.props.tracks = Utilities.setupProps(
-                    fakeUserData.tracks,
-                    appID.TRACKS,
-                    Utilities.header.TRACKS
-                );
+                const fakeProps = {
+                    fakeData: {},
+                    fakeAppID: '',
+                    fakeHeaderID: ''
+                };
+                res.locals.data.react.props.artists = fakeProps;
+                res.locals.data.react.props.tracks = fakeProps;
+                res.locals.data.react.props.mode = fakeProps;
+                res.locals.data.react.props.key = fakeProps;
+                res.locals.data.react.props.average = fakeProps;
+
                 Middleware.generateReactApps(req, res, nextSpy);
             });
             it('should render the apps', () => {
                 expect(Render.renderApp).to.be.called;
                 Render.renderApp.getCalls().forEach(call => {
                     expect(call).to.be.calledWith(
-                        sinon.match(sinon.match.object)
+                        sinon.match(sinon.match.object),
+                        sinon
+                            .match(Render.type.CHARTS)
+                            .or(sinon.match(Render.type.PIE))
                     ).and.to.not.be.empty;
                 });
             });

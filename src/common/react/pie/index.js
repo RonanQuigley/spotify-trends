@@ -5,6 +5,6 @@ import { hot } from 'react-hot-loader';
 @hot(module)
 export default class Pie extends Component {
     render() {
-        return <div />;
+        return <div>TO DO: WRITE PIE APP</div>;
     }
 }

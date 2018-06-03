@@ -11,7 +11,7 @@ import styles from './styles';
 
 @withRoot
 @withStyles(styles)
-export default class App extends Component {
+export default class Charts extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired,
         ssrID: PropTypes.string.isRequired,
