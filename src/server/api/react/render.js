@@ -2,7 +2,7 @@ import { renderToString } from 'react-dom/server';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import React from 'react';
 import Styles from './styles';
-import App from 'common/react/index';
+import App from 'charts/index';
 
 function serverSideRender(app, registry) {
     return {

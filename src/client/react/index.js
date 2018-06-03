@@ -1,5 +1,5 @@
 import React from 'react';
-import App from 'common/react/index';
+import App from 'charts/index';
 import ReactDOM from 'react-dom';
 
 export default function renderApps() {

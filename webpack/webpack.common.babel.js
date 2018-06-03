@@ -1,30 +1,17 @@
 import path from 'path';
 
-let aliases;
-
 const common = path.join(__dirname, './../src/common');
 const src = path.join(__dirname, './../src/');
+const charts = path.join(__dirname, './../src/common/react/charts');
+const fixtures = path.join(__dirname, './../test/fixtures');
 
-if (process.env.NODE_ENV === 'test') {
-    aliases = {
-        resolve: {
-            alias: {
-                common: common,
-                fixtures: path.join(__dirname, './../test/fixtures'),
-                src: src
-            }
+export default {
+    resolve: {
+        alias: {
+            common: common,
+            charts: charts,
+            fixtures: fixtures,
+            src: src
         }
-    };
-} else {
-    aliases = {
-        resolve: {
-            alias: {
-                common: common,
-                fixtures: path.join(__dirname, './../test/fixtures'),
-                src: src
-            }
-        }
-    };
-}
-
-export default aliases;
+    }
+};
