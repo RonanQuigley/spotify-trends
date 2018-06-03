@@ -6,6 +6,7 @@
             "fixtures/*": ["test/fixtures/*"],
             "common/*" : ["src/common/*"],
             "charts/*" : ["src/common/react/charts/*"],
+            "pie/*" : ["src/common/react/pie/*"],
             "src/*": ["src/*"]
         }   
     },
