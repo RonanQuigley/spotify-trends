@@ -17,6 +17,7 @@ import * as Statistics from 'src/server/api/statistics';
 import * as resultsPage from 'src/server/router/views/results/results.hbs';
 import * as Render from 'src/server/api/react/render';
 import * as Utilities from 'src/server/api/react/utilities';
+import { appID } from 'common/utilities';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -193,13 +194,13 @@ describe('back end - results view', () => {
                 };
                 res.locals.data.react.props.artists = Utilities.setupProps(
                     fakeUserData.artists,
-                    Utilities.id.ARTISTS,
+                    appID.ARTISTS,
                     Utilities.header.ARTISTS
                 );
 
                 res.locals.data.react.props.tracks = Utilities.setupProps(
                     fakeUserData.tracks,
-                    Utilities.id.TRACKS,
+                    appID.TRACKS,
                     Utilities.header.TRACKS
                 );
                 Middleware.generateReactApps(req, res, nextSpy);
@@ -277,6 +278,14 @@ describe('back end - results view', () => {
                         expect(args)
                             .to.have.property('dev')
                             .and.to.be.a('boolean');
+                    });
+                    describe('ids', () => {
+                        it('should contain all element and server side rendering for styling ids', () => {
+                            expect(args.ids).to.deep.equal({
+                                app: appID,
+                                style: Utilities.styleID
+                            });
+                        });
                     });
                 });
             });

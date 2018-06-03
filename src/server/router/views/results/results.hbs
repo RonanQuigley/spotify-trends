@@ -1,10 +1,10 @@
 {{> layout }}
 
 <div id="root">
-    <div id="mode">{{{react.apps.mode.html}}}</div>
+    <div id={{{appID.MODE}}}>{{{react.apps.mode.html}}}</div>
     <div id="top-charts-container">
-        <div style="width: 50%; float: left;" id="tracks">{{{react.apps.tracks.html}}}</div>
-        <div style="width: 50%; float: right;"id="artists">{{{react.apps.artists.html}}}</div>
+        <div style="width: 50%; float: left;" id={{{appID.TRACKS}}}>{{{react.apps.tracks.html}}}</div>
+        <div style="width: 50%; float: right;"id={{{appID.ARTISTS}}}>{{{react.apps.artists.html}}}</div>
     </div>    
 </div>
 

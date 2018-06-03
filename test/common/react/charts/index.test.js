@@ -8,6 +8,7 @@ import Header from 'charts/components/header';
 import chaiEnzyme from 'chai-enzyme';
 import { CssBaseline } from '@material-ui/core';
 import Content from 'charts/components/content';
+import { styleID } from 'src/server/api/react/utilities';
 
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -21,7 +22,12 @@ describe('react - charts - index', () => {
         repeatedly use dive to access the component we want to test
         as using mount won't work */
         wrapper = shallow(
-            <App data={{}} id={'fake'} header={'Fake'} map={new Map()} />
+            <App
+                data={{}}
+                ssrID={styleID.ARTISTS}
+                header={'Fake'}
+                map={new Map()}
+            />
         )
             .dive()
             .dive()

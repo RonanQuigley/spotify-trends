@@ -1,12 +1,13 @@
 import React from 'react';
 import App from 'charts/index';
 import ReactDOM from 'react-dom';
+import { appID } from 'common/utilities';
 
 export default function renderApps() {
     const roots = {
-        tracks: document.getElementById('tracks'),
-        artists: document.getElementById('artists'),
-        mode: document.getElementById('mode')
+        tracks: document.getElementById(appID.TRACKS),
+        artists: document.getElementById(appID.ARTISTS),
+        mode: document.getElementById(appID.MODE)
     };
     const props = getInitialState();
     renderChartApp(roots.tracks, props.tracks);

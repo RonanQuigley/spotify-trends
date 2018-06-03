@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import SwipeableViews from 'react-swipeable-views';
-import { timeRanges } from 'charts/utilities';
+import { timeRanges } from 'common/react/common/utilities';
 import Chart from 'charts/components/chart';
 
 @hot(module)

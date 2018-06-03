@@ -7,6 +7,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import withRoot from 'charts/root';
 import chaiEnzyme from 'chai-enzyme';
 import { MuiThemeProvider } from '@material-ui/core';
+import { styleID } from 'src/server/api/react/utilities';
 chai.use(sinonChai);
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -22,7 +23,7 @@ describe('react - charts - root (Higher Order Component) ', () => {
     let wrapper;
     beforeEach(() => {
         const HOC = withRoot(Fake);
-        wrapper = shallow(<HOC map={new Map()} />);
+        wrapper = shallow(<HOC ssrID={styleID.ARTISTS} map={new Map()} />);
     });
     afterEach(() => {
         sandbox.restore();

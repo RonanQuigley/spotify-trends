@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
-import { labels } from 'charts/utilities';
+import { labels } from 'common/react/common/utilities';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 
 @hot(module)

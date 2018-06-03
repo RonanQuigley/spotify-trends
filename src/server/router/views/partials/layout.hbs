@@ -6,8 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {{#if react}}
-        <style id="jss-server-side">
-            {{react.apps.tracks.css}}
+        <style id={{styleID.TRACKS}}>
+            {{react.apps.tracks.css}}            
+        </style>
+        <style id={{styleID.ARTISTS}}>
+            {{react.apps.artists.css}}            
+        </style>
+        <style id={{styleID.KEY}}>
+            {{react.apps.keys.css}}            
+        </style>
+        <style id={{styleID.MODE}}>
+            {{react.apps.mode.css}}            
+        </style>
+        <style id={{styleID.AVERAGE}}>
+            {{react.apps.mode.css}}            
         </style>
     {{/if}}
     {{#if title}}

@@ -1,17 +1,20 @@
-export function setupProps(data, id, header) {
+export function setupProps(data, ssrID, header) {
     return {
         data: data,
-        id: id,
+        ssrID: ssrID,
         header: header
     };
 }
 
-export const id = {
-    TRACKS: 'tracks',
-    ARTISTS: 'artists'
-};
-
 export const header = {
     ARTISTS: 'Top Artists',
     TRACKS: 'Top Tracks'
+};
+
+export const styleID = {
+    ARTISTS: 'jss-server-side-artists',
+    TRACKS: 'jss-server-side-tracks',
+    KEY: 'jss-server-side-key',
+    MODE: 'jss-server-side-mode',
+    AVERAGE: 'jss-server-side-average'
 };

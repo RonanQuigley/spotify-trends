@@ -8,14 +8,13 @@ import { withStyles } from '@material-ui/core/styles';
 import withRoot from './root';
 import { CssBaseline } from '@material-ui/core';
 import styles from './styles';
-import SwipeableViews from 'react-swipeable-views/lib/SwipeableViews';
 
 @withRoot
 @withStyles(styles)
 export default class App extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired,
-        id: PropTypes.string.isRequired,
+        ssrID: PropTypes.string.isRequired,
         header: PropTypes.string.isRequired,
         classes: PropTypes.object
     };
@@ -29,7 +28,7 @@ export default class App extends Component {
     };
 
     render() {
-        const { data, id, header } = this.props;
+        const { data, header } = this.props;
         const { root, scrollOuter, scrollInner } = this.props.classes;
         const { value } = this.state;
         return (

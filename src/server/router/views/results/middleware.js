@@ -1,5 +1,6 @@
 import results from './results.hbs';
-import { id, header } from 'src/server/api/react/utilities';
+import { header, styleID } from 'src/server/api/react/utilities';
+import { appID } from 'common/utilities';
 import { renderApp } from 'src/server/api/react/render';
 import { setupProps } from 'src/server/api/react/utilities';
 import processData from 'src/server/api/user-data/processor';
@@ -64,13 +65,13 @@ export function setupDevelopmentAssets(req, res, next) {
 export function setupReactProps(req, res, next) {
     const artistProps = setupProps(
         res.locals.data.userData.artists,
-        id.ARTISTS,
+        styleID.ARTISTS,
         header.ARTISTS
     );
 
     const tracksProps = setupProps(
         res.locals.data.userData.tracks,
-        id.TRACKS,
+        styleID.TRACKS,
         header.TRACKS
     );
 
@@ -101,6 +102,10 @@ export function renderResults(req, res, next) {
         react: {
             props: res.locals.data.react.props,
             apps: res.locals.data.react.apps
+        },
+        ids: {
+            app: appID,
+            style: styleID
         }
     };
     const payload = results(obj);
