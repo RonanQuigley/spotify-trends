@@ -1,6 +1,6 @@
 export default {
     card: {
-        width: '32.5rem',
+        width: '25.5rem',
         margin: '1% auto'
     },
     cardText: {
@@ -12,8 +12,5 @@ export default {
     },
     cardTextRight: {
         paddingLeft: '1%'
-    },
-    index: {
-        // float: "right"
     }
 };

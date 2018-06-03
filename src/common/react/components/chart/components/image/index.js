@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { withStyles } from '@material-ui/core';
 import styles from './styles';
+
 @hot(module)
 @withStyles(styles)
 export default class Image extends Component {

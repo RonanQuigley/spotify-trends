@@ -30,14 +30,18 @@ export default class App extends Component {
 
     render() {
         const { data, id, header } = this.props;
-        const { root } = this.props.classes;
+        const { root, scrollOuter, scrollInner } = this.props.classes;
         const { value } = this.state;
         return (
             <div className={root}>
                 <CssBaseline />
                 <Header header={header} />
                 <UI value={value} onChange={this.onChange} />
-                <Content value={value} data={data} />
+                <div className={scrollOuter}>
+                    <div className={scrollInner}>
+                        <Content value={value} data={data} />
+                    </div>
+                </div>
             </div>
         );
     }

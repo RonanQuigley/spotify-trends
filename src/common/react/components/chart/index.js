@@ -10,8 +10,8 @@ export default class Chart extends Component {
     };
 
     generateAssets = array => {
-        return array.map(item => {
-            return <Element key={item.name} item={item} />;
+        return array.map((item, index) => {
+            return <Element key={item.name} item={item} rank={index + 1} />;
         });
     };
 
