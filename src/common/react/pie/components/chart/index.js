@@ -24,12 +24,18 @@ export default class Chart extends Component {
         const dataPoints = this.setupDataPoints(data);
         return (
             <VictoryPie
-                width={700}
-                height={700}
+                width={600}
+                height={600}
                 padding={100}
                 labels={data => `${data.x}: ${data.y}`}
                 data={dataPoints}
-                style={{ parent: { margin: '0 auto', overflow: 'visible' } }}
+                style={{
+                    parent: {
+                        margin: '0 auto',
+                        'overflow-x': 'visible',
+                        'overflow-y': 'hidden'
+                    }
+                }}
                 containerComponent={<VictoryContainer responsive={false} />}
             />
         );
