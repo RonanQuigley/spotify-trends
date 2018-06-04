@@ -3,7 +3,6 @@ import chaiEnzyme from 'chai-enzyme';
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import withRoot from 'charts/root';
 import withBaseline from 'common/react/common/components/baseline';
 import { CssBaseline } from '@material-ui/core';
 chai.use(chaiEnzyme());

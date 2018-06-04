@@ -20,23 +20,15 @@ export default class Charts extends Component {
         data: PropTypes.object.isRequired,
         ssrID: PropTypes.string.isRequired,
         header: PropTypes.string.isRequired,
+        map: PropTypes.instanceOf(Map),
         value: PropTypes.number,
         onChange: PropTypes.func,
         classes: PropTypes.object
     };
 
-    // state = {
-    //     value: 0
-    // };
-
-    // onChange = (event, value) => {
-    //     this.setState({ value });
-    // };
-
     render() {
         const { data, header, onChange, value } = this.props;
         const { root, scrollOuter, scrollInner } = this.props.classes;
-        // const { value } = this.state;
         return (
             <div className={root}>
                 <Header header={header} />

@@ -20,7 +20,8 @@ export default function renderApps() {
     renderPieApp(roots.key, props.key);
     renderPieApp(roots.average, props.average);
 
-    // TO DO: ERASE THE DATA THAT IS BAKED RENDERED INTO THE HTML PAGE
+    // TO DO : ERASE THE DATA THAT IS BAKED RENDERED INTO THE HTML PAGE
+    // TO DO : ERASE THE HTML INJECTED SERVER DATA
     // clearInitialState();
 }
 

@@ -6,6 +6,8 @@ export const timeRanges = {
     LONG: 'LONG'
 };
 
+/* for improved debugging with higher order components - 
+gets the name of the component that is being wrapped */
 export function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
