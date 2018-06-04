@@ -7,6 +7,9 @@ import Pie from 'pie';
 import { styleID } from 'src/server/api/react/utilities';
 import Chart from 'common/react/pie/components/chart';
 import Payload from 'fixtures/spotify/processed-data/payload';
+import Header from 'common/react/common/components/header';
+import UI from 'common/react/common/components/ui';
+import Content from 'common/react/pie/components/content';
 
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -33,19 +36,43 @@ describe('react - pie - index', () => {
     it('should be able to render', () => {
         expect(wrapper.isEmptyRender()).to.be.false;
     });
-    describe('Chart', () => {
-        let charts;
+    describe('Content', () => {
+        let content;
         beforeEach(() => {
-            charts = wrapper.find(Chart);
+            content = wrapper.find(Content);
         });
         it('should exist', () => {
-            expect(charts).to.have.length(3);
+            expect(content).to.have.length(1);
         });
-        it('should contain a data attribute for each generated chart', () => {
-            charts.forEach(chart => {
-                expect(chart.props().data).to.be.a('object').and.to.not.be
-                    .empty;
-            });
+        it('should contain a value attribute', () => {
+            expect(content.props().value).to.be.a('number');
+        });
+        it('should contain a data attribute', () => {
+            expect(content.props().data).to.be.a('object');
+        });
+    });
+    describe('Header', () => {
+        let header;
+        beforeEach(() => {
+            header = wrapper.find(Header);
+        });
+        it('should exist', () => {
+            expect(header).to.have.length(1);
+        });
+        it('should contain a header attribute', () => {
+            expect(header.props().header).to.be.a('string').and.to.not.be.empty;
+        });
+    });
+    describe('UI', () => {
+        let ui;
+        beforeEach(() => {
+            ui = wrapper.find(UI);
+        });
+        it('should have a value attribute', () => {
+            expect(ui.props().value).to.be.a('number');
+        });
+        it('should have an onChange attribute', () => {
+            expect(ui.props().onChange).to.be.a('function');
         });
     });
 });
