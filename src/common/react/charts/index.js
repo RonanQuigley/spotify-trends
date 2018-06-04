@@ -5,7 +5,7 @@ import UI from './components/ui';
 import Content from './components/content';
 import Header from './components/header';
 import { withStyles } from '@material-ui/core/styles';
-import withRoot from './root';
+import withRoot from 'common/react/common/components/root';
 import { CssBaseline } from '@material-ui/core';
 import styles from './styles';
 import withBaseline from 'common/react/common/components/baseline';

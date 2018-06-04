@@ -2,7 +2,7 @@ import chai from 'chai';
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import withRoot from 'charts/root';
+import withRoot from 'common/react/common/components/root';
 import chaiEnzyme from 'chai-enzyme';
 import { MuiThemeProvider } from '@material-ui/core';
 import { styleID } from 'src/server/api/react/utilities';
