@@ -16,7 +16,7 @@ const Fake = () => {
     return <div />;
 };
 
-describe('react - charts - root (Higher Order Component) ', () => {
+describe('react - common - components - root', () => {
     let wrapper;
     beforeEach(() => {
         const HOC = withRoot(Fake);

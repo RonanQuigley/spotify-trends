@@ -2,8 +2,8 @@ import chai, { expect } from 'chai';
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Header from 'charts/components/header';
-import styles from 'charts/components/header/styles';
+import Header from 'common/react/common/components/header';
+import styles from 'common/react/common/components/header/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -31,10 +31,6 @@ describe('react - charts - components - header', () => {
         });
     });
     describe('Typography', () => {
-        let typography;
-        beforeEach(() => {
-            typography = wrapper.find(Typography);
-        });
         it('should contain text', () => {
             const text = wrapper
                 .find(Typography)

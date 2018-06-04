@@ -2,8 +2,8 @@ import chai, { expect } from 'chai';
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import UI from 'charts/components/ui';
-import Interface from 'charts/components/ui/components/interface';
+import UI from 'common/react/common/components/ui';
+import Interface from 'common/react/common/components/ui/components/interface';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('react - charts - components - ui - container', () => {

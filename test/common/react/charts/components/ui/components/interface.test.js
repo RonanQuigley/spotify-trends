@@ -4,7 +4,7 @@ import sinonChai from 'sinon-chai';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
-import Interface from 'charts/components/ui/components/interface';
+import Interface from 'common/react/common/components/ui/components/interface';
 import { Tabs, Tab, AppBar } from '@material-ui/core';
 
 chai.use(sinonChai);

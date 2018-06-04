@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
-import UI from './components/ui';
+import UI from 'common/react/common/components/ui';
 import Content from './components/content';
-import Header from './components/header';
+import Header from 'common/react/common/components/header';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'common/react/common/components/root';
-import { CssBaseline } from '@material-ui/core';
 import styles from './styles';
 import withBaseline from 'common/react/common/components/baseline';
 

@@ -1,12 +1,11 @@
 import chai from 'chai';
 import React from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Charts from 'charts/index';
-import UI from 'charts/components/ui';
-import Header from 'charts/components/header';
+import UI from 'common/react/common/components/ui';
+import Header from 'common/react/common/components/header';
 import chaiEnzyme from 'chai-enzyme';
-import { CssBaseline } from '@material-ui/core';
 import Content from 'charts/components/content';
 import { styleID } from 'src/server/api/react/utilities';
 

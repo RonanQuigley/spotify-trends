@@ -4,6 +4,7 @@ import { hot } from 'react-hot-loader';
 import SwipeableViews from 'react-swipeable-views';
 import { timeRanges } from 'common/react/common/utilities';
 import Chart from 'charts/components/chart';
+import Swipe from 'common/react/common/components/swipe';
 
 @hot(module)
 export default class Content extends Component {
@@ -12,17 +13,14 @@ export default class Content extends Component {
         data: PropTypes.object.isRequired
     };
 
+    generateCharts = data => {
+        return Object.keys(data).map(timeRange => {
+            return <Chart key={timeRange} data={data[timeRange]} />;
+        });
+    };
+
     render() {
         const { value, data } = this.props;
-        const short = data[timeRanges.SHORT];
-        const medium = data[timeRanges.MEDIUM];
-        const long = data[timeRanges.LONG];
-        return (
-            <SwipeableViews index={value}>
-                <Chart data={short} />
-                <Chart data={medium} />
-                <Chart data={long} />
-            </SwipeableViews>
-        );
+        return <Swipe index={value}>{this.generateCharts(data)}</Swipe>;
     }
 }

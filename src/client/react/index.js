@@ -14,6 +14,11 @@ export default function renderApps() {
         average: document.getElementById(appID.AVERAGE)
     };
     const props = getInitialState();
+    console.warn(
+        `You've disabled hydration for chart and some pie apps to ` +
+            `improve hot reloading speed - remember to turn ` +
+            `it back on once done`
+    );
     // renderChartApp(roots.tracks, props.tracks);
     // renderChartApp(roots.artists, props.artists);
     renderPieApp(roots.mode, props.mode);

@@ -6,6 +6,7 @@ import Content from 'charts/components/content';
 import Payload from 'fixtures/spotify/processed-data/payload';
 import SwipeableViews from 'react-swipeable-views/lib/SwipeableViews';
 import Chart from 'charts/components/chart';
+import Swipe from 'common/react/common/components/swipe';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -18,13 +19,13 @@ describe('', () => {
         expect(wrapper.isEmptyRender()).to.be.false;
     });
 
-    describe('swipeable views', () => {
-        let swipeableViews;
+    describe('Swipe', () => {
+        let swipe;
         beforeEach(() => {
-            swipeableViews = wrapper.find(SwipeableViews);
+            swipe = wrapper.find(Swipe);
         });
         it('should exist', () => {
-            expect(swipeableViews).to.have.length(1);
+            expect(swipe).to.have.length(1);
         });
         describe('attributes', () => {
             it('should have an index', () => {
@@ -32,7 +33,7 @@ describe('', () => {
                     value: 1
                 });
                 wrapper.update();
-                expect(swipeableViews.props().index).to.be.equal(1);
+                expect(swipe.props().index).to.be.equal(1);
             });
         });
     });
