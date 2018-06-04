@@ -5,3 +5,7 @@ export const timeRanges = {
     MEDIUM: 'MEDIUM',
     LONG: 'LONG'
 };
+
+export function getDisplayName(WrappedComponent) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}

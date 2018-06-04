@@ -3,7 +3,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core';
 import theme from 'charts/theme';
 import PropTypes from 'prop-types';
-export default function(Component) {
+import { getDisplayName } from 'common/react/common/utilities';
+
+export default function(WrappedComponent) {
     class Root extends React.Component {
         static propTypes = {
             map: PropTypes.instanceOf(Map),
@@ -26,10 +28,11 @@ export default function(Component) {
 
             return (
                 <MuiThemeProvider theme={theme} sheetsManager={map}>
-                    <Component {...props} />
+                    <WrappedComponent {...props} />
                 </MuiThemeProvider>
             );
         }
     }
+    Root.displayName = `Root(${getDisplayName(WrappedComponent)})`;
     return Root;
 }

@@ -8,7 +8,7 @@ import Pie from 'pie/index';
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('', () => {
+describe('react - pie - index', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<Pie />);

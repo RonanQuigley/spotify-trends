@@ -18,9 +18,8 @@ const expect = chai.expect;
 describe('react - charts - index', () => {
     let wrapper;
     beforeEach(() => {
-        /* the component under test is wrapped in a HOC. We need to
-        repeatedly use dive to access the component we want to test
-        as using mount won't work */
+        /* the component under test is wrapped several H.O.C's. We need 
+        to repeatedly use dive to access the component we want to test */
         wrapper = shallow(
             <Charts
                 data={{}}
@@ -29,6 +28,9 @@ describe('react - charts - index', () => {
                 map={new Map()}
             />
         )
+            .dive()
+            .dive()
+            .dive()
             .dive()
             .dive()
             .dive();
@@ -50,26 +52,8 @@ describe('react - charts - index', () => {
         it('should have an onChange attribute', () => {
             expect(ui.props().onChange).to.be.a('function');
         });
-        it('should update the state with onChange events', () => {
-            ui.props().onChange({}, 1);
+    });
 
-            expect(wrapper.state().value).to.equal(1);
-        });
-        it('should update the value attribute with onChange events', () => {
-            ui.props().onChange({}, 1);
-            wrapper.update();
-            expect(wrapper.find(UI).props().value).to.equal(1);
-        });
-    });
-    describe('CssBaseline', () => {
-        let cssBaseline;
-        beforeEach(() => {
-            cssBaseline = wrapper.find(CssBaseline);
-        });
-        it('should exist', () => {
-            expect(cssBaseline).to.have.length(1);
-        });
-    });
     describe('Header', () => {
         let header;
         beforeEach(() => {

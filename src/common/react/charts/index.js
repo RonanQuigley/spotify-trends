@@ -8,34 +8,39 @@ import { withStyles } from '@material-ui/core/styles';
 import withRoot from './root';
 import { CssBaseline } from '@material-ui/core';
 import styles from './styles';
+import withBaseline from 'common/react/common/components/baseline';
 
 @withRoot
+/* must be wrapped inside root
+- this is where the state lives */
+@withBaseline
 @withStyles(styles)
 export default class Charts extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired,
         ssrID: PropTypes.string.isRequired,
         header: PropTypes.string.isRequired,
+        value: PropTypes.number,
+        onChange: PropTypes.func,
         classes: PropTypes.object
     };
 
-    state = {
-        value: 0
-    };
+    // state = {
+    //     value: 0
+    // };
 
-    onChange = (event, value) => {
-        this.setState({ value });
-    };
+    // onChange = (event, value) => {
+    //     this.setState({ value });
+    // };
 
     render() {
-        const { data, header } = this.props;
+        const { data, header, onChange, value } = this.props;
         const { root, scrollOuter, scrollInner } = this.props.classes;
-        const { value } = this.state;
+        // const { value } = this.state;
         return (
             <div className={root}>
-                <CssBaseline />
                 <Header header={header} />
-                <UI value={value} onChange={this.onChange} />
+                <UI value={value} onChange={onChange} />
                 <div className={scrollOuter}>
                     <div className={scrollInner}>
                         <Content value={value} data={data} />
