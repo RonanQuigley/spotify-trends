@@ -10,7 +10,7 @@ import Swipe from 'common/react/common/components/swipe';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('', () => {
+describe('react - charts - components - content', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<Content value={1} data={Payload.tracks} />);
