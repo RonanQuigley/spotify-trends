@@ -1,21 +1,21 @@
 export default {
     average: {
         SHORT: {
-            loudness: -25.458,
+            loudness: 0.5757,
             energy: 0.10396666666666667,
             danceability: 0.09736666666666667,
             valence: 0.02706666666666667,
             acousticness: 0.6378333333333334
         },
         MEDIUM: {
-            loudness: -17.362666666666666,
+            loudness: 0.7106222222222222,
             energy: 0.21946666666666667,
             danceability: 0.22273333333333334,
             valence: 0.19433333333333333,
             acousticness: 0.4776666666666667
         },
         LONG: {
-            loudness: -24.043000000000003,
+            loudness: 0.5992833333333333,
             energy: 0.09363333333333333,
             danceability: 0.15966666666666665,
             valence: 0.03233333333333333,
@@ -29,9 +29,9 @@ export default {
             LONG: { major: 3, minor: 0 }
         },
         key: {
-            SHORT: { G: 1, 'G#/Ab': 1, F: 1 },
-            MEDIUM: { 'C#/Db': 2, F: 1 },
-            LONG: { C: 2, 'D#/Eb': 1 }
+            SHORT: { G: 1, 'G#': 1, F: 1 },
+            MEDIUM: { 'C#': 2, F: 1 },
+            LONG: { C: 2, 'D#': 1 }
         }
     }
 };

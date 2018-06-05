@@ -2132,21 +2132,21 @@ export default {
     statistics: {
         average: {
             SHORT: {
-                loudness: -24.601,
+                loudness: 0.6345266666666667,
                 energy: 0.14676180000000003,
                 danceability: 0.22442400000000004,
                 valence: 0.09487199999999998,
                 acousticness: 0.744534
             },
             MEDIUM: {
-                loudness: -17.28032,
+                loudness: 0.7095593333333333,
                 energy: 0.33889479999999994,
                 danceability: 0.29619400000000007,
                 valence: 0.161178,
                 acousticness: 0.45509067999999997
             },
             LONG: {
-                loudness: -15.506379999999996,
+                loudness: 0.7415603333333335,
                 energy: 0.43353080000000005,
                 danceability: 0.34390799999999994,
                 valence: 0.22594,

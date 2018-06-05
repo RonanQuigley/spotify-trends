@@ -1,13 +1,18 @@
 import { countKeys, averageKeys } from './keys';
 import { countData } from './count';
 import { filterArrayOfObj } from './filter';
-import { averageData } from './math';
+import { map, averageData } from './math';
 import format from './formatter';
 
 const calcType = {
     SUM: 'calculates the sum',
     AVERAGE: 'calculates the average'
 };
+
+const min = -60;
+const max = 0;
+const outMin = 0;
+const outMax = 1;
 
 export function getStatistics(tracks) {
     const statistics = Object.assign(
@@ -50,7 +55,19 @@ function calculateResults(array, filterer, type) {
 
 function calculate(array, filter, type) {
     if (type === calcType.AVERAGE) {
-        return averageData(array, filter);
+        const averageValue = averageData(array, filter);
+        /* TO DO : CONVERT AVERAGE KEYS INTO OBJECT.
+        THAT WAY WE CAN CONTINUE TO USE IT FOR THIS CHECK */
+        if (filter === 'loudness') {
+            /* https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/
+            loudness has a typical range of -60 to 0. 
+            map it to a range that is consistent with the rest 
+            of the averaged data set. in the event that a user has 
+            a loudness reading less than 60, we need to just clamp it.*/
+            const clampedValue = Math.clamp(averageValue, min, max);
+            return map(clampedValue, min, max, outMin, outMax);
+        }
+        return averageValue;
     } else {
         return countData(array, filter);
     }

@@ -29,6 +29,7 @@ export async function getUserData(req, res, next) {
 export async function processUserData(req, res, next) {
     const rawData = res.locals.data;
     const token = res.locals.accessToken;
+
     const processedData = processData(rawData);
     const audioFeatures = await requestAudioFeatures(
         token,

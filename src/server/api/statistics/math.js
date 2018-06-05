@@ -5,3 +5,7 @@ export function sumData(array, key) {
 export function averageData(array, key) {
     return sumData(array, key) / array.length;
 }
+
+export function map(num, in_min, in_max, out_min, out_max) {
+    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}

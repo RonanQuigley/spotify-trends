@@ -234,6 +234,7 @@ describe('back end - results view', () => {
                         sinon
                             .match(Render.type.CHARTS)
                             .or(sinon.match(Render.type.PIE))
+                            .or(sinon.match(Render.type.POLAR))
                     ).and.to.not.be.empty;
                 });
             });
