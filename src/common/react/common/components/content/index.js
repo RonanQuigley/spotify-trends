@@ -12,14 +12,16 @@ export default class Content extends Component {
         value: PropTypes.number
     };
 
-    generateCharts = data => {
+    generateCharts = (data, Component) => {
         return Object.keys(data).map(timeRange => {
-            return <Chart key={timeRange} data={data[timeRange]} />;
+            return <Component key={timeRange} data={data[timeRange]} />;
         });
     };
 
     render() {
-        const { value, data } = this.props;
-        return <Swipe index={value}>{this.generateCharts(data)}</Swipe>;
+        const { value, data, component } = this.props;
+        return (
+            <Swipe index={value}>{this.generateCharts(data, component)}</Swipe>
+        );
     }
 }

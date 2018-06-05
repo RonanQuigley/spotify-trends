@@ -50,10 +50,16 @@ describe('react - common - components - content', () => {
             it('should have the correct length', () => {
                 expect(swipe.props().children).to.have.lengthOf(3);
             });
+            it('should have the correct components rendered', () => {
+                const components = swipe.children();
+                components.forEach(component => {
+                    expect(component).to.match(Fake);
+                });
+            });
             describe('attributes', () => {
                 it('should contain a data attribute for each component', () => {
                     const components = swipe.children();
-                    components.forEach((component, index) => {
+                    components.forEach(component => {
                         expect(component.props().data).to.be.a('object').and.to
                             .not.be.empty;
                     });

@@ -8,7 +8,7 @@ import styles from './styles';
 import Content from 'common/react/common/components/content';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
-
+import Chart from 'common/react/polar/components/chart';
 @hot(module)
 @withRoot
 /* must be wrapped inside root
@@ -32,7 +32,7 @@ export default class Polar extends Component {
             <React.Fragment>
                 <Header header={header} />
                 <UI value={value} onChange={onChange} />
-                {/* <Content value={value} data={data} /> */}
+                <Content value={value} component={Chart} data={data} />
             </React.Fragment>
         );
     }

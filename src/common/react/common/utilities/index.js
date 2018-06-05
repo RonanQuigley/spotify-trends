@@ -11,3 +11,12 @@ gets the name of the component that is being wrapped */
 export function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
+
+export function setupDataPoints(obj) {
+    return Object.keys(obj).map(label => {
+        return {
+            x: label,
+            y: obj[label]
+        };
+    });
+}

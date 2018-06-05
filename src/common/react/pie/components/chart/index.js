@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { VictoryPie, VictoryContainer } from 'victory';
+import { setupDataPoints } from 'common/react/common/utilities';
 
 @hot(module)
 export default class Chart extends Component {
@@ -10,18 +11,9 @@ export default class Chart extends Component {
         classes: PropTypes.object
     };
 
-    setupDataPoints = obj => {
-        return Object.keys(obj).map(label => {
-            return {
-                x: label,
-                y: obj[label]
-            };
-        });
-    };
-
     render() {
         const { data, classes } = this.props;
-        const dataPoints = this.setupDataPoints(data);
+        const dataPoints = setupDataPoints(data);
         return (
             <VictoryPie
                 width={600}

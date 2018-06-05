@@ -5,34 +5,36 @@ import {
     VictoryPolarAxis,
     VictoryChart,
     VictoryBar,
-    VictoryTheme,
-    VictoryCursorContainer
+    VictoryTheme
 } from 'victory';
+import { setupDataPoints } from 'common/react/common/utilities';
 
-// testing out victory chart components
 @hot(module)
 export default class Chart extends Component {
     static propTypes = {
         data: PropTypes.object.isRequired
     };
 
+    getTickValues = array => {
+        return array.map(obj => {
+            return obj.x;
+        });
+    };
     render() {
+        const { data } = this.props;
+        const dataPoints = setupDataPoints(data);
+        const tickValues = this.getTickValues(dataPoints);
         return (
             <div style={{ width: '100%', height: '100%' }}>
                 <VictoryChart
                     theme={VictoryTheme.grayscale}
                     polar={true}
+                    scale={{ x: 'linear', y: 'sqrt' }}
                     height={400}
                     width={400}
                 >
                     <VictoryPolarAxis
-                        tickValues={[
-                            'Acousticness',
-                            'Energy',
-                            'Danceability',
-                            'Valence',
-                            'Loudness'
-                        ]}
+                        tickValues={tickValues}
                         labelPlacement={'vertical'}
                     />
                     <VictoryPolarAxis
@@ -49,13 +51,7 @@ export default class Chart extends Component {
                     />
                     <VictoryBar
                         style={{ data: { fill: '#c43a31', width: 80 } }}
-                        data={[
-                            { x: 'Acousticness', y: 0.1 },
-                            { x: 'Energy', y: 0.2 },
-                            { x: 'Danceability', y: 0.3 },
-                            { x: 'Valence', y: 0.5 },
-                            { x: 'Loudness', y: 0.9 }
-                        ]}
+                        data={dataPoints}
                     />
                 </VictoryChart>
             </div>
