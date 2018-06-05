@@ -114,7 +114,7 @@ export function generateReactApps(req, res, next) {
     const tracks = renderApp(res.locals.data.react.props.tracks, type.CHARTS);
     const mode = renderApp(res.locals.data.react.props.mode, type.PIE);
     const key = renderApp(res.locals.data.react.props.key, type.PIE);
-    const average = renderApp(res.locals.data.react.props.average, type.PIE);
+    const average = renderApp(res.locals.data.react.props.average, type.POLAR);
 
     res.locals.data.react.apps = {
         artists: artists,

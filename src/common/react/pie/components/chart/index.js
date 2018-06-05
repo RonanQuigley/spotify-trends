@@ -32,8 +32,8 @@ export default class Chart extends Component {
                 style={{
                     parent: {
                         margin: '0 auto',
-                        'overflow-x': 'visible',
-                        'overflow-y': 'hidden'
+                        overflowX: 'visible',
+                        overflowY: 'hidden'
                     }
                 }}
                 containerComponent={<VictoryContainer responsive={false} />}

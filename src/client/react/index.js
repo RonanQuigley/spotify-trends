@@ -4,6 +4,7 @@ import Pie from 'pie';
 import ReactDOM from 'react-dom';
 import { appID } from 'common/utilities';
 import { renderApp } from 'src/server/api/react/render';
+import Polar from 'common/react/polar';
 
 export default function renderApps() {
     const roots = {
@@ -15,19 +16,24 @@ export default function renderApps() {
     };
     const props = getInitialState();
     console.warn(
-        `You've disabled hydration for chart and some pie apps to ` +
+        `You've disabled hydration for chart and pie apps to ` +
             `improve hot reloading speed - remember to turn ` +
             `it back on once done`
     );
     // renderChartApp(roots.tracks, props.tracks);
     // renderChartApp(roots.artists, props.artists);
-    renderPieApp(roots.mode, props.mode);
-    renderPieApp(roots.key, props.key);
-    // renderPieApp(roots.average, props.average);
+    // renderPieApp(roots.mode, props.mode);
+    // renderPieApp(roots.key, props.key);
+    renderPolarApp(roots.average, props.average);
 
     // TO DO : ERASE THE DATA THAT IS BAKED RENDERED INTO THE HTML PAGE
     // TO DO : ERASE THE HTML INJECTED SERVER DATA
     // clearInitialState();
+}
+
+function renderPolarApp(root, props) {
+    const app = <Polar {...props} />;
+    ReactDOM.hydrate(app, root);
 }
 
 function renderPieApp(root, props) {
