@@ -8,7 +8,7 @@ import styles from './styles';
 import Chart from 'common/react/pie/components/chart';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
-import Content from 'common/react/pie/components/content';
+import Content from 'common/react/common/components/content';
 
 @hot(module)
 @withRoot
@@ -39,7 +39,7 @@ export default class Pie extends Component {
             <React.Fragment>
                 <Header header={header} />
                 <UI value={value} onChange={onChange} />
-                <Content value={value} data={data} />
+                <Content value={value} component={Chart} data={data} />
             </React.Fragment>
         );
     }

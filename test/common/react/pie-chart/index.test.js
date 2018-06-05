@@ -4,12 +4,11 @@ import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Pie from 'pie';
-import { styleID } from 'src/server/api/react/utilities';
-import Chart from 'common/react/pie/components/chart';
 import Payload from 'fixtures/spotify/processed-data/payload';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
-import Content from 'common/react/pie/components/content';
+import Content from 'common/react/common/components/content';
+import Chart from 'common/react/pie/components/chart';
 
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -21,7 +20,7 @@ describe('react - pie - index', () => {
         wrapper = shallow(
             <Pie
                 data={fakeData}
-                ssrID={styleID.KEY}
+                ssrID={'Fake'}
                 header={'Fake'}
                 map={new Map()}
             />
@@ -49,6 +48,11 @@ describe('react - pie - index', () => {
         });
         it('should contain a data attribute', () => {
             expect(content.props().data).to.be.a('object');
+        });
+        it('should have a component attribute', () => {
+            expect(content.props().component)
+                .to.be.a('function')
+                .and.to.equal(Chart);
         });
     });
     describe('Header', () => {
