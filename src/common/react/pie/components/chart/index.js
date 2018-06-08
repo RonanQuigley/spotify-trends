@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { VictoryPie, VictoryContainer } from 'victory';
 import { setupDataPoints } from 'common/react/common/utilities';
 
 @hot(module)
-export default class Chart extends Component {
+export default class Chart extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
         classes: PropTypes.object
@@ -28,7 +28,13 @@ export default class Chart extends Component {
                         overflowY: 'hidden'
                     }
                 }}
-                containerComponent={<VictoryContainer responsive={false} />}
+                // fixes warnings with SSR
+                containerComponent={
+                    <VictoryContainer
+                        containerId={'Chart-App'}
+                        responsive={false}
+                    />
+                }
             />
         );
     }

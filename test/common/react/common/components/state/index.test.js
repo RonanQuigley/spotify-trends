@@ -3,7 +3,7 @@ import chaiEnzyme from 'chai-enzyme';
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import withBaseline from 'common/react/common/components/baseline';
+import withState from 'common/react/common/components/state';
 import { CssBaseline } from '@material-ui/core';
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -15,7 +15,7 @@ const Fake = () => {
 describe('react - common - components - baseline', () => {
     let wrapper;
     beforeEach(() => {
-        const HOC = withBaseline(Fake);
+        const HOC = withState(Fake);
         wrapper = shallow(<HOC />);
     });
     it('should be able to render', () => {

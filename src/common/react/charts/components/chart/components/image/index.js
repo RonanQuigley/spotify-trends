@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { withStyles } from '@material-ui/core';
@@ -6,7 +6,7 @@ import styles from './styles';
 
 @hot(module)
 @withStyles(styles)
-export default class Image extends Component {
+export default class Image extends PureComponent {
     static propTypes = {
         image: PropTypes.string.isRequired,
         uri: PropTypes.string.isRequired,

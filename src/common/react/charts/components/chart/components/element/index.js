@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { Card, CardContent, withStyles } from '@material-ui/core';
@@ -10,7 +10,7 @@ import Rank from 'charts/components/chart/components/rank';
 import Genre from 'charts/components/chart/components/genre';
 @hot(module)
 @withStyles(styles)
-export default class Element extends Component {
+export default class Element extends PureComponent {
     static propTypes = {
         item: PropTypes.object.isRequired,
         rank: PropTypes.number.isRequired,

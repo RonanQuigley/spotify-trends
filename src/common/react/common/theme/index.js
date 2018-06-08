@@ -1,5 +1,3 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-
 const Colors = {
     primary: {
         light: '#6d6d6d',
@@ -15,22 +13,22 @@ const Colors = {
     }
 };
 
-const theme = createMuiTheme({
+const Theme = {
     palette: {
-        type: 'light', // Switching the dark mode on is a single property value change.
+        type: 'light',
         primary: Colors.primary,
         secondary: Colors.secondary
     },
-    // typography : {
-    //   fontFamily : "Roboto, 'Helvetica Neue', sans-serif",
-    // },
+    typography: {
+        fontFamily: "Roboto, 'Helvetica Neue', sans-serif"
+    },
     overrides: {
         MuiTypography: {
             headline: {
-                // textTransform: "uppercase"
+                textTransform: 'uppercase'
             }
         }
     }
-});
+};
 
-export default theme;
+export default Theme;

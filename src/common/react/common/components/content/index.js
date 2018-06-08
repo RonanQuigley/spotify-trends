@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import Chart from 'common/react/polar/components/chart';
 import Swipe from 'common/react/common/components/swipe';
 
 @hot(module)
-export default class Content extends Component {
+export default class Content extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
         component: PropTypes.func.isRequired,

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'common/react/common/components/root';
-import withBaseline from 'common/react/common/components/baseline';
+import withState from 'common/react/common/components/state';
 import styles from './styles';
 import Chart from 'common/react/pie/components/chart';
 import Header from 'common/react/common/components/header';
@@ -11,12 +11,11 @@ import UI from 'common/react/common/components/ui';
 import Content from 'common/react/common/components/content';
 
 @hot(module)
-@withRoot
 /* must be wrapped inside root
 - this is where the state lives */
-@withBaseline
+@withState
 @withStyles(styles)
-export default class Pie extends Component {
+export default class Pie extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
         ssrID: PropTypes.string.isRequired,
@@ -35,12 +34,13 @@ export default class Pie extends Component {
 
     render() {
         const { value, onChange, data, classes, header } = this.props;
+        const { root } = classes;
         return (
-            <React.Fragment>
+            <div className={root}>
                 <Header header={header} />
                 <UI value={value} onChange={onChange} />
                 <Content value={value} component={Chart} data={data} />
-            </React.Fragment>
+            </div>
         );
     }
 }

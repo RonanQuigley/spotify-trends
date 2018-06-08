@@ -2,55 +2,38 @@ import React from 'react';
 import Chart from 'charts';
 import Pie from 'pie';
 import ReactDOM from 'react-dom';
-import { appID } from 'common/utilities';
+import { appID, getApp, appType, getApps, renderType } from 'common/utilities';
 import { renderApp } from 'src/server/api/react/render';
 import Polar from 'common/react/polar';
+import {
+    createMuiTheme,
+    MuiThemeProvider,
+    createGenerateClassName
+} from '@material-ui/core';
+import JssProvider from 'react-jss/lib/JssProvider';
+import SSRRemover from 'src/client/react/ssr-remover';
+import { SheetsRegistry } from 'jss';
+import Theme from 'common/react/common/theme';
 
 export default function renderApps() {
-    const roots = {
-        tracks: document.getElementById(appID.TRACKS),
-        artists: document.getElementById(appID.ARTISTS),
-        mode: document.getElementById(appID.MODE),
-        key: document.getElementById(appID.KEY),
-        average: document.getElementById(appID.AVERAGE)
-    };
-    const props = getInitialState();
-    console.warn(
-        `You've disabled hydration for chart and pie apps to ` +
-            `improve hot reloading speed - remember to turn ` +
-            `it back on once done`
+    const props = getInitProps();
+
+    const theme = createMuiTheme(Theme);
+
+    const apps = getApps(theme, props, renderType.CLIENT);
+
+    ReactDOM.hydrate(
+        <SSRRemover>{apps}</SSRRemover>,
+        document.querySelector('#root')
     );
-    // renderChartApp(roots.tracks, props.tracks);
-    // renderChartApp(roots.artists, props.artists);
-    // renderPieApp(roots.mode, props.mode);
-    // renderPieApp(roots.key, props.key);
-    renderPolarApp(roots.average, props.average);
 
-    // TO DO : ERASE THE DATA THAT IS BAKED RENDERED INTO THE HTML PAGE
-    // TO DO : ERASE THE HTML INJECTED SERVER DATA
-    // clearInitialState();
+    clearInitProps();
 }
 
-function renderPolarApp(root, props) {
-    const app = <Polar {...props} />;
-    ReactDOM.hydrate(app, root);
-}
-
-function renderPieApp(root, props) {
-    const app = <Pie {...props} />;
-    ReactDOM.hydrate(app, root);
-}
-
-function renderChartApp(root, props) {
-    // const render = getRenderMethod();
-    const app = <Chart {...props} />;
-    ReactDOM.hydrate(app, root);
-}
-
-function getInitialState() {
+function getInitProps() {
     return window.__initial_state__;
 }
 
-function clearInitialState() {
+function clearInitProps() {
     delete window.__initial_state__;
 }

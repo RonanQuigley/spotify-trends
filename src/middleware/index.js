@@ -16,6 +16,7 @@ const serverDir = path.resolve(__dirname, '../server');
 const watcher = chokidar.watch(serverDir);
 
 const builtDevServer = devMiddleware(mergedCompilers, {
+    noInfo: true,
     serverSideRender: true,
     stats: 'errors-only'
 });

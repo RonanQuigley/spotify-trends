@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import Icon from 'charts/components/chart/components/icon';
 
 @hot(module)
-export default class Popularity extends Component {
+export default class Popularity extends PureComponent {
     static propTypes = {
         rating: PropTypes.number.isRequired,
         classes: PropTypes.object

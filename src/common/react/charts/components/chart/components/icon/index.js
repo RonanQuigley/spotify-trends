@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { Star, StarHalf } from '@material-ui/icons';
 import randomID from 'uuid/v4';
 
 @hot(module)
-export default class Icon extends Component {
+export default class Icon extends PureComponent {
     static propTypes = {
         popularity: PropTypes.number.isRequired
     };

@@ -71,6 +71,8 @@ export function setDevTool() {
             return 'source-map';
         default:
             // development mode
-            return 'inline-module-source-map';
+            // use inline-module-source-map for better mapping
+            // for larger projects shift to inline-cheap-module
+            return 'inline-cheap-module-source-map';
     }
 }

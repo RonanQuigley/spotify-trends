@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'common/react/common/components/root';
-import withBaseline from 'common/react/common/components/baseline';
+import withState from 'common/react/common/components/state';
 import styles from './styles';
 import Content from 'common/react/common/components/content';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
 import Chart from 'common/react/polar/components/chart';
 @hot(module)
-@withRoot
 /* must be wrapped inside root
 - this is where the state lives */
-@withBaseline
+@withState
 @withStyles(styles)
-export default class Polar extends Component {
+export default class Polar extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
         ssrID: PropTypes.string.isRequired,
@@ -27,13 +26,14 @@ export default class Polar extends Component {
     };
 
     render() {
-        const { data, header, onChange, value } = this.props;
+        const { data, header, onChange, value, classes } = this.props;
+        const { root } = classes;
         return (
-            <React.Fragment>
+            <div className={root}>
                 <Header header={header} />
                 <UI value={value} onChange={onChange} />
                 <Content value={value} component={Chart} data={data} />
-            </React.Fragment>
+            </div>
         );
     }
 }

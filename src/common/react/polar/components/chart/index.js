@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import {
     VictoryPolarAxis,
     VictoryChart,
     VictoryBar,
+    VictoryContainer,
     VictoryTheme
 } from 'victory';
 import { setupDataPoints } from 'common/react/common/utilities';
 
 @hot(module)
-export default class Chart extends Component {
+export default class Chart extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired
     };
@@ -32,6 +33,10 @@ export default class Chart extends Component {
                     scale={{ x: 'linear', y: 'sqrt' }}
                     height={400}
                     width={400}
+                    // fixes warnings with SSR
+                    containerComponent={
+                        <VictoryContainer containerId={'Polar-App'} />
+                    }
                 >
                     <VictoryPolarAxis
                         tickValues={tickValues}

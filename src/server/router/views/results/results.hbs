@@ -1,19 +1,6 @@
 {{> layout }}
 
-<div id="root">
-    <div id="pie-container">
-        <div id={{{ids.app.AVERAGE}}}>{{{react.apps.average.html}}}</div>        
-        <div id={{{ids.app.MODE}}}>{{{react.apps.mode.html}}}</div>
-        <div id={{{ids.app.KEY}}}>{{{react.apps.key.html}}}</div>
-        
-    </div>
-
-    <div id="charts-container">
-        <div style="width: 50%; float: left;" id={{{ids.app.TRACKS}}}>{{{react.apps.tracks.html}}}</div>
-        <div style="width: 50%; float: right;"id={{{ids.app.ARTISTS}}}>{{{react.apps.artists.html}}}</div>
-    </div>    
-</div>
-
+<div id="root">{{{react.apps.html}}}</div>
 
 <script id="react">
     window.__initial_state__ = {{{get-data-for-react react.props}}}

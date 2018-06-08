@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { CssBaseline } from '@material-ui/core';
 import { getDisplayName } from 'common/react/common/utilities';
 
 export default function(WrappedComponent) {
-    class Baseline extends React.Component {
+    class withState extends PureComponent {
         static propTypes = {
             classes: PropTypes.object
         };
@@ -22,16 +21,14 @@ export default function(WrappedComponent) {
             const { value } = this.state;
 
             return (
-                <CssBaseline>
-                    <WrappedComponent
-                        value={value}
-                        onChange={this.onChange}
-                        {...props}
-                    />
-                </CssBaseline>
+                <WrappedComponent
+                    value={value}
+                    onChange={this.onChange}
+                    {...props}
+                />
             );
         }
     }
-    Baseline.displayName = `Baseline(${getDisplayName(WrappedComponent)})`;
-    return Baseline;
+    withState.displayName = `withState(${getDisplayName(WrappedComponent)})`;
+    return withState;
 }

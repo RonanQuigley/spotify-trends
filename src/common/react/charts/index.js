@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import UI from 'common/react/common/components/ui';
@@ -7,15 +7,15 @@ import Header from 'common/react/common/components/header';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'common/react/common/components/root';
 import styles from './styles';
-import withBaseline from 'common/react/common/components/baseline';
+import withState from 'common/react/common/components/state';
 import Chart from 'common/react/charts/components/chart';
 
-@withRoot
-/* must be wrapped inside root
-- this is where the state lives */
-@withBaseline
-@withStyles(styles)
-export default class Charts extends Component {
+@hot(module)
+@withState
+@withStyles(styles, {
+    withTheme: true
+})
+export default class Charts extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
         ssrID: PropTypes.string.isRequired,
@@ -27,8 +27,8 @@ export default class Charts extends Component {
     };
 
     render() {
-        const { data, header, onChange, value } = this.props;
-        const { root, scrollOuter, scrollInner } = this.props.classes;
+        const { data, header, onChange, value, classes } = this.props;
+        const { root, scrollOuter, scrollInner } = classes;
         return (
             <div className={root}>
                 <Header header={header} />

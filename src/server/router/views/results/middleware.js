@@ -1,7 +1,7 @@
 import results from './results.hbs';
 import { headerID, styleID } from 'src/server/api/react/utilities';
-import { appID } from 'common/utilities';
-import { renderApp, type } from 'src/server/api/react/render';
+import { appID, getApp, appType, getApps, renderType } from 'common/utilities';
+import serverSideRender, { renderApp } from 'src/server/api/react/render';
 import { setupProps } from 'src/server/api/react/utilities';
 import processData from 'src/server/api/user-data/processor';
 import { getStatistics } from 'src/server/api/statistics';
@@ -9,6 +9,20 @@ import {
     requestPersonalData,
     requestAudioFeatures
 } from 'src/server/api/user-data/request-handler';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import JssProvider from 'react-jss/lib/JssProvider';
+import {
+    MuiThemeProvider,
+    createMuiTheme,
+    createGenerateClassName,
+    CssBaseline
+} from '@material-ui/core';
+
+import { SheetsRegistry } from 'react-jss/lib/jss';
+import theme from 'common/react/common/theme';
+import Theme from 'common/react/common/theme';
+
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
     res.locals.accessToken = token;
@@ -66,31 +80,31 @@ export function setupDevelopmentAssets(req, res, next) {
 export function setupReactProps(req, res, next) {
     /* TO DO : USE LOOP CONSTRUCT FOR THIS */
 
-    const artistProps = setupProps(
+    const artists = setupProps(
         res.locals.data.userData.artists,
         styleID.ARTISTS,
         headerID.ARTISTS
     );
 
-    const tracksProps = setupProps(
+    const tracks = setupProps(
         res.locals.data.userData.tracks,
         styleID.TRACKS,
         headerID.TRACKS
     );
 
-    const modeProps = setupProps(
+    const mode = setupProps(
         res.locals.data.statistics.tally.mode,
         styleID.MODE,
         headerID.MODE
     );
 
-    const keyProps = setupProps(
+    const key = setupProps(
         res.locals.data.statistics.tally.key,
         styleID.KEY,
         headerID.KEY
     );
 
-    const avgProps = setupProps(
+    const average = setupProps(
         res.locals.data.statistics.average,
         styleID.AVERAGE,
         headerID.AVERAGE
@@ -98,11 +112,11 @@ export function setupReactProps(req, res, next) {
 
     res.locals.data.react = {
         props: {
-            artists: artistProps,
-            tracks: tracksProps,
-            mode: modeProps,
-            key: keyProps,
-            average: avgProps
+            artists: artists,
+            tracks: tracks,
+            mode: mode,
+            key: key,
+            average: average
         }
     };
 
@@ -110,37 +124,74 @@ export function setupReactProps(req, res, next) {
 }
 
 export function generateReactApps(req, res, next) {
-    /* TO DO : USER A LOOP CONSTRUCT INSTEAD OF CALLING EACH ONE INDIVIDUALLY */
-    const artists = renderApp(res.locals.data.react.props.artists, type.CHARTS);
-    const tracks = renderApp(res.locals.data.react.props.tracks, type.CHARTS);
-    const mode = renderApp(res.locals.data.react.props.mode, type.PIE);
-    const key = renderApp(res.locals.data.react.props.key, type.PIE);
-    const average = renderApp(res.locals.data.react.props.average, type.POLAR);
+    // get out react props
+    const props = res.locals.data.react.props;
+
+    // const generateClassName = createGenerateClassName({
+    //     dangerouslyUseGlobalCSS: true
+    // });
+
+    const generateClassName = createGenerateClassName();
+
+    // Create a theme instance.
+    const theme = createMuiTheme(Theme);
+
+    // get all of the styled react apps
+    const apps = getApps(theme, props, renderType.SERVER);
+
+    // Create a sheetsRegistry instance.
+    const sheetsRegistry = new SheetsRegistry();
+
+    // Render the apps to a string.
+    const html = serverSideRender(apps, sheetsRegistry, generateClassName);
+
+    // Grab the CSS from our sheetsRegistry.
+    const css = sheetsRegistry.toString();
 
     res.locals.data.react.apps = {
-        artists: artists,
-        tracks: tracks,
-        average: average,
-        key: key,
-        mode: mode
+        html: html,
+        css: css
     };
+
     return next();
 }
 
 export function renderResults(req, res, next) {
-    const obj = {
-        dev: process.env.NODE_ENV !== 'production' ? true : false,
-        title: 'Results',
-        react: {
-            props: res.locals.data.react.props,
-            apps: res.locals.data.react.apps
-        },
-        ids: {
-            app: appID,
-            style: styleID
-        }
-    };
-    const payload = results(obj);
+    // const obj = {
+    //     dev: process.env.NODE_ENV !== 'production' ? true : false,
+    //     title: 'Results',
+    //     react: {
+    //         props: res.locals.data.react.props,
+    //         apps: res.locals.data.react.apps
+    //     },
+    //     ids: {
+    //         app: appID,
+    //         style: styleID
+    //     }
+    // };
+
+    // const payload = results(obj);
+    // res.send(payload);
+
+    const html = res.locals.data.react.apps.html;
+    const css = res.locals.data.react.apps.css;
+    const props = res.locals.data.react.props;
+
+    const payload = `
+    <!doctype html>
+        <html>
+        <head>
+            <title>Results</title>
+            <style id="jss-server-side">${css}</style>
+        </head>
+        <body>
+            <div id="root">${html}</div>
+        </body>
+        <script> window.__initial_state__ = ${JSON.stringify(props)}</script>
+        <script src="/dev.js"></script>
+        <script src="/results.js"></script>
+    </html>`;
+
     res.send(payload);
     return next();
 }
