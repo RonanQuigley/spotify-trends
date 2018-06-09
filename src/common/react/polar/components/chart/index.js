@@ -10,7 +10,6 @@ import {
 } from 'victory';
 import { setupDataPoints } from 'common/react/common/utilities';
 
-@hot(module)
 export default class Chart extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired

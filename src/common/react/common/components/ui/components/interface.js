@@ -4,7 +4,6 @@ import { hot } from 'react-hot-loader';
 import { labels } from 'common/react/common/utilities';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 
-@hot(module)
 export default class Interface extends PureComponent {
     static propTypes = {
         onChange: PropTypes.func.isRequired,

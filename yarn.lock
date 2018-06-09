@@ -683,6 +683,13 @@
     "@babel/helper-get-function-arity" "7.0.0-beta.49"
     "@babel/helper-plugin-utils" "7.0.0-beta.49"
 
+"@babel/plugin-transform-react-constant-elements@^7.0.0-beta.49":
+  version "7.0.0-beta.49"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-react-constant-elements/-/plugin-transform-react-constant-elements-7.0.0-beta.49.tgz#79fbfa9f5ce669a83e2f00d9d46d0639e72b3ad1"
+  dependencies:
+    "@babel/helper-annotate-as-pure" "7.0.0-beta.49"
+    "@babel/helper-plugin-utils" "7.0.0-beta.49"
+
 "@babel/plugin-transform-react-display-name@7.0.0-beta.49":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-react-display-name/-/plugin-transform-react-display-name-7.0.0-beta.49.tgz#242a006bf4122a93b273f69dfe6c394a0fcec638"
@@ -4602,6 +4609,10 @@ ignore-walk@^3.0.1:
 ignore@^3.3.3, ignore@^3.3.5:
   version "3.3.8"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.8.tgz#3f8e9c35d38708a3a7e0e9abb6c73e7ee7707b2b"
+
+immutable@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
 
 import-local@^1.0.0:
   version "1.0.0"

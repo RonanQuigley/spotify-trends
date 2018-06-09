@@ -65,9 +65,8 @@ export function setupDevelopmentAssets(req, res, next) {
         not have been set up. we need to check for this. We also use dummy
         data to speed up dev so we're not continuosly making spotify server requests
     */
-
-    console.time('server');
-    const fakeData = require('fixtures/spotify/processed-data/payload').default;
+    const fakeData = require('fixtures/spotify/processed-data/small-payload')
+        .default;
     res.locals.data = {
         userData: {
             artists: fakeData.artists,
@@ -168,7 +167,9 @@ export function renderResults(req, res, next) {
         <body>
             <div id="root">${html}</div>
         </body>
-        <script> window.__initial_state__ = ${JSON.stringify(props)}</script>
+        <script id="props"> window.__initial__props__ = ${JSON.stringify(
+            props
+        )}</script>
         ${
             process.env.NODE_ENV === 'development'
                 ? `<script src="/dev.js"></script>`
@@ -178,7 +179,6 @@ export function renderResults(req, res, next) {
     </html>`;
 
     res.send(payload);
-    console.timeEnd('server');
     return next();
 }
 

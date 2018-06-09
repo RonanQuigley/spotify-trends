@@ -24,7 +24,7 @@ const frontEndCommon = {
             {
                 exclude: /node_modules|packages/,
                 test: /\.js$/,
-                use: 'babel-loader'
+                use: 'babel-loader?cacheDirectory=true'
             },
             {
                 sideEffects: false // tells webpack our code is pure for dead code elimination

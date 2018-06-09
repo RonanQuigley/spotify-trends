@@ -15,7 +15,7 @@ export const renderType = {
     CLIENT: 'client'
 };
 
-export function getApps(theme, props, type) {
+export const getApps = (theme, props, type) => {
     const sheetsManager = type === renderType.SERVER ? new Map() : null;
     return (
         <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
@@ -27,7 +27,21 @@ export function getApps(theme, props, type) {
             <Polar {...props.average} />;
         </MuiThemeProvider>
     );
-}
+};
+
+export const getAppsImmutable = (theme, props, type) => {
+    const sheetsManager = type === renderType.SERVER ? new Map() : null;
+    return (
+        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+            <CssBaseline />
+            <Charts {...props.get('artists')} />
+            <Charts {...props.get('tracks')} />;
+            <Pie {...props.get('key')} />;
+            <Pie {...props.get('mode')} />;
+            <Polar {...props.get('average')} />;
+        </MuiThemeProvider>
+    );
+};
 
 getApps.propTypes = {
     artists: PropTypes.object,

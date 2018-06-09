@@ -8,7 +8,7 @@ import Content from 'common/react/common/components/content';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
 import Chart from 'common/react/polar/components/chart';
-@hot(module)
+
 /* must be wrapped inside root
 - this is where the state lives */
 @withState

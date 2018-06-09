@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import Element from './components/element';
 
-@hot(module)
 export default class Chart extends PureComponent {
     static propTypes = {
         data: PropTypes.array.isRequired

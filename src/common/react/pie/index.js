@@ -9,7 +9,6 @@ import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
 import Content from 'common/react/common/components/content';
 
-@hot(module)
 /* must be wrapped inside root
 - this is where the state lives */
 @withState

@@ -1,20 +1,11 @@
 import React from 'react';
-import Chart from 'charts';
-import Pie from 'pie';
 import ReactDOM from 'react-dom';
-import { appID, getApp, appType, getApps, renderType } from 'common/utilities';
-import { renderApp } from 'src/server/api/react/render';
-import Polar from 'common/react/polar';
-import {
-    createMuiTheme,
-    MuiThemeProvider,
-    createGenerateClassName
-} from '@material-ui/core';
-import JssProvider from 'react-jss/lib/JssProvider';
+import { getApps, renderType } from 'common/utilities';
 import SSRRemover from 'src/client/react/ssr-remover';
-import { SheetsRegistry } from 'jss';
 import Theme from 'common/react/common/theme';
 import whyDidYouUpdate from 'why-did-you-update';
+import Immutable from 'immutable';
+import { createMuiTheme } from '@material-ui/core';
 
 export default function renderApps() {
     const props = getInitProps();
@@ -28,15 +19,24 @@ export default function renderApps() {
         document.querySelector('#root')
     );
 
-    whyDidYouUpdate(React);
+    // whyDidYouUpdate(React);
 
-    clearInitProps();
+    clearInitPropsFromDOM();
+    clearInitPropsFromWindow();
 }
 
 function getInitProps() {
-    return window.__initial_state__;
+    return window.__initial__props__;
 }
 
-function clearInitProps() {
-    delete window.__initial_state__;
+function clearInitPropsFromDOM() {
+    document.getElementById('props').remove();
+}
+
+function clearInitPropsFromWindow() {
+    delete window.__initial__props__;
+}
+
+if (module.hot) {
+    module.hot.accept();
 }

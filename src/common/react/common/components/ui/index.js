@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import Interface from './components/interface';
 
-@hot(module)
 export default class UI extends PureComponent {
     static propTypes = {
         value: PropTypes.number.isRequired,
