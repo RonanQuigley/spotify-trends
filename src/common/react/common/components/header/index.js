@@ -7,13 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 import styles from './styles';
 
-@hot(module)
 @withStyles(styles)
 export default class Header extends PureComponent {
     static propTypes = {
         header: PropTypes.string.isRequired,
         classes: PropTypes.object
     };
+
     render() {
         const { header } = this.props;
         const { typography } = this.props.classes;

@@ -26,10 +26,6 @@ describe('react - polar - index', () => {
             />
         )
             .dive()
-            .dive()
-            .dive()
-            .dive()
-            .dive()
             .dive();
     });
     it('should be able to render', () => {

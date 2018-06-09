@@ -23,10 +23,6 @@ describe('react - charts - index', () => {
             <Charts data={{}} ssrID={'Fake'} header={'Fake'} map={new Map()} />
         )
             .dive()
-            .dive()
-            .dive()
-            .dive()
-            .dive()
             .dive();
     });
     it('should render', () => {

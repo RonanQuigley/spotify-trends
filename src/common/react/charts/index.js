@@ -5,7 +5,6 @@ import UI from 'common/react/common/components/ui';
 import Content from 'common/react/common/components/content';
 import Header from 'common/react/common/components/header';
 import { withStyles } from '@material-ui/core/styles';
-import withRoot from 'common/react/common/components/root';
 import styles from './styles';
 import withState from 'common/react/common/components/state';
 import Chart from 'common/react/charts/components/chart';

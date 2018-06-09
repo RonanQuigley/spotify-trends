@@ -8,7 +8,7 @@ import Popularity from '../popularity';
 import { Typography } from '@material-ui/core';
 import Rank from 'charts/components/chart/components/rank';
 import Genre from 'charts/components/chart/components/genre';
-@hot(module)
+
 @withStyles(styles)
 export default class Element extends PureComponent {
     static propTypes = {
@@ -16,6 +16,7 @@ export default class Element extends PureComponent {
         rank: PropTypes.number.isRequired,
         classes: PropTypes.object
     };
+
     render() {
         const { item, rank, classes } = this.props;
         const {

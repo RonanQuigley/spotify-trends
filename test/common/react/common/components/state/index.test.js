@@ -21,12 +21,7 @@ describe('react - common - components - baseline', () => {
     it('should be able to render', () => {
         expect(wrapper.isEmptyRender()).to.be.false;
     });
-    describe('CssBaseline', () => {
-        it('should exist', () => {
-            const cssBaseline = wrapper.find(CssBaseline);
-            expect(cssBaseline).to.have.length(1);
-        });
-    });
+
     describe('wrapped component', () => {
         let wrappedComponent;
         beforeEach(() => {

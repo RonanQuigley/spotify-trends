@@ -14,6 +14,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import SSRRemover from 'src/client/react/ssr-remover';
 import { SheetsRegistry } from 'jss';
 import Theme from 'common/react/common/theme';
+import whyDidYouUpdate from 'why-did-you-update';
 
 export default function renderApps() {
     const props = getInitProps();
@@ -26,6 +27,8 @@ export default function renderApps() {
         <SSRRemover>{apps}</SSRRemover>,
         document.querySelector('#root')
     );
+
+    whyDidYouUpdate(React);
 
     clearInitProps();
 }

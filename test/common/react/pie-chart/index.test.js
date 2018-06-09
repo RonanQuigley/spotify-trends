@@ -26,10 +26,6 @@ describe('react - pie - index', () => {
             />
         )
             .dive()
-            .dive()
-            .dive()
-            .dive()
-            .dive()
             .dive();
     });
     it('should be able to render', () => {

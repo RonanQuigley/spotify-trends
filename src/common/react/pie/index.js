@@ -2,7 +2,6 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { withStyles } from '@material-ui/core/styles';
-import withRoot from 'common/react/common/components/root';
 import withState from 'common/react/common/components/state';
 import styles from './styles';
 import Chart from 'common/react/pie/components/chart';

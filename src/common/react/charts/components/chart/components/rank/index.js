@@ -4,7 +4,6 @@ import { hot } from 'react-hot-loader';
 import { Typography, withStyles } from '@material-ui/core';
 import styles from './styles';
 
-@hot(module)
 @withStyles(styles)
 export default class Rank extends PureComponent {
     static propTypes = {

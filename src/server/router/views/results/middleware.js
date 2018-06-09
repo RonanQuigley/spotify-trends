@@ -1,7 +1,7 @@
 import results from './results.hbs';
 import { headerID, styleID } from 'src/server/api/react/utilities';
 import { appID, getApp, appType, getApps, renderType } from 'common/utilities';
-import serverSideRender, { renderApp } from 'src/server/api/react/render';
+import serverSideRender from 'src/server/api/react/render';
 import { setupProps } from 'src/server/api/react/utilities';
 import processData from 'src/server/api/user-data/processor';
 import { getStatistics } from 'src/server/api/statistics';
@@ -20,7 +20,6 @@ import {
 } from '@material-ui/core';
 
 import { SheetsRegistry } from 'react-jss/lib/jss';
-import theme from 'common/react/common/theme';
 import Theme from 'common/react/common/theme';
 
 export function getAccessToken(req, res, next) {
@@ -66,6 +65,8 @@ export function setupDevelopmentAssets(req, res, next) {
         not have been set up. we need to check for this. We also use dummy
         data to speed up dev so we're not continuosly making spotify server requests
     */
+
+    console.time('server');
     const fakeData = require('fixtures/spotify/processed-data/payload').default;
     res.locals.data = {
         userData: {
@@ -127,10 +128,6 @@ export function generateReactApps(req, res, next) {
     // get out react props
     const props = res.locals.data.react.props;
 
-    // const generateClassName = createGenerateClassName({
-    //     dangerouslyUseGlobalCSS: true
-    // });
-
     const generateClassName = createGenerateClassName();
 
     // Create a theme instance.
@@ -157,22 +154,6 @@ export function generateReactApps(req, res, next) {
 }
 
 export function renderResults(req, res, next) {
-    // const obj = {
-    //     dev: process.env.NODE_ENV !== 'production' ? true : false,
-    //     title: 'Results',
-    //     react: {
-    //         props: res.locals.data.react.props,
-    //         apps: res.locals.data.react.apps
-    //     },
-    //     ids: {
-    //         app: appID,
-    //         style: styleID
-    //     }
-    // };
-
-    // const payload = results(obj);
-    // res.send(payload);
-
     const html = res.locals.data.react.apps.html;
     const css = res.locals.data.react.apps.css;
     const props = res.locals.data.react.props;
@@ -188,11 +169,16 @@ export function renderResults(req, res, next) {
             <div id="root">${html}</div>
         </body>
         <script> window.__initial_state__ = ${JSON.stringify(props)}</script>
-        <script src="/dev.js"></script>
+        ${
+            process.env.NODE_ENV === 'development'
+                ? `<script src="/dev.js"></script>`
+                : ``
+        }
         <script src="/results.js"></script>
     </html>`;
 
     res.send(payload);
+    console.timeEnd('server');
     return next();
 }
 

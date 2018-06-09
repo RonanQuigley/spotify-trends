@@ -15,9 +15,12 @@ import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
 import * as resultsPage from 'src/server/router/views/results/results.hbs';
-import * as Render from 'src/server/api/react/render';
-import * as Utilities from 'src/server/api/react/utilities';
+import * as CommonUtil from 'common/utilities';
+import * as ServerUtil from 'src/server/api/react/utilities';
 import { appID } from 'common/utilities';
+import * as serverSideRender from 'src/server/api/react/render';
+import Theme from 'common/react/common/theme';
+import { createMuiTheme } from '@material-ui/core';
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -169,7 +172,7 @@ describe('back end - results view', () => {
 
         describe('setting up react props', () => {
             beforeEach(() => {
-                sandbox.spy(Utilities, 'setupProps');
+                sandbox.spy(ServerUtil, 'setupProps');
                 Middleware.setupReactProps(req, res, nextSpy);
             });
             it('should call next', () => {
@@ -177,10 +180,10 @@ describe('back end - results view', () => {
             });
             describe('props setup', () => {
                 it('should be called at least once', () => {
-                    expect(Utilities.setupProps).to.be.called;
+                    expect(ServerUtil.setupProps).to.be.called;
                 });
                 it('should have the correct arguments for each call', () => {
-                    Utilities.setupProps.getCalls().forEach(call => {
+                    ServerUtil.setupProps.getCalls().forEach(call => {
                         expect(call).to.be.calledWith(
                             sinon.match.object,
                             sinon.match.string,
@@ -208,47 +211,33 @@ describe('back end - results view', () => {
 
         describe('generating react assets', () => {
             beforeEach(() => {
-                sandbox.stub(Render, 'renderApp').returns({});
-                res.locals.data.react = {
-                    props: {}
-                };
-
-                const fakeProps = {
-                    fakeData: {},
-                    fakeAppID: '',
-                    fakeHeaderID: ''
-                };
-                res.locals.data.react.props.artists = fakeProps;
-                res.locals.data.react.props.tracks = fakeProps;
-                res.locals.data.react.props.mode = fakeProps;
-                res.locals.data.react.props.key = fakeProps;
-                res.locals.data.react.props.average = fakeProps;
-
+                sandbox.spy(serverSideRender, 'default');
+                sandbox.spy(CommonUtil, 'getApps');
+                // run the previous middleware function to setup our apps
+                Middleware.setupReactProps(req, res, () => {});
                 Middleware.generateReactApps(req, res, nextSpy);
             });
-            it('should render the apps', () => {
-                expect(Render.renderApp).to.be.called;
-                Render.renderApp.getCalls().forEach(call => {
-                    expect(call).to.be.calledWith(
-                        sinon.match(sinon.match.object),
-                        sinon
-                            .match(Render.type.CHARTS)
-                            .or(sinon.match(Render.type.PIE))
-                            .or(sinon.match(Render.type.POLAR))
-                    ).and.to.not.be.empty;
+            describe('getting apps', () => {
+                it('should be called', () => {
+                    expect(CommonUtil.getApps).to.be.calledOnce;
                 });
+                // it('should should be called with the correct args', () => {
+                //     const theme = createMuiTheme(Theme);
+                //     expect(CommonUtil.getApps).to.be.calledWith(theme);
+                // });
             });
+
             describe('res.locals', () => {
                 it('should pass in the rendered apps', () => {
                     expect(res.locals.data.react.apps).to.be.a('object');
                 });
-                it('should contain the tracks', () => {
-                    expect(res.locals.data.react.apps.tracks).to.be.a('object');
+                it('should contain the app html', () => {
+                    expect(res.locals.data.react.apps.html).to.be.a('string')
+                        .and.to.not.be.empty;
                 });
-                it('should contain artists', () => {
-                    expect(res.locals.data.react.apps.artists).to.be.a(
-                        'object'
-                    );
+                it('should contain the artists css ', () => {
+                    expect(res.locals.data.react.apps.css).to.be.a('string').and
+                        .to.not.be.empty;
                 });
             });
             it('should call next', () => {
@@ -257,60 +246,34 @@ describe('back end - results view', () => {
         });
 
         describe('render results page', () => {
-            let fakeData;
+            const html = 'fake app html';
+            const css = 'fake app css';
+            const props = { data: 'fake' };
             beforeEach(() => {
-                sandbox.spy(resultsPage, 'default');
-
-                fakeData = res.locals.data.react = {
-                    props: {
-                        artists: {},
-                        tracks: {},
-                        statistics: {}
-                    },
+                res.locals.data.react = {
                     apps: {
-                        artists: {
-                            html: 'fake rendered app html',
-                            css: 'fake rendered css'
-                        },
-                        tracks: {
-                            html: 'fake rendered app html',
-                            css: 'fake rendered css'
-                        }
-                    }
+                        html: html,
+                        css: css
+                    },
+                    props: props
                 };
                 Middleware.renderResults(req, res, nextSpy);
             });
-            it('should call send', () => {
-                expect(res.send).to.be.calledWith(sinon.match.string).and.to.be
-                    .calledOnce;
-            });
-            describe('rendering payload', () => {
-                it('should render the handlebars page ', () => {
-                    expect(resultsPage.default).to.be.calledOnce;
+            describe('sent response', () => {
+                it('should call send', () => {
+                    expect(res.send).to.be.calledOnce;
                 });
-                describe('call arguments', () => {
-                    let args;
-                    beforeEach(() => {
-                        args = resultsPage.default.getCall(0).args[0];
+                describe('payload', () => {
+                    it('should contain the react app html', () => {
+                        expect(res.send.getCall(0).args[0]).to.contain(html);
                     });
-                    it('should have a props property that contains the props data', () => {
-                        expect(args.react.props).to.deep.equal(fakeData.props);
+                    it('should contain the react app css', () => {
+                        expect(res.send.getCall(0).args[0]).to.contain(css);
                     });
-                    it('should have a react property that contains the react data', () => {
-                        expect(args.react.apps).to.deep.equal(fakeData.apps);
-                    });
-                    it('should contain a dev property', () => {
-                        expect(args)
-                            .to.have.property('dev')
-                            .and.to.be.a('boolean');
-                    });
-                    describe('ids', () => {
-                        it('should contain all element and server side rendering for styling ids', () => {
-                            expect(args.ids).to.deep.equal({
-                                app: appID,
-                                style: Utilities.styleID
-                            });
-                        });
+                    it('should contain stringified props', () => {
+                        expect(res.send.getCall(0).args[0]).to.contain(
+                            JSON.stringify(props)
+                        );
                     });
                 });
             });
