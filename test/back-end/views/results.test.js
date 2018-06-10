@@ -14,13 +14,13 @@ import * as Middleware from 'src/server/router/views/results/middleware';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
-import * as resultsPage from 'src/server/router/views/results/results.hbs';
+// import * as resultsPage from 'src/server/router/views/results/results.hbs';
 import * as CommonUtil from 'common/utilities';
 import * as ServerUtil from 'src/server/api/react/utilities';
-import { appID } from 'common/utilities';
+// import { appID } from 'common/utilities';
 import * as serverSideRender from 'src/server/api/react/render';
-import Theme from 'common/react/common/theme';
-import { createMuiTheme } from '@material-ui/core';
+import * as App from 'common/react/app';
+
 const agent = supertest.agent(app);
 const expect = chai.expect;
 
@@ -213,18 +213,15 @@ describe('back end - results view', () => {
             beforeEach(() => {
                 sandbox.spy(serverSideRender, 'default');
                 sandbox.spy(CommonUtil, 'getApps');
+                sandbox.spy(App, 'default');
                 // run the previous middleware function to setup our apps
                 Middleware.setupReactProps(req, res, () => {});
                 Middleware.generateReactApps(req, res, nextSpy);
             });
-            describe('getting apps', () => {
-                it('should be called', () => {
-                    expect(CommonUtil.getApps).to.be.calledOnce;
+            describe('React App', () => {
+                it('should be created', () => {
+                    expect(App.default).to.be.calledOnce;
                 });
-                // it('should should be called with the correct args', () => {
-                //     const theme = createMuiTheme(Theme);
-                //     expect(CommonUtil.getApps).to.be.calledWith(theme);
-                // });
             });
 
             describe('res.locals', () => {

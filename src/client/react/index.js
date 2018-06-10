@@ -6,16 +6,19 @@ import Theme from 'common/react/common/theme';
 import whyDidYouUpdate from 'why-did-you-update';
 import Immutable from 'immutable';
 import { createMuiTheme } from '@material-ui/core';
+import App from 'common/react/app';
 
 export default function renderApps() {
     const props = getInitProps();
 
     const theme = createMuiTheme(Theme);
 
-    const apps = getApps(theme, props, renderType.CLIENT);
+    // const apps = getApps(theme, props, renderType.CLIENT);
+
+    const app = <App theme={theme} childProps={props} />;
 
     ReactDOM.hydrate(
-        <SSRRemover>{apps}</SSRRemover>,
+        <SSRRemover>{app}</SSRRemover>,
         document.querySelector('#root')
     );
 

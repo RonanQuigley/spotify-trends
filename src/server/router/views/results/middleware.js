@@ -21,6 +21,8 @@ import {
 
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import Theme from 'common/react/common/theme';
+import App from 'common/react/app';
+import { V4MAPPED } from 'dns';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -132,14 +134,18 @@ export function generateReactApps(req, res, next) {
     // Create a theme instance.
     const theme = createMuiTheme(Theme);
 
-    // get all of the styled react apps
-    const apps = getApps(theme, props, renderType.SERVER);
+    // // get all of the styled react apps
+    // const apps = getApps(theme, props, renderType.SERVER);
+
+    const app = (
+        <App theme={theme} childProps={props} sheetsManager={new Map()} />
+    );
 
     // Create a sheetsRegistry instance.
     const sheetsRegistry = new SheetsRegistry();
 
     // Render the apps to a string.
-    const html = serverSideRender(apps, sheetsRegistry, generateClassName);
+    const html = serverSideRender(app, sheetsRegistry, generateClassName);
 
     // Grab the CSS from our sheetsRegistry.
     const css = sheetsRegistry.toString();

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
 
-@hot(module)
 export default class SSRRemover extends React.PureComponent {
     static propTypes = {
         children: PropTypes.node.isRequired
