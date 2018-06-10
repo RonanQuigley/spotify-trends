@@ -8,20 +8,18 @@ import App from 'common/react/app';
 
 export default function renderApps() {
     const props = getInitProps();
-
     const theme = createMuiTheme(Theme);
-
     const app = <App theme={theme} childProps={props} />;
-
+    // setConfig({ logLevel: 'debug' });
     ReactDOM.hydrate(
         <SSRRemover>{app}</SSRRemover>,
         document.querySelector('#root')
     );
-
     // whyDidYouUpdate(React);
-
-    clearInitPropsFromDOM();
-    clearInitPropsFromWindow();
+    if (process.env.NODE_ENV !== 'development') {
+        clearInitPropsFromDOM();
+        clearInitPropsFromWindow();
+    }
 }
 
 function getInitProps() {
@@ -37,5 +35,6 @@ function clearInitPropsFromWindow() {
 }
 
 if (module.hot) {
+    console.log('this module is hot');
     module.hot.accept();
 }

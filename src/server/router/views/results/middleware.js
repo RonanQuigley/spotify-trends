@@ -155,10 +155,14 @@ export function renderResults(req, res, next) {
     const props = res.locals.data.react.props;
 
     const payload = `
-    <!doctype html>
-        <html>
+    <!DOCTYPE html>
+    <html lang="en">
         <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>Results</title>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
             <style id="jss-server-side">${css}</style>
         </head>
         <body>

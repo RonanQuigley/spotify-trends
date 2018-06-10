@@ -1,7 +1,6 @@
 {
     "version": "0.2.0",
     "configurations": [
-
         {
             "type": "chrome",
             "request": "attach",
@@ -75,7 +74,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug Prod Build",
+            "name": "Debug Prod Build - Server",
             "smartStep": true,
             "program": "${workspaceFolder}/dist/server.js",
             "skipFiles": [
@@ -88,6 +87,6 @@
                 "ENABLE_LOGGING" : "false"
             },
 
-        },
+        }
     ]
 }

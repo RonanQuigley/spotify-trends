@@ -12,9 +12,9 @@ const dev = {
             './src/client/pages/index/'
         ],
         results: [
-            'webpack-hot-middleware/client',
             'whatwg-fetch',
-            './src/client/pages/results/'
+            './src/client/pages/results/',
+            'webpack-hot-middleware/client'
         ]
     },
     plugins: [
