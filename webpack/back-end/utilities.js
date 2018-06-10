@@ -70,9 +70,10 @@ export function setDevTool() {
         case 'production':
             return 'source-map';
         default:
-            // development mode
-            // use inline-module-source-map for better mapping
-            // for larger projects shift to inline-cheap-module
-            return 'inline-cheap-module-source-map';
+            /* development mode
+            use inline-module-source-map for better debugging
+            DO NOT change it to any other type as you will get 
+            a breakpoints set but not yet bound error */
+            return 'inline-module-source-map';
     }
 }
