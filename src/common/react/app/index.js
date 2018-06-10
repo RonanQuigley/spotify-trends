@@ -17,17 +17,15 @@ import styles from './styles';
 export default class App extends PureComponent {
     static propTypes = {
         childProps: PropTypes.object.isRequired,
-        theme: PropTypes.object.isRequired,
-        sheetsManager: PropTypes.object,
         classes: PropTypes.object
     };
 
     render() {
-        const { sheetsManager, childProps, classes, theme } = this.props;
+        const { childProps, classes } = this.props;
         const { artists, tracks } = classes;
-        console.log(classes);
+
         return (
-            <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+            <React.Fragment>
                 <CssBaseline />
                 <div className={classes.topChartsContainer}>
                     <div id="artists" className={artists}>
@@ -42,7 +40,7 @@ export default class App extends PureComponent {
                     <Pie {...childProps.mode} />
                     <Polar {...childProps.average} />
                 </div>
-            </MuiThemeProvider>
+            </React.Fragment>
         );
     }
 }

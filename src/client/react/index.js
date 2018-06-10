@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom';
 import SSRRemover from 'src/client/react/ssr-remover';
 import Theme from 'common/react/common/theme';
 import whyDidYouUpdate from 'why-did-you-update';
-import { createMuiTheme } from '@material-ui/core';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import App from 'common/react/app';
 
 export default function renderApps() {
     const props = getInitProps();
     const theme = createMuiTheme(Theme);
-    const app = <App theme={theme} childProps={props} />;
-    // setConfig({ logLevel: 'debug' });
+    const app = <App childProps={props} />;
     ReactDOM.hydrate(
-        <SSRRemover>{app}</SSRRemover>,
+        <SSRRemover>
+            <MuiThemeProvider theme={theme}>{app}</MuiThemeProvider>
+        </SSRRemover>,
         document.querySelector('#root')
     );
     // whyDidYouUpdate(React);
@@ -35,6 +36,5 @@ function clearInitPropsFromWindow() {
 }
 
 if (module.hot) {
-    console.log('this module is hot');
     module.hot.accept();
 }

@@ -10,7 +10,7 @@ export default class SSRRemover extends React.PureComponent {
     componentDidMount() {
         const jssStyles = document.getElementById('jss-server-side');
         if (jssStyles && jssStyles.parentNode) {
-            jssStyles.parentNode.removeChild(jssStyles);
+            jssStyles.remove();
         }
     }
 

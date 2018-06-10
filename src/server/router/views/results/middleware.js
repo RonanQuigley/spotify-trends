@@ -9,10 +9,7 @@ import {
     requestAudioFeatures
 } from 'src/server/api/user-data/request-handler';
 import React from 'react';
-import { createMuiTheme, createGenerateClassName } from '@material-ui/core';
-
 import { SheetsRegistry } from 'react-jss/lib/jss';
-import Theme from 'common/react/common/theme';
 import App from 'common/react/app';
 
 export function getAccessToken(req, res, next) {
@@ -120,23 +117,13 @@ export function generateReactApps(req, res, next) {
     // get out react props
     const props = res.locals.data.react.props;
 
-    const generateClassName = createGenerateClassName();
-
-    // Create a theme instance.
-    const theme = createMuiTheme(Theme);
-
-    // // get all of the styled react apps
-    // const apps = getApps(theme, props, renderType.SERVER);
-
-    const app = (
-        <App theme={theme} childProps={props} sheetsManager={new Map()} />
-    );
+    const app = <App childProps={props} />;
 
     // Create a sheetsRegistry instance.
     const sheetsRegistry = new SheetsRegistry();
 
     // Render the apps to a string.
-    const html = serverSideRender(app, sheetsRegistry, generateClassName);
+    const html = serverSideRender(app, sheetsRegistry);
 
     // Grab the CSS from our sheetsRegistry.
     const css = sheetsRegistry.toString();
@@ -152,7 +139,11 @@ export function generateReactApps(req, res, next) {
 export function renderResults(req, res, next) {
     const html = res.locals.data.react.apps.html;
     const css = res.locals.data.react.apps.css;
-    const props = res.locals.data.react.props;
+    const props = JSON.stringify(res.locals.data.react.props);
+    const env = process.env.NODE_ENV;
+    const dev = env === 'development' ? `<script src="/dev.js"></script>` : ``;
+    const font = 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+    const pageTitle = 'Results';
 
     const payload = `
     <!DOCTYPE html>
@@ -161,22 +152,18 @@ export function renderResults(req, res, next) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Results</title>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+            <title>${pageTitle}</title>
+            <link rel="stylesheet" href=${font}>
             <style id="jss-server-side">${css}</style>
+            ${dev}
+            <!-- initial props must be set first --> 
+            <script id="props">window.__initial__props__ = ${props}</script>
+            <!-- call the results js last --> 
+            <script src="/results.js"></script>
         </head>
         <body>
             <div id="root">${html}</div>
         </body>
-        <script id="props"> window.__initial__props__ = ${JSON.stringify(
-            props
-        )}</script>
-        ${
-            process.env.NODE_ENV === 'development'
-                ? `<script src="/dev.js"></script>`
-                : ``
-        }
-        <script src="/results.js"></script>
     </html>`;
 
     res.send(payload);

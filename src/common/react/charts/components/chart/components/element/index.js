@@ -1,6 +1,6 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
+
 import { Card, CardContent, withStyles } from '@material-ui/core';
 import styles from './styles';
 import Image from '../image';
@@ -19,13 +19,7 @@ export default class Element extends PureComponent {
 
     render() {
         const { item, rank, classes } = this.props;
-        const {
-            card,
-            ranking,
-            cardText,
-            cardTextLeft,
-            cardTextRight
-        } = classes;
+        const { card, cardText, cardTextLeft, cardTextRight } = classes;
         const { name, uri, image, popularity, genres } = item;
         return (
             <Card className={card}>

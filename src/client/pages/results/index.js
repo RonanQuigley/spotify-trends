@@ -9,7 +9,9 @@ if (process.env.NODE_ENV !== 'development') {
     console.warn(`In dev mode for react; window __initial_state__ not cleared`);
 }
 
-renderApps();
+window.onload = () => {
+    renderApps();
+};
 
 if (module.hot) {
     module.hot.accept();
