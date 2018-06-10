@@ -12,10 +12,14 @@ export function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
+export function capitalise(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
 export function setupDataPoints(obj) {
     return Object.keys(obj).map(label => {
         return {
-            x: label,
+            x: capitalise(label),
             y: obj[label]
         };
     });

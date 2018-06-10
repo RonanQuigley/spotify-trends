@@ -10,9 +10,7 @@ import withState from 'common/react/common/components/state';
 import Chart from 'common/react/charts/components/chart';
 
 @withState
-@withStyles(styles, {
-    withTheme: true
-})
+@withStyles(styles)
 export default class Charts extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,

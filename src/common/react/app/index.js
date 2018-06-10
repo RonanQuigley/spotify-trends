@@ -19,10 +19,10 @@ export default class App extends PureComponent {
         return (
             <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
                 <CssBaseline />
-                <Charts {...childProps.artists} />
+                {/* <Charts {...childProps.artists} />
                 <Charts {...childProps.tracks} />;
                 <Pie {...childProps.key} />;
-                <Pie {...childProps.mode} />;
+                <Pie {...childProps.mode} />; */}
                 <Polar {...childProps.average} />;
             </MuiThemeProvider>
         );

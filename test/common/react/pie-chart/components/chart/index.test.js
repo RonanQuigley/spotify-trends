@@ -30,8 +30,8 @@ describe('common - react - chart', () => {
         });
         it('should have a data attribute', () => {
             expect(vicPie.props().data).to.deep.equal([
-                { x: 'major', y: 30 },
-                { x: 'minor', y: 20 }
+                { x: 'Major', y: 30 },
+                { x: 'Minor', y: 20 }
             ]);
         });
     });
