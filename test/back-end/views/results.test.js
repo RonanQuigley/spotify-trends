@@ -15,7 +15,6 @@ import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
 // import * as resultsPage from 'src/server/router/views/results/results.hbs';
-import * as CommonUtil from 'common/utilities';
 import * as ServerUtil from 'src/server/api/react/utilities';
 // import { appID } from 'common/utilities';
 import * as serverSideRender from 'src/server/api/react/render';
@@ -212,7 +211,7 @@ describe('back end - results view', () => {
         describe('generating react assets', () => {
             beforeEach(() => {
                 sandbox.spy(serverSideRender, 'default');
-                sandbox.spy(CommonUtil, 'getApps');
+
                 sandbox.spy(App, 'default');
                 // run the previous middleware function to setup our apps
                 Middleware.setupReactProps(req, res, () => {});

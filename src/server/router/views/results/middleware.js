@@ -1,6 +1,5 @@
-import results from './results.hbs';
+// import results from './results.hbs';
 import { headerID, styleID } from 'src/server/api/react/utilities';
-import { appID, getApp, appType, getApps, renderType } from 'common/utilities';
 import serverSideRender from 'src/server/api/react/render';
 import { setupProps } from 'src/server/api/react/utilities';
 import processData from 'src/server/api/user-data/processor';
@@ -10,19 +9,11 @@ import {
     requestAudioFeatures
 } from 'src/server/api/user-data/request-handler';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
-import JssProvider from 'react-jss/lib/JssProvider';
-import {
-    MuiThemeProvider,
-    createMuiTheme,
-    createGenerateClassName,
-    CssBaseline
-} from '@material-ui/core';
+import { createMuiTheme, createGenerateClassName } from '@material-ui/core';
 
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import Theme from 'common/react/common/theme';
 import App from 'common/react/app';
-import { V4MAPPED } from 'dns';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
