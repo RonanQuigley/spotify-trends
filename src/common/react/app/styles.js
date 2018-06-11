@@ -1,14 +1,33 @@
 import Theme from 'common/react/common/theme';
 
 export default {
+    background: {
+        padding: '2rem'
+    },
+    padChildren: {
+        '& > div': {
+            padding: '10rem'
+        }
+    },
     topChartsBackground: {
+        backgroundColor: Theme.palette.secondary.light,
+        overflow: 'auto'
+    },
+    pitchModeBackground: {
+        backgroundColor: Theme.palette.secondary.light,
+        overflow: 'auto'
+    },
+    averagesBackground: {
         backgroundColor: Theme.palette.secondary.light,
         overflow: 'auto'
     },
     headerContainer: {
         width: '50%',
-        margin: '1rem auto'
+        marginLeft: 'auto',
+        marginRight: 'auto'
     },
+    headerCharts: {},
+    headerPitchMode: {},
     heading: {
         letterSpacing: '0.4rem',
         textTransform: 'uppercase',
@@ -21,16 +40,19 @@ export default {
         flexFlow: 'row wrap',
         justifyContent: 'space-around'
     },
+    paperClamp: {
+        maxWidth: '46rem',
+        minWidth: '37rem'
+    },
     paper: {
         width: '40%',
-        maxWidth: '46rem',
-        minWidth: '35rem'
+        margin: '0 auto'
     },
     artists: {},
     tracks: {},
     divider: {
         width: '100%',
-        maxWidth: '40rem',
+        maxWidth: '30rem',
         minWidth: '14rem',
         margin: '0.7rem auto 0.7rem auto'
     }

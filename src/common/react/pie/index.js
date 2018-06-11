@@ -19,6 +19,7 @@ export default class Pie extends PureComponent {
         ssrID: PropTypes.string.isRequired,
         header: PropTypes.string.isRequired,
         padAngle: PropTypes.number,
+        cornerRadius: PropTypes.number,
         map: PropTypes.instanceOf(Map),
         value: PropTypes.number,
         onChange: PropTypes.func,
@@ -26,14 +27,27 @@ export default class Pie extends PureComponent {
     };
 
     render() {
-        const { value, onChange, data, classes, header, padAngle } = this.props;
+        const {
+            value,
+            onChange,
+            data,
+            classes,
+            header,
+            padAngle,
+            cornerRadius
+        } = this.props;
         const { root } = classes;
 
         return (
             <div className={root}>
                 <Header header={header} />
                 <UI value={value} onChange={onChange} />
-                <Content padAngle={padAngle} value={value} data={data} />
+                <Content
+                    cornerRadius={cornerRadius}
+                    padAngle={padAngle}
+                    value={value}
+                    data={data}
+                />
             </div>
         );
     }

@@ -7,15 +7,17 @@ export default class Content extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
         padAngle: PropTypes.number,
+        cornerRadius: PropTypes.number,
         value: PropTypes.number
     };
 
-    generateCharts = (data, padAngle) => {
+    generateCharts = (data, padAngle, cornerRadius) => {
         return Object.keys(data).map(timeRange => {
             return (
                 <Chart
                     padAngle={padAngle}
                     key={timeRange}
+                    cornerRadius={cornerRadius}
                     data={data[timeRange]}
                 />
             );
@@ -23,9 +25,11 @@ export default class Content extends PureComponent {
     };
 
     render() {
-        const { value, data, padAngle } = this.props;
+        const { value, data, padAngle, cornerRadius } = this.props;
         return (
-            <Swipe index={value}>{this.generateCharts(data, padAngle)}</Swipe>
+            <Swipe index={value}>
+                {this.generateCharts(data, padAngle, cornerRadius)}
+            </Swipe>
         );
     }
 }

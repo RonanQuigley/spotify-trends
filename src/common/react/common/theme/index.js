@@ -21,7 +21,10 @@ const Theme = {
     },
     typography: {
         fontFamily: "Roboto, 'Helvetica Neue', sans-serif",
-        fontSize: 14
+        fontSize: 14,
+        fontWeightLight: 300,
+        fontWeightMedium: 500,
+        fontWeightRegular: 400
     },
     overrides: {
         MuiTypography: {

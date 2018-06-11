@@ -28,7 +28,7 @@ export default class Polar extends PureComponent {
         const { root } = classes;
         return (
             <div className={root}>
-                <Header header={header} />
+                {/* <Header header={header} /> */}
                 <UI value={value} onChange={onChange} />
                 <Content value={value} data={data} />
             </div>
