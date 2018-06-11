@@ -9,7 +9,6 @@ export default class Genre extends PureComponent {
 
     render() {
         const { genre } = this.props;
-
         return <Typography variant="caption">{genre}</Typography>;
     }
 }

@@ -1,4 +1,4 @@
-import artists from './tracks';
-import tracks from './artists';
+import tracks from './tracks';
+import artists from './artists';
 
-export default Object.assign({}, artists, tracks);
+export default Object.assign({}, tracks, artists);

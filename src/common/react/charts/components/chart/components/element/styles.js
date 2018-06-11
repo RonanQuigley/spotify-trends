@@ -12,11 +12,12 @@ export default {
         width: '52%'
     },
     cardContent: {
-        width: '50%'
+        width: '50%',
+        paddingBottom: '12px !important'
     },
     cardText: {
         display: 'flex',
-        height: '8rem',
+        height: '100%',
         justifyContent: 'space-between'
     },
     cardTextLeft: {},

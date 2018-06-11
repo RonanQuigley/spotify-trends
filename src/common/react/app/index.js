@@ -12,7 +12,6 @@ import {
 import { hot } from 'react-hot-loader';
 import { PropTypes } from 'prop-types';
 import styles from './styles';
-import Header from 'common/react/common/components/header';
 @hot(module)
 @withStyles(styles, { withTheme: true })
 export default class App extends PureComponent {
@@ -36,23 +35,23 @@ export default class App extends PureComponent {
                 <div className={classes.topChartsBackground}>
                     <div className={classes.headerContainer}>
                         <Typography
-                            gutterBottom={true}
+                            gutterBottom={false}
                             variant={'display2'}
                             align={'center'}
                             className={classes.heading}
                         >
                             Charts
                         </Typography>
-                        <Divider light={false} />
+                        <Divider className={classes.divider} light={false} />
                     </div>
 
                     <div className={classes.topChartsContainer}>
-                        <Paper elevation={12}>
+                        <Paper className={classes.paper} elevation={12}>
                             <div id="artists" className={classes.artists}>
                                 <Charts {...childProps.artists} />
                             </div>
                         </Paper>
-                        <Paper elevation={12}>
+                        <Paper className={classes.paper} elevation={12}>
                             <div id="tracks" className={classes.tracks}>
                                 <Charts {...childProps.tracks} />
                             </div>

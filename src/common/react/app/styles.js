@@ -7,24 +7,31 @@ export default {
     },
     headerContainer: {
         width: '50%',
-        margin: '1% auto'
+        margin: '1rem auto'
     },
     heading: {
-        // textDecoration: 'underline',
+        letterSpacing: '0.4rem',
         textTransform: 'uppercase',
         color: Theme.palette.secondary.contrastText
     },
     topChartsContainer: {
-        width: '90%',
+        width: '100%',
         margin: '0 auto',
         display: 'flex',
         flexFlow: 'row wrap',
         justifyContent: 'space-around'
     },
-    artists: {
-        width: '46rem'
+    paper: {
+        width: '40%',
+        maxWidth: '46rem',
+        minWidth: '35rem'
     },
-    tracks: {
-        width: '46rem'
+    artists: {},
+    tracks: {},
+    divider: {
+        width: '100%',
+        maxWidth: '40rem',
+        minWidth: '14rem',
+        margin: '0.7rem auto 0.7rem auto'
     }
 };
