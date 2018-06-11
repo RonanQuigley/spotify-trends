@@ -8,7 +8,9 @@ import Popularity from '../popularity';
 import { Typography } from '@material-ui/core';
 import Rank from 'charts/components/chart/components/rank';
 import Genre from 'charts/components/chart/components/genre';
+import { hot } from 'react-hot-loader';
 
+@hot(module)
 @withStyles(styles)
 export default class Element extends PureComponent {
     static propTypes = {
@@ -19,19 +21,25 @@ export default class Element extends PureComponent {
 
     render() {
         const { item, rank, classes } = this.props;
-        const { card, cardText, cardTextLeft, cardTextRight } = classes;
         const { name, uri, image, popularity, genres } = item;
         return (
-            <Card className={card}>
-                <Image uri={uri} image={image} />
-                <CardContent>
-                    <div className={cardText}>
-                        <div className={cardTextLeft}>
-                            <Typography variant="subheading">{name}</Typography>
+            <Card className={classes.card}>
+                <div className={classes.image}>
+                    <Image uri={uri} image={image} />
+                </div>
+                <CardContent className={classes.cardContent}>
+                    <div className={classes.cardText}>
+                        <div className={classes.cardTextLeft}>
+                            <Typography
+                                className={classes.test}
+                                variant="subheading"
+                            >
+                                {name}
+                            </Typography>
                             <Popularity rating={popularity} />
                             {genres && <Genre genre={genres} />}
                         </div>
-                        <div className={cardTextRight}>
+                        <div className={classes.cardTextRight}>
                             <Rank rank={rank} />
                         </div>
                     </div>

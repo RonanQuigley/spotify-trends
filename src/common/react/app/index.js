@@ -3,18 +3,18 @@ import Charts from 'charts';
 import Pie from 'pie/';
 import Polar from 'common/react/polar';
 import {
-    MuiThemeProvider,
     CssBaseline,
-    createMuiTheme,
     withStyles,
-    Paper
+    Paper,
+    Typography,
+    Divider
 } from '@material-ui/core';
 import { hot } from 'react-hot-loader';
 import { PropTypes } from 'prop-types';
-import Theme from 'common/react/common/theme';
 import styles from './styles';
+import Header from 'common/react/common/components/header';
 @hot(module)
-@withStyles(styles)
+@withStyles(styles, { withTheme: true })
 export default class App extends PureComponent {
     static propTypes = {
         childProps: PropTypes.object.isRequired,
@@ -34,6 +34,18 @@ export default class App extends PureComponent {
             <React.Fragment>
                 <CssBaseline />
                 <div className={classes.topChartsBackground}>
+                    <div className={classes.headerContainer}>
+                        <Typography
+                            gutterBottom={true}
+                            variant={'display2'}
+                            align={'center'}
+                            className={classes.heading}
+                        >
+                            Charts
+                        </Typography>
+                        <Divider light={false} />
+                    </div>
+
                     <div className={classes.topChartsContainer}>
                         <Paper elevation={12}>
                             <div id="artists" className={classes.artists}>

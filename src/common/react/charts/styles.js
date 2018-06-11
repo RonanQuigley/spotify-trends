@@ -1,6 +1,6 @@
 export default {
     root: {
-        margin: '1% auto'
+        margin: '0'
     },
     scrollOuter: {
         height: '65rem',

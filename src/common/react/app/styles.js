@@ -1,6 +1,18 @@
+import Theme from 'common/react/common/theme';
+
 export default {
     topChartsBackground: {
-        backgroundColor: 'cyan'
+        backgroundColor: Theme.palette.secondary.light,
+        overflow: 'auto'
+    },
+    headerContainer: {
+        width: '50%',
+        margin: '1% auto'
+    },
+    heading: {
+        // textDecoration: 'underline',
+        textTransform: 'uppercase',
+        color: Theme.palette.secondary.contrastText
     },
     topChartsContainer: {
         width: '90%',

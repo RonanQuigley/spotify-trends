@@ -20,7 +20,8 @@ const Theme = {
         secondary: Colors.secondary
     },
     typography: {
-        fontFamily: "Roboto, 'Helvetica Neue', sans-serif"
+        fontFamily: "Roboto, 'Helvetica Neue', sans-serif",
+        fontSize: 14
     },
     overrides: {
         MuiTypography: {

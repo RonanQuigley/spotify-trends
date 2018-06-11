@@ -15,14 +15,13 @@ export default class Header extends PureComponent {
     };
 
     render() {
-        const { header } = this.props;
-        const { typography } = this.props.classes;
+        const { header, classes } = this.props;
         return (
-            <AppBar position="static">
+            <AppBar className={classes.appBar} position="static">
                 <Toolbar>
                     <Typography
-                        className={typography}
-                        variant="title"
+                        className={classes.typography}
+                        variant="headline"
                         color="inherit"
                     >
                         {header}

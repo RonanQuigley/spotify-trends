@@ -20,6 +20,9 @@ export default function renderApps() {
     if (process.env.NODE_ENV !== 'development') {
         clearInitPropsFromDOM();
         clearInitPropsFromWindow();
+    } else {
+        // expose the theme to the window for reference
+        window.theme = theme;
     }
 }
 

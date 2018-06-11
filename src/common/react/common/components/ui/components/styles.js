@@ -1,9 +1,8 @@
 import Theme from 'common/react/common/theme';
 
 export default {
-    typography: {
-        margin: '0 auto',
-        textTransform: 'uppercase'
+    root: {
+        height: '55px'
     },
     appBar: {
         backgroundColor: Theme.palette.primary.dark

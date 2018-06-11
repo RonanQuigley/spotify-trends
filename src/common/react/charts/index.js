@@ -9,6 +9,7 @@ import styles from './styles';
 import withState from 'common/react/common/components/state';
 import Chart from 'common/react/charts/components/chart';
 
+@hot(module)
 @withState
 @withStyles(styles)
 export default class Charts extends PureComponent {
