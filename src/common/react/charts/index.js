@@ -2,12 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import UI from 'common/react/common/components/ui';
-import Content from 'common/react/common/components/content';
+import Content from 'common/react/charts/components/content';
 import Header from 'common/react/common/components/header';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import withState from 'common/react/common/components/state';
-import Chart from 'common/react/charts/components/chart';
 
 @hot(module)
 @withState
@@ -32,7 +31,7 @@ export default class Charts extends PureComponent {
                 <UI value={value} onChange={onChange} />
                 <div className={scrollOuter}>
                     <div className={scrollInner}>
-                        <Content value={value} component={Chart} data={data} />
+                        <Content value={value} data={data} />
                     </div>
                 </div>
             </div>

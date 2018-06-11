@@ -7,17 +7,21 @@ import { setupDataPoints } from 'common/react/common/utilities';
 export default class Chart extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
+        padAngle: PropTypes.number,
         classes: PropTypes.object
     };
 
     render() {
-        const { data, classes } = this.props;
+        const { data, classes, padAngle } = this.props;
         const dataPoints = setupDataPoints(data);
         return (
             <VictoryPie
                 width={600}
                 height={600}
                 padding={100}
+                domainPadding={{ x: 1000 }}
+                labelRadius={215}
+                padAngle={padAngle}
                 labels={data => `${data.x}: ${data.y}`}
                 data={dataPoints}
                 style={{

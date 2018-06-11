@@ -8,7 +8,7 @@ import Payload from 'fixtures/spotify/processed-data/payload';
 import Chart from 'common/react/polar/components/chart';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
-import Content from 'common/react/common/components/content';
+import Content from 'common/react/polar/components/content';
 
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -44,11 +44,6 @@ describe('react - polar - index', () => {
         });
         it('should contain a data attribute', () => {
             expect(content.props().data).to.be.a('object');
-        });
-        it('should have a component attribute', () => {
-            expect(content.props().component)
-                .to.be.a('function')
-                .and.to.equal(Chart);
         });
     });
     describe('Header', () => {

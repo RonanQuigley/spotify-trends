@@ -17,7 +17,7 @@ describe('react - charts - component - ui', () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallow(<Interface value={0} onChange={() => {}} />);
+        wrapper = shallow(<Interface value={0} onChange={() => {}} />).dive();
     });
     afterEach(() => {
         sandbox.restore();
@@ -59,7 +59,7 @@ describe('react - charts - component - ui', () => {
             const onChange = sandbox.spy();
             const wrapper = shallow(
                 <Interface value={0} onChange={onChange} />
-            );
+            ).dive();
             wrapper.find(Tabs).simulate('change');
             expect(onChange).to.be.calledOnce;
         });

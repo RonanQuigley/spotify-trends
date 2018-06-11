@@ -7,7 +7,7 @@ import Pie from 'pie';
 import Payload from 'fixtures/spotify/processed-data/payload';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
-import Content from 'common/react/common/components/content';
+import Content from 'common/react/pie/components/content';
 import Chart from 'common/react/pie/components/chart';
 
 chai.use(chaiEnzyme());
@@ -44,11 +44,6 @@ describe('react - pie - index', () => {
         });
         it('should contain a data attribute', () => {
             expect(content.props().data).to.be.a('object');
-        });
-        it('should have a component attribute', () => {
-            expect(content.props().component)
-                .to.be.a('function')
-                .and.to.equal(Chart);
         });
     });
     describe('Header', () => {

@@ -1,22 +1,19 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
-import Chart from 'common/react/polar/components/chart';
+import Chart from 'common/react/pie/components/chart';
 import Swipe from 'common/react/common/components/swipe';
 
 export default class Content extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
-        component: PropTypes.func.isRequired,
         padAngle: PropTypes.number,
         value: PropTypes.number
     };
 
-    generateCharts = (data, Component) => {
-        const padAngle = this.props.padAngle;
+    generateCharts = (data, padAngle) => {
         return Object.keys(data).map(timeRange => {
             return (
-                <Component
+                <Chart
                     padAngle={padAngle}
                     key={timeRange}
                     data={data[timeRange]}
@@ -26,9 +23,9 @@ export default class Content extends PureComponent {
     };
 
     render() {
-        const { value, data, component } = this.props;
+        const { value, data, padAngle } = this.props;
         return (
-            <Swipe index={value}>{this.generateCharts(data, component)}</Swipe>
+            <Swipe index={value}>{this.generateCharts(data, padAngle)}</Swipe>
         );
     }
 }

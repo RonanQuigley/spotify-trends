@@ -59,9 +59,32 @@ export default class App extends PureComponent {
                     </div>
                 </div>
 
+                <div id="pitch-and-mode-container">
+                    <div className={classes.headerContainer}>
+                        <Typography
+                            gutterBottom={false}
+                            variant={'display2'}
+                            align={'center'}
+                            className={classes.heading}
+                        >
+                            Mode
+                        </Typography>
+                        <Divider className={classes.divider} light={false} />
+                    </div>
+                    <div className={classes.topChartsContainer}>
+                        <Paper className={classes.paper} elevation={12}>
+                            <div id="key" className={classes.artists}>
+                                <Pie padAngle={5} {...childProps.key} />
+                            </div>
+                        </Paper>
+                        <Paper className={classes.paper} elevation={12}>
+                            <div id="mode" className={classes.tracks}>
+                                <Pie {...childProps.mode} />
+                            </div>
+                        </Paper>
+                    </div>
+                </div>
                 {/* <div id="audio-features-container">
-                    <Pie {...childProps.key} />
-                    <Pie {...childProps.mode} />
                     <Polar {...childProps.average} />
                 </div> */}
             </React.Fragment>

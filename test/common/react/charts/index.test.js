@@ -6,7 +6,7 @@ import Charts from 'charts/index';
 import UI from 'common/react/common/components/ui';
 import Header from 'common/react/common/components/header';
 import chaiEnzyme from 'chai-enzyme';
-import Content from 'common/react/common/components/content';
+import Content from 'common/react/charts/components/content';
 import Chart from 'common/react/charts/components/chart';
 
 chai.use(chaiEnzyme());
@@ -69,11 +69,6 @@ describe('react - charts - index', () => {
         });
         it('should have a data attribute', () => {
             expect(content.props().data).to.be.a('object');
-        });
-        it('should have a component attribute', () => {
-            expect(content.props().component)
-                .to.be.a('function')
-                .and.to.equal(Chart);
         });
     });
 });

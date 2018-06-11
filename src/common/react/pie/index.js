@@ -7,7 +7,7 @@ import styles from './styles';
 import Chart from 'common/react/pie/components/chart';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
-import Content from 'common/react/common/components/content';
+import Content from 'common/react/pie/components/content';
 
 /* must be wrapped inside root
 - this is where the state lives */
@@ -18,26 +18,22 @@ export default class Pie extends PureComponent {
         data: PropTypes.object.isRequired,
         ssrID: PropTypes.string.isRequired,
         header: PropTypes.string.isRequired,
+        padAngle: PropTypes.number,
         map: PropTypes.instanceOf(Map),
         value: PropTypes.number,
         onChange: PropTypes.func,
         classes: PropTypes.object
     };
 
-    generateCharts = data => {
-        return Object.keys(data).map(timeRange => {
-            return <Chart key={timeRange} data={data[timeRange]} />;
-        });
-    };
-
     render() {
-        const { value, onChange, data, classes, header } = this.props;
+        const { value, onChange, data, classes, header, padAngle } = this.props;
         const { root } = classes;
+
         return (
             <div className={root}>
                 <Header header={header} />
                 <UI value={value} onChange={onChange} />
-                <Content value={value} component={Chart} data={data} />
+                <Content padAngle={padAngle} value={value} data={data} />
             </div>
         );
     }

@@ -1,10 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
 import { withStyles } from '@material-ui/core/styles';
 import withState from 'common/react/common/components/state';
 import styles from './styles';
-import Content from 'common/react/common/components/content';
+import Content from 'common/react/polar/components/content';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
 import Chart from 'common/react/polar/components/chart';
@@ -31,7 +30,7 @@ export default class Polar extends PureComponent {
             <div className={root}>
                 <Header header={header} />
                 <UI value={value} onChange={onChange} />
-                <Content value={value} component={Chart} data={data} />
+                <Content value={value} data={data} />
             </div>
         );
     }
