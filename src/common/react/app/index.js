@@ -6,7 +6,8 @@ import {
     MuiThemeProvider,
     CssBaseline,
     createMuiTheme,
-    withStyles
+    withStyles,
+    Paper
 } from '@material-ui/core';
 import { hot } from 'react-hot-loader';
 import { PropTypes } from 'prop-types';
@@ -22,24 +23,36 @@ export default class App extends PureComponent {
 
     render() {
         const { childProps, classes } = this.props;
-        const { artists, tracks } = classes;
+
+        /*
+            Performance Considerations:
+
+            - Paper components use box shadows
+        */
 
         return (
             <React.Fragment>
                 <CssBaseline />
-                <div className={classes.topChartsContainer}>
-                    <div id="artists" className={artists}>
-                        <Charts {...childProps.artists} />
-                    </div>
-                    <div id="tracks" className={tracks}>
-                        <Charts {...childProps.tracks} />
+                <div className={classes.topChartsBackground}>
+                    <div className={classes.topChartsContainer}>
+                        <Paper elevation={12}>
+                            <div id="artists" className={classes.artists}>
+                                <Charts {...childProps.artists} />
+                            </div>
+                        </Paper>
+                        <Paper elevation={12}>
+                            <div id="tracks" className={classes.tracks}>
+                                <Charts {...childProps.tracks} />
+                            </div>
+                        </Paper>
                     </div>
                 </div>
-                <div id="audio-features-container">
+
+                {/* <div id="audio-features-container">
                     <Pie {...childProps.key} />
                     <Pie {...childProps.mode} />
                     <Polar {...childProps.average} />
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

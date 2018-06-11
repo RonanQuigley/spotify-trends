@@ -155,7 +155,7 @@ export function renderResults(req, res, next) {
             <title>${pageTitle}</title>
             <link rel="stylesheet" href=${font}>
             <style id="jss-server-side">${css}</style>
-            ${dev}
+
             <!-- initial props must be set first --> 
             <script id="props">window.__initial__props__ = ${props}</script>
             <!-- call the results js last --> 
@@ -163,6 +163,7 @@ export function renderResults(req, res, next) {
         </head>
         <body>
             <div id="root">${html}</div>
+            ${dev}
         </body>
     </html>`;
 

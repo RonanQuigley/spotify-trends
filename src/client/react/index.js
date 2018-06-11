@@ -34,7 +34,3 @@ function clearInitPropsFromDOM() {
 function clearInitPropsFromWindow() {
     delete window.__initial__props__;
 }
-
-if (module.hot) {
-    module.hot.accept();
-}

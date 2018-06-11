@@ -14,5 +14,8 @@ window.onload = () => {
 };
 
 if (module.hot) {
-    module.hot.accept();
+    module.hot.accept('src/client/react', () => {
+        // we need to re-require the module for changes to take effect
+        require('src/client/react').default();
+    });
 }
