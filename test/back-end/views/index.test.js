@@ -29,6 +29,8 @@ describe('back end - index route', () => {
         describe('rendering results page', () => {
             beforeEach(() => {
                 sandbox.spy(res, 'send');
+                // setup our apps before our render page tests
+                Middleware.setupReactApp(req, res, () => {});
                 Middleware.renderPage(req, res, () => {});
             });
             it('should call send', () => {

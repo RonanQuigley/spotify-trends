@@ -1,4 +1,6 @@
-import renderApps from 'src/client/react';
+import { hydrateApp, getInitProps } from 'src/client/react';
+import App from 'common/react/apps/results';
+import React from 'react';
 import { updateAllTokens } from 'src/client/utilities/tokens';
 
 // when working with react & data fixtures, we don't need to update tokens
@@ -10,7 +12,9 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 window.onload = () => {
-    renderApps();
+    const props = getInitProps();
+    const app = <App childProps={props} />;
+    hydrateApp(app);
 };
 
 if (module.hot) {

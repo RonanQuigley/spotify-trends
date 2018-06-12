@@ -18,7 +18,7 @@ import * as Statistics from 'src/server/api/statistics';
 import * as ServerUtil from 'src/server/api/react/utilities';
 // import { appID } from 'common/utilities';
 import * as serverSideRender from 'src/server/api/react/render';
-import * as App from 'common/react/app';
+import * as App from 'common/react/apps/results';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;

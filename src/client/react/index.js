@@ -4,12 +4,10 @@ import SSRRemover from 'src/client/react/ssr-remover';
 import Theme from 'common/react/common/theme';
 import whyDidYouUpdate from 'why-did-you-update';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
-import App from 'common/react/app';
 
-export default function renderApps() {
-    const props = getInitProps();
+export function hydrateApp(app) {
     const theme = createMuiTheme(Theme);
-    const app = <App childProps={props} />;
+
     ReactDOM.hydrate(
         <SSRRemover>
             <MuiThemeProvider theme={theme}>{app}</MuiThemeProvider>
@@ -26,7 +24,7 @@ export default function renderApps() {
     }
 }
 
-function getInitProps() {
+export function getInitProps() {
     return window.__initial__props__;
 }
 

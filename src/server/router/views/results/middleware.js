@@ -10,7 +10,7 @@ import {
 } from 'src/server/api/user-data/request-handler';
 import React from 'react';
 import { SheetsRegistry } from 'react-jss/lib/jss';
-import App from 'common/react/app';
+import App from 'common/react/apps/results';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;

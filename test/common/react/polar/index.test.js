@@ -46,18 +46,18 @@ describe('react - polar - index', () => {
             expect(content.props().data).to.be.a('object');
         });
     });
-    describe('Header', () => {
-        let header;
-        beforeEach(() => {
-            header = wrapper.find(Header);
-        });
-        it('should exist', () => {
-            expect(header).to.have.length(1);
-        });
-        it('should contain a header attribute', () => {
-            expect(header.props().header).to.be.a('string').and.to.not.be.empty;
-        });
-    });
+    // describe('Header', () => {
+    //     let header;
+    //     beforeEach(() => {
+    //         header = wrapper.find(Header);
+    //     });
+    //     it('should exist', () => {
+    //         expect(header).to.have.length(1);
+    //     });
+    //     it('should contain a header attribute', () => {
+    //         expect(header.props().header).to.be.a('string').and.to.not.be.empty;
+    //     });
+    // });
     describe('UI', () => {
         let ui;
         beforeEach(() => {
