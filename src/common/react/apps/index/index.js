@@ -22,7 +22,7 @@ export default class App extends PureComponent {
             <div id="container" className={classes.container}>
                 <CssBaseline />
                 <Title />
-                <Divider inset={true} className={classes.divider} />
+                <Divider inset={true} />
                 <div id="features" className={classes.features}>
                     <Text />
                     <Text />

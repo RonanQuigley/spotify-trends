@@ -34,6 +34,11 @@ const Theme = {
             headline: {
                 textTransform: 'uppercase'
             }
+        },
+        MuiDivider: {
+            root: {
+                backgroundColor: 'rgba(255,255,255,0.70)'
+            }
         }
     }
 };

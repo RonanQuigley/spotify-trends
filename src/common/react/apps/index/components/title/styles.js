@@ -7,6 +7,7 @@ export default {
     },
     heading: {
         letterSpacing: '0.7rem',
+        textAlign: 'center',
         fontWeight: 100,
         textTransform: 'uppercase'
     },
