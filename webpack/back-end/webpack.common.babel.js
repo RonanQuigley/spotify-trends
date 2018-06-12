@@ -1,9 +1,8 @@
-import path from 'path';
 import DotEnv from 'dotenv-webpack';
 import nodeExternals from 'webpack-node-externals';
 import merge from 'webpack-merge';
 import common from '../webpack.common.babel';
-import { setDevTool, setHBSLoader, setOutput } from './utilities';
+import { setDevTool, setOutput } from './utilities';
 
 const backEndCommon = {
     name: 'server',
@@ -22,7 +21,6 @@ const backEndCommon = {
                 test: /\.js$/,
                 use: ['babel-loader?cacheDirectory=true']
             },
-            setHBSLoader(),
             {
                 sideEffects: false // tells webpack our code is pure for dead code elimination
             }
