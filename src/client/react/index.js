@@ -9,7 +9,7 @@ export function hydrateApp(app, theme) {
     // changeable and can be hot reloaded
     const muiTheme = createMuiTheme(theme);
     if (process.env.NODE_ENV === 'development') {
-        window.theme = theme;
+        window.theme = muiTheme;
     }
     ReactDOM.hydrate(
         <SSRRemover>
