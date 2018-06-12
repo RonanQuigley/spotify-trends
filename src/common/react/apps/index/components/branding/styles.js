@@ -1,5 +1,6 @@
 export default {
     brandingContainer: {
-        margin: '1rem'
+        margin: '0 auto',
+        width: '50%'
     }
 };

@@ -30,7 +30,8 @@ export function renderPage(req, res, next) {
     const css = res.locals.react.apps.css;
     const env = process.env.NODE_ENV;
     const dev = env === 'development' ? `<script src="/dev.js"></script>` : ``;
-    const font = 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+    const font =
+        'https://fonts.googleapis.com/css?family=Roboto:300,400,500|Roboto+Mono:100,300';
     const payload = `
     <!DOCTYPE html>
     <html lang="en">

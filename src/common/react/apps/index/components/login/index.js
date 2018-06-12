@@ -14,7 +14,7 @@ export default class Login extends PureComponent {
                 variant="outlined"
                 size={'large'}
             >
-                Login
+                Login with Spotify
             </Button>
         );
     }
