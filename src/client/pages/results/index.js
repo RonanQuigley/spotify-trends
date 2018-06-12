@@ -14,12 +14,19 @@ if (process.env.NODE_ENV !== 'development') {
 window.onload = () => {
     const props = getInitProps();
     const app = <App childProps={props} />;
+    if (process.env.NODE_ENV !== 'development') {
+        clearInitPropsFromDOM();
+        clearInitPropsFromWindow();
+    }
     hydrateApp(app);
 };
 
 if (module.hot) {
     module.hot.accept('src/client/react', () => {
         // we need to re-require the module for changes to take effect
-        require('src/client/react').default();
+        const { hydrateApp } = require('src/client/react');
+        const props = getInitProps();
+        const app = <App childProps={props} />;
+        hydrateApp(app);
     });
 }
