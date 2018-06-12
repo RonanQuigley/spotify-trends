@@ -18,23 +18,7 @@ const frontEndCommon = {
     devtool: setDevTool(),
     output: setOutput(),
     plugins: [new webpack.NamedModulesPlugin()],
-    externals: externals,
-    module: {
-        rules: [
-            {
-                exclude: /node_modules|packages/,
-                test: /\.js$/,
-                use: 'babel-loader?cacheDirectory=true'
-            },
-            {
-                test: /\.svg$/,
-                loader: 'svg-inline-loader'
-            },
-            {
-                sideEffects: false // tells webpack our code is pure for dead code elimination
-            }
-        ]
-    }
+    externals: externals
 };
 
 export default merge(common, frontEndCommon);

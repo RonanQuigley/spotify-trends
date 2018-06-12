@@ -13,23 +13,7 @@ const backEndCommon = {
         __dirname: false
     },
     externals: nodeExternals(),
-    plugins: [new DotEnv()],
-    module: {
-        rules: [
-            {
-                exclude: /node_modules/,
-                test: /\.js$/,
-                use: ['babel-loader?cacheDirectory=true']
-            },
-            {
-                test: /\.svg$/,
-                loader: 'svg-inline-loader'
-            },
-            {
-                sideEffects: false // tells webpack our code is pure for dead code elimination
-            }
-        ]
-    }
+    plugins: [new DotEnv()]
 };
 
 export default merge(common, backEndCommon);
