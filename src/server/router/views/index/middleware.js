@@ -45,9 +45,6 @@ export function renderPage(req, res, next) {
         </head>
         <body>
             <div id="root">${html}</div>                      
-            <div id="login-wrapper">
-                <a href="/login">Login</a>
-            </div>
             ${dev}
         </body>
     </html>`;

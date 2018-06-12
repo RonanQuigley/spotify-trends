@@ -27,6 +27,10 @@ const frontEndCommon = {
                 use: 'babel-loader?cacheDirectory=true'
             },
             {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader'
+            },
+            {
                 sideEffects: false // tells webpack our code is pure for dead code elimination
             }
         ]

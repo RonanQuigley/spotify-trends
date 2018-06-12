@@ -5,6 +5,7 @@
         "paths": {
             "fixtures/*": ["test/fixtures/*"],
             "common/*" : ["src/common/*"],
+            "apps/*" : ["src/common/react/apps/*"],
             "charts/*" : ["src/common/react/charts/*"],
             "pie/*" : ["src/common/react/pie/*"],
             "src/*": ["src/*"]
