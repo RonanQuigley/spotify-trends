@@ -17,7 +17,10 @@ const Theme = {
     palette: {
         type: 'light',
         primary: Colors.primary,
-        secondary: Colors.secondary
+        secondary: Colors.secondary,
+        background: {
+            default: Colors.primary.dark
+        }
     },
     typography: {
         fontFamily: "Roboto, 'Helvetica Neue', sans-serif",

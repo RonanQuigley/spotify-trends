@@ -2,6 +2,7 @@ import { isExistingUser, processUser } from '../../utilities/user';
 import React from 'react';
 import App from 'common/react/apps/index';
 import { hydrateApp } from 'src/client/react';
+import Theme from 'common/react/common/theme';
 
 window.onload = () => {
     (async () => {
@@ -11,7 +12,7 @@ window.onload = () => {
     })();
 
     const app = <App />;
-    hydrateApp(app);
+    hydrateApp(app, Theme);
 };
 
 if (module.hot) {
