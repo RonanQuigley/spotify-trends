@@ -5,6 +5,8 @@ import SSRRemover from 'src/client/react/ssr-remover';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
 export function hydrateApp(app, theme) {
+    // pass the theme in so that it is
+    // changeable and can be hot reloaded
     const muiTheme = createMuiTheme(theme);
     if (process.env.NODE_ENV === 'development') {
         window.theme = theme;
