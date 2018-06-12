@@ -1,7 +1,7 @@
 import { hydrateApp, getInitProps } from 'src/client/react';
 import App from 'common/react/apps/results';
 import React from 'react';
-import Theme from 'common/react/common/theme';
+import Theme from 'common/react/common/theme/results';
 import { updateAllTokens } from 'src/client/utilities/tokens';
 
 window.onload = () => {
@@ -30,10 +30,10 @@ if (module.hot) {
         https://webpack.js.org/api/hot-module-replacement/ 
     */
     // accept changes from the theme
-    module.hot.accept('common/react/common/theme', () => {
+    module.hot.accept('common/react/common/theme/results', () => {
         const { hydrateApp } = require('src/client/react');
         // this is a export default, so use .default
-        const theme = require('common/react/common/theme').default;
+        const theme = require('common/react/common/theme/results').default;
         const props = getInitProps();
         const app = <App childProps={props} />;
         hydrateApp(app, theme);

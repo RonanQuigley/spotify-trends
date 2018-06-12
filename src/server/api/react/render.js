@@ -6,10 +6,9 @@ import {
     createMuiTheme,
     createGenerateClassName
 } from '@material-ui/core';
-import Theme from 'common/react/common/theme';
 
-export default function serverSideRender(apps, registry) {
-    const theme = createMuiTheme(Theme);
+export default function serverSideRender(apps, registry, theme) {
+    const muiTheme = createMuiTheme(theme);
     /* IMPORTANT
     the MuiThemeProvider and JssProvider CANNOT be put inside the app.
     It would otherwise result in the css failing for successive server 
@@ -20,7 +19,7 @@ export default function serverSideRender(apps, registry) {
             registry={registry}
             generateClassName={createGenerateClassName()}
         >
-            <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+            <MuiThemeProvider theme={muiTheme} sheetsManager={new Map()}>
                 {apps}
             </MuiThemeProvider>
         </JssProvider>

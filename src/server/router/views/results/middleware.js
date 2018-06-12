@@ -11,6 +11,7 @@ import {
 import React from 'react';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import App from 'common/react/apps/results';
+import Theme from 'common/react/common/theme/results';
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -123,7 +124,7 @@ export function generateReactApps(req, res, next) {
     const sheetsRegistry = new SheetsRegistry();
 
     // Render the apps to a string.
-    const html = serverSideRender(app, sheetsRegistry);
+    const html = serverSideRender(app, sheetsRegistry, Theme);
 
     // Grab the CSS from our sheetsRegistry.
     const css = sheetsRegistry.toString();

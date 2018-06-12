@@ -1,6 +1,7 @@
 import React from 'react';
 import App from 'common/react/apps/index';
 import serverSideRender from 'src/server/api/react/render';
+import Theme from 'common/react/common/theme/index';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 
 export function setupReactApp(req, res, next) {
@@ -9,7 +10,7 @@ export function setupReactApp(req, res, next) {
     // Create a sheetsRegistry instance.
     const sheetsRegistry = new SheetsRegistry();
 
-    const html = serverSideRender(app, sheetsRegistry);
+    const html = serverSideRender(app, sheetsRegistry, Theme);
 
     const css = sheetsRegistry.toString();
 
