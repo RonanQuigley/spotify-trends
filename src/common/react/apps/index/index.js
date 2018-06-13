@@ -41,11 +41,11 @@ export default class App extends PureComponent {
                         >
                             <SubHeadline>Charts</SubHeadline>
                             <Text>
-                                Discover your listening preferences with a
-                                rundown of your top 50 artists and tracks. Your
-                                listening habits are sampled across a range of
-                                time frames. This includes the past four weeks,
-                                six months and all time.
+                                Discover your listening habits with a rundown of
+                                your top artists and tracks. Results are
+                                gathered across a range of time frames,
+                                including the past four weeks, six months and
+                                all time.
                             </Text>
                         </div>
                         <div
@@ -68,10 +68,10 @@ export default class App extends PureComponent {
                         >
                             <SubHeadline>Traits</SubHeadline>
                             <Text>
-                                Get a sample of your evolving, or maybe even
-                                unchanging, musical tastes. Attributes include
+                                Sample your evolving, or maybe even unchanging,
+                                musical tastes. Attributes measured include
                                 acousticness, loudness, music danceability and
-                                valence; this is a measure of how positive your
+                                valence, an indication of how positive your
                                 music choices sound.
                             </Text>
                         </div>
