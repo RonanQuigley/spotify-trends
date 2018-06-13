@@ -29,7 +29,8 @@ export default {
         },
         '@media (max-width : 420px)': {
             fontSize: '1.0rem',
-            letterSpacing: '0.05rem'
+            letterSpacing: '0.05rem',
+            margin: '0 0 0.5rem 0'
         }
     },
     divider: {
