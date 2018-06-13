@@ -16,8 +16,7 @@ export default class Login extends PureComponent {
                 className={classes.button}
                 color="secondary"
                 component={'a'}
-                // href={'/login'}
-
+                href={'/login'}
                 variant="raised"
                 size={'large'}
             >

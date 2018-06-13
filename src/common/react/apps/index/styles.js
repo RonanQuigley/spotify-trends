@@ -14,5 +14,8 @@ export default {
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between'
+    },
+    featureItem: {
+        padding: '1rem'
     }
 };

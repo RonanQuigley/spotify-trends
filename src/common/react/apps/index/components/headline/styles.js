@@ -1,6 +1,13 @@
 export default {
     headline: {
-        display: 'inline-block',
-        margin: '1rem 1rem 1rem 0rem'
-    }
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    typography: {
+        fontFamily: "'Roboto Mono', monospace",
+        textTransform: 'uppercase',
+        letterSpacing: '0.5rem',
+        margin: '1rem'
+    },
+    divider: {}
 };
