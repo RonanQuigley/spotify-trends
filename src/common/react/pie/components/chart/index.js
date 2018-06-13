@@ -43,7 +43,7 @@ export default class Chart extends PureComponent {
                 containerComponent={
                     <VictoryContainer
                         containerId={'Chart-App'}
-                        responsive={false}
+                        responsive={true}
                     />
                 }
             />

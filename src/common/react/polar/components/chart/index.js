@@ -1,16 +1,18 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
 import {
     VictoryPolarAxis,
     VictoryChart,
     VictoryBar,
     VictoryContainer,
-    VictoryTheme,
-    VictoryClipContainer
+    VictoryTheme
 } from 'victory';
-import { setupDataPoints } from 'common/react/common/utilities';
 
+import { setupDataPoints } from 'common/react/common/utilities';
+import Theme from 'common/react/common/theme/results';
+import { hot } from 'react-hot-loader';
+
+@hot(module)
 export default class Chart extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired
@@ -29,13 +31,13 @@ export default class Chart extends PureComponent {
 
         return (
             <VictoryChart
-                theme={VictoryTheme.grayscale}
                 polar={true}
                 padding={30}
                 height={400}
                 width={500}
                 scale={{ x: 'linear', y: 'sqrt' }}
                 style={{ parent: { overflow: 'hidden' } }}
+                theme={VictoryTheme.grayscale}
                 // fixes warnings with SSR
                 containerComponent={
                     <VictoryContainer containerId={'Polar-App'} />
@@ -58,7 +60,15 @@ export default class Chart extends PureComponent {
                     tickCount={8}
                 />
                 <VictoryBar
-                    style={{ data: { fill: '#c43a31', width: 80 } }}
+                    style={{
+                        data: {
+                            // we can pass fill a function to
+                            // provide a range of colours
+                            // for now just use one
+                            fill: Theme.palette.primary.dark,
+                            width: 80
+                        }
+                    }}
                     data={dataPoints}
                 />
             </VictoryChart>

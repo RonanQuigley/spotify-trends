@@ -30,12 +30,7 @@ export default class Element extends PureComponent {
                 <CardContent className={classes.cardContent}>
                     <div className={classes.cardText}>
                         <div className={classes.cardTextLeft}>
-                            <Typography
-                                className={classes.test}
-                                variant="subheading"
-                            >
-                                {name}
-                            </Typography>
+                            <Typography variant="subheading">{name}</Typography>
                             <Popularity rating={popularity} />
                             {genres && <Genre genre={genres} />}
                         </div>
