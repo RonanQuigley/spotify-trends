@@ -8,11 +8,14 @@ import {
     withStyles,
     Paper,
     Typography,
-    Divider
+    Divider,
+    AppBar,
+    Toolbar
 } from '@material-ui/core';
 import { hot } from 'react-hot-loader';
 import { PropTypes } from 'prop-types';
 import styles from './styles';
+import ChartContainer from 'common/react/apps/results/components/chart-container';
 @hot(module)
 @withStyles(styles, { withTheme: true })
 export default class App extends PureComponent {
@@ -25,6 +28,15 @@ export default class App extends PureComponent {
         const { childProps, classes } = this.props;
 
         /*
+
+            To Do:
+
+            - break down into separate components
+            - refactor components outside the apps folder 
+            so that they are inside the results app folder.
+            currently a refactoring nightmare so will leave until basic 
+            and responsive styling is out of the way  
+
             Performance Considerations:
 
             - Paper components use box shadows
@@ -40,7 +52,7 @@ export default class App extends PureComponent {
             classes.topChartsBackground
         );
 
-        const bgClassesPitchMode = classNames(
+        const pitchModeContainerClasses = classNames(
             classes.background,
             classes.pitchModeBackground
         );
@@ -50,16 +62,21 @@ export default class App extends PureComponent {
             classes.averagesBackground
         );
 
-        const paperClasses = classNames(classes.paperClamp, classes.paper);
-
-        const test = classNames(
-            classes.topChartsContainer,
-            classes.padChildren
-        );
-
         return (
             <React.Fragment>
                 <CssBaseline />
+                <div id="page-title-container">
+                    <AppBar position="static" className={classes.pageTitleBar}>
+                        <Toolbar>
+                            <Typography
+                                variant="display2"
+                                className={classes.pageTitle}
+                            >
+                                Results
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                </div>
                 <div
                     id="top-charts-container"
                     className={chartsContainerClasses}
@@ -76,17 +93,17 @@ export default class App extends PureComponent {
                         <Divider className={classes.divider} light={false} />
                     </div>
 
-                    <div className={classes.topChartsContainer}>
-                        <Paper className={paperClasses} elevation={12}>
+                    <div className={classes.flexbox}>
+                        <ChartContainer>
                             <div id="artists" className={classes.artists}>
                                 <Charts {...childProps.artists} />
                             </div>
-                        </Paper>
-                        <Paper className={paperClasses} elevation={12}>
+                        </ChartContainer>
+                        <ChartContainer>
                             <div id="tracks" className={classes.tracks}>
                                 <Charts {...childProps.tracks} />
                             </div>
-                        </Paper>
+                        </ChartContainer>
                     </div>
                 </div>
                 <div id="audio-features-container" className={bgAverages}>
@@ -101,15 +118,15 @@ export default class App extends PureComponent {
                         </Typography>
                         <Divider className={classes.divider} light={false} />
                     </div>
-                    <Paper className={paperClasses} elevation={12}>
+                    <ChartContainer>
                         <div id="averages" className={classes.averages}>
                             <Polar {...childProps.average} />
                         </div>
-                    </Paper>
+                    </ChartContainer>
                 </div>
                 <div
                     id="pitch-and-mode-container"
-                    className={bgClassesPitchMode}
+                    className={pitchModeContainerClasses}
                 >
                     <div className={classes.headerContainer}>
                         <Typography
@@ -122,8 +139,8 @@ export default class App extends PureComponent {
                         </Typography>
                         <Divider className={classes.divider} light={false} />
                     </div>
-                    <div className={classes.topChartsContainer}>
-                        <Paper className={paperClasses} elevation={12}>
+                    <div className={classes.flexbox}>
+                        <ChartContainer>
                             <div id="key" className={classes.artists}>
                                 <Pie
                                     cornerRadius={6}
@@ -131,12 +148,12 @@ export default class App extends PureComponent {
                                     {...childProps.key}
                                 />
                             </div>
-                        </Paper>
-                        <Paper className={paperClasses} elevation={12}>
+                        </ChartContainer>
+                        <ChartContainer>
                             <div id="mode" className={classes.tracks}>
                                 <Pie {...childProps.mode} />
                             </div>
-                        </Paper>
+                        </ChartContainer>
                     </div>
                 </div>
             </React.Fragment>

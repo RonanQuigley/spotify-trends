@@ -143,7 +143,9 @@ export function renderResults(req, res, next) {
     const props = JSON.stringify(res.locals.data.react.props);
     const env = process.env.NODE_ENV;
     const dev = env === 'development' ? `<script src="/dev.js"></script>` : ``;
-    const font = 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+    // remember to remove unused font sizes
+    const font =
+        'https://fonts.googleapis.com/css?family=Roboto:300,400,500|Roboto+Mono:100,200,300';
     const pageTitle = 'Results';
 
     const payload = `

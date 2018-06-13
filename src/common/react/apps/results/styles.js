@@ -1,8 +1,18 @@
 import Theme from 'common/react/common/theme';
 
 export default {
+    '@global': {
+        body: {
+            '@media (max-width : 670px)': {
+                minWidth: '380px'
+            }
+        }
+    },
     background: {
-        padding: '2rem'
+        padding: '2rem',
+        '@media (max-width : 670px)': {
+            padding: '1rem 2% 1rem 2%'
+        }
     },
     padChildren: {
         '& > div': {
@@ -33,7 +43,7 @@ export default {
         textTransform: 'uppercase',
         color: Theme.palette.secondary.contrastText
     },
-    topChartsContainer: {
+    flexbox: {
         width: '100%',
         margin: '0 auto',
         display: 'flex',
@@ -55,5 +65,15 @@ export default {
         maxWidth: '30rem',
         minWidth: '14rem',
         margin: '0.7rem auto 0.7rem auto'
+    },
+    pageTitle: {
+        fontFamily: "'Roboto Mono', monospace",
+        color: Theme.palette.primary.contrastText,
+        textTransform: 'uppercase',
+        fontWeight: 300,
+        letterSpacing: '0.7rem'
+    },
+    pageTitleBar: {
+        backgroundColor: Theme.palette.primary.dark
     }
 };
