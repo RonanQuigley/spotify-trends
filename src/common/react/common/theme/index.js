@@ -2,7 +2,7 @@ const Colors = {
     primary: {
         light: '#6d6d6d',
         main: '#424242',
-        dark: '#191414', // spotify branding's dark colour
+        dark: '#1b1b1b', // spotify branding's dark colour
         contrastText: '#ffffff'
     },
     secondary: {

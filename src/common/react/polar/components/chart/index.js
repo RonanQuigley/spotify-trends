@@ -28,7 +28,7 @@ export default class Chart extends PureComponent {
         const { data } = this.props;
         const dataPoints = setupDataPoints(data);
         const tickValues = this.getTickValues(dataPoints);
-
+        const typography = Theme.typography;
         return (
             <VictoryChart
                 polar={true}
@@ -37,7 +37,7 @@ export default class Chart extends PureComponent {
                 width={500}
                 scale={{ x: 'linear', y: 'sqrt' }}
                 style={{ parent: { overflow: 'hidden' } }}
-                theme={VictoryTheme.grayscale}
+                // theme={VictoryTheme.grayscale}
                 // fixes warnings with SSR
                 containerComponent={
                     <VictoryContainer containerId={'Polar-App'} />
@@ -45,6 +45,13 @@ export default class Chart extends PureComponent {
             >
                 <VictoryPolarAxis
                     tickValues={tickValues}
+                    style={{
+                        tickLabels: {
+                            fontFamily: typography.fontFamily,
+                            fontSize: typography.fontSize,
+                            fontWeight: typography.fontWeightLight
+                        }
+                    }}
                     labelPlacement={'vertical'}
                 />
                 <VictoryPolarAxis

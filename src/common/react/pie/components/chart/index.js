@@ -39,9 +39,9 @@ export default class Chart extends PureComponent {
                         fontWeight: typography.fontWeightRegular
                     }
                 }}
-                // fixes warnings with SSR
                 containerComponent={
                     <VictoryContainer
+                        // fixes warnings with SSR
                         containerId={'Chart-App'}
                         responsive={true}
                     />
