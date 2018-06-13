@@ -114,7 +114,7 @@ export default class App extends PureComponent {
                             align={'center'}
                             className={classes.heading}
                         >
-                            Moods
+                            Traits
                         </Typography>
                         <Divider className={classes.divider} light={false} />
                     </div>
