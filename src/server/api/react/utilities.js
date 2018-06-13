@@ -9,7 +9,7 @@ export function setupProps(data, ssrID, header) {
 export const headerID = {
     ARTISTS: 'Top Artists',
     TRACKS: 'Top Tracks',
-    MODE: 'Major/Minor',
+    MODE: 'Mode',
     KEY: 'Key Signatures',
     AVERAGE: 'Average Audio Features'
 };
