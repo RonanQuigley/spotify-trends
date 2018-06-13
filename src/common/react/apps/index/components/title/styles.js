@@ -2,8 +2,7 @@ import Theme from 'common/react/common/theme';
 
 export default {
     font: {
-        fontFamily: "'Roboto Mono', monospace",
-        color: Theme.palette.primary.contrastText
+        fontFamily: "'Roboto Mono', monospace"
     },
     heading: {
         letterSpacing: '0.7rem',
@@ -12,6 +11,11 @@ export default {
         textTransform: 'uppercase'
     },
     subheading: {
-        fontWeight: 100
+        fontWeight: 100,
+        textTransform: 'uppercase'
+    },
+    divider: {
+        width: '27rem',
+        margin: '0.2rem 0rem 1rem 4rem'
     }
 };

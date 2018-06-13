@@ -15,7 +15,7 @@ const Colors = {
 
 const Theme = {
     palette: {
-        type: 'light',
+        type: 'dark', // this will change our text to be contrasting - white
         primary: Colors.primary,
         secondary: Colors.secondary,
         background: {
@@ -25,16 +25,13 @@ const Theme = {
     typography: {
         fontFamily: "Roboto, 'Helvetica Neue', sans-serif",
         fontSize: 14,
-        fontWeightLight: 300,
-        fontWeightMedium: 500,
-        fontWeightRegular: 400
+        color: Colors.primary.contrastText,
+        fontWeightLight: 200,
+        fontWeightMedium: 400,
+        fontWeightRegular: 300
     },
     overrides: {
-        MuiTypography: {
-            headline: {
-                textTransform: 'uppercase'
-            }
-        },
+        MuiTypography: {},
         MuiDivider: {
             root: {
                 backgroundColor: 'rgba(255,255,255,0.70)'

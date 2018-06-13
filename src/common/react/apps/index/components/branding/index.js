@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SpotifyIcon from 'common/assets/spotify-icon.svg';
+import SpotifyIcon from 'common/assets/spotify-icon-white.svg';
 import { withStyles } from '@material-ui/core';
 import styles from './styles';
 import { hot } from 'react-hot-loader';

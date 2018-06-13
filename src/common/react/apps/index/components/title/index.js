@@ -26,6 +26,7 @@ export default class Title extends PureComponent {
                 <Typography variant="headline" className={subheadingClasses}>
                     A Spotify Music Analyser
                 </Typography>
+                <Divider className={classes.divider} />
             </React.Fragment>
         );
     }

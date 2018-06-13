@@ -1,6 +1,9 @@
 export default {
     brandingContainer: {
-        margin: '0 auto',
-        width: '50%'
+        alignSelf: 'center',
+        margin: '1rem',
+        width: '20%',
+        minWidth: '13rem',
+        maxWidth: '20rem'
     }
 };

@@ -5,7 +5,11 @@ export default {
         minWidth: '40rem',
         margin: '0 auto'
     },
-
+    loginBrandingContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
     features: {
         width: '100%',
         display: 'flex',
