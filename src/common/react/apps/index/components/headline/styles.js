@@ -7,7 +7,10 @@ export default {
         fontFamily: "'Roboto Mono', monospace",
         textTransform: 'uppercase',
         letterSpacing: '0.5rem',
-        margin: '1rem'
+        margin: '1rem',
+        '@media (max-width : 670px)': {
+            fontSize: '1.1rem'
+        }
     },
     divider: {}
 };

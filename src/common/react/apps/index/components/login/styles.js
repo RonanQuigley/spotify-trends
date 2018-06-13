@@ -16,6 +16,10 @@ export default {
         alignSelf: 'center',
         '&:hover': {
             backgroundColor: spotfiyStyles.hoverGreen
+        },
+        '@media (max-width : 670px)': {
+            width: '12rem',
+            padding: 0
         }
     }
 };

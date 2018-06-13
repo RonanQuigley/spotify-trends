@@ -43,8 +43,8 @@ export default class App extends PureComponent {
                             <Text>
                                 Discover your listening preferences with a chart
                                 based rundown of your top 50 artists and tracks.
-                                Your listening habits are sampled from a range
-                                of time frames. Ranges includes the past four
+                                Your listening habits are sampled across a range
+                                of time frames. This includes the past four
                                 weeks, six months and all time.
                             </Text>
                         </div>
@@ -54,12 +54,12 @@ export default class App extends PureComponent {
                         >
                             <SubHeadline>Tonality</SubHeadline>
                             <Text>
-                                By using spotify's audio features analysis of
-                                your top 50 tracks, your preferred key
-                                signatures are graphed into a set of easily
-                                digesteable pie charts. Furthermore, your modal
-                                preferences will let you see whether you favour
-                                tracks that in major or minor keys.
+                                By using spotify's analysis of your top track's
+                                audio features, your preferred key signatures
+                                are graphed into a set of easily digesteable pie
+                                charts. Your modal preferences will also let you
+                                see whether you favour tracks in major or minor
+                                keys.
                             </Text>
                         </div>
                         <div
@@ -68,12 +68,11 @@ export default class App extends PureComponent {
                         >
                             <SubHeadline>Traits</SubHeadline>
                             <Text>
-                                Allows you to see an overview of your evolved
-                                (or potentially unchanging!) musical tastes over
-                                time. Attributes include track acousticness,
-                                loudness, song danceability and valence - this
-                                is a measure of how positive your music choices
-                                sound.
+                                Get a sample of your evolving (or potentially
+                                unchanging!) musical tastes. Attributes include
+                                track acousticness, loudness, song danceability
+                                and valence, a measure of how positive your
+                                music choices sound.
                             </Text>
                         </div>
                     </div>

@@ -1,5 +1,8 @@
 export default {
     typography: {
-        // color: Theme.palette.primary.contrastText
+        '@media (max-width : 670px)': {
+            textAlign: 'center',
+            padding: '1rem'
+        }
     }
 };

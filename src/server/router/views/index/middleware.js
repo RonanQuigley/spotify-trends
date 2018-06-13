@@ -33,7 +33,7 @@ export function renderPage(req, res, next) {
     const dev = env === 'development' ? `<script src="/dev.js"></script>` : ``;
     // get rid of unused font weights once done.
     const font =
-        'https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500|Roboto+Mono:100,300';
+        'https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500|Roboto+Mono:100,200,300';
     const payload = `
     <!DOCTYPE html>
     <html lang="en">
