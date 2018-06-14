@@ -4,8 +4,9 @@ import common from './webpack.common.babel';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 const prod = {
     mode: 'production',
-    // we need this polyfill for Math extensions
-    entry: ['./src/server/index'],
+    // we need this babel polyfill in production
+    // for Math library extensions. Otherwise our app will break.
+    entry: ['@babel/polyfill', './src/server/index'],
     optimization: {
         minimizer: [
             // maintain source maps but strip comments
