@@ -1,4 +1,9 @@
-import { hydrateApp, getInitProps } from 'src/client/react';
+import {
+    hydrateApp,
+    getInitProps,
+    clearInitPropsFromDOM,
+    clearInitPropsFromWindow
+} from 'src/client/react';
 import App from 'common/react/apps/results';
 import React from 'react';
 import Theme from 'common/react/common/theme/results';

@@ -63,7 +63,10 @@ function calculate(array, filter, type) {
             loudness has a typical range of -60 to 0. 
             map it to a range that is consistent with the rest 
             of the averaged data set. in the event that a user has 
-            a loudness reading less than 60, we need to just clamp it.*/
+            a loudness reading less than 60, we need to just clamp it.
+            Note that this is a stage 1 proposal so we need a polyfill 
+            https://github.com/tc39/proposals
+            */
             const clampedValue = Math.clamp(averageValue, min, max);
             return map(clampedValue, min, max, outMin, outMax);
         }

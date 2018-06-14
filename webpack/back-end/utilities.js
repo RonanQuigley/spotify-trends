@@ -54,6 +54,7 @@ export function setOutput() {
         return {
             path: dist,
             filename: filename,
+            library: '',
             libraryTarget: libraryTarget
         };
     }

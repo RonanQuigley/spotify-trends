@@ -23,7 +23,29 @@ export default {
             {
                 exclude: /node_modules|packages/,
                 test: /\.js$/,
-                use: 'babel-loader?cacheDirectory=true'
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        babelrc: false,
+                        presets: [
+                            [
+                                '@babel/preset-env',
+                                { modules: false, targets: { node: 'current' } }
+                            ],
+                            '@babel/preset-react',
+                            ['@babel/stage-0', { decoratorsLegacy: true }]
+                        ],
+                        plugins: [
+                            [
+                                '@babel/transform-runtime',
+                                {
+                                    polyfill: false,
+                                    regenerator: true
+                                }
+                            ]
+                        ]
+                    }
+                }
             },
             {
                 test: /\.svg$/,

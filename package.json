@@ -67,7 +67,7 @@
     "@babel/preset-env": "7.0.0-beta.49",
     "@babel/preset-react": "7.0.0-beta.49",
     "@babel/preset-stage-0": "7.0.0-beta.49",
-    "@babel/preset-stage-3": "^7.0.0-beta.49",
+    "@babel/preset-stage-1": "7.0.0-beta.49",
     "@babel/register": "7.0.0-beta.49",
     "@babel/runtime": "7.0.0-beta.49",
     "@types/chai": "^4.1.3",

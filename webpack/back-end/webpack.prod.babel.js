@@ -4,7 +4,9 @@ import common from './webpack.common.babel';
 
 const prod = {
     mode: 'production',
-    entry: './src/index',
+    // we need this polyfill for Math extensions
+    entry: ['@babel/polyfill', './src/server/index'],
+
     plugins: [
         // need to specify NODE_ENV otherwise it will show undefined in code
         new webpack.EnvironmentPlugin({

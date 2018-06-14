@@ -1,7 +1,7 @@
 import merge from 'webpack-merge';
 import common from './webpack.common.babel';
 import webpack from 'webpack';
-
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 const prod = {
     mode: 'production',
     entry: {

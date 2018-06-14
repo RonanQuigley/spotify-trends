@@ -872,7 +872,7 @@
     "@babel/plugin-proposal-throw-expressions" "7.0.0-beta.49"
     "@babel/preset-stage-3" "7.0.0-beta.49"
 
-"@babel/preset-stage-3@7.0.0-beta.49", "@babel/preset-stage-3@^7.0.0-beta.49":
+"@babel/preset-stage-3@7.0.0-beta.49":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/preset-stage-3/-/preset-stage-3-7.0.0-beta.49.tgz#3b012312b81d483db7a675d4acba8668fd46f5c3"
   dependencies:
