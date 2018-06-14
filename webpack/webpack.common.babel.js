@@ -7,6 +7,8 @@ const charts = path.join(__dirname, './../src/common/react/charts');
 const fixtures = path.join(__dirname, './../test/fixtures');
 const pie = path.join(__dirname, './../src/common/react/pie');
 
+const env = process.env.NODE_ENV;
+
 export default {
     resolve: {
         alias: {
@@ -23,28 +25,30 @@ export default {
             {
                 exclude: /node_modules|packages/,
                 test: /\.js$/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        babelrc: false,
-                        presets: [
-                            [
-                                '@babel/preset-env',
-                                { modules: false, targets: { node: 'current' } }
-                            ],
-                            '@babel/preset-react',
-                            ['@babel/stage-0', { decoratorsLegacy: true }]
-                        ],
-                        plugins: [
-                            [
-                                '@babel/transform-runtime',
-                                {
-                                    polyfill: false,
-                                    regenerator: true
+                loader: 'babel-loader?cacheDirectory=true',
+                query: {
+                    babelrc: true,
+                    presets: [
+                        [
+                            // overwriting the babelrc env preset
+                            // ideally this would all be done inside the env file
+                            // but currently this is the best workaround for modules
+                            // as webpack doesn't seem to support using babelrc configs
+                            // that are not written with JSON.
+                            '@babel/preset-env',
+                            {
+                                /* disable transforming of modules from es6. Let webpack 
+                                handle import/exports for a reduction in bundle size.
+                                If we are testing, we want to target commonjs.
+                                We also want to continue targetting the current node version
+                                */
+                                modules: env !== 'test' ? false : 'commonjs',
+                                targets: {
+                                    node: 'current'
                                 }
-                            ]
+                            }
                         ]
-                    }
+                    ]
                 }
             },
             {

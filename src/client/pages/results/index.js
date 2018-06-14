@@ -26,6 +26,8 @@ window.onload = () => {
         console.warn(`In dev mode for react; tokens won't be updated`);
         console.warn(`In dev mode for react; window props not cleared`);
     }
+
+    updateAllTokens();
 };
 
 if (module.hot) {

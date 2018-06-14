@@ -59,6 +59,7 @@ export function updateAllTokens() {
         update both the access token and expiry */
         updateTokenFromUrl(names.accessToken);
         updateTokenFromUrl(names.expiryIn);
+        updateTokenFromUrl(names.refreshToken);
     }
 }
 
