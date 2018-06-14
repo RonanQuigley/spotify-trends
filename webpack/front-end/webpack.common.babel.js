@@ -6,9 +6,7 @@ import common from '../webpack.common.babel';
 import { setDevTool, setOutput } from './utilities';
 
 /* if we're testing, we run jsdom via node for our unit tests
-we also need to use nodeExternals to prevent warnings for fetch-mock
 */
-
 const target = process.env.NODE_ENV === 'test' ? 'node' : 'web';
 const externals = process.env.NODE_ENV === 'test' ? nodeExternals() : [];
 
