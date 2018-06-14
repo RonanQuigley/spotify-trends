@@ -11,7 +11,7 @@ import {
 import React from 'react';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import App from 'common/react/apps/results';
-import { default as fakeData } from 'fixtures/spotify/processed-data/small-payload';
+import fakeData from 'fixtures/spotify/processed-data/small-payload';
 import Theme from 'common/react/common/theme/results';
 
 export function getAccessToken(req, res, next) {
