@@ -4,6 +4,7 @@ import { fakeTokens } from 'fixtures/authentication/';
 import sinonChai from 'sinon-chai';
 import * as serverFetch from 'src/client/utilities/server-fetch';
 import chaiAsPromised from 'chai-as-promised';
+import 'whatwg-fetch';
 
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
