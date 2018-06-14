@@ -8,6 +8,19 @@ const prod = {
         index: ['whatwg-fetch', './src/client/pages/index/'],
         results: ['whatwg-fetch', './src/client/pages/results/']
     },
+    optimization: {
+        minimizer: [
+            // maintain source maps but strip comments
+            new UglifyJsPlugin({
+                sourceMap: true,
+                uglifyOptions: {
+                    output: {
+                        comments: false
+                    }
+                }
+            })
+        ]
+    },
     plugins: [
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'production'
