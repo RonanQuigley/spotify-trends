@@ -1,5 +1,3 @@
-import 'whatwg-fetch';
-
 export function fetchData(endpoint, header) {
     // we wrap window.fetch in a function for unit testing purposes
     return window.fetch(endpoint, header);
