@@ -1,38 +1,38 @@
 import path from 'path';
 const dist = path.join(__dirname, '../../dist');
 
-export function setHBSLoader() {
-    /* handlebars-loader is not stubbable with sinon.
-    workaround is to change the loader for hbs files 
-    so that in testing we use a null loader; it just exports 
-    a function that returns a string */
-    if (process.env.NODE_ENV !== 'test') {
-        return {
-            exclude: /node_modules|packages/,
-            test: /\.hbs$/,
-            loader: 'handlebars-loader',
-            query: {
-                partialDirs: [
-                    path.join(
-                        __dirname,
-                        '../../src/server/router/views/partials'
-                    )
-                ],
-                helperDirs: [
-                    path.join(
-                        __dirname,
-                        '../../src/server/router/views/helpers'
-                    )
-                ]
-            }
-        };
-    } else {
-        return {
-            test: /\.hbs$/,
-            loader: path.join(__dirname, '../null-loader.js')
-        };
-    }
-}
+// export function setHBSLoader() {
+//     /* handlebars-loader is not stubbable with sinon.
+//     workaround is to change the loader for hbs files
+//     so that in testing we use a null loader; it just exports
+//     a function that returns a string */
+//     if (process.env.NODE_ENV !== 'test') {
+//         return {
+//             exclude: /node_modules|packages/,
+//             test: /\.hbs$/,
+//             loader: 'handlebars-loader',
+//             query: {
+//                 partialDirs: [
+//                     path.join(
+//                         __dirname,
+//                         '../../src/server/router/views/partials'
+//                     )
+//                 ],
+//                 helperDirs: [
+//                     path.join(
+//                         __dirname,
+//                         '../../src/server/router/views/helpers'
+//                     )
+//                 ]
+//             }
+//         };
+//     } else {
+//         return {
+//             test: /\.hbs$/,
+//             loader: path.join(__dirname, '../null-loader.js')
+//         };
+//     }
+// }
 
 export function setOutput() {
     const filename = 'server.js';
@@ -67,13 +67,14 @@ export function setDevTool() {
     switch (process.env.NODE_ENV) {
         case 'test':
             return 'inline-cheap-module-source-map';
-        case 'production':
-            return 'source-map';
-        default:
+        case 'development':
             /* development mode
             use inline-module-source-map for better debugging
             DO NOT change it to any other type as you will get 
             a breakpoints set but not yet bound error */
             return 'inline-module-source-map';
+        default:
+            // production or undefined
+            return 'source-map';
     }
 }

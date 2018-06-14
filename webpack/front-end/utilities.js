@@ -35,9 +35,7 @@ export function setDevTool() {
     switch (process.env.NODE_ENV) {
         case 'test':
             return 'inline-cheap-module-source-map';
-        case 'production':
-            return 'source-map';
-        default:
+        case 'development':
             /* we use a second flag to decide our devtool choice : 
                 module-source-map: 
                     -- slower rebuild
@@ -50,5 +48,9 @@ export function setDevTool() {
             return process.env.DEBUG === 'true'
                 ? 'source-map'
                 : 'cheap-module-eval-source-map';
+
+        default:
+            // production or undefined
+            return 'source-map';
     }
 }
