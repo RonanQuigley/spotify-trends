@@ -120,7 +120,7 @@
     "build:back": "webpack -p --config webpack/back-end/webpack.prod.babel.js",
     "build:front": "webpack -p --config webpack/front-end/webpack.prod.babel.js",
     "build:all": "webpack -p --config webpack/full-stack/webpack.babel.js",
-    "build:all:start": "npm-run-all -s build:all start:prod",
+    "build:all:start": "npm-run-all -s build:all start",
     "build:analyze": "cross-env ANALYZE=true webpack -p --config webpack/full-stack/webpack.babel.js",
     "start": "cross-env NODE_ENV=production DEBUG=false node ./dist/server.js",
     "heroku-postbuild": "npm run build:all",
