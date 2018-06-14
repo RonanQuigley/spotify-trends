@@ -122,6 +122,7 @@
     "build:all:start": "npm-run-all -s build:all start:prod",
     "build:analyze": "cross-env ANALYZE=true webpack -p --config webpack/full-stack/webpack.babel.js",
     "start": "cross-env NODE_ENV=production DEBUG=false node ./dist/server.js",
+    "heroku-postbuild": "npm run build:all",
     "start:dump-log": "npm run start -- > dump.txt",
     "start:dev": "cross-env NODE_ENV=development node --max-old-space-size=8192 --inspect --require @babel/register --require dotenv/config ./src/index.js",
     "start:debug": "cross-env NODE_ENV=development DEBUG=true node --max-old-space-size=8192 --inspect --require @babel/register --require dotenv/config ./src/index.js",
