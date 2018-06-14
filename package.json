@@ -1,8 +1,11 @@
 {
-  "name": "spotify",
+  "name": "statisfy",
   "version": "1.0.0",
-  "description": "",
+  "description": "A spotify music analyzer",
   "main": "./src/index.js",
+  "engines": {
+    "node": "10.1.0"
+  },
   "dependencies": {
     "@babel/plugin-transform-react-constant-elements": "^7.0.0-beta.49",
     "@material-ui/core": "^1.0.0",
@@ -139,7 +142,7 @@
     "type": "git",
     "url": "git+https://github.com/RonanQuigley/spotify-trends.git"
   },
-  "author": "",
+  "author": "Ronan Quigley",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/RonanQuigley/spotify-trends/issues"
