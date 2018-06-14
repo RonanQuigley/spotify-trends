@@ -11,6 +11,7 @@ import {
 import React from 'react';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import App from 'common/react/apps/results';
+import { default as fakeData } from 'fixtures/spotify/processed-data/small-payload';
 import Theme from 'common/react/common/theme/results';
 
 export function getAccessToken(req, res, next) {
@@ -56,8 +57,8 @@ export function setupDevelopmentAssets(req, res, next) {
         not have been set up. we need to check for this. We also use dummy
         data to speed up dev so we're not continuosly making spotify server requests
     */
-    const fakeData = require('fixtures/spotify/processed-data/small-payload')
-        .default;
+    // const fakeData = require('fixtures/spotify/processed-data/small-payload')
+    //     .default;
     res.locals.data = {
         userData: {
             artists: fakeData.artists,

@@ -80,6 +80,7 @@
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta.3",
     "babel-plugin-import": "^1.8.0",
+    "babel-plugin-transform-imports": "^1.5.0",
     "chai-as-promised": "^7.1.1",
     "cross-env": "^5.1.4",
     "dotenv": "^5.0.1",
@@ -113,13 +114,13 @@
     "webpack-merge": "^4.1.2",
     "webpack-node-externals": "^1.6.0"
   },
-  "sideEffects" : "false",
+  "sideEffects": "false",
   "scripts": {
     "build:back": "webpack -p --config webpack/back-end/webpack.prod.babel.js",
     "build:front": "webpack -p --config webpack/front-end/webpack.prod.babel.js",
     "build:all": "webpack -p --config webpack/full-stack/webpack.babel.js",
     "build:all:start": "npm-run-all -s build:all start:prod",
-    "build:analyze": "cross-env ANALYZE=true npm-run-all build:all",
+    "build:analyze": "cross-env ANALYZE=true webpack -p --display-used-exports --display-reasons  --config webpack/full-stack/webpack.babel.js",
     "start:prod": "cross-env NODE_ENV=production DEBUG=false node ./dist/server.js",
     "start:dump-log": "npm run start -- > dump.txt",
     "start": "cross-env NODE_ENV=development node --max-old-space-size=8192 --inspect --require @babel/register --require dotenv/config ./src/index.js",

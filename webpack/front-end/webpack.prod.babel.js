@@ -5,8 +5,8 @@ import webpack from 'webpack';
 const prod = {
     mode: 'production',
     entry: {
-        index: ['whatwg-fetch', './src/client/pages/index/'],
-        results: ['whatwg-fetch', './src/client/pages/results/']
+        index: ['./src/client/pages/index/'],
+        results: ['./src/client/pages/results/']
     },
     plugins: [
         new webpack.EnvironmentPlugin({

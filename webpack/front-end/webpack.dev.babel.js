@@ -6,14 +6,9 @@ const dev = {
     mode: 'development',
     entry: {
         dev: ['./src/client/dev'],
-        index: [
-            'webpack-hot-middleware/client',
-            'whatwg-fetch',
-            './src/client/pages/index/'
-        ],
+        index: ['webpack-hot-middleware/client', './src/client/pages/index/'],
         results: [
             'webpack-hot-middleware/client',
-            'whatwg-fetch',
             './src/client/pages/results/'
         ]
     },

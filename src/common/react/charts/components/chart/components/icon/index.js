@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Star, StarHalf } from '@material-ui/icons';
+// use direct imports for tree shaking
+import Star from '@material-ui/icons/Star';
+import StarHalf from '@material-ui/icons/StarHalf';
 import randomID from 'uuid/v4';
 
 export default class Icon extends PureComponent {
