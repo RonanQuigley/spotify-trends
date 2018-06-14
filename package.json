@@ -132,8 +132,7 @@
     "test:all": "npm-run-all -p test:front test:common test:back",
     "coverage:front": "nyc --include-all-sources --color --reporter=lcov --reporter=text --report-dir ./coverage/front mocha-webpack --require mocha.setup.js --webpack-config ./webpack/front-end/webpack.dev.babel.js \"test/front-end/**/*.test.js\"",
     "coverage:back": "nyc --include-all-sources --color --reporter=lcov --reporter=text --report-dir ./coverage/back mocha-webpack --require mocha.setup.js --webpack-config ./webpack/back-end/webpack.dev.babel.js \"test/back-end/**/*.test.js\"",
-    "coverage:all": "npm-run-all -p coverage:front coverage:back",
-    "test": "webpack --config webpack-test/test.config.js"
+    "coverage:all": "npm-run-all -p coverage:front coverage:back"
   },
   "nyc": {
     "include": [
