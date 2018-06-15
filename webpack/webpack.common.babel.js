@@ -44,7 +44,8 @@ export default {
                                 */
                                 modules: env !== 'test' ? false : 'commonjs',
                                 targets: {
-                                    node: 'current'
+                                    node: 'current',
+                                    forceAllTransforms: true
                                 }
                             }
                         ]
