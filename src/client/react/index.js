@@ -15,9 +15,6 @@ export function hydrateApp(app, theme) {
         window.theme = muiTheme;
     }
 
-    // const prefixer = postcss([autoprefixer]);
-    // prefixer.process(css).css;
-
     ReactDOM.hydrate(
         <SSRRemover>
             <JssProvider
