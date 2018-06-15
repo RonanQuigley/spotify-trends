@@ -43,8 +43,9 @@ export default {
                                 We also want to continue targetting the current node version
                                 */
                                 modules: env !== 'test' ? false : 'commonjs',
+                                // the current behaviour of babel results in only the last option being used
+                                // therefore do not specify more than one option!
                                 targets: {
-                                    node: 'current',
                                     forceAllTransforms: true
                                 }
                             }

@@ -6,8 +6,13 @@ const dev = {
     mode: 'development',
     entry: {
         dev: ['./src/client/dev'],
-        index: ['webpack-hot-middleware/client', './src/client/pages/index/'],
+        index: [
+            '@babel/polyfill',
+            'webpack-hot-middleware/client',
+            './src/client/pages/index/'
+        ],
         results: [
+            '@babel/polyfill',
             'webpack-hot-middleware/client',
             './src/client/pages/results/'
         ]
