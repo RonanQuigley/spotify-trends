@@ -12,6 +12,12 @@ import React from 'react';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import App from 'common/react/apps/results';
 import Theme from 'common/react/common/theme/results';
+import autoPrefixer from 'autoprefixer';
+import cssNano from 'cssnano';
+import postcss from 'postcss';
+
+const prefixer = postcss([autoPrefixer]);
+const minifier = postcss([cssNano]);
 
 export function getAccessToken(req, res, next) {
     const token = req.query.accessToken;
@@ -114,7 +120,7 @@ export function setupReactProps(req, res, next) {
     return next();
 }
 
-export function generateReactApps(req, res, next) {
+export async function generateReactApps(req, res, next) {
     // get out react props
     const props = res.locals.data.react.props;
 
@@ -127,7 +133,12 @@ export function generateReactApps(req, res, next) {
     const html = serverSideRender(app, sheetsRegistry, Theme);
 
     // Grab the CSS from our sheetsRegistry.
-    const css = sheetsRegistry.toString();
+    let css = sheetsRegistry.toString();
+
+    // from undefined eliminates warnings
+    css = await prefixer.process(css, { from: undefined }).css;
+    console.log(css);
+    css = await minifier.process(css);
 
     res.locals.data.react.apps = {
         html: html,

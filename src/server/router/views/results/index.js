@@ -1,14 +1,13 @@
-import dotEnv from 'dotenv';
 import express from 'express';
 import * as middleware from './middleware';
 const router = express.Router();
 
 const nodeEnv = process.env.NODE_ENV;
-// allows for a degree of hot reloading the env file
-// it does require you to resave this page...
-const skipData = dotEnv.load().parsed.SKIP_DATA;
+// rather than put this in an env file
+// this allows for hot reloading
+const skipData = true;
 
-if (nodeEnv === 'development' && skipData === 'true') {
+if (nodeEnv === 'development' && skipData === true) {
     // for faster login where we use our dev assets
     console.warn(
         'Using development mode: skipping spotify server requests'.green

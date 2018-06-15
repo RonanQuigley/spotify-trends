@@ -5,6 +5,9 @@ import { hydrateApp } from 'src/client/react';
 import Theme from 'common/react/common/theme';
 
 window.onload = () => {
+    // let the user log themselves back in
+    // if it's looping over and over try commenting this out
+    // or the module.hot.accept()
     (async () => {
         if (isExistingUser()) {
             await processUser();
