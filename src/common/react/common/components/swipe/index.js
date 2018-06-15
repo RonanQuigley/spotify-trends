@@ -15,6 +15,7 @@ export default class Swipe extends PureComponent {
         const { index, children } = this.props;
         return (
             <SwipeableViews
+                containerStyle={{ WebkitOverflowScrolling: 'touch' }}
                 style={{ transform: 'translate3d(0,0,0)' }}
                 index={index}
             >
