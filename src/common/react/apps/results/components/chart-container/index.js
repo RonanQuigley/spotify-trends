@@ -14,7 +14,7 @@ export default class ChartContainer extends PureComponent {
         const { classes, children } = this.props;
 
         return (
-            <Paper className={classes.paper} elevation={12}>
+            <Paper className={classes.paper} elevation={6}>
                 {children}
             </Paper>
         );

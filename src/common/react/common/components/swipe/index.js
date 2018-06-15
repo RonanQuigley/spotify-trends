@@ -1,9 +1,6 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
 import SwipeableViews from 'react-swipeable-views';
-import { timeRanges } from 'common/react/common/utilities';
-import Chart from 'charts/components/chart';
 
 export default class Swipe extends PureComponent {
     static propTypes = {

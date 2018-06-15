@@ -6,6 +6,7 @@ export default {
         textTransform: 'uppercase'
     },
     appBar: {
-        backgroundColor: Theme.palette.primary.dark
+        backgroundColor: Theme.palette.primary.dark,
+        boxShadow: 'initial'
     }
 };
