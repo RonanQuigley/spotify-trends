@@ -4,7 +4,7 @@ export default {
     '@global': {
         body: {
             '@media (max-width : 670px)': {
-                minWidth: '380px'
+                minWidth: '320px'
             }
         }
     },
@@ -34,7 +34,11 @@ export default {
     headerContainer: {
         width: '50%',
         marginLeft: 'auto',
-        marginRight: 'auto'
+        marginRight: 'auto',
+        '@media (max-width : 670px)': {
+            width: '100%',
+            maxWidth: '15rem'
+        }
     },
     headerCharts: {},
     headerPitchMode: {},
