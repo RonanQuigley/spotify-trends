@@ -209,13 +209,13 @@ describe('back end - results view', () => {
         });
 
         describe('generating react assets', () => {
-            beforeEach(() => {
+            beforeEach(async () => {
                 sandbox.spy(serverSideRender, 'default');
 
                 sandbox.spy(App, 'default');
                 // run the previous middleware function to setup our apps
                 Middleware.setupReactProps(req, res, () => {});
-                Middleware.generateReactApps(req, res, nextSpy);
+                await Middleware.generateReactApps(req, res, nextSpy);
             });
             describe('React App', () => {
                 it('should be created', () => {
@@ -231,7 +231,7 @@ describe('back end - results view', () => {
                     expect(res.locals.data.react.apps.html).to.be.a('string')
                         .and.to.not.be.empty;
                 });
-                it('should contain the artists css ', () => {
+                it('should contain the app css ', () => {
                     expect(res.locals.data.react.apps.css).to.be.a('string').and
                         .to.not.be.empty;
                 });

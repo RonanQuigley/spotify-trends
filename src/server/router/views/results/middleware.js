@@ -133,16 +133,18 @@ export async function generateReactApps(req, res, next) {
     const html = serverSideRender(app, sheetsRegistry, Theme);
 
     // Grab the CSS from our sheetsRegistry.
-    let css = sheetsRegistry.toString();
+    const css = sheetsRegistry.toString();
 
     // from undefined eliminates warnings
-    css = await prefixer.process(css, { from: undefined }).css;
-    console.log(css);
-    css = await minifier.process(css);
+    // add our vendor prefixes
+    const prefixed = await prefixer.process(css, { from: undefined }).css;
+
+    // minify the css to save extra bytes
+    const minified = await minifier.process(prefixed);
 
     res.locals.data.react.apps = {
         html: html,
-        css: css
+        css: minified.css
     };
 
     return next();
