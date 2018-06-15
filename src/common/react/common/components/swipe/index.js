@@ -13,6 +13,13 @@ export default class Swipe extends PureComponent {
 
     render() {
         const { index, children } = this.props;
-        return <SwipeableViews index={index}>{children}</SwipeableViews>;
+        return (
+            <SwipeableViews
+                style={{ transform: 'translate3d(0,0,0)' }}
+                index={index}
+            >
+                {children}
+            </SwipeableViews>
+        );
     }
 }
