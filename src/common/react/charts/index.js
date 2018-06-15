@@ -31,7 +31,11 @@ export default class Charts extends PureComponent {
                 <UI value={value} onChange={onChange} />
                 <div className={scrollOuter}>
                     <div className={scrollInner}>
-                        <Content value={value} data={data} />
+                        <Content
+                            onChange={onChange}
+                            value={value}
+                            data={data}
+                        />
                     </div>
                 </div>
             </div>

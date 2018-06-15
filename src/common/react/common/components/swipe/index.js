@@ -10,14 +10,27 @@ export default class Swipe extends PureComponent {
             PropTypes.arrayOf(PropTypes.node),
             PropTypes.node
         ]).isRequired,
+        onChange: PropTypes.func.isRequired,
         index: PropTypes.number.isRequired,
         classes: PropTypes.object
+    };
+
+    handleIndexChange = index => {
+        // we have to wrap this change in a function
+        // as we need to make the event call null.
+        // otherwise a weird mismatch bug occurs between the ui
+        // tabs and the app bar
+        this.props.onChange(null, index);
     };
 
     render() {
         const { index, children, classes } = this.props;
         return (
-            <SwipeableViews className={classes.test} index={index}>
+            <SwipeableViews
+                onChangeIndex={this.handleIndexChange}
+                className={classes.test}
+                index={index}
+            >
                 {children}
             </SwipeableViews>
         );
