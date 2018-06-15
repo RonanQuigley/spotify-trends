@@ -5,8 +5,12 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 const prod = {
     mode: 'production',
     entry: {
-        index: ['whatwg-fetch', './src/client/pages/index/'],
-        results: ['whatwg-fetch', './src/client/pages/results/']
+        index: ['@babel/polyfill', 'whatwg-fetch', './src/client/pages/index/'],
+        results: [
+            '@babel/polyfill',
+            'whatwg-fetch',
+            './src/client/pages/results/'
+        ]
     },
     optimization: {
         minimizer: [

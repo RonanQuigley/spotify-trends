@@ -1,10 +1,6 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "targets" : {
-        "node" : "current"
-      }
-    }], 
+    ["@babel/preset-env"], 
     "@babel/preset-react",
     ["@babel/stage-0", {"decoratorsLegacy" : true}]
   ],

@@ -140,7 +140,7 @@ export async function generateReactApps(req, res, next) {
     const prefixed = await prefixer.process(css, { from: undefined }).css;
 
     // minify the css to save extra bytes
-    const minified = await minifier.process(prefixed);
+    const minified = await minifier.process(prefixed, { from: undefined });
 
     res.locals.data.react.apps = {
         html: html,
