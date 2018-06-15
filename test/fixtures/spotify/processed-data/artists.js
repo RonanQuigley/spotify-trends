@@ -7,7 +7,7 @@ export default {
                 genres: 'soundtrack',
                 uri: 'spotify:artist:00oL7zWxmWveTsKF7DnIRd',
                 image:
-                    'https://i.scdn.co/image/802b7c0501bc87aac70106fe0a2de9dd6598744d'
+                    'https://i.scdn.co/image/984e723d433769e33d35070793c02e62440721d4'
             }
         ],
         MEDIUM: [
@@ -17,7 +17,7 @@ export default {
                 genres: 'alternative metal',
                 uri: 'spotify:artist:6XyY86QOPPrYVGvF9ch6wz',
                 image:
-                    'https://i.scdn.co/image/1685533969d5b68cbc630f991e873bd6467f1814'
+                    'https://i.scdn.co/image/f759994946aa42851e5293083f472c96c1753105'
             }
         ],
         LONG: [
@@ -27,7 +27,7 @@ export default {
                 genres: 'alternative metal',
                 uri: 'spotify:artist:6XyY86QOPPrYVGvF9ch6wz',
                 image:
-                    'https://i.scdn.co/image/1685533969d5b68cbc630f991e873bd6467f1814'
+                    'https://i.scdn.co/image/f759994946aa42851e5293083f472c96c1753105'
             }
         ]
     }

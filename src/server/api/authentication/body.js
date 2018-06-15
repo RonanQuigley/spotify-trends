@@ -1,4 +1,5 @@
 import { grantType } from './header';
+import { getRedirectURI } from 'src/server/api/authentication/utilities';
 
 export function generateAccessBody(token) {
     return {
@@ -7,7 +8,7 @@ export function generateAccessBody(token) {
             from an initial auth login to spotify  
             */
             code: token,
-            redirect_uri: process.env.REDIRECT_URI, // the callback uri
+            redirect_uri: getRedirectURI(), // the callback uri
             grant_type: grantType.AUTH
         }
     };

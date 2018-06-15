@@ -19,4 +19,7 @@ describe('back end - env', () => {
     it('should have a redirect uri', () => {
         expect(process.env.REDIRECT_URI).to.exist;
     });
+    it('should have a redirect uri for development', () => {
+        expect(process.env.REDIRECT_URI_DEV).to.exist;
+    });
 });

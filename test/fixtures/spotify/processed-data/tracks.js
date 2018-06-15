@@ -7,7 +7,7 @@ export default {
                 popularity: 67,
                 id: '1vgSaC0BPlL6LEm4Xsx59J',
                 image:
-                    'https://i.scdn.co/image/881a150b6e7e35d5c3162cc17cbceb647a217636'
+                    'https://i.scdn.co/image/122477fb15a5cea16a602481a54aea2f6c67ff5f'
             }
         ],
         MEDIUM: [
@@ -17,7 +17,7 @@ export default {
                 popularity: 47,
                 id: '33MhyD4tOUTPDrJtUOmlzy',
                 image:
-                    'https://i.scdn.co/image/71ba954049737d56477cc150c348e223ebfcfa03'
+                    'https://i.scdn.co/image/1722c88ab0b6d77b54a15de8323da51684ec39e9'
             }
         ],
         LONG: [
@@ -27,7 +27,7 @@ export default {
                 popularity: 68,
                 id: '0sp00HSXkQyqTa6QqM0O8V',
                 image:
-                    'https://i.scdn.co/image/deb48b2781de449175ff7865da3bb249652fc28f'
+                    'https://i.scdn.co/image/25c88542f89cfcd842e62b6c3851518fe0eca6f6'
             }
         ]
     }

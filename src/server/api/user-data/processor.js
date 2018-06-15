@@ -1,24 +1,28 @@
-import util from 'util';
+function getImageURL(images) {
+    // return the second smallest image
+    return images[images.length - 2].url;
 
-function getLargestImageURL(images) {
     /* the image array size is inconsitent between artists
     so we need to keep checking for the right sized match.
     the largest size is 640 x 640 */
-    for (let i = 0; i < images.length; i++) {
-        if (parseInt(images[i].width, 10) === 640) {
-            return images[i].url;
-        } else if (i === images.length - 1) {
-            /* return the largest image that is available */
-            return images[0].url;
-        }
-    }
+    // for (let i = 0; i < images.length; i++) {
+    //     if (parseInt(images[i].width, 10) === 640) {
+    //         return images[i].url;
+    //     } else if (i === images.length - 1) {
+    //         /* return the largest image that is available */
+    //         return images[0].url;
+    //     }
+    // }
 }
 
 function getTrackData(obj) {
-    const image =
-        obj.album && obj.album.images
-            ? getLargestImageURL(obj.album.images)
-            : null;
+    let image;
+    if (obj.album && obj.album.images) {
+        image = getImageURL(obj.album.images);
+    } else {
+        image = null;
+    }
+
     return {
         name: obj.name ? obj.name : null,
         uri: obj.uri ? obj.uri : null,
@@ -34,7 +38,7 @@ function getArtistData(obj) {
         popularity: obj.popularity ? obj.popularity : null,
         genres: obj.genres ? obj.genres[0] : null,
         uri: obj.uri ? obj.uri : null,
-        image: obj.images ? getLargestImageURL(obj.images) : null
+        image: obj.images ? getImageURL(obj.images) : null
     };
 }
 

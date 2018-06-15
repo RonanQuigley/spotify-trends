@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import 'colors';
 import { getHostName } from './utilities';
 import bodyParser from 'body-parser';
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -34,7 +33,10 @@ if (process.env.NODE_ENV === 'development') {
 
 // let our unit tests handle listening
 if (process.env.NODE_ENV !== 'test') {
-    app.listen(process.env.PORT || 3000);
+    const port = process.env.PORT || 3000;
+    app.listen(port);
+    console.log('Server now listening at port: '.green + port);
+    // the code below causes issues with heroku due to the use of a host name.
     // app.listen(process.env.PORT || 3000, getHostName(), function(err) {
     //     if (err) throw err;
     //     const addr = this.address();
