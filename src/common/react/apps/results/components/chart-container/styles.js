@@ -7,7 +7,8 @@ export default {
         margin: '1rem auto 1rem auto',
         '@media (max-width : 670px)': {
             minWidth: '20rem',
-            width: '80%'
+            width: '75%',
+            margin: '0.5rem auto 0.5rem auto'
         }
     }
 };

@@ -99,14 +99,14 @@ export default class App extends PureComponent {
                                 <Charts {...childProps.artists} />
                             </div>
                         </ChartContainer>
-                        {/* <ChartContainer>
+                        <ChartContainer>
                             <div id="tracks" className={classes.tracks}>
                                 <Charts {...childProps.tracks} />
                             </div>
-                        </ChartContainer> */}
+                        </ChartContainer>
                     </div>
                 </div>
-                {/* <div id="audio-features-container" className={bgAverages}>
+                <div id="audio-features-container" className={bgAverages}>
                     <div className={headerClasses}>
                         <Typography
                             gutterBottom={false}
@@ -155,7 +155,7 @@ export default class App extends PureComponent {
                             </div>
                         </ChartContainer>
                     </div>
-                </div> */}
+                </div>
             </React.Fragment>
         );
     }
