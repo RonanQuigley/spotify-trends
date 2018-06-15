@@ -20,6 +20,7 @@ describe('react - polar - index', () => {
         wrapper = shallow(
             <Polar
                 data={fakeData}
+                onChange={() => {}}
                 ssrID={'Fake'}
                 header={'Fake'}
                 map={new Map()}

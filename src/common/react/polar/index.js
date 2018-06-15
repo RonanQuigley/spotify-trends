@@ -17,6 +17,7 @@ export default class Polar extends PureComponent {
         data: PropTypes.object.isRequired,
         ssrID: PropTypes.string.isRequired,
         header: PropTypes.string.isRequired,
+        onChange: PropTypes.func.isRequired,
         map: PropTypes.instanceOf(Map),
         value: PropTypes.number,
         onChange: PropTypes.func,
@@ -30,7 +31,7 @@ export default class Polar extends PureComponent {
             <div className={root}>
                 {/* <Header header={header} /> */}
                 <UI value={value} onChange={onChange} />
-                <Content value={value} data={data} />
+                <Content onChange={onChange} value={value} data={data} />
             </div>
         );
     }

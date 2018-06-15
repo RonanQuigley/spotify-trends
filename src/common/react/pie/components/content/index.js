@@ -6,6 +6,7 @@ import Swipe from 'common/react/common/components/swipe';
 export default class Content extends PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
+        onChange: PropTypes.func.isRequired,
         padAngle: PropTypes.number,
         cornerRadius: PropTypes.number,
         value: PropTypes.number
@@ -25,9 +26,9 @@ export default class Content extends PureComponent {
     };
 
     render() {
-        const { value, data, padAngle, cornerRadius } = this.props;
+        const { value, data, padAngle, cornerRadius, onChange } = this.props;
         return (
-            <Swipe index={value}>
+            <Swipe onChange={onChange} index={value}>
                 {this.generateCharts(data, padAngle, cornerRadius)}
             </Swipe>
         );

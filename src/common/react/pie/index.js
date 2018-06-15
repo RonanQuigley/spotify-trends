@@ -44,6 +44,7 @@ export default class Pie extends PureComponent {
                 <UI value={value} onChange={onChange} />
                 <Content
                     cornerRadius={cornerRadius}
+                    onChange={onChange}
                     padAngle={padAngle}
                     value={value}
                     data={data}
