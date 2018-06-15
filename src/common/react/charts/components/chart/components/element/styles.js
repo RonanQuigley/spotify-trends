@@ -5,8 +5,6 @@ export default {
         margin: '1.5% auto',
         display: 'flex',
         boxShadow: '2px 2.6px 3px 0px rgba(0,0,0,0.12)',
-        transform: 'translate3d(0,0,0)',
-        willChange: 'transform',
         justifyContent: 'space-between',
         '@media (max-width : 670px)': {
             width: '100%',
