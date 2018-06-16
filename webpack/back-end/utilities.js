@@ -1,39 +1,6 @@
 import path from 'path';
 const dist = path.join(__dirname, '../../dist');
 
-// export function setHBSLoader() {
-//     /* handlebars-loader is not stubbable with sinon.
-//     workaround is to change the loader for hbs files
-//     so that in testing we use a null loader; it just exports
-//     a function that returns a string */
-//     if (process.env.NODE_ENV !== 'test') {
-//         return {
-//             exclude: /node_modules|packages/,
-//             test: /\.hbs$/,
-//             loader: 'handlebars-loader',
-//             query: {
-//                 partialDirs: [
-//                     path.join(
-//                         __dirname,
-//                         '../../src/server/router/views/partials'
-//                     )
-//                 ],
-//                 helperDirs: [
-//                     path.join(
-//                         __dirname,
-//                         '../../src/server/router/views/helpers'
-//                     )
-//                 ]
-//             }
-//         };
-//     } else {
-//         return {
-//             test: /\.hbs$/,
-//             loader: path.join(__dirname, '../null-loader.js')
-//         };
-//     }
-// }
-
 export function setOutput() {
     const filename = 'server.js';
     const libraryTarget = 'commonjs2';
