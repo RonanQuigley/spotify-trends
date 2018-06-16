@@ -1,4 +1,3 @@
-// import results from './results.hbs';
 import { headerID, styleID } from 'src/server/api/react/utilities';
 import serverSideRender from 'src/server/api/react/render';
 import { setupProps } from 'src/server/api/react/utilities';
@@ -54,23 +53,6 @@ export async function processUserData(req, res, next) {
 
 export function getAudioStats(req, res, next) {
     res.locals.data.statistics = getStatistics(res.locals.data.audioFeatures);
-    return next();
-}
-
-export function setupDevelopmentAssets(req, res, next) {
-    /* if we're in development mode, the res.locals.data will
-        not have been set up. we need to check for this. We also use dummy
-        data to speed up dev so we're not continuosly making spotify server requests
-    */
-    const fakeData = require('fixtures/spotify/processed-data/small-payload')
-        .default;
-    res.locals.data = {
-        userData: {
-            artists: fakeData.artists,
-            tracks: fakeData.tracks
-        },
-        statistics: fakeData.statistics
-    };
     return next();
 }
 

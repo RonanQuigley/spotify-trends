@@ -11,6 +11,7 @@ import fakeStatistics from 'fixtures/spotify/processed-data/statistics';
 import sinonChai from 'sinon-chai';
 import httpMocks from 'node-mocks-http';
 import * as Middleware from 'src/server/router/views/results/middleware';
+import * as DevMiddleware from 'src/server/router/views/results/dev-middleware';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
@@ -158,7 +159,7 @@ describe('back end - results view', () => {
         describe('setting up dev assets for react', () => {
             beforeEach(() => {
                 res.locals.data = null;
-                Middleware.setupDevelopmentAssets(req, res, nextSpy);
+                DevMiddleware.setupDevelopmentAssets(req, res, nextSpy);
             });
             it('should setup res.locals correctly', () => {
                 expect(res.locals.data.userData.tracks).to.be.a('object');
