@@ -216,6 +216,7 @@ describe('back end - results view', () => {
                 sandbox.spy(App, 'default');
                 // run the previous middleware function to setup our apps
                 Middleware.setupReactProps(req, res, () => {});
+
                 await Middleware.generateReactApps(req, res, nextSpy);
             });
             describe('React App', () => {

@@ -5,11 +5,11 @@ const router = express.Router();
 
 // rather than put this in an env file
 // this allows for hot reloading
-const skipData = true;
+const skipData = false;
 
 // DO NOT ASSIGN PROCESS.ENV.NODE_ENV TO A VARIABLE
 // OR TREE SHAKING FOR THIS SECTION WILL FAIL - WHY I HAVE NO IDEA
-if (process.env.NODE_ENV === 'development' && skipData === true) {
+if (process.env.NODE_ENV === 'development' && skipData) {
     // for faster login where we use our dev assets
     console.warn(
         'Using development mode: skipping spotify server requests'.green

@@ -70,6 +70,7 @@ function getRelevantData(rawData, type) {
 
 export default function processData(rawData) {
     let result = {};
+    // type is either artists or tracks
     for (const type in rawData) {
         result[type] = getRelevantData(rawData[type], type);
     }

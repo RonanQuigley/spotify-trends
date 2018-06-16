@@ -35,6 +35,14 @@ export async function getUserData(req, res, next) {
     }
 }
 
+export function validataUserData(req, res, next) {
+    /* if the user has little data to work with, there are a series of checks to do:
+    - empty time ranges; if so, remove them and use the remaining time tanges
+    - a minimum of three pieces of data in each array, if not remove them.
+    - if there is not enough data at all, trigger our  
+    */
+}
+
 export async function processUserData(req, res, next) {
     const rawData = res.locals.data;
     const token = res.locals.accessToken;
@@ -106,6 +114,7 @@ export async function generateReactApps(req, res, next) {
     // get out react props
     const props = res.locals.data.react.props;
 
+    console.log(props);
     const app = <App childProps={props} />;
 
     // Create a sheetsRegistry instance.
