@@ -108,6 +108,10 @@ describe('back end - results view', () => {
                 Middleware.validataUserData(req, res, nextSpy);
             });
 
+            describe('scenarios', () => {
+                describe('empty results', () => {});
+            });
+
             it('should call next', () => {
                 expect(nextSpy).to.be.calledOnce;
             });
