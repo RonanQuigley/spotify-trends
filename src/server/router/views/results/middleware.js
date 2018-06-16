@@ -41,6 +41,10 @@ export function validataUserData(req, res, next) {
     - a minimum of three pieces of data in each array, if not remove them.
     - if there is not enough data at all, trigger our  
     */
+    // const data = res.locals.data;
+    // Object.keys(data).map(key => {
+    //     console.log(key);
+    // });
 
     return next();
 }

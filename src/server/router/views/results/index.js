@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'development' && skipData) {
         '/results',
         middleware.getAccessToken,
         middleware.getUserData,
-        middleware.validataUserData,
+        // middleware.validataUserData,
         middleware.processUserData,
         middleware.getAudioStats,
         middleware.setupReactProps,

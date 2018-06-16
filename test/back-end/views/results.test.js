@@ -18,6 +18,7 @@ import * as Statistics from 'src/server/api/statistics';
 import * as ServerUtil from 'src/server/api/react/utilities';
 import * as serverSideRender from 'src/server/api/react/render';
 import * as App from 'common/react/apps/results';
+import emptyData from 'fixtures/spotify/raw-data/empty';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;
@@ -104,16 +105,21 @@ describe('back end - results view', () => {
         });
 
         describe('validating user data', () => {
-            beforeEach(() => {
-                Middleware.validataUserData(req, res, nextSpy);
-            });
-
             describe('scenarios', () => {
-                describe('empty results', () => {});
-            });
-
-            it('should call next', () => {
-                expect(nextSpy).to.be.calledOnce;
+                // describe('empty results', () => {
+                //     beforeEach(() => {
+                //         res.locals.data = emptyData;
+                //         Middleware.validataUserData(req, res, nextSpy);
+                //     });
+                //     it('should call next route', () => {
+                //         expect(nextSpy).to.be.calledWith('route');
+                //     });
+                // });
+                // describe('normal', () => {
+                //     it('should call next', () => {
+                //         expect(nextSpy).to.be.calledOnce;
+                //     });
+                // });
             });
         });
 
