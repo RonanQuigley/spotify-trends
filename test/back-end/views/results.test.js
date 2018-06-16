@@ -4,7 +4,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 import { fakeTokens } from 'fixtures/authentication/';
 import { fakeExpiredError } from 'fixtures/spotify/errors';
-import fakeRawData from 'fixtures/spotify/raw-data';
+import fakeRawData from 'fixtures/spotify/raw-data/normal/index';
 import fakeUserData from 'fixtures/spotify/processed-data';
 import fakeAudioFeatures from 'fixtures/spotify/processed-data/audio-features';
 import fakeStatistics from 'fixtures/spotify/processed-data/statistics';
@@ -15,9 +15,7 @@ import * as DevMiddleware from 'src/server/router/views/results/dev-middleware';
 import * as requestHandler from 'src/server/api/user-data/request-handler';
 import * as Processor from 'src/server/api/user-data/processor';
 import * as Statistics from 'src/server/api/statistics';
-// import * as resultsPage from 'src/server/router/views/results/results.hbs';
 import * as ServerUtil from 'src/server/api/react/utilities';
-// import { appID } from 'common/utilities';
 import * as serverSideRender from 'src/server/api/react/render';
 import * as App from 'common/react/apps/results';
 
@@ -102,6 +100,16 @@ describe('back end - results view', () => {
             });
             it('should pass the raw data into res.locals ', () => {
                 expect(res.locals.data).to.deep.equal(fakeRawData);
+            });
+        });
+
+        describe('validating user data', () => {
+            beforeEach(() => {
+                Middleware.validataUserData(req, res, nextSpy);
+            });
+
+            it('should call next', () => {
+                expect(nextSpy).to.be.calledOnce;
             });
         });
 

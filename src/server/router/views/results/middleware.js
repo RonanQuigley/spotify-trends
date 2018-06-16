@@ -41,6 +41,8 @@ export function validataUserData(req, res, next) {
     - a minimum of three pieces of data in each array, if not remove them.
     - if there is not enough data at all, trigger our  
     */
+
+    return next();
 }
 
 export async function processUserData(req, res, next) {
@@ -114,7 +116,6 @@ export async function generateReactApps(req, res, next) {
     // get out react props
     const props = res.locals.data.react.props;
 
-    console.log(props);
     const app = <App childProps={props} />;
 
     // Create a sheetsRegistry instance.
