@@ -10,7 +10,8 @@ const prod = {
             '@babel/polyfill',
             'whatwg-fetch',
             './src/client/pages/results/'
-        ]
+        ],
+        invalid: ['@babel/polyfill', './src/client/pages/invalid/']
     },
     optimization: {
         minimizer: [

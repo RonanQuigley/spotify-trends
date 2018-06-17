@@ -15,6 +15,11 @@ const dev = {
             '@babel/polyfill',
             'webpack-hot-middleware/client',
             './src/client/pages/results/'
+        ],
+        invalid: [
+            '@babel/polyfill',
+            'webpack-hot-middleware/client',
+            './src/client/pages/invalid/'
         ]
     },
     plugins: [

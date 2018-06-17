@@ -22,6 +22,7 @@ import * as Validation from 'src/server/api/user-data/validation';
 import normalData from 'fixtures/spotify/raw-data/normal/index';
 import emptyData from 'fixtures/spotify/raw-data/empty';
 import partialData from 'fixtures/spotify/raw-data/partial';
+import * as InvalidMiddleware from 'src/server/router/views/results/invalid-middleware';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;
@@ -131,9 +132,20 @@ describe('back end - results view', () => {
             describe('user is invalid', () => {
                 it('should call redirect the route', () => {
                     res.locals.data = emptyData;
+                    sandbox.spy(InvalidMiddleware, 'renderInvalidUserDataPage');
                     Middleware.validataUserData(req, res, nextSpy);
-                    expect(res.send).to.be.calledOnce;
+                    expect(InvalidMiddleware.renderInvalidUserDataPage).to.be
+                        .calledOnce;
                 });
+            });
+        });
+
+        describe('rendering invalid user page', () => {
+            beforeEach(() => {
+                InvalidMiddleware.renderInvalidUserDataPage(req, res, nextSpy);
+            });
+            it('should call send', () => {
+                expect(res.send).to.be.calledOnce;
             });
         });
 

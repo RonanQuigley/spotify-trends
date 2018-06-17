@@ -18,6 +18,7 @@ import {
     findInvalidData,
     isUserValid
 } from 'src/server/api/user-data/validation';
+import { renderInvalidUserDataPage } from 'src/server/router/views/results/invalid-middleware';
 
 const prefixer = postcss([autoPrefixer]);
 const minifier = postcss([cssNano]);
@@ -53,7 +54,7 @@ export function validataUserData(req, res, next) {
         res.locals.data = userData;
         return next();
     } else {
-        return res.send('invalid user');
+        return renderInvalidUserDataPage(req, res, next);
     }
 }
 

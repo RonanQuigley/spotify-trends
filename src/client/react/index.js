@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SSRRemover from 'src/client/react/ssr-remover';
-//import Theme from 'common/react/common/theme';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { create } from 'jss';
