@@ -21,6 +21,7 @@ import * as App from 'common/react/apps/results';
 import * as Validation from 'src/server/api/user-data/validation';
 import normalData from 'fixtures/spotify/raw-data/normal/index';
 import emptyData from 'fixtures/spotify/raw-data/empty';
+import partialData from 'fixtures/spotify/raw-data/partial';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;
@@ -98,7 +99,7 @@ describe('back end - results view', () => {
 
         describe('validating user data', () => {
             beforeEach(() => {
-                res.locals.data = normalData;
+                res.locals.data = partialData;
                 sandbox.spy(Validation, 'findInvalidData');
                 sandbox.spy(Validation, 'isUserValid');
                 Middleware.validataUserData(req, res, nextSpy);
@@ -114,6 +115,17 @@ describe('back end - results view', () => {
             describe('user is valid', () => {
                 it('should call next', () => {
                     expect(nextSpy).to.be.calledOnce;
+                });
+                it('should pass the updated data into res.locals', () => {
+                    const expectation = Validation.findInvalidData(partialData);
+                    expect(res.locals.data).to.deep.equal(expectation);
+                });
+                describe('unchanged or the expected "normal" data response from spotify', () => {
+                    it('should have the same res.locals.data for a fully formed user data response', () => {
+                        res.locals.data = normalData;
+                        Middleware.validataUserData(req, res, nextSpy);
+                        expect(res.locals.data).to.deep.equal(normalData);
+                    });
                 });
             });
             describe('user is invalid', () => {

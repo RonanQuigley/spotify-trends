@@ -48,6 +48,9 @@ export function validataUserData(req, res, next) {
     const userData = findInvalidData(res.locals.data);
 
     if (isUserValid(userData)) {
+        // update the data in case it has changed
+        // this would be the result of our findInvalidData call
+        res.locals.data = userData;
         return next();
     } else {
         return res.send('invalid user');

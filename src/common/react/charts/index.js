@@ -7,6 +7,7 @@ import Header from 'common/react/common/components/header';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import withState from 'common/react/common/components/state';
+import { getLabelKeys } from 'common/react/common/utilities';
 
 @hot(module)
 @withState
@@ -25,11 +26,11 @@ export default class Charts extends PureComponent {
     render() {
         const { data, header, onChange, value, classes } = this.props;
         const { root, scrollOuter, scrollInner } = classes;
-
+        const labelKeys = getLabelKeys(data);
         return (
             <div className={root}>
                 <Header header={header} />
-                <UI value={value} onChange={onChange} />
+                <UI labelKeys={labelKeys} value={value} onChange={onChange} />
                 <div className={scrollOuter}>
                     <div className={scrollInner}>
                         <Content

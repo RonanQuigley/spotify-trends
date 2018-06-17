@@ -42,6 +42,9 @@ describe('react - charts - index', () => {
         it('should have an onChange attribute', () => {
             expect(ui.props().onChange).to.be.a('function');
         });
+        it('should have a label keys attribute', () => {
+            expect(ui.props().labelKeys).to.be.a('array');
+        });
     });
 
     describe('Header', () => {

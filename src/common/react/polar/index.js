@@ -7,6 +7,7 @@ import Content from 'common/react/polar/components/content';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
 import Chart from 'common/react/polar/components/chart';
+import { getLabelKeys } from 'common/react/common/utilities';
 
 /* must be wrapped inside root
 - this is where the state lives */
@@ -27,10 +28,11 @@ export default class Polar extends PureComponent {
     render() {
         const { data, header, onChange, value, classes } = this.props;
         const { root } = classes;
+        const labelKeys = getLabelKeys(data);
         return (
             <div className={root}>
                 {/* <Header header={header} /> */}
-                <UI value={value} onChange={onChange} />
+                <UI labelKeys={labelKeys} value={value} onChange={onChange} />
                 <Content onChange={onChange} value={value} data={data} />
             </div>
         );

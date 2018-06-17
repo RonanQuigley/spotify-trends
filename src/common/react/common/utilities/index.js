@@ -1,4 +1,8 @@
-export const labels = ['Four Weeks', 'Six Months', 'All Time'];
+export const UILabels = {
+    SHORT: 'Four Weeks',
+    MEDIUM: 'Six Months',
+    LONG: 'All Time'
+};
 
 export const timeRanges = {
     SHORT: 'SHORT',
@@ -23,4 +27,8 @@ export function setupDataPoints(obj) {
             y: obj[label]
         };
     });
+}
+
+export function getLabelKeys(obj) {
+    return Object.keys(obj);
 }

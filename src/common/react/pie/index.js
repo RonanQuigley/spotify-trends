@@ -8,6 +8,7 @@ import Chart from 'common/react/pie/components/chart';
 import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
 import Content from 'common/react/pie/components/content';
+import { getLabelKeys } from 'common/react/common/utilities';
 
 /* must be wrapped inside root
 - this is where the state lives */
@@ -37,11 +38,11 @@ export default class Pie extends PureComponent {
             cornerRadius
         } = this.props;
         const { root } = classes;
-
+        const labelKeys = getLabelKeys(data);
         return (
             <div className={root}>
                 <Header header={header} />
-                <UI value={value} onChange={onChange} />
+                <UI labelKeys={labelKeys} value={value} onChange={onChange} />
                 <Content
                     cornerRadius={cornerRadius}
                     onChange={onChange}

@@ -6,6 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import Interface from 'common/react/common/components/ui/components/interface';
 import { Tabs, Tab, AppBar } from '@material-ui/core';
+import { UILabels } from 'common/react/common/utilities';
 
 chai.use(sinonChai);
 Enzyme.configure({ adapter: new Adapter() });
@@ -17,7 +18,13 @@ describe('react - charts - component - ui', () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallow(<Interface value={0} onChange={() => {}} />).dive();
+        wrapper = shallow(
+            <Interface
+                labels={[...Object.values(UILabels)]}
+                value={0}
+                onChange={() => {}}
+            />
+        ).dive();
     });
     afterEach(() => {
         sandbox.restore();
@@ -58,7 +65,11 @@ describe('react - charts - component - ui', () => {
         it('should call props.onChange when the tab has been changed', () => {
             const onChange = sandbox.spy();
             const wrapper = shallow(
-                <Interface value={0} onChange={onChange} />
+                <Interface
+                    labels={[...Object.values(UILabels)]}
+                    value={0}
+                    onChange={onChange}
+                />
             ).dive();
             wrapper.find(Tabs).simulate('change');
             expect(onChange).to.be.calledOnce;
