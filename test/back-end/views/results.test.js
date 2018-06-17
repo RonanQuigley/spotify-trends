@@ -18,6 +18,8 @@ import * as Statistics from 'src/server/api/statistics';
 import * as ServerUtil from 'src/server/api/react/utilities';
 import * as serverSideRender from 'src/server/api/react/render';
 import * as App from 'common/react/apps/results';
+import * as Validation from 'src/server/api/user-data/validation';
+import normalData from 'fixtures/spotify/raw-data/normal/index';
 import emptyData from 'fixtures/spotify/raw-data/empty';
 
 const agent = supertest.agent(app);
@@ -60,16 +62,6 @@ describe('back end - results view', () => {
         sandbox.restore();
     });
 
-    describe('endpoint', () => {
-        it('should exist and respond', async () => {
-            await agent
-                .get('/results')
-                .set('Accept', 'text/html')
-                .expect('Content-Type', /html/)
-                .expect(200);
-        });
-    });
-
     describe('middleware', () => {
         describe('getting the access token', () => {
             beforeEach(() => {
@@ -105,21 +97,31 @@ describe('back end - results view', () => {
         });
 
         describe('validating user data', () => {
-            describe('scenarios', () => {
-                // describe('empty results', () => {
-                //     beforeEach(() => {
-                //         res.locals.data = emptyData;
-                //         Middleware.validataUserData(req, res, nextSpy);
-                //     });
-                //     it('should call next route', () => {
-                //         expect(nextSpy).to.be.calledWith('route');
-                //     });
-                // });
-                // describe('normal', () => {
-                //     it('should call next', () => {
-                //         expect(nextSpy).to.be.calledOnce;
-                //     });
-                // });
+            beforeEach(() => {
+                res.locals.data = normalData;
+                sandbox.spy(Validation, 'findInvalidData');
+                sandbox.spy(Validation, 'isUserValid');
+                Middleware.validataUserData(req, res, nextSpy);
+            });
+
+            it('should check if there is any invalid data', () => {
+                expect(Validation.findInvalidData).to.be.calledOnce;
+            });
+
+            it('should check is the user is stil valid', () => {
+                expect(Validation.isUserValid).to.be.calledOnce;
+            });
+            describe('user is valid', () => {
+                it('should call next', () => {
+                    expect(nextSpy).to.be.calledOnce;
+                });
+            });
+            describe('user is invalid', () => {
+                it('should call redirect the route', () => {
+                    res.locals.data = emptyData;
+                    Middleware.validataUserData(req, res, nextSpy);
+                    expect(res.send).to.be.calledOnce;
+                });
             });
         });
 
@@ -234,7 +236,6 @@ describe('back end - results view', () => {
                 sandbox.spy(App, 'default');
                 // run the previous middleware function to setup our apps
                 Middleware.setupReactProps(req, res, () => {});
-
                 await Middleware.generateReactApps(req, res, nextSpy);
             });
             describe('React App', () => {
@@ -315,6 +316,18 @@ describe('back end - results view', () => {
                     expect(res.status).to.be.calledWith(500);
                     expect(res.send).to.be.calledOnce;
                 });
+            });
+        });
+
+        // call endpoint last due to failing test stack traces
+        // not showing up with react props warnings
+        describe('endpoint', () => {
+            it('should exist and respond', async () => {
+                await agent
+                    .get('/results')
+                    .set('Accept', 'text/html')
+                    .expect('Content-Type', /html/)
+                    .expect(200);
             });
         });
     });

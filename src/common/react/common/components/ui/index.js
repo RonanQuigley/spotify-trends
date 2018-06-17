@@ -6,6 +6,7 @@ import Interface from './components/interface';
 export default class UI extends PureComponent {
     static propTypes = {
         value: PropTypes.number.isRequired,
+        labelKeys: PropTypes.array.isRequired,
         onChange: PropTypes.func.isRequired
     };
 

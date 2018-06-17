@@ -47,7 +47,7 @@ function isObject(obj) {
 }
 
 function belowThreshold(obj) {
-    return obj.total <= 2;
+    return obj.total < 2;
 }
 
 function searchForInvalid(obj) {

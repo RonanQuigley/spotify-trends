@@ -14,6 +14,10 @@ import Theme from 'common/react/common/theme/results';
 import autoPrefixer from 'autoprefixer';
 import cssNano from 'cssnano';
 import postcss from 'postcss';
+import {
+    findInvalidData,
+    isUserValid
+} from 'src/server/api/user-data/validation';
 
 const prefixer = postcss([autoPrefixer]);
 const minifier = postcss([cssNano]);
@@ -38,15 +42,16 @@ export async function getUserData(req, res, next) {
 export function validataUserData(req, res, next) {
     /* if the user has little data to work with, there are a series of checks to do:
     - empty time ranges; if so, remove them and use the remaining time tanges
-    - a minimum of three pieces of data in each array, if not remove them.
-    - if there is not enough data at all, trigger our  
+    - a minimum total of data in each array. if not met, remove.
+    - if there is not enough data at all, trigger our fallback page 
     */
-    // const data = res.locals.data;
-    // Object.keys(data).map(key => {
-    //     console.log(key);
-    // });
+    const userData = findInvalidData(res.locals.data);
 
-    return next();
+    if (isUserValid(userData)) {
+        return next();
+    } else {
+        return res.send('invalid user');
+    }
 }
 
 export async function processUserData(req, res, next) {

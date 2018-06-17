@@ -25,6 +25,7 @@ export default class Charts extends PureComponent {
     render() {
         const { data, header, onChange, value, classes } = this.props;
         const { root, scrollOuter, scrollInner } = classes;
+
         return (
             <div className={root}>
                 <Header header={header} />
