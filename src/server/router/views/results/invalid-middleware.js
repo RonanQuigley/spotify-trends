@@ -17,10 +17,14 @@ export function renderInvalidUserDataPage(req, res, next) {
     // Grab the CSS from our sheetsRegistry.
     const css = sheetsRegistry.toString();
     const env = process.env.NODE_ENV;
-    const dev = env === 'development' ? `<script src="/dev.js"></script>` : ``;
+    const dev =
+        env === 'development'
+            ? `<script src="/dev.js"></script>
+               <script src="/invalid.js"></script>`
+            : ``;
     // remember to remove unused font sizes
     const font =
-        'https://fonts.googleapis.com/css?family=Roboto:300,400,500|Roboto+Mono:100,200,300';
+        'https://fonts.googleapis.com/css?family=Roboto:300,400,500|Roboto+Mono:300';
     const pageTitle = 'Results';
 
     const payload = `
@@ -33,7 +37,7 @@ export function renderInvalidUserDataPage(req, res, next) {
             <title>${pageTitle}</title>
             <link rel="stylesheet" href=${font}>
             <style id="jss-server-side">${css}</style>    
-            <script src="/invalid.js"></script>
+            
         </head>
         <body>
             <div id="root">${html}</div>
