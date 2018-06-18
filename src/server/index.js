@@ -3,7 +3,6 @@ import morgan from 'morgan';
 // colors modifies the string prototype
 // this will prevent eslint throwing no-unused-var errors
 import 'colors';
-import { getHostName } from './utilities';
 import bodyParser from 'body-parser';
 const app = express();
 
@@ -36,12 +35,6 @@ if (process.env.NODE_ENV !== 'test') {
     const port = process.env.PORT || 3000;
     app.listen(port);
     console.log('Server now listening at port: '.green + port);
-    // the code below causes issues with heroku due to the use of a host name.
-    // app.listen(process.env.PORT || 3000, getHostName(), function(err) {
-    //     if (err) throw err;
-    //     const addr = this.address();
-    //     console.log('Listening at http://%s:%d', addr.address, addr.port);
-    // });
 }
 
 export default app;
