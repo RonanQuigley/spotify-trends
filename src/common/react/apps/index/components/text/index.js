@@ -7,7 +7,8 @@ import styles from './styles';
 export default class Text extends PureComponent {
     static propTypes = {
         classes: PropTypes.object,
-        children: PropTypes.string.isRequired
+        children: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+            .isRequired
     };
 
     render() {

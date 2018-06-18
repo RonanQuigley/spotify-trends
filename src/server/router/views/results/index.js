@@ -3,6 +3,7 @@ import * as middleware from './middleware';
 import * as devMiddleware from './dev-middleware';
 const router = express.Router();
 
+// skips spotify data requests
 // rather than put this in an env file
 // this allows for hot reloading
 const skipData = false;
@@ -38,3 +39,10 @@ if (process.env.NODE_ENV === 'development' && skipData) {
 }
 
 export default router;
+process.on('uncaughtException', function(err) {
+    console.log('Caught exception: ' + err);
+});
+
+process.on('unhandledRejection', err => {
+    console.log(err);
+});

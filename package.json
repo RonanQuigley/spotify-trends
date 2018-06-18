@@ -132,7 +132,7 @@
     "start:dump-log": "npm run start -- > dump.txt",
     "start:dev": "cross-env NODE_ENV=development node --max-old-space-size=8192 --inspect --require @babel/register --require dotenv/config ./src/index.js",
     "start:debug": "cross-env NODE_ENV=development DEBUG=true node --max-old-space-size=8192 --inspect --require @babel/register --require dotenv/config ./src/index.js",
-    "lint" : "eslint --fix src/**/*.js webpack/**/*.js test/**/*.js",
+    "lint": "eslint --fix src/**/*.js webpack/**/*.js test/**/*.js",
     "test:front": "mocha-webpack --opts mocha.opts --webpack-config ./webpack/front-end/webpack.dev.js test/front-end/**/*.test.js",
     "test:common": "mocha-webpack --opts mocha.opts --webpack-config ./webpack/front-end/webpack.dev.js test/common/**/*.test.js",
     "test:back": "mocha-webpack --opts mocha.opts --webpack-config ./webpack/back-end/webpack.dev.js test/back-end/**/*.test.js",
