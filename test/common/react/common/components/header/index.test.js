@@ -1,12 +1,10 @@
-import chai, { expect } from 'chai';
-import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import { expect } from 'chai';
+import Header from 'common/react/common/components/header';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Header from 'common/react/common/components/header';
-import styles from 'common/react/common/components/header/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import React from 'react';
 
 Enzyme.configure({ adapter: new Adapter() });
 

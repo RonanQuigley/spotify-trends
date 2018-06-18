@@ -9,7 +9,6 @@ chai.use(sinonChai);
 
 const expect = chai.expect;
 const sandbox = sinon.createSandbox();
-let response;
 
 describe('back end - api - header', () => {
     afterEach(() => {

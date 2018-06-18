@@ -1,16 +1,14 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import {
-    VictoryPolarAxis,
-    VictoryChart,
-    VictoryBar,
-    VictoryContainer,
-    VictoryTheme
-} from 'victory';
-
-import { setupDataPoints } from 'common/react/common/utilities';
 import Theme from 'common/react/common/theme/results';
+import { setupDataPoints } from 'common/react/common/utilities';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
+import {
+    VictoryBar,
+    VictoryChart,
+    VictoryContainer,
+    VictoryPolarAxis
+} from 'victory';
 
 @hot(module)
 export default class Chart extends PureComponent {

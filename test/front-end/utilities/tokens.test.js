@@ -1,11 +1,10 @@
 import chai from 'chai';
+import { fakeTokens } from 'fixtures/authentication/';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { fakeTokens } from 'fixtures/authentication/';
-import * as Url from 'src/client/utilities/url';
-import * as Tokens from 'src/client/utilities/tokens';
 import * as localStorage from 'src/client/utilities/local-storage';
 import * as serverFetch from 'src/client/utilities/server-fetch';
+import * as Tokens from 'src/client/utilities/tokens';
 
 chai.use(sinonChai);
 
@@ -52,10 +51,9 @@ describe('front end - Tokens', () => {
         });
 
         describe('setting access token expiry', () => {
-            let result;
             beforeEach(() => {
                 sandbox.stub(localStorage, 'setItem');
-                result = Tokens.setExpiry(fakeTokens.expiryIn);
+                Tokens.setExpiry(fakeTokens.expiryIn);
             });
             it('should set the correct item in local storage', () => {
                 expect(localStorage.setItem).to.be.calledOnce;

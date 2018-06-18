@@ -1,12 +1,12 @@
-import supertest from 'supertest';
-import app from 'src/server/';
 import chai from 'chai';
-import httpMocks from 'node-mocks-http';
 import { fakeTokens } from 'fixtures/authentication/';
+import httpMocks from 'node-mocks-http';
 import sinon from 'sinon';
-import * as middleware from 'src/server/router/endpoints/refresh/middleware';
-import * as Tokens from 'src/server/api/authentication/tokens';
 import sinonChai from 'sinon-chai';
+import app from 'src/server/';
+import * as Tokens from 'src/server/api/authentication/tokens';
+import * as middleware from 'src/server/router/endpoints/refresh/middleware';
+import supertest from 'supertest';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;
@@ -52,8 +52,6 @@ describe('back end - refresh route', () => {
 
     describe('middleware', () => {
         describe('processing refresh request', () => {
-            let result;
-
             beforeEach(() => {
                 nextSpy = sandbox.stub();
             });

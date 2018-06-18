@@ -1,28 +1,30 @@
-import supertest from 'supertest';
-import app from 'src/server/';
 import chai from 'chai';
-import sinon from 'sinon';
+import * as App from 'common/react/apps/results';
 import { fakeTokens } from 'fixtures/authentication/';
 import { fakeExpiredError } from 'fixtures/spotify/errors';
-import fakeRawData from 'fixtures/spotify/raw-data/normal/index';
 import fakeUserData from 'fixtures/spotify/processed-data';
 import fakeAudioFeatures from 'fixtures/spotify/processed-data/audio-features';
 import fakeStatistics from 'fixtures/spotify/processed-data/statistics';
-import sinonChai from 'sinon-chai';
-import httpMocks from 'node-mocks-http';
-import * as Middleware from 'src/server/router/views/results/middleware';
-import * as DevMiddleware from 'src/server/router/views/results/dev-middleware';
-import * as requestHandler from 'src/server/api/user-data/request-handler';
-import * as Processor from 'src/server/api/user-data/processor';
-import * as Statistics from 'src/server/api/statistics';
-import * as ServerUtil from 'src/server/api/react/utilities';
-import * as serverSideRender from 'src/server/api/react/render';
-import * as App from 'common/react/apps/results';
-import * as Validation from 'src/server/api/user-data/validation';
-import normalData from 'fixtures/spotify/raw-data/normal/index';
 import emptyData from 'fixtures/spotify/raw-data/empty';
+import {
+    default as fakeRawData,
+    default as normalData
+} from 'fixtures/spotify/raw-data/normal/index';
 import partialData from 'fixtures/spotify/raw-data/partial';
+import httpMocks from 'node-mocks-http';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+import app from 'src/server/';
+import * as serverSideRender from 'src/server/api/react/render';
+import * as ServerUtil from 'src/server/api/react/utilities';
+import * as Statistics from 'src/server/api/statistics';
+import * as Processor from 'src/server/api/user-data/processor';
+import * as requestHandler from 'src/server/api/user-data/request-handler';
+import * as Validation from 'src/server/api/user-data/validation';
+import * as DevMiddleware from 'src/server/router/views/results/dev-middleware';
 import * as InvalidMiddleware from 'src/server/router/views/results/invalid-middleware';
+import * as Middleware from 'src/server/router/views/results/middleware';
+import supertest from 'supertest';
 
 const agent = supertest.agent(app);
 const expect = chai.expect;

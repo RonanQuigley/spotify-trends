@@ -1,10 +1,9 @@
 import chai, { expect } from 'chai';
 import chaiEnzyme from 'chai-enzyme';
-import React from 'react';
+import withState from 'common/react/common/components/state';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import withState from 'common/react/common/components/state';
-import { CssBaseline } from '@material-ui/core';
+import React from 'react';
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
 

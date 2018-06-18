@@ -1,10 +1,10 @@
+import { Typography } from '@material-ui/core';
 import chai, { expect } from 'chai';
 import chaiEnzyme from 'chai-enzyme';
-import React from 'react';
-import Enzyme, { shallow, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import Rank from 'charts/components/chart/components/rank';
-import { Typography } from '@material-ui/core';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import React from 'react';
 
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });

@@ -27,10 +27,10 @@ export default class App extends PureComponent {
                     </div>
                     <div id="message" className={classes.message}>
                         <Typography variant={'body2'}>
-                            It looks like you don't currently have enough
-                            spotify data to work with. Don't fret, just keep on
-                            listening, give it a couple of weeks to build up a
-                            record of results and try again.
+                            It looks like you {`don't`} currently have enough
+                            spotify data to work with. {`Don't`} fret, just keep
+                            on listening, give it a couple of weeks to build up
+                            a record of results and try again.
                         </Typography>
                     </div>
                 </div>

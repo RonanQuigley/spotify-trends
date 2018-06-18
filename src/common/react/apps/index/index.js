@@ -54,7 +54,8 @@ export default class App extends PureComponent {
                         >
                             <SubHeadline>Tonality</SubHeadline>
                             <Text>
-                                By using spotify's analysis of your top track's
+                                By using {`spotify's`} analysis of your top
+                                {`track's`}
                                 audio features, your preferred key signatures
                                 are graphed into a set of easily digesteable pie
                                 charts. Your modal preferences will also let you

@@ -1,10 +1,10 @@
-import chai, { expect } from 'chai';
-import React from 'react';
+import { expect } from 'chai';
+import Chart from 'charts/components/chart';
+import Element from 'charts/components/chart/components/element';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Chart from 'charts/components/chart';
 import Payload from 'fixtures/spotify/processed-data/payload';
-import Element from 'charts/components/chart/components/element';
+import React from 'react';
 
 Enzyme.configure({ adapter: new Adapter() });
 
