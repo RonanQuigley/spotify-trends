@@ -67,3 +67,5 @@ The app is deployed using heroku but a local build can be built and run by using
 * The unit tests for our statistics api folder on the server only tests the expected behaviour i.e. just the final result against a data fixture. Consequently, there's multiple functions/files for the stats generation that have no real test coverage
 
 * Remove unused font sizes once remaining styling is complete.
+
+* Cosmetic - the css used for scroll containers for the charts is fixed in size. If a user has less than 50 results for a specific time period, then there's a lot of empty space left that can still be scrolled.
