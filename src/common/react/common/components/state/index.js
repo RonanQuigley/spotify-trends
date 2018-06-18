@@ -1,7 +1,6 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { getDisplayName } from 'common/react/common/utilities';
-import { hot } from 'react-hot-loader';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 
 export default function(WrappedComponent) {
     class withState extends PureComponent {

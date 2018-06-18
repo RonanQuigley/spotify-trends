@@ -1,21 +1,20 @@
-import React, { PureComponent } from 'react';
-import classNames from 'classnames';
-import Charts from 'charts';
-import Pie from 'pie/';
-import Polar from 'common/react/polar';
 import {
-    CssBaseline,
-    withStyles,
-    Paper,
-    Typography,
-    Divider,
     AppBar,
-    Toolbar
+    CssBaseline,
+    Divider,
+    Toolbar,
+    Typography,
+    withStyles
 } from '@material-ui/core';
-import { hot } from 'react-hot-loader';
-import { PropTypes } from 'prop-types';
-import styles from './styles';
+import Charts from 'charts';
+import classNames from 'classnames';
 import ChartContainer from 'common/react/apps/results/components/chart-container';
+import Polar from 'common/react/polar';
+import Pie from 'pie/';
+import { PropTypes } from 'prop-types';
+import React, { PureComponent } from 'react';
+import { hot } from 'react-hot-loader';
+import styles from './styles';
 @hot(module)
 @withStyles(styles, { withTheme: true })
 export default class App extends PureComponent {

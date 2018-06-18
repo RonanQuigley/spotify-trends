@@ -1,6 +1,6 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import Icon from 'charts/components/chart/components/icon';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 
 export default class Popularity extends PureComponent {
     static propTypes = {

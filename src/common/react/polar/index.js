@@ -1,13 +1,12 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import withState from 'common/react/common/components/state';
-import styles from './styles';
-import Content from 'common/react/polar/components/content';
-import Header from 'common/react/common/components/header';
 import UI from 'common/react/common/components/ui';
-import Chart from 'common/react/polar/components/chart';
 import { getLabelKeys } from 'common/react/common/utilities';
+import Content from 'common/react/polar/components/content';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+import styles from './styles';
+import Header from 'common/react/common/components/header';
 
 /* must be wrapped inside root
 - this is where the state lives */

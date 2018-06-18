@@ -1,8 +1,6 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
-import Chart from 'common/react/polar/components/chart';
 import Swipe from 'common/react/common/components/swipe';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 
 export default class Content extends PureComponent {
     static propTypes = {

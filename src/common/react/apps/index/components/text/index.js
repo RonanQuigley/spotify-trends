@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, withStyles, Paper, Divider } from '@material-ui/core';
+import { Typography, withStyles } from '@material-ui/core';
 import styles from './styles';
 
 @withStyles(styles)

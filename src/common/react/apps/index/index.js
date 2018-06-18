@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
-import { CssBaseline, withStyles, Divider } from '@material-ui/core';
-import Login from 'common/react/apps/index/components/login';
-import styles from './styles';
+import { CssBaseline, withStyles } from '@material-ui/core';
 import Branding from 'common/react/apps/index/components/branding';
-import Title from 'common/react/apps/index/components/title';
-import Text from 'common/react/apps/index/components/text';
-import SubHeadline from 'common/react/apps/index/components/subheadline';
 import Headline from 'common/react/apps/index/components/headline';
+import Login from 'common/react/apps/index/components/login';
+import SubHeadline from 'common/react/apps/index/components/subheadline';
+import Text from 'common/react/apps/index/components/text';
+import Title from 'common/react/apps/index/components/title';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+import { hot } from 'react-hot-loader';
+import styles from './styles';
 @hot(module)
 // this contains global styling changes
 @withStyles(styles)

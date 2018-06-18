@@ -1,9 +1,9 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
-import { VictoryPie, VictoryContainer } from 'victory';
-import { setupDataPoints } from 'common/react/common/utilities';
 import Theme from 'common/react/common/theme';
+import { setupDataPoints } from 'common/react/common/utilities';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+import { hot } from 'react-hot-loader';
+import { VictoryContainer, VictoryPie } from 'victory';
 
 @hot(module)
 export default class Chart extends PureComponent {

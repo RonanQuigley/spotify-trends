@@ -1,10 +1,9 @@
-import { requestTokens } from '../../../api/authentication/tokens';
+import { stringify } from 'querystring';
 import {
     generateAuthHeader,
     grantType
 } from '../../../api/authentication/header';
-import { stringify } from 'querystring';
-import rp from 'request-promise';
+import { requestTokens } from '../../../api/authentication/tokens';
 
 export async function authUser(req, res, next) {
     const token = req.query.code;

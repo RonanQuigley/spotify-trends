@@ -1,8 +1,6 @@
-import React, { PureComponent } from 'react';
+import { AppBar, Tab, Tabs, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
-import { UILabels } from 'common/react/common/utilities';
-import { AppBar, Tabs, Tab, withStyles } from '@material-ui/core';
+import React, { PureComponent } from 'react';
 import styles from './styles';
 
 @withStyles(styles)

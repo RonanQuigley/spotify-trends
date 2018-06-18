@@ -1,12 +1,10 @@
 import rp from 'request-promise';
 import {
     endpoints,
-    timeRanges,
+    generateAudioFeaturesUrl,
     generatePersonalDataUrl,
-    generateAudioFeaturesUrl
+    timeRanges
 } from './url';
-
-import util from 'util';
 
 export function generateOptions(token, url) {
     return {
