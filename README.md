@@ -2,7 +2,7 @@
 
 A Spotify music analyzer. Charts and graphs a user's listening habits and musical preferences.
 
-### Getting Started
+## Getting Started
 
 Before running the app, you'll need an env file setup with the following variables: 
 
@@ -20,7 +20,7 @@ For creating a spotify app, you need to register one at the following url with a
 
 https://developer.spotify.com/dashboard/
 
-### Running
+## Running
 
 Use the following command for local development: 
 
@@ -28,18 +28,12 @@ Use the following command for local development:
 
 ## Unit tests
 
-Tests and all fixtures are stored in the tests folder. They can be run using the following options: 
+Tests and all fixtures are stored in the tests folder. They can be ran using the following options: 
 
 - Run back end tests - ```npm run test:back```
 - Run front end tests - ```npm run test:front```
 - Run common tests - ```npm run test:common``` - this is for react apps
 - Run all tests - ```npm run test:all``` 
-
-## Deployment
-
-The app is deployed using heroku but a local build can be built and run by using the following:
-
-``` npm run build:all:dev:start:dev```
 
 ## Built With
 
@@ -57,6 +51,7 @@ The app is deployed using heroku but a local build can be built and run by using
 * Chai
 * Enzyme 
 * Sinon
+* Istanbul
 
 ## Notes/Current Issues
 
@@ -69,3 +64,5 @@ The app is deployed using heroku but a local build can be built and run by using
 * Remove unused font sizes once remaining styling is complete.
 
 * Cosmetic - the css used for scroll containers for the charts is fixed in size. If a user has less than 50 results for a specific time period, then there's a lot of empty space left that can still be scrolled.
+
+* The application was built in a windows environment, so mac osx/linux may have platform specific issues for running scripts/developing with
