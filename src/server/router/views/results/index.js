@@ -11,7 +11,7 @@ const skipData = false;
 // DO NOT ASSIGN PROCESS.ENV.NODE_ENV TO A VARIABLE
 // OR TREE SHAKING FOR THIS SECTION WILL FAIL - WHY I HAVE NO IDEA
 if (process.env.NODE_ENV === 'development' && skipData) {
-    // for faster login where we use our dev assets
+    // for faster login we'll use our dev assets and fixtures from our test folder
     console.warn(
         'Using development mode: skipping spotify server requests'.green
     );
@@ -39,10 +39,3 @@ if (process.env.NODE_ENV === 'development' && skipData) {
 }
 
 export default router;
-process.on('uncaughtException', function(err) {
-    console.log('Caught exception: ' + err);
-});
-
-process.on('unhandledRejection', err => {
-    console.log(err);
-});
