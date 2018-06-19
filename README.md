@@ -1,6 +1,8 @@
 # Statisfy
 
-A Spotify music analyzer. Charts and graphs a user's listening habits and musical preferences.
+A Spotify music analyzer. Charts and graphs a user's listening habits and musical preferences by using the spotify web api: 
+
+https://developer.spotify.com/documentation/
 
 ## Getting Started
 
