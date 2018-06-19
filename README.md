@@ -8,11 +8,11 @@ Before running the app, you'll need an env file setup with the following variabl
 
 ```
 HOST=localhost
-CLIENT_ID=a spotify application client ID
-CLIENT_SECRET=a spotify application client secret
+CLIENT_ID= a spotify application client ID
+CLIENT_SECRET= a spotify application client secret
 RESPONSE_TYPE=code
 SCOPE='user-read-private user-read-email user-top-read'
-REDIRECT_URI='https://url-of-your-chosen-ddomain.com/callback'
+REDIRECT_URI='https://url-of-your-chosen-site.com/callback'
 REDIRECT_URI_DEV='http://localhost:3000/callback'
 ```
 
@@ -22,13 +22,13 @@ https://developer.spotify.com/dashboard/
 
 ## Running
 
-Use the following command for local development: 
+Use the following command for running/developing locally: 
 
 ```npm run start:dev``` 
 
 ## Unit tests
 
-Tests and all fixtures are stored in the tests folder. They can be ran using the following options: 
+Tests are stored in the tests folder. They can be ran using the following options: 
 
 - Run back end tests - ```npm run test:back```
 - Run front end tests - ```npm run test:front```
@@ -65,4 +65,4 @@ Tests and all fixtures are stored in the tests folder. They can be ran using the
 
 * Cosmetic - the css used for scroll containers for the charts is fixed in size. If a user has less than 50 results for a specific time period, then there's a lot of empty space left that can still be scrolled.
 
-* The application was built in a windows environment, so mac osx/linux may have platform specific issues for running scripts/developing with
+* The application was built in a windows environment, so mac osx/linux may have platform specific issues for running the project.
